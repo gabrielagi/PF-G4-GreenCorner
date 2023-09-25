@@ -32,7 +32,7 @@ sequelize.define('User', {
   image: {
     type: DataTypes.STRING,
     allowNull: true,
-    defaultValue: ''
+    defaultValue: '' //hay que modificar aca por la imagen por defecto  
   },
   rating: {
     type: DataTypes.INTEGER,
