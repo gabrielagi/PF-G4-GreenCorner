@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Order = sequelize.define('Order', {
+   sequelize.define('Order', {
       id: {
         type: DataTypes.UUIDV4,
         primaryKey: true,
@@ -31,9 +31,5 @@ module.exports = (sequelize, DataTypes) => {
       //user ID
     } );
     
-    
-
-  
-    return Order;
   };
   
