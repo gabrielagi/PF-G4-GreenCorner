@@ -32,7 +32,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 // Para relacionarlos hacemos un destructuring
 
 
-const { User, Order, Product, Category, ProductCategory } = sequelize.models;
+const { User, Order, Product, Category, ProductCategory, OrderDetail } = sequelize.models;
 
 // RELACIONES
 User.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
