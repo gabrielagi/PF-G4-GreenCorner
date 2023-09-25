@@ -26,17 +26,17 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 
 
-const { User, Order, Product, Category, ProductCategory, OrderDetail } = sequelize.models;
+const { User, Order, Product, Category, OrderDetail } = sequelize.models;
 
 // RELACIONES
 User.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
 Order.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
-Order.belongsToMany(Product, { through: 'OrderDetail', foreignKey: 'orderId', as: 'products' });
-Product.belongsToMany(Order, { through: 'OrderDetail', foreignKey: 'productId', as: 'orders' });
+Order.belongsToMany(Product, { through: OrderDetail, foreignKey: 'orderId', as: 'products' });
+Product.belongsToMany(Order, { through: OrderDetail, foreignKey: 'productId', as: 'orders' });
 
-Product.belongsToMany(Category, { through: ProductCategory, foreignKey: 'productId', as: 'categories' });
-Category.belongsToMany(Product, { through: ProductCategory, foreignKey: 'categoryId', as: 'products' });
+Product.belongsToMany(Category, { through: "ProductCategory", foreignKey: 'productId', as: 'categories' });
+Category.belongsToMany(Product, { through: "ProductCategory", foreignKey: 'categoryId', as: 'products' });
 
 
 module.exports = {
