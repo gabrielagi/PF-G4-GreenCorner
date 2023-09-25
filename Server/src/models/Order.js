@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('Order', {
+    const Order = sequelize.define('Order', {
       id: {
         type: DataTypes.UUIDV4,
         primaryKey: true,
@@ -9,18 +9,28 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
+      status:{
+        type:DataTypes.ENUM('Pending','Finish','Rejected'),
+        allowNull:false,
       },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      shippingAdress:{
+        type:DataTypes.STRING,
+        allowNull:false
       },
+      adressHouseNumber:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+      },
+    //   paymenMethod:{
+
+    //   },
+      total:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+      },
+      //user ID
+    } );
     
-    });
-  
     
 
   
