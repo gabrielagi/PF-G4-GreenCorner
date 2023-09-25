@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 
     //   },
       total:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.DECIMAL,
         allowNull:false
       },
       //user ID
