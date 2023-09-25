@@ -29,6 +29,11 @@ sequelize.define('User', {
     defaultValue: 'user',
     allowNull: false 
   },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: ''
+  },
   rating: {
     type: DataTypes.INTEGER,
     allowNull: true,
