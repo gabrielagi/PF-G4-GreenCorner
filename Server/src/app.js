@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const routes = require('./outes/index.routes.js');
+const routes = require('./Routes/index.routes.js');
 
 require('./db.js');
 
