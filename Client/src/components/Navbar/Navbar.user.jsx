@@ -4,7 +4,7 @@ import React from "react";
 
 function NavbarUser() {
   return (
-    <nav className="bg-blue-500 p-4">
+    <nav className="bg-[#1d252d] p-4">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <div className="text-white text-2xl font-bold">Mi Sitio</div>
