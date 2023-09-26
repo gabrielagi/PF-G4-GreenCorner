@@ -17,6 +17,7 @@ const getAllProducts = async (req, res) => {
   }
 };
 
+
 const getProductById = async (id) => {
   try {
     const product = await Product.findByPk(id, {

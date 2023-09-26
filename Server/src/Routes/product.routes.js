@@ -19,4 +19,9 @@ productRouter.delete("/:id", deleteProductHandler);
 
 productRouter.put("/:id", updateProductHandler);
 
+// Rutas adicionales (por si les pinta)
+productRouter.get("/category/:categoryId", filterProductByCategoryHandler); // Filtrado por categoría
+productRouter.get("/related/:productId", getRelatedProductsHandler); // Productos relacionados
+productRouter.get("/featured", getFeaturedProductsHandler); // Productos destacados
+
 module.exports = productRouter;

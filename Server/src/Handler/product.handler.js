@@ -7,13 +7,13 @@ const {
   updateProduct,
 } = require("../Controller/product.controller");
 
+
+
+//Busca un producto por nombre que pasemos por query y si no enviamos ninguno devuelve todos los productos 
 const getAllProductHandler = async (req, res) => {
   try {
-    // Si buscamos un Producto por nombre
     const name = req.query.name ? req.query.name.toLowerCase() : null;
-
     const allProduct = await getAllProduct();
-
     if (name) {
       console.log("Un name a buscar", name);
       const filteredProduct = allProduct.filter((product) =>
@@ -28,26 +28,24 @@ const getAllProductHandler = async (req, res) => {
   }
 };
 
+//Busca un producto por id
 const getProductByIdHandler = async (req, res) => {
   try {
     const { id } = req.params;
-
     const product = await getProductById(id);
-
     if (!product) {
       return res.status(404).json({ error: "Producto no encontrado" });
     }
-
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
 
+
 const postProductHandler = async (req, res) => {
   try {
     const product = req.body;
-
     console.log("Un product enviado", product);
     const response = await postProduct(product);
     console.log("response", response);
