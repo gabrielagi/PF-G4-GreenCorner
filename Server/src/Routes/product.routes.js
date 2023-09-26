@@ -20,7 +20,7 @@ productRouter.delete("/:id", deleteProductHandler);
 
 productRouter.put("/:id", updateProductHandler);
 
-productRouter.get('/products/:id/related', getRelatedProductsHandler);
+productRouter.get('/:id/related', getRelatedProductsHandler);
 
 
 module.exports = productRouter;
