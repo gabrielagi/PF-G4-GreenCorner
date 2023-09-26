@@ -4,6 +4,7 @@ const {
   getProductById,
   postProduct,
   updateProduct,
+  findRelatedProducts,
 } = require("../Controller/product.controller");
 const Product = require("../models/Product");
 
@@ -95,8 +96,18 @@ const updateProductHandler = async (req, res) => {
   }
 };
 
+//Busca 5 productos relacionados por categoría (product detail)
+const getRelatedProductsHandler = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const relatedProducts = await findRelatedProducts(id);
 
-
+    res.status(200).json(relatedProducts);
+  } catch (error) {
+    console.error('Error en getRelatedProductsHandler:', error.message);
+    res.status(500).json({ error: 'Error en el servidor' });
+  }
+};
 
 
 
@@ -108,4 +119,5 @@ module.exports = {
   postProductHandler,
   deleteProductHandler,
   updateProductHandler,
+  getRelatedProductsHandler,
 };
