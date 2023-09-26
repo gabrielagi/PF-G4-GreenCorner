@@ -1,11 +1,12 @@
 import "tailwindcss/tailwind.css";
+import React from "react";
 import { BiMenuAltRight } from "react-icons/bi";
 import { MdOutlineDashboard, MdPayment } from "react-icons/md";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiShoppingBag } from "react-icons/fi";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
-import { Link } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function NavbarUser() {
   const menus = [
