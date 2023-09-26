@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 import "tailwindcss/tailwind.css";
+import NavbarUser from "./components/Navbar/Navbar.user";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,6 +31,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <NavbarUser />
     </>
   );
 }
