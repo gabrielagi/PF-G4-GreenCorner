@@ -1,13 +1,23 @@
 const { Router } = require("express");
+const {
+  getAllCategoriesHandler,
+  getCategoryByIdHandler,
+  getCategoryByNameHandler,
+  addCategoriesHandler,
+} = require("../Handler/categories.handler");
 
-const router = Router();
+const categoryRouter = Router();
 
-const { getAllCategoriesHandler, getCategoryByIdHandler, getCategoryByNameHandler, addCategoriesHandler}= require('../Handler/categories.handler')
+// Obtener todas las categorías
+categoryRouter.get("/", getAllCategoriesHandler);
 
+// Agregar una nueva categoría
+categoryRouter.post("/", addCategoriesHandler);
 
-router
-.get('/', getAllCategoriesHandler)
-.post('/', addCategoriesHandler)
-.get( '/:id', getCategoryByIdHandler)
-.get( '/find/:name', getCategoryByNameHandler)
-module.exports = router;
+// Obtener una categoría por su ID
+categoryRouter.get("/:id", getCategoryByIdHandler);
+
+// Buscar una categoría por su nombre
+categoryRouter.get("/find/:name", getCategoryByNameHandler);
+
+module.exports = categoryRouter;

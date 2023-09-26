@@ -93,37 +93,35 @@ const updateProduct = async (id, updatedData) => {
 
 //Lista de 5 productos relacionados (product detail)
 const findRelatedProducts = async (productId) => {
-  const targetProduct = await Product.findByPk(productId, {
-    include: 'categories',
-  });
+  try {
+    const targetProduct = await Product.findByPk(productId, {include: 'categories',});
+    if (!targetProduct) {
+      throw new Error('Producto no encontrado');
+    }
+    const targetCategories = targetProduct.categories.map((category) => category.id);
 
-  if (!targetProduct) {
-    throw new Error('Producto no encontrado');
+    const filteredRelatedProducts = [];
+    const relatedProducts = await Product.findAll({
+      where: {
+        id: {[sequelize.Op.ne]: targetProduct.id, },
+      },
+      include: [
+        {model: Category,as: 'categories',attributes: ['id'],},
+      ],
+    });
+
+    for (const product of relatedProducts) {
+      const productCategories = product.categories.map((category) => category.id);
+      if (productCategories.some((categoryId) => targetCategories.includes(categoryId))) {
+        filteredRelatedProducts.push(product);
+        if (filteredRelatedProducts.length >= 5) {
+          return filteredRelatedProducts;
+        }
+      }
+    }
+  } catch (error) {
+    throw new Error('Error en findRelatedProducts: ' + error.message);
   }
-
-  const targetCategories = targetProduct.categories.map((category) => category.id);
-
-  const relatedProducts = await Product.findAll({
-    where: {
-      product_id: {
-        [sequelize.Op.ne]: targetProduct.product_id,
-      },
-    },
-    include: [
-      {
-        model: Category,
-        as: 'categories',
-        attributes: ['id'],
-      },
-    ],
-  });
-
-  const filteredRelatedProducts = relatedProducts.filter((product) => {
-    const productCategories = product.categories.map((category) => category.id);
-    return productCategories.some((categoryId) => targetCategories.includes(categoryId));
-  });
-
-  return filteredRelatedProducts.slice(0, 5);
 };
 
 
