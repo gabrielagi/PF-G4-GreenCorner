@@ -1,34 +1,30 @@
 const {
     getAllCategories,
     getCategoryById,
-    getCategoryByName
-  } = require("../Controller/product.controller");
-const { Category } = require("../models/Category");
+    getCategoryByName,
+    postCategory
+  } = require("../Controller/categories.controller");
+const { Category } = require("../db");
 
 // Obtiene todas las categorias
-const getAllCategoriesHandler = async (req, res) => {
+const getAllCategoriesHandler= async(req, res) => {
   try {
-    const categories = await getAllCategories();
 
-    // Verificar si se encontraron categorías
-    if (categories.length === 0) {
-      return res.status(404).json({ message: "No se encontraron categorías." });
-    }
+      const categories = await getAllCategories();
+      res.status(200).json(categories)
 
-    // Enviar las categorías como respuesta
-    return res.status(200).json(categories);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error en el servidor" });
+      res.status(500).json({ error: error.message })
+
   }
 };
 
 // Obtiene una categoria por id
 const getCategoryByIdHandler = async (req, res) => {
-  const categoryId = req.params.id; // Obtén el ID de los parámetros de la solicitud
+  const id  = req.params.id; // Obtén el ID de los parámetros de la solicitud
 
   try {
-    const category = await getCategoryById(categoryId);
+    const category = await getCategoryById(id);
 
     // Verificar si se encontró la categoría
     if (!category) {
@@ -39,7 +35,7 @@ const getCategoryByIdHandler = async (req, res) => {
     return res.status(200).json(category);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error en el servidor" });
+    res.status(500).send(error.message);
   }
 };
 
@@ -62,9 +58,27 @@ const getCategoryByNameHandler = async (req, res) => {
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
+const addCategoriesHandler = async (req, res) => {
+  const { name } = req.body
+  try {
+      const newCategory = await postCategory(name);
+      res.status(200).json(newCategory)
 
+  } catch (error) {
+
+      res.status(500).json({ error: error.message })
+
+  }
+
+
+
+};
 module.exports = {
   getAllCategoriesHandler,
   getCategoryByIdHandler,
   getCategoryByNameHandler,
+  addCategoriesHandler
 };
+
+
+
