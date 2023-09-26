@@ -2,7 +2,7 @@ const { Product } = require("../db");
 const { Category } = require("../db");
 
 //Obtiene todos los productos con sus categorías asociadas (home)
-const getAllProducts = async (req, res) => {
+const getAllProduct = async (req, res) => {
   try {
     const products = await Product.findAll({
       include: {
@@ -41,8 +41,6 @@ const getProductById = async (id) => {
 //Crea un producto y lo guarda en la base de datos con sus categorías asociadas (admin dashboard) (falta imagen por defecto)
 const postProduct = async (productData) => {
   try {
-  
-    console.log(productData);
     const { name, description, price, image, stock, available, categories } = productData;
 
     if (!name || !price || !stock) {
@@ -73,7 +71,7 @@ const postProduct = async (productData) => {
    return newProduct;
   } catch (error) {
     console.error("Error en postProduct:", error.message);
-    return( "Error en el servidor")
+    throw new Error("Error en el servidor");
   }
 };
 
@@ -147,7 +145,7 @@ const getAllTrending = async () => {
 
 
 module.exports = {
-  getAllProducts,
+  getAllProduct,
   getProductById,
   postProduct,
   updateProduct,

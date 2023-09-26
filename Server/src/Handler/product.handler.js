@@ -29,7 +29,7 @@ const getAllProductHandler = async (req, res) => {
       res.status(200).json(allProduct);
     }
   } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
+    console.error("Error en getAllProductHandler:", error.message);
   }
 };
 
@@ -51,7 +51,6 @@ const getProductByIdHandler = async (req, res) => {
 const postProductHandler = async (req, res) => {
   try {
     const productData = req.body;
-    // console.log(productData);
     const newProduct = await postProduct(productData);
     
     if (newProduct) {

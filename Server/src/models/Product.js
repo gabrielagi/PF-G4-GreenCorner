@@ -2,9 +2,10 @@ const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   sequelize.define('Product', {
     product_id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+      unique: true,
         allowNull: false,
       },
       name: {
@@ -28,12 +29,12 @@ module.exports = (sequelize) => {
       },
       available: {
         type: DataTypes.BOOLEAN,
-        allowNull: false,
+        allowNull: true,
       },
       isTrending:{
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        allowNull: true,  
       }
-      
     });
 };
