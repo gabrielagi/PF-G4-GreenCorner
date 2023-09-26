@@ -2,6 +2,7 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
+const ShoppingCart = require('./models/ShoppingCart');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,DB_NAME,
 } = process.env;
@@ -37,6 +38,10 @@ Product.belongsToMany(Order, { through: OrderDetail, foreignKey: 'productId', as
 
 Product.belongsToMany(Category, { through: "ProductCategory", foreignKey: 'productId', as: 'categories' });
 Category.belongsToMany(Product, { through: "ProductCategory", foreignKey: 'categoryId', as: 'products' });
+
+//Descomentar si se importo el modelo ShoppingCart
+//User.hasMany(ShoppingCart, { foreignKey: 'userId', as: 'ShoppingCart' });
+//ShoppingCart.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 
 module.exports = {
