@@ -30,6 +30,11 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },
+      isTrending:{
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+        allowNull:false
+      }
       
     });
 };
