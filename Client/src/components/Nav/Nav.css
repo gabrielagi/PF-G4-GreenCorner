@@ -1,0 +1,48 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    box-sizing: border-box;
+}
+html{
+    font-size: 62.5%;
+}
+body{
+    font-size: 1.6rem;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: darkgray;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
+}
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 5vh;
+    background: linear-gradient(rgba(133, 135, 141, 0.75),rgba(232, 232, 234, 0.75));
+}
+.nav__brand {
+   
+    font-weight: bold;
+    color: black;
+    font-size: 20px;
+    
+}
+.nav__menu{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 5rem;
+}
+.nav__toggler {
+    display: flex;
+    width: 2.5rem;
+    height: 0.2rem;
+    margin: 0.4rem;
+    gap: 3rem;
+}
