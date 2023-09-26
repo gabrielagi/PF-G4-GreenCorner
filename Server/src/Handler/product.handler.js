@@ -6,7 +6,7 @@ const {
   updateProduct,
   findRelatedProducts,
   getAllTrending,
-  setProductAsTrending,
+
 } = require("../Controller/product.controller");
 const Product = require("../models/Product");
 
@@ -122,23 +122,6 @@ const getAllTrendingHandler = async (req, res) => {
   }
 };
 
-//Setea el atributo isTrending en true (admin dashboard)
-const setProductAsTrendingHandler = async (req, res) => {
-  try {
-    const {id} = req.params;
-
-    const success = await setProductAsTrending(id);
-
-    if (success) {
-      res.status(200).json({ message: 'Producto marcado como Trending exitosamente' });
-    } else {
-      res.status(404).json({ error: `No se encontró un producto con el ID ${id}` });
-    }
-  } catch (error) {
-    console.error('Error en setProductAsTrendingHandler:', error.message);
-    res.status(500).json({ error: 'Error en el servidor' });
-  }
-};
 
 
 
@@ -150,5 +133,5 @@ module.exports = {
   updateProductHandler,
   getRelatedProductsHandler,
   getAllTrendingHandler,
-  setProductAsTrendingHandler,
+  
 };

@@ -7,7 +7,6 @@ const {
   updateProductHandler,
   getRelatedProductsHandler,
   getAllTrendingHandler,
-  setProductAsTrendingHandler,
 } = require("../Handler/product.handler");
 
 const productRouter = Router();
