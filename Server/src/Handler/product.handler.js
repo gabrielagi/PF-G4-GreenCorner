@@ -5,6 +5,8 @@ const {
   postProduct,
   updateProduct,
   findRelatedProducts,
+  getAllTrending,
+
 } = require("../Controller/product.controller");
 const Product = require("../models/Product");
 
@@ -109,6 +111,16 @@ const getRelatedProductsHandler = async (req, res) => {
   }
 };
 
+//Busca los productos que tengan el atributo isTrending en true (home)
+const getAllTrendingHandler = async (req, res) => {
+  try {
+    const allTrending = await getAllTrending();
+    res.status(200).json(allTrending);
+  } catch (error) {
+    console.error('Error en getAllTrendingHandler:', error);
+    res.status(500).json({ error: 'Error en el handler al obtener los productos Trending' });
+  }
+};
 
 
 
@@ -120,4 +132,6 @@ module.exports = {
   deleteProductHandler,
   updateProductHandler,
   getRelatedProductsHandler,
+  getAllTrendingHandler,
+  
 };
