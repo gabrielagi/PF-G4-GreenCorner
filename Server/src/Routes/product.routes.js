@@ -6,9 +6,13 @@ const {
   deleteProductHandler,
   updateProductHandler,
   getRelatedProductsHandler,
+  getAllTrendingHandler,
+  setProductAsTrendingHandler,
 } = require("../Handler/product.handler");
 
 const productRouter = Router();
+
+///PRODUCTOS
 
 productRouter.get("/", getAllProductHandler);
 
@@ -20,7 +24,14 @@ productRouter.delete("/:id", deleteProductHandler);
 
 productRouter.put("/:id", updateProductHandler);
 
+///RELACIONADOS
+
 productRouter.get('/:id/related', getRelatedProductsHandler);
+
+
+///TRENDING
+
+productRouter.get('/trending', getAllTrendingHandler);
 
 
 module.exports = productRouter;

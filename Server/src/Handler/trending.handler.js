@@ -6,15 +6,7 @@ const {
     addNewTrendingByID,
 }= require('../Controller/trending.controller')
 //SECCIÓN PENDIENTE
-const getAllTrendingsHandler=async(req,res)=>{
-    try {
-        const allTrending=await getAllTrendings()
-        res.status(200).json(allTrending)
-    } catch (error) {
-        res.status(500).json({error:'Error en el handler trayendo todos los trending'})
-        
-    }
-}
+
 
 const deleteTrendingHandler=async(req,res)=>{
     const {id}=req.params

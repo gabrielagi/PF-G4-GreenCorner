@@ -126,11 +126,30 @@ const findRelatedProducts = async (productId) => {
   return filteredRelatedProducts.slice(0, 5);
 };
 
+
+//Busca todos los productos con el atributo isTrending con valor true (home)
+const getAllTrending = async () => {
+  try {
+    const trendingProducts = await Product.findAll({
+      where: { isTrending: true },
+    });
+    return trendingProducts;
+  } catch (error) {
+    throw new Error('Error al buscar todos los productos Trending');
+  }
+};
+
+
+
+
+
+
 module.exports = {
   getAllProducts,
   getProductById,
   postProduct,
   updateProduct,
   findRelatedProducts,
+  getAllTrending,
 
 };
