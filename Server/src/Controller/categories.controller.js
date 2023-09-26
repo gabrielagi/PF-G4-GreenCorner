@@ -1,10 +1,28 @@
 const { Category } = require("../db");
 
 //Obtiene todas las categorias
-const getAllCategories = async() => {
-  const cat = await Category.findAll()
-  return cat;
-}
+const getAllCategories = async () => {
+  try {
+    const categories = await Category.findAll();
+    return categories;
+  } catch (error) {
+    throw new Error("Error al obtener categorías desde la base de datos: " + error.message);
+  }
+};
+
+//Crea una categoria y la guarda en la base de datos
+const postCategory = async (name) => {
+  try {
+    const newCategory = await Category.create({ name });
+    return newCategory;
+  } catch (error) {
+    throw new Error("Error al agregar categoría a la base de datos: " + error.message);
+  }
+};
+
+
+
+
 
 
 //Obtiene una categoria por id 
@@ -48,11 +66,7 @@ const getCategoryByName = async (name) => {
     }
   };
 
-  const postCategory = async(name) => {
-    const newCategory = await Category.create({name});
-    return newCategory;
-}
-
+  
 module.exports = {
     getAllCategories,
     getCategoryById,

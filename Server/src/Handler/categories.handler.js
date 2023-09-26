@@ -11,18 +11,36 @@ const getAllCategoriesHandler = async (req, res) => {
   try {
     const categories = await getAllCategories();
 
-    // Verificar si se encontraron categorías
     if (categories.length === 0) {
       return res.status(404).json({ message: "No se encontraron categorías." });
     }
 
-    // Enviar las categorías como respuesta
-    return res.status(200).json(categories);
+    res.status(200).json(categories);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error en el servidor" });
+    console.error("Error al obtener categorías:", error);
+    res.status(500).json({ error: "Error en el servidor al obtener categorías" });
   }
 };
+
+
+// Agregar una nueva categoría
+const addCategoriesHandler = async (req, res) => {
+  const { name } = req.body;
+  if (!name) {
+    return res.status(400).json({ error: "El nombre de la categoría es obligatorio." });
+  }
+  try {
+    const newCategory = await postCategory(name);
+    res.status(201).json(newCategory);
+  } catch (error) {
+    console.error("Error al agregar categoría:", error);
+    res.status(500).json({ error: "Error en el servidor al agregar categoría" });
+  }
+};
+
+
+
+
 
 // Obtiene una categoria por id
 const getCategoryByIdHandler = async (req, res) => {
@@ -63,20 +81,7 @@ const getCategoryByNameHandler = async (req, res) => {
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
-const addCategoriesHandler = async (req, res) => {
-  const {name} = req.body
-  
-  try {
-      const newCategory = await postCategory(name);
-      res.status(201).json(newCategory)
 
-  } catch (error) {
-
-      res.status(500).json({ error: error.message })
-
-  }
-
-};
 module.exports = {
   getAllCategoriesHandler,
   getCategoryByIdHandler,
