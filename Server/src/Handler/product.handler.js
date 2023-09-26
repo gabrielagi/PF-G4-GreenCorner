@@ -49,6 +49,7 @@ const getProductByIdHandler = async (req, res) => {
 const postProductHandler = async (req, res) => {
   try {
     const productData = req.body;
+    // console.log(productData);
     const newProduct = await postProduct(productData);
     
     if (newProduct) {

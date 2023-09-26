@@ -1,5 +1,5 @@
-const { Product } = require("../models/Product");
-const { Category } = require("../models/Category");
+const { Product } = require("../db");
+const { Category } = require("../db");
 
 //Obtiene todos los productos con sus categorías asociadas (home)
 const getAllProducts = async (req, res) => {
@@ -39,9 +39,11 @@ const getProductById = async (id) => {
 
 
 //Crea un producto y lo guarda en la base de datos con sus categorías asociadas (admin dashboard) (falta imagen por defecto)
-const postProduct = async (req, res) => {
+const postProduct = async (productData) => {
   try {
-    const { name, description, price, image, stock, available, categories } = req.body;
+  
+    console.log(productData);
+    const { name, description, price, image, stock, available, categories } = productData;
 
     if (!name || !price || !stock) {
       throw new Error("Faltan completar campos obligatorios");
@@ -68,10 +70,10 @@ const postProduct = async (req, res) => {
       await newProduct.setCategories(categories);
     }
 
-    return res.status(201).json(newProduct);
+   return newProduct;
   } catch (error) {
     console.error("Error en postProduct:", error.message);
-    res.status(500).json({ error: "Error en el servidor" });
+    return( "Error en el servidor")
   }
 };
 
