@@ -1,4 +1,4 @@
-const { DataTypes } = requiere('sequelize');
+const { DataTypes } = require('sequelize');
 module.exports = (sequelize) => {
   sequelize.define('Order', {
     id: {
@@ -29,6 +29,8 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     // user ID 
+  }, {
+    timestamps: false, 
   });
 
 

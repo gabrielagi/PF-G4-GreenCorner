@@ -5,9 +5,13 @@ const {
   postProductHandler,
   deleteProductHandler,
   updateProductHandler,
+  getRelatedProductsHandler,
+  getAllTrendingHandler,
 } = require("../Handler/product.handler");
 
 const productRouter = Router();
+
+///PRODUCTOS
 
 productRouter.get("/", getAllProductHandler);
 
@@ -19,9 +23,14 @@ productRouter.delete("/:id", deleteProductHandler);
 
 productRouter.put("/:id", updateProductHandler);
 
-// Rutas adicionales (por si les pinta)
-productRouter.get("/category/:categoryId", filterProductByCategoryHandler); // Filtrado por categoría
-productRouter.get("/related/:productId", getRelatedProductsHandler); // Productos relacionados
-productRouter.get("/featured", getFeaturedProductsHandler); // Productos destacados
+///RELACIONADOS
+
+productRouter.get('/:id/related', getRelatedProductsHandler);
+
+
+///TRENDING
+
+productRouter.get('/trending', getAllTrendingHandler);
+
 
 module.exports = productRouter;
