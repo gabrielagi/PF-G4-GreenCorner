@@ -22,6 +22,7 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.STRING,
+      defaultValue: "https://img.lovepik.com/free_png/32/28/43/58PIC3358PICa1Ut458PICf58PIC79sUT_PIC2018.png_300.png",
       allowNull: true,
     },
     stock: {
@@ -30,6 +31,7 @@ module.exports = (sequelize) => {
     },
     available: {
       type: DataTypes.BOOLEAN,
+      defaultValue: true,
       allowNull: true,
     },
     isTrending: {

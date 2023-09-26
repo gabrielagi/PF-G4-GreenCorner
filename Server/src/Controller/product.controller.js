@@ -47,19 +47,11 @@ const postProduct = async (productData) => {
       throw new Error("Faltan completar campos obligatorios");
     }
 
-    let urlDeImagen = "";
-    if (image) {
-      urlDeImagen = image;
-    } else {
-      urlDeImagen =
-        ""; // Poner aquí la URL de la imagen por defecto 
-    }
-
     const newProduct = await Product.create({
       name,
       description,
       price,
-      image: urlDeImagen,
+      image,
       stock,
       available,
     });
