@@ -1,9 +1,10 @@
 const {
     getAllCategories,
     getCategoryById,
-    getCategoryByName
-  } = require("../Controller/product.controller");
-const { Category } = require("../models/Category");
+    getCategoryByName,
+    postCategory
+  } = require("../Controller/categories.controller");
+const { Category } = require("../db");
 
 // Obtiene todas las categorias
 const getAllCategoriesHandler = async (req, res) => {
@@ -62,9 +63,23 @@ const getCategoryByNameHandler = async (req, res) => {
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
+const addCategoriesHandler = async (req, res) => {
+  const {name} = req.body
+  
+  try {
+      const newCategory = await postCategory(name);
+      res.status(201).json(newCategory)
 
+  } catch (error) {
+
+      res.status(500).json({ error: error.message })
+
+  }
+
+};
 module.exports = {
   getAllCategoriesHandler,
   getCategoryByIdHandler,
   getCategoryByNameHandler,
+  addCategoriesHandler
 };

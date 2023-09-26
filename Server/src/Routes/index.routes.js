@@ -6,6 +6,6 @@ const router = Router();
 
 router.use("/user", userRouter);
 router.use("/product", productRouter);
-router.use("/category", categoriesRouter);
+router.use("/category", categoriesRouter );
 
 module.exports = router;
