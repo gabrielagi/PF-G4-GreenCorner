@@ -1,7 +1,7 @@
 const { Product } = require("../models/Product");
 const { Category } = require("../models/Category");
 
-
+////////////////////////////////////////////////////////
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.findAll({
@@ -19,7 +19,7 @@ const getAllProducts = async (req, res) => {
 };
 
 
-
+////////////////////////////////////////////////////////
 const getProductById = async (id) => {
   try {
     const product = await Product.findByPk(id, {
@@ -37,7 +37,9 @@ const getProductById = async (id) => {
   }
 };
 
-const postProductController = async (productData) => {
+
+//Crea un producto y lo guarda en la base de datos (FALTA PONER IMAGEN POR DEFECTO)
+const postProduct = async (productData) => {
   try {
     const { name, description, price, image, stock, related_products, available } = productData;
     if (!name || !price || !stock) {
@@ -69,8 +71,12 @@ const postProductController = async (productData) => {
 };
 
 
+
+
+
 module.exports = {
   getAllProducts,
   getProductById,
-  postProductController,
+  postProduct,
+
 };

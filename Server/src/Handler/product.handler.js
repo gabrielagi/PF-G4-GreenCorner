@@ -3,9 +3,9 @@ const {
   getAllProduct,
   getProductById,
   postProduct,
-  deleteProduct,
   updateProduct,
 } = require("../Controller/product.controller");
+const Product = require("../models/Product");
 
 
 
@@ -46,7 +46,7 @@ const getProductByIdHandler = async (req, res) => {
 const postProductHandler = async (req, res) => {
   try {
     const productData = req.body;
-    const newProduct = await postProductController(productData);
+    const newProduct = await postProduct(productData);
     
     if (newProduct) {
       res.status(201).json({ success: true, message: "Producto creado con éxito", data: newProduct });
@@ -58,22 +58,20 @@ const postProductHandler = async (req, res) => {
   }
 };
 
-
+//Borra un producto por id
 const deleteProductHandler = async (req, res) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
-    const success = await deleteProduct(id);
-
-    if (success) {
-      res.status(200).json({ message: "Producto eliminado exitosamente" });
+    const productDelete = await Product.findByPk(id);
+    if (!productDelete) {
+      return res.status(404).json({ error: 'The ID to delete does not exist' });
     } else {
-      res
-        .status(404)
-        .json({ error: `No se encontró un Producto con el ID ${id}` });
+      await productDelete.destroy();
+      return res.status(204).send(); 
     }
   } catch (error) {
-    console.error("Error en deleteProductHandler:", error.message);
-    res.status(500).json({ error: "Error en el servidor" });
+    console.error('Error en el servidor:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
 
