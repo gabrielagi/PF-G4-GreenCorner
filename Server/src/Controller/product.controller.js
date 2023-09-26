@@ -91,11 +91,46 @@ const updateProduct = async (id, updatedData) => {
 };
 
 
+//Lista de 5 productos relacionados (product detail)
+const findRelatedProducts = async (productId) => {
+  const targetProduct = await Product.findByPk(productId, {
+    include: 'categories',
+  });
+
+  if (!targetProduct) {
+    throw new Error('Producto no encontrado');
+  }
+
+  const targetCategories = targetProduct.categories.map((category) => category.id);
+
+  const relatedProducts = await Product.findAll({
+    where: {
+      product_id: {
+        [sequelize.Op.ne]: targetProduct.product_id,
+      },
+    },
+    include: [
+      {
+        model: Category,
+        as: 'categories',
+        attributes: ['id'],
+      },
+    ],
+  });
+
+  const filteredRelatedProducts = relatedProducts.filter((product) => {
+    const productCategories = product.categories.map((category) => category.id);
+    return productCategories.some((categoryId) => targetCategories.includes(categoryId));
+  });
+
+  return filteredRelatedProducts.slice(0, 5);
+};
 
 module.exports = {
   getAllProducts,
   getProductById,
   postProduct,
   updateProduct,
+  findRelatedProducts,
 
 };
