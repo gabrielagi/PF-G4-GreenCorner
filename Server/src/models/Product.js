@@ -26,10 +26,6 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      related_products: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER), // Meto todos los integers(opcional) de los productos en un array 
-        defaultValue: [],      
-      },
       available: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
