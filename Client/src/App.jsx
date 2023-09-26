@@ -6,10 +6,12 @@ import Detail from "./pages/Detail";
 import Shop from "./pages/Shop";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
+import Navbar from "./components/Navbar/Navbar";
 
 const App = () => {
   return (
     <div>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/detail/:id" element={<Detail />} />
