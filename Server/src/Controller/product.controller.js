@@ -37,26 +37,34 @@ const getProductById = async (id) => {
   }
 };
 
-const postProductController = async (req, res) => {
+const postProductController = async (productData) => {
   try {
-    const { name, description, price, image, stock, related_products, available } = req.body;
+    const { name, description, price, image, stock, related_products, available } = productData;
     if (!name || !price || !stock) {
       throw new Error("Faltan completar campos obligatorios");
+    }
+
+    let urlDeImagen = "";
+    if (image) {
+      urlDeImagen = image;
+    } else {
+      urlDeImagen =
+        ""; //Poner aca la url de la imagen por defecto que quieran
     }
 
     const newProduct = await Product.create({
       name,
       description,
       price,
-      image,
+      image: urlDeImagen,
       stock,
       related_products,
       available,
     });
-    // Si necesitamos asociar categorías al producto,hacerlo aquí
-    res.status(201).json(newProduct);
+    // Si necesitamos asociar categorías al producto, hacerlo aquí
+    return newProduct;
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    throw error;
   }
 };
 

@@ -46,15 +46,15 @@ const getProductByIdHandler = async (req, res) => {
 const postProductHandler = async (req, res) => {
   try {
     const productData = req.body;
-    const response = await postProduct(productData);
-
-    if (response !== false) {
-      res.status(201).json({ success: true, message: "Producto creado con éxito" });
+    const newProduct = await postProductController(productData);
+    
+    if (newProduct) {
+      res.status(201).json({ success: true, message: "Producto creado con éxito", data: newProduct });
     } else {
       res.status(400).json({ success: false, message: "No se pudo crear el producto" });
     }
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(400).json({ success: false, error: error.message });
   }
 };
 
