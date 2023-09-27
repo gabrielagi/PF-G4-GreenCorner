@@ -13,6 +13,14 @@ const BannerHome = () => {
           <h1 className="sm:text-9xl text-4xl font-semibold">
             Welcome to GreenCorner
           </h1>
+          <p className="mt-4 sm:text-2xl text-[#9a9a9a]">
+            We offer plant care guidance and strive to enhance lives through the
+            beauty of nature. Explore our catalog and welcome to our green
+            sanctuary.
+          </p>
+          <button className="mt-16 bg-green-500 text-white font-semibold py-4 px-8 rounded hover:bg-green-600 font-poppins">
+            Visit our Shop
+          </button>
         </div>
         <img
           src={bannerPlantHome}
