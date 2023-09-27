@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <div>
       <section
-        className="bg-blue-200 min-h-screen"
+        className="bg-color:#f6f6f6 min-h-screen"
         data-aos="fade-up"
         data-aos-duration="1000"
       >
