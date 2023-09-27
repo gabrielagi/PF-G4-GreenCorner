@@ -43,6 +43,10 @@ const postProduct = async (productData) => {
   try {
     const { name, description, price, image, stock, available, categories } = productData;
 
+    if(!categories){
+      throw new Error("Las categorias son obligatorias");
+    }
+
     if (!name || !price || !stock) {
       throw new Error("Faltan completar campos obligatorios");
     }
@@ -57,7 +61,7 @@ const postProduct = async (productData) => {
     });
 
     if (categories && categories.length > 0) {
-      await newProduct.setCategories(categories);
+      await newProduct.addCategory(categories);
     }
 
    return newProduct;

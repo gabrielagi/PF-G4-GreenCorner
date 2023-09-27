@@ -6,17 +6,17 @@ import { GrFormSearch } from "react-icons/gr";
 const Nav = () => {
   return (
     <nav className="nav">
-      <a href="#" className="nav__brand">
+      <a href="/" className="nav__brand">
         GreenCorner
       </a>
       <ul className="nav__menu">
         <li className="nav__item">
           <a href="#" className="nav__link">
-            Home
+            <div className="home">Home</div>
           </a>
         </li>
         <li className="nav__item">
-          <a href="#" className="nav__link">
+          <a href="aboutus" className="nav__link">
             About Us
           </a>
         </li>
