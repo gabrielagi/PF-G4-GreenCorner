@@ -42,6 +42,10 @@ const Home = () => {
         <h1 className="text-4xl font-bold">Sección 3</h1>
         <p>Contenido de la sección 3</p>
       </section>
+      
+      
+
+
     </div>
   );
 };
