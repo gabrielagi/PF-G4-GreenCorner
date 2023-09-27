@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import Card from "../components/Card/Card"
+
 
 const Home = () => {
   // Inicializo a AOS al momento del montaje del componente
@@ -17,9 +19,12 @@ const Home = () => {
         className="bg-color:#f6f6f6 min-h-screen"
         data-aos="fade-up"
         data-aos-duration="1000"
-      >
+        >
         <h1 className="text-4xl font-bold">Sección 1</h1>
         <p>Contenido de la sección 1</p>
+        <div>
+          <Card/>
+        </div>
       </section>
 
       <section
@@ -39,7 +44,9 @@ const Home = () => {
         <h1 className="text-4xl font-bold">Sección 3</h1>
         <p>Contenido de la sección 3</p>
       </section>
+      
     </div>
+    
   );
 };
 
