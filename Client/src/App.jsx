@@ -9,6 +9,7 @@ import Shop from "./pages/Shop";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/profile" element={<Profile />} />
       </Routes>
+      <Footer/>
     </div>
   );
 };
