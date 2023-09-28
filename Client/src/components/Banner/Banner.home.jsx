@@ -27,7 +27,7 @@ const BannerHome = () => {
         <img
           src={bannerPlantHome}
           alt="Imagen de fondo"
-          className="bg-contain bg-center h-[180px] sm:h-auto hidden md:block ml-[80px]"
+          className="bg-contain bg-center h-[180px] sm:h-auto hidden md:block xl:ml-[80px]"
         />
       </div>
     </div>

@@ -13,7 +13,7 @@ const InformationHome = () => {
           Explore a Vibrant Variety of Botanical Treasures: Embrace Our Diverse
           Collection of Over 10 Unique Plant Species
         </p>
-        <div className="flex flex-col md:flex-row justify-center">
+        <div className="flex flex-col xl:flex-row justify-center">
           <img src={informationbannermobile1} alt="" />
           <img src={informationbannermobile2} alt="" />
         </div>

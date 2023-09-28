@@ -13,7 +13,7 @@ export const LoginButton = () => {
         className={styles.primaryButton} 
         id={styles.buttonLarge}
       >
-        Ingresar
+        Login
       </button>
       <button
         onClick={() => loginWithRedirect()}
