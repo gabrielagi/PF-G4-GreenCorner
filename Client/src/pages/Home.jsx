@@ -22,6 +22,7 @@ const Home = () => {
         data-aos-duration="1000"
       >
         <BannerHome />
+        
         <h1 className="text-4xl font-bold">Sección 1</h1>
         <p>Contenido de la sección 1</p>
       </section>

@@ -9,8 +9,6 @@ import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar/Navbar";
 import AboutUs from "./components/About Us/AboutUs";
 import Nav from "./components/Nav/Nav";
-import LoginButton from "./components/Auth0/LoginButton";
-import LogoutButton from "./components/Auth0/LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
   
 import Footer from "./components/Footer/Footer";
@@ -24,8 +22,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/detail/:id" element={<Detail />} />
-       {<Route path="/aboutus" element={<Detail />} /> }
-        <Route path="/aboutUs" element={<AboutUs />} />
+        <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/favorites" element={<Favorites />} />
         {/* <Route path="/profile" element={<Profile/>} /> */}
