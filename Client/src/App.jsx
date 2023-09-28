@@ -21,8 +21,7 @@ const App = () => {
       <Profile/> {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<AboutUs />} />
-       {/*<Route path="/aboutus" element={<Detail />} /> */}
+        <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/favorites" element={<Favorites />} />
