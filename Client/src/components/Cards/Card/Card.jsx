@@ -1,5 +1,5 @@
 import "tailwindcss/tailwind.css";
-import imageProduct from "../../img/plantsAbout.jpg";
+import imageProduct from "../../../img/plantsAbout.jpg";
 import { AiFillHeart } from 'react-icons/ai';
 import { useState } from "react";
 

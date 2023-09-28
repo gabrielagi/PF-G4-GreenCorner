@@ -38,6 +38,8 @@ export const getProductByName = (name) => {
 
 export const getProductById = (id) => {
   console.log(id) 
+  console.log ('llegó al action')
+  id='58c6045b-fa50-4698-9e0b-fb1275c49004'.toString()
   return async (dispatch) => {
     
     try {

@@ -8,6 +8,8 @@ const rootReducer = (state = initialState, action) => {
     switch (action.type) {
         
         case GET_PRODUCT_BY_ID:
+            console.log('llegó al reducer')
+            console.log(action.payload)
             return{
                 ...state, searchProduct:action.payload
             }
