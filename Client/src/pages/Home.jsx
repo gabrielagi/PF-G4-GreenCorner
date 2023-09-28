@@ -5,7 +5,6 @@ import "aos/dist/aos.css";
 import BannerHome from "../components/Banner/Banner.home";
 import InformationHome from "../components/Banner/Information.home";
 
-
 const Home = () => {
   // Inicializo a AOS al momento del montaje del componente
   useEffect(() => {
@@ -23,9 +22,8 @@ const Home = () => {
         data-aos-duration="1000"
       >
         <BannerHome />
-        >
         <h1 className="text-4xl font-bold">Sección 1</h1>
-        <p>Contenido de la sección 1</p>        
+        <p>Contenido de la sección 1</p>
       </section>
 
       <section
@@ -47,7 +45,6 @@ const Home = () => {
         <p>Contenido de la sección 3</p>
       </section>
     </div>
-    
   );
 };
 
