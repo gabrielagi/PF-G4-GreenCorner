@@ -1,8 +1,18 @@
-import { GET_ALL_PRODUCT, GET_PRODUCT_BY_SEARCHBAR, GET_PRODUCT_BY_ID } from "../action-types";
+import { deleteProduct } from "../../../../../Server/src/Controller/product.controller";
+import { 
+  GET_ALL_PRODUCT,
+  GET_PRODUCT_BY_SEARCHBAR,
+  GET_PRODUCT_BY_ID,
+  POST_PRODUCT,
+  GET_CATEGORIES,
+  DELETE_PRODUCT_BY_ID,
+  UPDATE_PRODUCT_BY_ID
+} from "../action-types";
 
 import axios from "axios";
 
 const endpoint = "http://localhost:3001/product";
+const categories = "http://localhost:3001/category"
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -37,9 +47,9 @@ export const getProductByName = (name) => {
 };
 
 export const getProductById = (id) => {
-  console.log(id) 
+  console.log(id)
   return async (dispatch) => {
-    
+
     try {
       const { data } = await axios.get(`${endpoint}/${id}`);
       console.log(id)
@@ -53,3 +63,65 @@ export const getProductById = (id) => {
     }
   };
 };
+
+export const addProduct = (productdata) => {
+  return async (dispatch) => {
+
+    try {
+      const { data } = await axios.post( endpoint, productdata)
+      dispatch({
+        type: POST_PRODUCT,
+        payload: data
+
+      })
+    } catch (error) {
+      alert ("Hubo un problema al crear el producto")
+    }
+
+  }
+
+}
+
+export const getAllCategories = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(categories);
+      dispatch({
+        type: GET_CATEGORIES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert ("Hubo un problema trayendo las categorías")
+    }
+  };
+};
+
+export const deleteProduct = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${endpoint}/${id}`);
+      dispatch( {
+        type: DELETE_PRODUCT_BY_ID,
+        payload: data,
+      })
+    } catch (error) {
+      console.log(error.message);
+      alert("Hubo un problema eliminando el producto")
+    }
+    }
+} 
+export const updateProduct = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${endpoint}/${id}`);
+      dispatch( {
+        type: UPDATE_PRODUCT_BY_ID,
+        payload: data,
+      })
+    } catch (error) {
+      console.log(error.message);
+      alert("Hubo un problema actualizando el producto")
+    }
+    }
+} 
