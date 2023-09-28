@@ -23,7 +23,7 @@ const ImagesBanner = () => {
               <img
                 src={image}
                 alt={`Image ${index + 1}`}
-                className="w-64 h-64 object-cover transition-transform transform scale-100 group-hover:scale-105 rounded-md"
+                className="w-96 h-96 object-cover transition-transform transform scale-100 group-hover:scale-105 rounded-md"
               />
               <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <h2 className="text-white text-xl font-semibold mb-2">
@@ -57,7 +57,7 @@ const ImagesBanner = () => {
                 <img
                   src={image}
                   alt={`Image ${index + 1}`}
-                  className="w-64 h-64 object-cover transition-transform transform scale-100 group-hover:scale-105 rounded-md "
+                  className="w-96 h-96 object-cover transition-transform transform scale-100 group-hover:scale-105 rounded-md "
                 />
                 <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <h2 className="text-white text-xl font-semibold mb-2">
