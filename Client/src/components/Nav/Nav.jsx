@@ -7,33 +7,32 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../Auth0/LogoutButton";
 
 const Nav = () => {
-
-  const {isAuthenticated} = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
-    <nav className="nav p-4">
+    <nav className="nav">
       <a href="/" className="nav__brand">
-        GreenCorner
+        GreenCorner 🍃
       </a>
       <ul className="nav__menu">
         <li className="nav__item">
-          <a href="#" className="nav__link">
+          <a href="/" className="nav__link">
             <div className="home">Home</div>
           </a>
         </li>
         <li className="nav__item">
-          <a href="aboutUs" className="nav__link">
-            About Us
-          </a>
-        </li>
-        <li className="nav__item">
-          <a href="#" className="nav__link">
+          <a href="shop" className="nav__link">
             Products
           </a>
         </li>
         <li className="nav__item">
           <a href="#" className="nav__link">
-            News
+            Guide
+          </a>
+        </li>
+        <li className="nav__item">
+          <a href="about-us" className="nav__link">
+            About Us
           </a>
         </li>
         <li className="nav__item">
@@ -43,15 +42,16 @@ const Nav = () => {
         </li>
       </ul>
       <div className="nav__toggler">
-        <a href="#">
-          <GrFormSearch />
-        </a>
-        <a href="#">
-          <GrCart />
-        </a>
-        {isAuthenticated ?<LogoutButton/> : <LoginButton/> }
-      </div>
+    <a href="#">
+        <GrFormSearch style={{ fontSize: "24px" }}/>
+    </a>
+    <a href="#">
+        <GrCart style={{ fontSize: "24px" }}/>
+    </a>
+    {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+</div>
     </nav>
   );
 };
+
 export default Nav;
