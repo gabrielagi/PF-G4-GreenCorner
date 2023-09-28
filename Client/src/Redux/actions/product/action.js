@@ -2,7 +2,7 @@ import { GET_ALL_PRODUCT, GET_PRODUCT_BY_SEARCHBAR } from "../action-types";
 
 import axios from "axios";
 
-const endpoint = "http://localhost:3001/products";
+const endpoint = "http://localhost:3001/product";
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -45,7 +45,7 @@ export const getProductById = (id) => {
         payload: data,
       });
     } catch (error) {
-      alert("El Producto no se encuentra en la lista de Pokemons");
+      alert("El Producto no se encuentra en la lista");
     }
   };
 };
