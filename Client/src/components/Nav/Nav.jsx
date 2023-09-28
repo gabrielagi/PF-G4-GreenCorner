@@ -2,10 +2,16 @@ import "../Nav/Nav.css";
 import { CiUser } from "react-icons/ci";
 import { GrCart } from "react-icons/gr";
 import { GrFormSearch } from "react-icons/gr";
+import LoginButton from "../Auth0/LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import LogoutButton from "../Auth0/LogoutButton";
 
 const Nav = () => {
+
+  const {isAuthenticated} = useAuth0();
+
   return (
-    <nav className="nav">
+    <nav className="nav p-4">
       <a href="/" className="nav__brand">
         GreenCorner
       </a>
@@ -16,7 +22,7 @@ const Nav = () => {
           </a>
         </li>
         <li className="nav__item">
-          <a href="aboutus" className="nav__link">
+          <a href="aboutUs" className="nav__link">
             About Us
           </a>
         </li>
@@ -43,9 +49,7 @@ const Nav = () => {
         <a href="#">
           <GrCart />
         </a>
-        <a href="#">
-          <CiUser />
-        </a>
+        {isAuthenticated ?<LogoutButton/> : <LoginButton/> }
       </div>
     </nav>
   );
