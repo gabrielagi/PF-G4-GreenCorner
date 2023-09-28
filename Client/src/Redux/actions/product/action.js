@@ -8,12 +8,13 @@ export const getAllProducts = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
+      
       dispatch({
         type: GET_ALL_PRODUCT,
         payload: data,
       });
     } catch (error) {
-      console.log(error.message);
+      console.log(error.message );
     }
   };
 };
