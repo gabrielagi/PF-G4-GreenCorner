@@ -1,35 +1,32 @@
 import React from "react";
 import bannerPlantHome from "../../assets/planta-banner-home.png";
+import "tailwindcss/tailwind.css";
 
 const BannerHome = () => {
   return (
-    <div className="bg-gray-200 h-screen flex items-center justify-center relative">
-      <img
-        src={bannerPlantHome}
-        alt="Imagen de fondo"
-        className="absolute inset-y-0 right-0 w-1/4 h-auto"
-      />
-
-      <div class="flex items-center">
-        <div class="w-1/2 pl-10">
-          <h1 class="text-6xl font-bold text-green-700 font-poppins">
-            Your Green Oasis
-          </h1>
-          <p class="text-2xl text-gray-600 font-poppins mt-4">
-            Welcome to your green oasis! Explore our wide range of plants, from
-            lush indoor beauties to vibrant outdoor companions. We also offer a
-            variety of gardening essentials and accessories. Let's make your
-            world greener together.
+    <div className="w-full">
+      <div className="max-w-[1480px] m-auto grid md:grid-cols-2">
+        <div className="sm:py-60 py-20 font-poppins sm:ml-40 ml-10">
+          <p className="sm:text-4xl text-2xl text-[#1d252d] font-medium hidden sm:block">
+            #Be more connected with nature
           </p>
-        </div>
-        <div class="w-1/2">
-          <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mb-2 font-poppins">
-            Shop Now
+          <h1 className="sm:text-9xl text-4xl font-semibold">
+            Welcome to GreenCorner
+          </h1>
+          <p className="mt-4 sm:text-2xl text-[#9a9a9a]">
+            We offer plant care guidance and strive to enhance lives through the
+            beauty of nature. Explore our catalog and welcome to our green
+            sanctuary.
+          </p>
+          <button className="mt-16 bg-green-500 text-white font-semibold py-4 px-8 rounded hover:bg-green-600 font-poppins">
+            Visit our Shop
           </button>
-          <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded font-poppins">
-            Learn More
-          </button>
         </div>
+        <img
+          src={bannerPlantHome}
+          alt="Imagen de fondo"
+          className="bg-contain bg-center h-[150px] sm:h-auto hidden md:block"
+        />
       </div>
     </div>
   );
