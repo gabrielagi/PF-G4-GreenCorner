@@ -5,7 +5,8 @@ import { GrSearch } from "react-icons/gr";
 import LoginButton from "../Auth0/LoginButton";
 import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../Auth0/LogoutButton";
-import {ImMenu3} from "react-icons/im";
+import {AiFillShop} from "react-icons/ai";
+import {BsBook} from "react-icons/bs";
 
 const Nav = () => {
   const { isAuthenticated } = useAuth0();
@@ -45,15 +46,19 @@ const Nav = () => {
           </a>
         </li>
       </ul>
-      <div className="nav__toggler">
+      <div className="nav__toggler"> 
+  <a href="/shop" className="shop">
+    <AiFillShop style={{ fontSize: "24px" }} /> <a>Products</a>
+  </a> 
+  <a href="#" className="guide">
+    <BsBook style={{ fontSize: "24px" }} /> <a>Guide</a>
+  </a>   
   <a href="#">
-    <GrSearch style={{ fontSize: "24px" }} />
+    <GrSearch style={{ fontSize: "24px" }} /> <a>Search</a>
   </a>  
-  
   <a href="#">
-    <GrCart style={{ fontSize: "24px" }} />
+    <GrCart style={{ fontSize: "24px" }} /> <a>Cart</a>
   </a>
-  
   {isAuthenticated ? <LogoutButton /> : <LoginButton />}
 </div>
 
