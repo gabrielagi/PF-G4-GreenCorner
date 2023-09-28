@@ -42,7 +42,7 @@ a {
     font-weight: bold;
     color: black;
     font-size: 35px; 
-    margin-left: 0px; 
+   
 }
 
 .nav__menu {
@@ -67,6 +67,8 @@ a {
     color:rgb(0, 133, 0);
 }
 
+
+
 .nav__toggler {
     display: flex;
     width: 20rem;
@@ -76,3 +78,67 @@ a {
     align-items: center;
 }
 
+.shop, .guide {
+    display: none;
+}
+
+
+a a{
+    display: none;
+}
+
+@media (max-width: 1180px) {
+    .nav{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        height: auto;
+        align-items: center;
+    }
+
+    
+  }
+
+  @media (max-width: 650px) {
+    .nav__menu {
+        display: none;
+    }
+    .nav__brand {
+        font-size: 30px; 
+    }
+
+    .shop,
+    .guide,
+    a {
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    a a{
+        display: block;
+      
+    }
+
+
+}
+
+@media (max-width: 350px) {
+    .nav__brand {
+        font-size: 25px; 
+    }
+
+    .shop,
+    .guide,
+    a {
+        font-size: 2px;
+    }
+    a a{
+        display: none;
+    }
+}
+
+  

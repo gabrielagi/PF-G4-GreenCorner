@@ -1,0 +1,30 @@
+.primaryButton {
+    background-color: rgb(0, 146, 0);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+  }
+  
+  .primaryButton:hover {
+    background-color: green;
+  }
+
+  #buttonSmall {
+    display: none;
+  }
+  
+ 
+  @media (max-width: 400px) {
+
+    #buttonLarge {
+        display: none; 
+      }
+      #buttonSmall {
+        display: inline-block; 
+        border-radius: 100px;
+      }
+  }
+  
