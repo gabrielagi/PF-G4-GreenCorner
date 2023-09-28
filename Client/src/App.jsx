@@ -12,26 +12,25 @@ import Nav from "./components/Nav/Nav";
 import LoginButton from "./components/Auth0/LoginButton";
 import LogoutButton from "./components/Auth0/LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
-  
+
 import Footer from "./components/Footer/Footer";
 
 const App = () => {
-
   return (
     <div>
       <Nav />
-      <Profile/> {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
+      <Profile />{" "}
+      {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/detail/:id" element={<AboutUs />} />
-       {/*<Route path="/aboutus" element={<Detail />} /> */}
+        {/*<Route path="/aboutus" element={<Detail />} /> */}
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/favorites" element={<Favorites />} />
         {/* <Route path="/profile" element={<Profile/>} /> */}
-        
       </Routes>
-      <Footer/>
+      {/* <Footer /> */}
     </div>
   );
 };
