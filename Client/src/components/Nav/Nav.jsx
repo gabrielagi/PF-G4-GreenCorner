@@ -30,7 +30,7 @@ const Nav = () => {
           </a>
         </li>
         <li className={styles.nav__item}>
-          <a href="#" className={styles.nav__link}>
+          <a href="guide" className={styles.nav__link}>
             Guide
           </a>
         </li>
@@ -40,7 +40,7 @@ const Nav = () => {
           </a>
         </li>
         <li className={styles.nav__item}>
-          <a href="#" className={styles.nav__link}>
+          <a href="contact-us" className={styles.nav__link}>
             Contact Us
           </a>
         </li>

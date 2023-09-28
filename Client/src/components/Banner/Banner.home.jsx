@@ -2,6 +2,7 @@ import React from "react";
 import bannerPlantHome from "../../assets/planta-banner-home.png";
 import "tailwindcss/tailwind.css";
 import { CiLocationArrow1 } from "react-icons/ci";
+import { Link } from "react-router-dom";
 
 const BannerHome = () => {
   return (
@@ -19,10 +20,13 @@ const BannerHome = () => {
             beauty of nature. Explore our catalog and welcome to our green
             sanctuary.
           </p>
-          <button className="mt-16 bg-green-500 text-white font-semibold py-4 px-8 rounded hover:bg-green-600 font-poppins flex mx-auto">
-            {`Visit our Shop `}
-            <CiLocationArrow1 className="ml-2 text-xl" />
-          </button>
+          <Link to="/shop">
+         <button button className="mt-16 bg-green-500 text-white font-semibold py-4 px-8 rounded hover:bg-green-600 font-poppins flex mx-auto">
+           {`Visit our Shop `}
+        <CiLocationArrow1 className="ml-2 text-xl" />
+        </button>
+          </Link>
+
         </div>
         <img
           src={bannerPlantHome}
