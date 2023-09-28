@@ -78,6 +78,14 @@ a {
     align-items: center;
 }
 
+.shop, .guide {
+    display: none;
+}
+
+
+a a{
+    display: none;
+}
 
 @media (max-width: 1180px) {
     .nav{
@@ -98,6 +106,38 @@ a {
     }
     .nav__brand {
         font-size: 30px; 
+    }
+
+    .shop,
+    .guide,
+    a {
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    a a{
+        display: block;
+      
+    }
+
+
+}
+
+@media (max-width: 350px) {
+    .nav__brand {
+        font-size: 25px; 
+    }
+
+    .shop,
+    .guide,
+    a {
+        font-size: 2px;
+    }
+    a a{
+        display: none;
     }
 }
 

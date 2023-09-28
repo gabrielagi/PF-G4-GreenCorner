@@ -30,6 +30,12 @@ const rootReducer = (state = initialState, action) => {
             searchResults: action.payload
         }
         
+        case GET_ALL_PRODUCT:
+            return {
+                ...state,
+                allProducts: action.payload
+            }
+
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
