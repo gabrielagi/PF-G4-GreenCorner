@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
-import Card from "../components/Card/Card"
+
 
 
 const Home = () => {
@@ -21,10 +21,7 @@ const Home = () => {
         data-aos-duration="1000"
         >
         <h1 className="text-4xl font-bold">Sección 1</h1>
-        <p>Contenido de la sección 1</p>
-        <div>
-          <Card/>
-        </div>
+        <p>Contenido de la sección 1</p>        
       </section>
 
       <section
