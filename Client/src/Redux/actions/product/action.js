@@ -42,10 +42,11 @@ export const getProductById = (id) => {
   console.log ('llegó al action')
   id='58c6045b-fa50-4698-9e0b-fb1275c49004'.toString()
   return async (dispatch) => {
-    
+console.log('está por entrar al try')
     try {
+      console.log('entró al try')
       const { data } = await axios.get(`${endpoint}/${id}`);
-      console.log(id)
+      console.log(data)
       dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: data,

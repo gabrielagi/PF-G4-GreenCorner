@@ -12,7 +12,7 @@ const Detail = () => {
 
 
  console.log(id)
- const product=useSelector((state=>state.searchProduct[0]))
+ const product=useSelector((state=>state.searchProduct))
 
   useEffect(()=>{
     dispatch( getProductById(id))
@@ -20,11 +20,11 @@ const Detail = () => {
     console.log('llegó '+id)
   },[])
 
-  console.log(product)
+  console.log(product?.name)
 
 
-  return (
-    <div className="mx-60">
+ return (
+     <div className="mx-60">
       <Link to='/'><button >Atrás</button></Link>
 
       <div className="grid grid-cols-1 sm:grid-cols-2  gap-12 text-[#a9a9a9]">
@@ -35,7 +35,7 @@ const Detail = () => {
 
           <div className=" px-10 bg-[#f6f6f6] justify-between">
               
-            <h2 className="mt-10 pt-5 text-6xl text-[#444444]">asdasd del producto</h2>
+            <h2 className="mt-10 pt-5 text-6xl text-[#444444]">{product.name}</h2>
             <p className="py-5">rating</p>
             <p className="py-t text-5xl text-[#444444]">$160.00</p>
             <p className="py-20">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam, sapiente! Quas cum cumque, nulla nesciunt, nam blanditiis minima est totam, consequuntur earum fugiat aperiam qui praesentium porro velit nostrum fugit.</p>

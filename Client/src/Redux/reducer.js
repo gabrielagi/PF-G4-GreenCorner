@@ -18,6 +18,7 @@ const rootReducer = (state = initialState, action) => {
             console.log('llegó al reducer')
             console.log(action.payload)
             return{
+                
                 ...state, searchProduct:action.payload
             }
 
