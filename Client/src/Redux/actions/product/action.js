@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCT, GET_PRODUCT_BY_SEARCHBAR } from "../action-types";
+import { GET_ALL_PRODUCT, GET_PRODUCT_BY_SEARCHBAR, GET_PRODUCT_BY_ID } from "../action-types";
 
 import axios from "axios";
 
@@ -37,13 +37,17 @@ export const getProductByName = (name) => {
 };
 
 export const getProductById = (id) => {
+  console.log(id) 
   return async (dispatch) => {
+    
     try {
       const { data } = await axios.get(`${endpoint}/${id}`);
+      console.log(id)
       dispatch({
-        type: GET_PRODUCTN_BY_SEARCHBAR,
+        type: GET_PRODUCT_BY_ID,
         payload: data,
       });
+      console.log(id)
     } catch (error) {
       alert("El Producto no se encuentra en la lista");
     }
