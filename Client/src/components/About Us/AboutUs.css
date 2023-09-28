@@ -1,0 +1,39 @@
+/*header{
+    text-align: center;
+    color: #043821;
+    font-family: Playfair Display,Poppins,swap;
+    font-size: 35px;
+}
+*
+.div1 section img {
+  position: relative;
+  width: 600px;
+  height: 400px;
+}
+.titleSectionOne {
+  position: relative;
+  left: 650px;
+  font-size: 24px;
+  top: -400px;
+  font-family: Poppins, swap;
+  color: rgb(3, 60, 3);
+}
+.div1 section p {
+  position: relative;
+  width: 650px;
+  left: 650px;
+  top: -400px;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+.strongSectionOne {
+  position: relative;
+  font-size: 15.04px;
+  left: 650px;
+  top: -400px;
+  color: rgb(3, 60, 3);
+}
+*/
