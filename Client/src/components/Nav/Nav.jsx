@@ -11,7 +11,7 @@ const Nav = () => {
   const {isAuthenticated} = useAuth0();
 
   return (
-    <nav className="nav">
+    <nav className="nav p-4">
       <a href="/" className="nav__brand">
         GreenCorner
       </a>
@@ -22,7 +22,7 @@ const Nav = () => {
           </a>
         </li>
         <li className="nav__item">
-          <a href="aboutus" className="nav__link">
+          <a href="aboutUs" className="nav__link">
             About Us
           </a>
         </li>
