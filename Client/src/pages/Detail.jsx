@@ -1,8 +1,24 @@
 import "tailwindcss/tailwind.css"
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useDispatch,useSelector } from 'react-redux'
+import { useEffect } from "react";
+import {getProductById} from '../Redux/actions/product/action'
 
 const Detail = () => {
+  const {id} =useParams()
+  const dispatch=useDispatch()
 
+
+ console.log(id)
+ const product=useSelector((state=>state.searchProduct[0]))
+
+  useEffect(()=>{
+    dispatch( getProductById(id))
+    console.log(id)
+    console.log('llegó '+id)
+  },[])
+
+  console.log(product)
 
 
   return (
@@ -17,7 +33,7 @@ const Detail = () => {
 
       <div className=" px-10 bg-blue-500 justify-between">
          
-      <h2 className="mt-10 pt-5 text-6xl">Titulo Ejemplo</h2>
+      <h2 className="mt-10 pt-5 text-6xl">Titulo del producto</h2>
       <p className="py-5">rating</p>
       <p className="py-t text-5xl">$160.00</p>
       <p className="py-20">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam, sapiente! Quas cum cumque, nulla nesciunt, nam blanditiis minima est totam, consequuntur earum fugiat aperiam qui praesentium porro velit nostrum fugit.</p>
