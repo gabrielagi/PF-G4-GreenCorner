@@ -6,10 +6,13 @@ import { getAllProducts } from "../../Redux/actions/product/action"
 import { useSelector } from "react-redux";
 import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
 import styles from  "./Shop.module.css"
+import { useState } from "react";
 
 const Shop = () => {
 
   const allProducts= useSelector(state=>state.allProducts)
+  const [orderBy, setOrderBy] = useState(""); 
+  const [priceOrder, setPriceOrder] = useState("");
 
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -18,41 +21,52 @@ const Shop = () => {
 
 
 
-function handleOrder(e){
-  if(e.target.value === "asc" || e.target.value === "desc"){
-      e.preventDefault();
-      dispatch(filterByName(e.target.value))
+
+function handleOrder(e) {
+  const selectedValue = e.target.value;
+
+  if (selectedValue === "asc" || selectedValue === "desc") {
+    setOrderBy(selectedValue); 
+    setPriceOrder(""); 
+    dispatch(filterByName(selectedValue));
   }
-  if(e.target.value === "high" || e.target.value === "low"){
-      e.preventDefault();
-      dispatch(filterByPrice(e.target.value))
+  
+  else if (selectedValue === "high" || selectedValue === "low") {
+    setOrderBy(""); 
+    setPriceOrder(selectedValue); 
+    dispatch(filterByPrice(selectedValue));
   }
 }
 
-  return (
-    <div>
-      <div className={styles.filtros}>
-  <select
-  onChange={(e) => handleOrder(e)}
-  className={styles.order}
-  >
-  <option disabled selected>Order ⮟</option>
-  <option value="asc">A - Z</option>
-  <option value="desc">Z - A</option>
-  
-</select>
-<select
-  onChange={(e) => handleOrder(e)}
-  className={styles.order}
-  >
-  <option disabled selected>Price ⮟</option>
-  <option value="high">High - Low</option>
-  <option value="low">Low - High</option>
-</select>
-</div>
-    <Cards allProducts={allProducts} />
+return (
+  <div>
+    <div className={styles.filtros}>
+      <select
+        onChange={(e) => handleOrder(e)}
+        className={styles.order}
+        value={orderBy} 
+      >
+        <option disabled value="">
+          Order ⮟
+        </option>
+        <option value="asc">A - Z</option>
+        <option value="desc">Z - A</option>
+      </select>
+      <select
+        onChange={(e) => handleOrder(e)}
+        className={styles.order}
+        value={priceOrder} 
+      >
+        <option disabled value="">
+          Price ⮟
+        </option>
+        <option value="high">High - Low</option>
+        <option value="low">Low - High</option>
+      </select>
     </div>
-  );
-}
+    <Cards allProducts={allProducts} />
+  </div>
+);
+};
 
 export default Shop;
