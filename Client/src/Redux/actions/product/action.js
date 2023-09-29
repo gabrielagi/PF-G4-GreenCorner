@@ -1,4 +1,4 @@
-import { GET_ALL_PRODUCT, GET_PRODUCT_BY_SEARCHBAR, GET_PRODUCT_BY_ID } from "../action-types";
+import { GET_ALL_PRODUCT, GET_PRODUCT_BY_SEARCHBAR, GET_PRODUCT_BY_ID,ORDER_BY_NAME, ORDER_BY_PRICE} from "../action-types";
 
 import axios from "axios";
 
@@ -57,3 +57,19 @@ console.log('está por entrar al try')
     }
   };
 };
+
+
+export function filterByName(payload){
+  return{
+      type: ORDER_BY_NAME,
+      payload
+  }
+}
+
+
+export function filterByPrice(payload){
+  return{
+      type: ORDER_BY_PRICE,
+      payload
+  }
+}

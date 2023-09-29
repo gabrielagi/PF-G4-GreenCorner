@@ -47,16 +47,16 @@ const Nav = () => {
       </ul>
       <div className={styles.nav__toggler}>
         <a href="/shop" className={styles.shop}>
-          <AiFillShop style={{ fontSize: "24px" }} /> <a>Products</a>
+          <AiFillShop style={{ fontSize: "24px" }} /> <p>Products</p>
         </a>
         <a href="#" className={styles.guide}>
-          <BsBook style={{ fontSize: "24px" }} /> <a>Guide</a>
+          <BsBook style={{ fontSize: "24px" }} /> <p>Guide</p>
         </a>
         <a href="#" className={styles.someOtherClass}>
-          <GrSearch style={{ fontSize: "24px" }} /> <a>Search</a>
+          <GrSearch style={{ fontSize: "24px" }} /> <p>Search</p>
         </a>
         <a href="#" className={styles.anotherClass}>
-          <GrCart style={{ fontSize: "24px" }} /> <a>Cart</a>
+          <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
         </a>
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </div>

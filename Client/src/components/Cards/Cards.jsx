@@ -6,14 +6,12 @@ import Card from "./Card/Card";
 
 
 
-const AllProducts = () => {
+const Cards = (allProducts) => {
 
-    const products = useSelector(state=>state.allProducts)
-  
 
     return(
         <div className="flex flex-wrap ml-4">
-        {products.map((p, i)=>{
+        {allProducts.map((p, i)=>{
             return <Card
                 key={i}
                 name={p.name}
@@ -25,4 +23,4 @@ const AllProducts = () => {
        
 )};
    
-export default AllProducts
+export default Cards
