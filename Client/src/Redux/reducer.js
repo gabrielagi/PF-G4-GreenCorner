@@ -3,7 +3,7 @@ import {
     DELETE_PRODUCT_BY_ID,
     UPDATE_PRODUCT_BY_ID,
     GET_ALL_PRODUCT,
-    GET_PRODUCT_BY_SEARCHBAR,
+    GET_PRODUCT_BY_NAME,
     GET_CATEGORIES,
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
@@ -12,11 +12,15 @@ import {
 } from "./actions/action-types"
 
 const initialState = {
+    allProducts : [],
     product: [],
     categories: [],
-    searchResults: [],
+    searchProduct:[],
+    searchByName: [],
     productDetail: [],
 };
+
+/* 
 function updater(product, id, updatedProductData) {
     const index = product.findIndex(item => item.id === id);
 
@@ -33,7 +37,7 @@ function updater(product, id, updatedProductData) {
 
         product[index] = currentProduct;
     }
-}
+} */
 
 
 
@@ -42,30 +46,26 @@ let products = []
 
 function rootReducer (state = initialState, action){
     switch (action.type) {
-        case GET_ALL_PRODUCT:
-            return {
-                ...state,
-                product: action.payload
-            }
-
-        case GET_PRODUCT_BY_SEARCHBAR:
-            return {
-                ...state,
-                searchResults: action.payload
-            }
-
+    
+    
         case GET_ALL_PRODUCT:
             return {
                 ...state,
                 allProducts: action.payload
             }
 
+        case GET_PRODUCT_BY_NAME:
+                return {
+                    ...state,
+                    searchByName: action.payload
+                }
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
                 productDetail: action.payload
 
             }
+
         case POST_PRODUCT:
             return {
                 ...state,
@@ -81,7 +81,8 @@ function rootReducer (state = initialState, action){
                 ...state,
                 product: state.product.filter((product) => product.id !== action.payload.id)
             }
-        case UPDATE_PRODUCT_BY_ID:
+
+  /*       case UPDATE_PRODUCT_BY_ID:
             const { id, updatedProductData } = action.payload;
             const newProducts = [...state.product]
 
@@ -90,7 +91,8 @@ function rootReducer (state = initialState, action){
                 ...state,
                 product: newProducts
 
-            }
+            } */
+
         case ORDER_BY_NAME:
             products = [...state.allProducts]
             productSorted = products.sort(function (a, b) {
