@@ -186,7 +186,19 @@ position: absolute;
       
     }
 
+    .searchInput{
+      top: 55px;
+      width:350px;
+      height: 40px;
+  }
 
+}
+
+@media (max-width: 400px){
+  .searchInput{
+  right: -140px;
+  width:340px;
+  }
 }
 
 @media (max-width: 350px) {
@@ -205,5 +217,10 @@ position: absolute;
     a p{
         display: none;
     }
+
+  .searchInput{
+     top: 43px;
+      width:300px;
+      }
 }
 
