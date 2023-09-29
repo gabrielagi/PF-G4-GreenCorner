@@ -6,7 +6,9 @@ import {
   POST_PRODUCT,
   GET_CATEGORIES,
   DELETE_PRODUCT_BY_ID,
-  UPDATE_PRODUCT_BY_ID
+  UPDATE_PRODUCT_BY_ID,
+  ORDER_BY_NAME,
+  ORDER_BY_PRICE
 } from "../action-types";
 
 import axios from "axios";
@@ -48,12 +50,15 @@ export const getProductByName = (name) => {
 };
 
 export const getProductById = (id) => {
-  console.log(id)
-  return async (dispatch) => {
+  console.log(id) 
+  console.log ('llegó al action')
 
+  return async (dispatch) => {
+console.log('está por entrar al try')
     try {
+      console.log('entró al try')
       const { data } = await axios.get(`${endpoint}/${id}`);
-      console.log(id)
+      console.log(data)
       dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: data,
@@ -133,3 +138,18 @@ export const updateProduct = (id, updatedProductData) => {
     }
     }
 } 
+
+export function filterByName(payload){
+  return{
+      type: ORDER_BY_NAME,
+      payload
+  }
+}
+
+
+export function filterByPrice(payload){
+  return{
+      type: ORDER_BY_PRICE,
+      payload
+  }
+}

@@ -1,28 +1,23 @@
-
-import {  useSelector} from "react-redux";
-//import { Link } from "react-router-dom";
-
 import Card from "./Card/Card";
+import plantgif from "../../assets/plantgif.gif";
 
-
-
-const AllProducts = () => {
-
-    const products = useSelector(state=>state.allProducts)
-  
-
-    return(
-        <div className="flex flex-wrap ml-4">
-        {products.map((p, i)=>{
-            return <Card
-                key={i}
-                name={p.name}
-                image={p.image}
-                price={p.price}                
-            />
-        })}
+const Cards = ({ allProducts }) => {
+  return (
+    <div className="flex flex-wrap ml-4">
+      {allProducts ? (
+        allProducts.map((p, i) => {
+         return (
+              <Card key={i} name={p.name} image={p.image} price={p.price} id={p.product_id} />
+          );
+        })
+      ) : (
+        <div className="flex justify-center items-center">
+          <img src={plantgif} alt="loading" />
+        </div>
+      )}
     </div>
-       
-)};
-   
-export default AllProducts
+  );
+};
+
+export default Cards;
+

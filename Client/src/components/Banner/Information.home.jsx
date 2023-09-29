@@ -1,15 +1,23 @@
 import React from "react";
+import informationbannermobile1 from "../../assets/informationbannermobile1.png";
+import informationbannermobile2 from "../../assets/informationbannermobile1.png";
 
 const InformationHome = () => {
   return (
-    <div className="w-full">
-      <div className="max-w-[1480px] m-auto grid md:grid-cols-2">
-        <h1 className="text-center text-2xl font-bold text-[#47a358]">
-          Trusted by over 25,000 people 
+    <div className="w-full bg-white py-[80px]">
+      <div className="max-w-[1480px] m-auto">
+        <h1 className="text-center text-2xl font-bold text-green-600">
+          Flowers and Plants for All: Trust Our 10+ Species
         </h1>
-        <p></p>
+        <p className="text-center text-[#9a9a9a] text-md">
+          Explore a Vibrant Variety of Botanical Treasures: Embrace Our Diverse
+          Collection of Over 10 Unique Plant Species
+        </p>
+        <div className="flex flex-col xl:flex-row justify-center">
+          <img src={informationbannermobile1} alt="" />
+          <img src={informationbannermobile2} alt="" />
+        </div>
       </div>
-      <p>Hola Information</p>
     </div>
   );
 };
