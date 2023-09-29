@@ -3,59 +3,64 @@
 import "tailwindcss/tailwind.css"
 const Footer = () => {
   return (
-    <div><footer className='flex bg-[#000000] text-white pb-40 px-40 font-poppins'>
-      
-    <li className=' px-10  bg-[#000000] w-1/5 justify-center'>
-    <h1 className=' flex  text-1xl sm:text-4xl my-2 py-6'>My Account</h1>
-      <ul className='my-4 mt-7 text-[#9a9a9a]  text-1xl sm:text-2xl'  >
+    <div><footer className='grid grid-cols-1 text-2xl px-32 pt-20 pb-40 gap-x-24  font-poppins sm:grid-cols-2 gap-y-10   py-6 text-white bg-[#000000]   text-1xl md:grid-cols-5 '>
+    <div><li className='   grid grid-cols-1  gap-y-4  bg-[#000000] sm: '>
+    <h1 className=' text-1xl sm: flex text-4xl my-2 py-6'>My Account</h1>
+      <button className=' hover:text-white-500   mt-7 text-[#9a9a9a] sm:flex '  >
         About us
-      </ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Team members
-      </ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >
+      </button>
+      <button className='    text-[#9a9a9a]  text-1xl sm:text-2xl flex hover:text-white-500' >Team members
+      </button>
+      <button className=' hover:text-white-500  text-[#9a9a9a]  text-1xl sm:text-2xl flex' >
         Career
-      </ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >
-        Specials</ul>
-        <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >
+      </button>
+      <button className=' hover:text-white-500   text-[#9a9a9a]  text-1xl sm:text-2xl flex' >
+        Specials</button>
+        <button className=' hover:text-white-500   text-[#9a9a9a]  text-1xl sm:text-2xl flex' >
           Best sellers
-        </ul>
-        <ul className='flex  text-[#9a9a9a]  text-1xl sm:text-2xl' >
+        </button>
+        <button className=' hover:text-white-500    text-[#9a9a9a]  text-1xl sm:text-2xl flex ' >
           Our stores
-        </ul>
-        <ul className=' my-4 flex  text-[#9a9a9a]  text-1xl sm:text-2xl' >  
-        Contact us</ul>
+        </button>
+        <button className=' hover:text-white-500      text-[#9a9a9a]  text-1xl sm:text-2xl flex' >  
+        Contact us</button>
+    </li></div>
+    <div><li className=' grid grid-cols-1  gap-y-4  bg-[#000000] '>
+    <h1 className=' text-1xl sm: flex text-4xl my-2 py-6' >Information</h1>
+      <button className=' hover:text-white-500  text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Suppor Center</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Term & Conditions</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Shipping</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Privacy Policy</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Help</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Products Return</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >FAQS</button>
+    </li></div>
+    <div>
+      <li className='  grid grid-cols-1  gap-y-4  bg-[#000000] '>
+    <h1 className='    text-1xl sm: flex text-4xl my-2 py-6' >Quick Links </h1>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Support Center</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Term & Conditions</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Shipping</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Privacy Policy</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Help</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Products Return</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >FAQS</button>
     </li>
-    <li className='bg-[#000000] w-1/5'>
-    <h1 className=' flex  text-1xl sm:text-4xl my-2 py-6' >Information</h1>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Suppor Center</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Term & Conditions</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Shipping</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Privacy Policy</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Help</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Products Return</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >FAQS</ul>
-    </li><li className=' bg-[#000000] w-1/5'>
-    <h1 className=' flex  text-1xl sm:text-4xl my-2 py-6' >Quick Links </h1>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Support Center</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Term & Conditions</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Shipping</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Privacy Policy</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Help</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Products Return</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >FAQS</ul>
+    </div>
+    <div>
+      <li className=' grid grid-cols-1  gap-y-4  bg-[#000000] '>
+      <h1 className='    text-1xl sm:flex text-4xl my-2 py-6' >Categories</h1>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Bedroom</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Furniture</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Livingroom</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex md:flex ' >Mobile & Tablets</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Men</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Women</button>
+      <button className=' hover:text-white-500 text-[#9a9a9a]  text-1xl sm:text-2xl flex' >Accesories</button>
     </li>
-    <li className='bg-[#000000] w-1/5 my-'>
-      <h1 className=' flex  text-1xl sm:text-4xl my-2 py-6' >Categories</h1>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Bedroom</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Furniture</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Livingroom</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Mobile & Tablets</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Men</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Women</ul>
-      <ul className='my-4 text-[#9a9a9a]  text-1xl sm:text-2xl' >Accesories</ul>
-    </li>
-    <button className=' font-poppins mr- w-1/5 flex items-center justify-start text-2xl sm:text-6xl'>GreenCorner</button>
+    </div>
+    <li className=""><button className=' hover:text-white-500w-1/5 mt-16 font-poppins  text-center    text-2xl sm:text-5xl   '>GreenCorner</button></li>
+    
     
     <div>
       <p></p>
