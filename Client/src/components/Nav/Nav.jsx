@@ -7,18 +7,37 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../Auth0/LogoutButton";
 import { AiFillShop } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import leaf from "../../assets/leaf.png";
 import { useState } from "react";
+import { getProductByName } from "../../Redux/actions/product/action";
+import { useDispatch } from "react-redux";
 
 const Nav = () => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { isAuthenticated } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
   const handleSearchMouseEnter = () => {
-    searchValue ? setSearchValue("") :setSearchVisible(!isSearchVisible);/* HAY QUE PONER EN setSearchValue("") LA ACCION QUE EJECUTA PARA BUSCAR UN PRODUCTO EN ESPECIFICO */
-  };
+    if(searchValue){
+      dispatch(getProductByName(searchValue))
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        window.alert("No se encontró el producto");
+      });
+      navigate("/shop");
+      setSearchValue("")
+    }else{
+      setSearchVisible(!isSearchVisible);
+    }
+    };
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
