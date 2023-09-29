@@ -9,10 +9,20 @@ import {AiFillShop} from "react-icons/ai";
 import {BsBook} from "react-icons/bs";
 import { Link } from "react-router-dom";
 import leaf from "../../assets/leaf.png";
+import { useState } from "react";
 
 const Nav = () => {
   const { isAuthenticated } = useAuth0();
- 
+  const [isSearchVisible, setSearchVisible] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchMouseEnter = () => {
+    searchValue ? setSearchValue("") :setSearchVisible(!isSearchVisible);/* HAY QUE PONER EN setSearchValue("") LA ACCION QUE EJECUTA PARA BUSCAR UN PRODUCTO EN ESPECIFICO */
+  };
+
+  const handleInputChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <nav className={styles.nav}>
@@ -53,9 +63,20 @@ const Nav = () => {
         <a href="#" className={styles.guide}>
           <BsBook style={{ fontSize: "24px" }} /> <p>Guide</p>
         </a>
-        <a href="#" className={styles.someOtherClass}>
-          <GrSearch style={{ fontSize: "24px" }} /> <p>Search</p>
+        <div className={styles.search}>
+        <input
+          type="text"
+          placeholder="Search here..."
+          className={`${styles.searchInput} ${
+            isSearchVisible ? styles.searchInputVisible : ""
+          }`}
+          value={searchValue}
+          onChange={handleInputChange}
+        />
+        <a href="#" className={styles.search}>
+          <GrSearch onClick={handleSearchMouseEnter}  style={{ fontSize: "24px" }} /> <p>Search</p>
         </a>
+        </div>
         <a href="#" className={styles.anotherClass}>
           <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
         </a>
