@@ -6,7 +6,7 @@ import {
     GET_PRODUCT_BY_SEARCHBAR,
     GET_CATEGORIES,
     GET_PRODUCT_BY_ID,
-    
+
 } from "./actions/action-types"
 
 const initialState = {
@@ -15,6 +15,25 @@ const initialState = {
     searchResults: [],
     productDetail: [],
 };
+function updater(product, id, updatedProductData) {
+    const index = product.findIndex(item => item.id === id);
+
+    if (index !== -1) {
+        const currentProduct = product[index];
+
+        for (const property in updatedProductData) {
+            if (updatedProductData.hasOwnProperty(property)) {
+                if (currentProduct.hasOwnProperty(property)) {
+                    currentProduct[property] = updatedProductData[property];
+                }
+            }
+        }
+
+        product[index] = currentProduct;
+    }
+}
+
+
 
 const rootReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -24,12 +43,12 @@ const rootReducer = (state = initialState, action) => {
                 product: action.payload
             }
 
-        case GET_PRODUCT_BY_SEARCHBAR: 
-        return {
-            ...state,
-            searchResults: action.payload
-        }
-        
+        case GET_PRODUCT_BY_SEARCHBAR:
+            return {
+                ...state,
+                searchResults: action.payload
+            }
+
         case GET_ALL_PRODUCT:
             return {
                 ...state,
@@ -42,11 +61,11 @@ const rootReducer = (state = initialState, action) => {
                 productDetail: action.payload
 
             }
-        case POST_PRODUCT: 
+        case POST_PRODUCT:
             return {
                 ...state,
                 product: [...state.product, action.payload]
-            }   
+            }
         case GET_CATEGORIES:
             return {
                 ...state,
@@ -55,17 +74,22 @@ const rootReducer = (state = initialState, action) => {
         case DELETE_PRODUCT_BY_ID:
             return {
                 ...state,
-                product: state.product.filter((product) => product.id !== action.payload)
+                product: state.product.filter((product) => product.id !== action.payload.id)
             }
         case UPDATE_PRODUCT_BY_ID:
+            const { id, updatedProductData } = action.payload;
+            const newProducts = [...state.product]
+
+            updater(newProducts, id, updatedProductData)
             return {
                 ...state,
-                product: s
+                product: newProducts
+
             }
 
         default:
             return { ...state };
     }
 };
-                
+
 export default rootReducer; 

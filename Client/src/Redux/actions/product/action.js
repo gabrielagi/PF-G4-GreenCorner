@@ -104,7 +104,10 @@ export const deleteProduct = (id) => {
       const { data } = await axios.delete(`${endpoint}/${id}`);
       dispatch( {
         type: DELETE_PRODUCT_BY_ID,
-        payload: data,
+        payload: {
+          data: data,
+          id: id
+        },
       })
     } catch (error) {
       console.log(error.message);
@@ -112,13 +115,17 @@ export const deleteProduct = (id) => {
     }
     }
 } 
-export const updateProduct = (id) => {
+export const updateProduct = (id, updatedProductData) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`${endpoint}/${id}`);
+      const { data } = await axios.put(`${endpoint}/${id}`, updatedProductData);
       dispatch( {
         type: UPDATE_PRODUCT_BY_ID,
-        payload: data,
+        payload: {
+          data: data,
+          id: id,
+          updatedProductData: updatedProductData
+        }
       })
     } catch (error) {
       console.log(error.message);
