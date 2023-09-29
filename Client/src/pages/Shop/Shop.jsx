@@ -21,7 +21,6 @@ const Shop = () => {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getAllProducts());
-    dispatch(getAllCategories());
 },[dispatch]);
 
 
@@ -75,13 +74,13 @@ return (
       </select>
     </div>
 
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
      
-      <div className="w-1/3 mr-4">
-      
+      <div className="lg:w-1/3 mr-4">
+
       </div>
 
-      <div className="w-2/3 ml-4">
+      <div className="lg:w-2/3 ml-4">
         <Cards allProducts={allProducts} />
       </div>
 
