@@ -1,4 +1,3 @@
-import { deleteProduct } from "../../../../../Server/src/Controller/product.controller";
 import { 
   GET_ALL_PRODUCT,
   GET_PRODUCT_BY_SEARCHBAR,
