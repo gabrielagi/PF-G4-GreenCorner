@@ -1,4 +1,6 @@
 const axios = require("axios");
+
+//Todos los const de abajo son llamadas a la base de datos
 const {
   getAllProduct,
   getProductById,

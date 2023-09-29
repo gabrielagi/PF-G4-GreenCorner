@@ -12,7 +12,7 @@ const AllProducts = () => {
   
 
     return(
-        <div className="flex flex-wrap ml-4">
+        <div className="flex relative flex-wrap -left-[-500px] space-x-[100px] ">
         {products.map((p, i)=>{
             return <Card
                 key={i}

@@ -1,7 +1,7 @@
 import plantsAbout from "../../img/plantsAbout.jpg";
 const SectionOne = () => {
 return(
-    <div>
+    <div className="max-w-[1920px]">
            <section
         className="relative  bg-green-200 p-4 h-[400px] sm:p-8 md:p-12 lg:p-16 xl:p-20"
         data-aos="fade-left"
