@@ -3,6 +3,7 @@ import { useEffect  } from "react";
 import "tailwindcss/tailwind.css"
 import Cards from "../../components/Cards/Cards"
 import { getAllProducts } from "../../Redux/actions/product/action"
+import { getAllCategories } from "../../Redux/actions/product/action"
 import { useSelector } from "react-redux";
 import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
 import styles from  "./Shop.module.css"
@@ -11,6 +12,7 @@ import { useState } from "react";
 const Shop = () => {
 
   const allProducts= useSelector(state=>state.allProducts)
+  const allCategories= useSelector(state=>state.categories);
   const [nameOrder, setNameOrder] = useState(""); 
   const [priceOrder, setPriceOrder] = useState("");
 
@@ -18,6 +20,7 @@ const Shop = () => {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getAllProducts());
+    dispatch(getAllCategories());
 },[dispatch]);
 
 
