@@ -5,9 +5,17 @@ import "aos/dist/aos.css";
 import BannerHome from "../components/Banner/Banner.home";
 import InformationHome from "../components/Banner/Information.home";
 import ImagesBanner from "../components/Banner/imageshover.home";
+import { useDispatch } from "react-redux";
+import { getAllProducts } from "../Redux/actions/product/action";
 
 const Home = () => {
   // Inicializo AOS al momento del montaje del componente
+  const dispatch = useDispatch();
+
+  useEffect(()=>{
+    dispatch(getAllProducts());
+},[dispatch]);
+
   useEffect(() => {
     Aos.init({
       duration: 1800,

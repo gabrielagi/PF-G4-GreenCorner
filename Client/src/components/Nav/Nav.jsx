@@ -27,13 +27,16 @@ const Nav = () => {
       dispatch(getProductByName(searchValue))
       .then((response) => {
         console.log(response);
+        if(response){
+          console.log("hola :D")
+          navigate("/shop");
+          setSearchValue("");
+        }
       })
       .catch((error) => {
         console.log(error);
         window.alert("No se encontró el producto");
       });
-      navigate("/shop");
-      setSearchValue("")
     }else{
       setSearchVisible(!isSearchVisible);
     }

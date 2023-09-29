@@ -19,9 +19,7 @@ const Shop = () => {
 
 
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(getAllProducts());
-},[dispatch]);
+
 
 
 
@@ -43,7 +41,7 @@ function handleOrder(e) {
   else {
       setNameOrder(""); 
       setPriceOrder(""); 
-      dispatch(getAllProducts());
+      /* dispatch(getAllProducts()); */
     }
 }
 
