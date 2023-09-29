@@ -12,8 +12,10 @@ import leaf from "../../assets/leaf.png";
 import { useState } from "react";
 import { getProductByName } from "../../Redux/actions/product/action";
 import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Nav = () => {
+const Nav = ({notify}) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,8 +36,8 @@ const Nav = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
-        window.alert("No se encontró el producto");
+        console.log(error); 
+        notify();
       });
     }else{
       setSearchVisible(!isSearchVisible);
@@ -117,6 +119,7 @@ const Nav = () => {
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </div>
     </nav>
+    
   );
 };
 
