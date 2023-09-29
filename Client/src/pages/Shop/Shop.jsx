@@ -64,7 +64,18 @@ return (
         <option value="low">Low - High</option>
       </select>
     </div>
-    <Cards allProducts={allProducts} />
+
+    <div className="flex">
+     
+      <div className="w-1/3 mr-4">
+      
+      </div>
+
+      <div className="w-2/3 ml-4">
+        <Cards allProducts={allProducts} />
+      </div>
+
+    </div>
   </div>
 );
 };
