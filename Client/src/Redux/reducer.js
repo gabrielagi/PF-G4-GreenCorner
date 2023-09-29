@@ -41,30 +41,15 @@ function rootReducer (state = initialState, action){
             }
 
             case ORDER_BY_PRICE:
-                products = [...state.allProducts]
-                productSorted = action.payload === 'high' ? 
-                products.sort(function (a, b) {
-                    if (a.price < b.price) {
-                        return -1
-                    }
-                    if (a.price > b.price) {
-                        return 1
-                    }
-                    return 0;
-                }) :   
-                products.sort(function (a, b) {
-                    if (a.price < b.price) {
-                        return 1
-                    }
-                    if (a.price > b.price) {
-                        return -1
-                    }
-                    return 0;
-                })
-                return {
-                    ...state,
-                    allProducts: productSorted
-                }
+            products = [...state.allProducts]; 
+            productSorted = action.payload === 'low' ? 
+            products.sort((a, b) => a.price - b.price) :   
+            products.sort((a, b) => b.price - a.price);
+
+  return {
+    ...state,
+    allProducts: productSorted
+  }
            
         default:
             return { ...state };
