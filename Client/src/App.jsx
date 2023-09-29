@@ -3,7 +3,7 @@ import "./App.css";
 import "tailwindcss/tailwind.css";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
-import Shop from "./pages/Shop";
+import Shop from "./pages/Shop/Shop";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar/Navbar";
@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/favorites" element={<Favorites />} />
         {/* <Route path="/profile" element={<Profile/>} /> */}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

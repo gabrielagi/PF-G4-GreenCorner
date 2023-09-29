@@ -7,6 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../Auth0/LogoutButton";
 import {AiFillShop} from "react-icons/ai";
 import {BsBook} from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const { isAuthenticated } = useAuth0();
@@ -25,9 +26,9 @@ const Nav = () => {
           </a>
         </li>
         <li className={styles.nav__item}>
-          <a href="shop" className={styles.nav__link}>
+          <Link to='/shop/' className={styles.nav__link}>
             Products
-          </a>
+          </Link>
         </li>
         <li className={styles.nav__item}>
           <a href="guide" className={styles.nav__link}>
@@ -47,16 +48,16 @@ const Nav = () => {
       </ul>
       <div className={styles.nav__toggler}>
         <a href="/shop" className={styles.shop}>
-          <AiFillShop style={{ fontSize: "24px" }} /> <a>Products</a>
+          <AiFillShop style={{ fontSize: "24px" }} /> <p>Products</p>
         </a>
         <a href="#" className={styles.guide}>
-          <BsBook style={{ fontSize: "24px" }} /> <a>Guide</a>
+          <BsBook style={{ fontSize: "24px" }} /> <p>Guide</p>
         </a>
         <a href="#" className={styles.someOtherClass}>
-          <GrSearch style={{ fontSize: "24px" }} /> <a>Search</a>
+          <GrSearch style={{ fontSize: "24px" }} /> <p>Search</p>
         </a>
         <a href="#" className={styles.anotherClass}>
-          <GrCart style={{ fontSize: "24px" }} /> <a>Cart</a>
+          <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
         </a>
         {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </div>

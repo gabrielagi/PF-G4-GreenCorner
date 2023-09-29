@@ -36,8 +36,8 @@ const Detail = () => {
               
             <h2 className="mt-10 pt-5 text-6xl text-[#444444]">{product.name}</h2>
             <p className="py-5">rating</p>
-            <p className="py-t text-5xl text-[#444444]">$160.00</p>
-            <p className="py-20">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam, sapiente! Quas cum cumque, nulla nesciunt, nam blanditiis minima est totam, consequuntur earum fugiat aperiam qui praesentium porro velit nostrum fugit.</p>
+            <p className="py-t text-5xl text-[#444444]">{product.price}</p>
+            <p className="py-20">{product.description }</p>
             <h2 className="text-5xl text-[#343434]">Variante</h2>
             <select className="w-40">
               <option>uno</option>

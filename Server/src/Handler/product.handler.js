@@ -8,6 +8,7 @@ const {
   updateProduct,
   findRelatedProducts,
   getAllTrending,
+  deleteProduct
 
 } = require("../Controller/product.controller");
 const Product = require("../models/Product");
@@ -25,8 +26,8 @@ const getAllProductHandler = async (req, res) => {
         product.name.toLowerCase().includes(name)
       );
       filteredProduct.length
-      ? res.status(200).json(filteredProduct)
-      : res.status(404).json({ error: "Producto no encontrado" });
+        ? res.status(200).json(filteredProduct)
+        : res.status(404).json({ error: "Producto no encontrado" });
     } else {
       res.status(200).json(allProduct);
     }
@@ -54,7 +55,7 @@ const postProductHandler = async (req, res) => {
   try {
     const productData = req.body;
     const newProduct = await postProduct(productData);
-    
+
     if (newProduct) {
       res.status(201).json({ success: true, message: "Producto creado con éxito", data: newProduct });
     } else {
@@ -74,7 +75,7 @@ const deleteProductHandler = async (req, res) => {
       return res.status(404).json({ error: 'The ID to delete does not exist' });
     } else {
       await productDelete.destroy();
-      return res.status(204).send(); 
+      return res.status(204).send();
     }
   } catch (error) {
     console.error('Error en el servidor:', error);
@@ -86,11 +87,12 @@ const deleteProductHandler = async (req, res) => {
 const updateProductHandler = async (req, res) => {
   try {
     const { id } = req.params;
-    const updatedProductData = req.body; 
+    const updatedProductData = req.body;
+    console.log(updatedProductData);
     const success = await updateProduct(id, updatedProductData);
 
     if (success) {
-      res.status(200).json({ message: "Producto actualizado exitosamente" });
+      res.status(200).json({ message: "Producto actualizado exitosamente", id: id });
     } else {
       res.status(404).json({ error: `No se encontró un Producto con el ID ${id}` });
     }
@@ -124,7 +126,21 @@ const getAllTrendingHandler = async (req, res) => {
   }
 };
 
-
+const deleteHandler = async (req, res) => {
+  const { id } = req.params
+  console.log(id);
+  try {
+    const deleter = await deleteProduct(id)
+    if (deleter === true) {
+      return res.status(200).json({ message: "Producto eliminado exitosamente"})
+    } else {
+      return res.status(404).send("Produncto no encontrado")
+    }
+  }
+  catch (error){
+    return res.status(500).send(error.message)
+  }
+}
 
 
 module.exports = {
@@ -135,5 +151,5 @@ module.exports = {
   updateProductHandler,
   getRelatedProductsHandler,
   getAllTrendingHandler,
-  
+  deleteHandler
 };
