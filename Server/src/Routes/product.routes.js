@@ -3,7 +3,7 @@ const {
   getAllProductHandler,
   getProductByIdHandler,
   postProductHandler,
-  deleteProductHandler,
+  deleteHandler,
   updateProductHandler,
   getRelatedProductsHandler,
   getAllTrendingHandler,
@@ -19,7 +19,7 @@ productRouter.get("/:id", getProductByIdHandler);
 
 productRouter.post("/", postProductHandler);
 
-productRouter.delete("/:id", deleteProductHandler);
+productRouter.delete("/:id", deleteHandler);
 
 productRouter.put("/:id", updateProductHandler);
 
