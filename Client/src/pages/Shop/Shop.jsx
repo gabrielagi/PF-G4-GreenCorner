@@ -3,6 +3,7 @@ import { useEffect  } from "react";
 import "tailwindcss/tailwind.css"
 import Cards from "../../components/Cards/Cards"
 import { getAllProducts } from "../../Redux/actions/product/action"
+import { getAllCategories } from "../../Redux/actions/product/action"
 import { useSelector } from "react-redux";
 import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
 import styles from  "./Shop.module.css"
@@ -11,12 +12,15 @@ import { useState } from "react";
 const Shop = () => {
 
   const allProducts= useSelector(state=>state.allProducts)
-  const [orderBy, setOrderBy] = useState(""); 
+  const allCategories= useSelector(state=>state.categories);
+  const [nameOrder, setNameOrder] = useState(""); 
   const [priceOrder, setPriceOrder] = useState("");
+
 
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getAllProducts());
+    dispatch(getAllCategories());
 },[dispatch]);
 
 
@@ -26,16 +30,21 @@ function handleOrder(e) {
   const selectedValue = e.target.value;
 
   if (selectedValue === "asc" || selectedValue === "desc") {
-    setOrderBy(selectedValue); 
+    setNameOrder(selectedValue); 
     setPriceOrder(""); 
     dispatch(filterByName(selectedValue));
   }
   
   else if (selectedValue === "high" || selectedValue === "low") {
-    setOrderBy(""); 
+    setNameOrder(""); 
     setPriceOrder(selectedValue); 
     dispatch(filterByPrice(selectedValue));
   }
+  else {
+      setNameOrder(""); 
+      setPriceOrder(""); 
+      dispatch(getAllProducts());
+    }
 }
 
 return (
@@ -44,27 +53,38 @@ return (
       <select
         onChange={(e) => handleOrder(e)}
         className={styles.order}
-        value={orderBy} 
+        value={nameOrder} 
       >
-        <option disabled value="">
-          Order ⮟
+        <option  className={styles.title} value="">
+          Name ⮟
         </option>
-        <option value="asc">A - Z</option>
-        <option value="desc">Z - A</option>
+        <option value="asc">A - Z </option>
+        <option value="desc">Z - A </option>
       </select>
       <select
         onChange={(e) => handleOrder(e)}
         className={styles.order}
         value={priceOrder} 
       >
-        <option disabled value="">
+        <option  className={styles.title} value="">
           Price ⮟
         </option>
-        <option value="high">High - Low</option>
-        <option value="low">Low - High</option>
+        <option value="high">High - Low </option>
+        <option value="low">Low - High </option>
       </select>
     </div>
-    <Cards allProducts={allProducts} />
+
+    <div className="flex">
+     
+      <div className="w-1/3 mr-4">
+      
+      </div>
+
+      <div className="w-2/3 ml-4">
+        <Cards allProducts={allProducts} />
+      </div>
+
+    </div>
   </div>
 );
 };

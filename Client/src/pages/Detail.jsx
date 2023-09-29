@@ -7,12 +7,11 @@ import Card from "../components/Cards/Card/Card";
 // import Card from "../components/Cards/Card/Card";
 
 const Detail = () => {
-  const {id} =useParams()
+  const {id} = useParams()
   const dispatch=useDispatch()
 
-
  console.log(id)
- const product=useSelector((state=>state.searchProduct))
+ const product = useSelector((state=>state.searchProduct))
 
   useEffect(()=>{
     dispatch( getProductById(id))

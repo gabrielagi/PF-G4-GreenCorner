@@ -133,7 +133,22 @@ const getAllTrending = async () => {
   }
 };
 
-
+const deleteProduct = async (id) => {
+  try {
+      const deleter = await Product.destroy({ 
+        where: {
+          product_id: id
+        }  
+      })
+      if (deleter === 1) {
+        return true
+      } else {
+        return false
+      }
+  } catch (error) {
+      return ("Error al eliminar el product", error)
+  }
+}
 
 
 
@@ -145,5 +160,5 @@ module.exports = {
   updateProduct,
   findRelatedProducts,
   getAllTrending,
-
+  deleteProduct
 };
