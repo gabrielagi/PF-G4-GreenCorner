@@ -1,6 +1,6 @@
 import { 
   GET_ALL_PRODUCT,
-  GET_PRODUCT_BY_SEARCHBAR,
+  GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
   POST_PRODUCT,
   GET_CATEGORIES,
@@ -36,7 +36,7 @@ export const getProductByName = (name) => {
       const { data } = await axios.get(`${endpoint}/?name=${name}`);
       if (Array.isArray(data) && data.length > 0) {
         dispatch({
-          type: GET_PRODUCT_BY_SEARCHBAR,
+          type: GET_PRODUCT_BY_NAME,
           payload: data,
         });
       } else {

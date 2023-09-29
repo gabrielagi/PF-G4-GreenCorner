@@ -3,7 +3,7 @@ import {
     DELETE_PRODUCT_BY_ID,
     UPDATE_PRODUCT_BY_ID,
     GET_ALL_PRODUCT,
-    GET_PRODUCT_BY_SEARCHBAR,
+    GET_PRODUCT_BY_NAME,
     GET_CATEGORIES,
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
@@ -15,7 +15,8 @@ const initialState = {
     allProducts : [],
     product: [],
     categories: [],
-    searchResults: [],
+    searchProduct:[],
+    searchByName: [],
     productDetail: [],
 };
 
@@ -46,18 +47,17 @@ let products = []
 function rootReducer (state = initialState, action){
     switch (action.type) {
     
-       
-
+    
         case GET_ALL_PRODUCT:
             return {
                 ...state,
                 allProducts: action.payload
             }
 
-        case GET_PRODUCT_BY_SEARCHBAR:
+        case GET_PRODUCT_BY_NAME:
                 return {
                     ...state,
-                    searchResults: action.payload
+                    searchByName: action.payload
                 }
         case GET_PRODUCT_BY_ID:
             return {
@@ -92,7 +92,7 @@ function rootReducer (state = initialState, action){
                 product: newProducts
 
             } */
-            
+
         case ORDER_BY_NAME:
             products = [...state.allProducts]
             productSorted = products.sort(function (a, b) {
