@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { useEffect  } from "react";
 import "tailwindcss/tailwind.css"
 import Cards from "../../components/Cards/Cards"
+import Categories from "../../components/Categories/Categories";
 import { getAllProducts } from "../../Redux/actions/product/action"
 import { getAllCategories } from "../../Redux/actions/product/action"
 import { useSelector } from "react-redux";
@@ -12,7 +13,7 @@ import { useState } from "react";
 const Shop = () => {
 
   const allProducts= useSelector(state=>state.allProducts)
-  const allCategories= useSelector(state=>state.categories);
+  const allCategories = useSelector(state=>state.categories);
   const [nameOrder, setNameOrder] = useState(""); 
   const [priceOrder, setPriceOrder] = useState("");
 
@@ -20,7 +21,6 @@ const Shop = () => {
   const dispatch = useDispatch();
   useEffect(()=>{
     dispatch(getAllProducts());
-    dispatch(getAllCategories());
 },[dispatch]);
 
 
@@ -74,17 +74,18 @@ return (
       </select>
     </div>
 
-    <div className="flex">
+    <div className="flex flex-col lg:flex-row">
      
-      <div className="w-1/3 mr-4">
-      
+      <div className="lg:w-1/3 mr-4">
+
       </div>
 
-      <div className="w-2/3 ml-4">
+      <div className="lg:w-2/3 ml-4">
         <Cards allProducts={allProducts} />
       </div>
 
     </div>
+    <Categories allCategories={allCategories}/>
   </div>
 );
 };
