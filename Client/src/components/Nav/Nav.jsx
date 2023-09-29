@@ -7,6 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LogoutButton from "../Auth0/LogoutButton";
 import {AiFillShop} from "react-icons/ai";
 import {BsBook} from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const { isAuthenticated } = useAuth0();
@@ -25,9 +26,9 @@ const Nav = () => {
           </a>
         </li>
         <li className={styles.nav__item}>
-          <a href="shop" className={styles.nav__link}>
+          <Link to='/shop/' className={styles.nav__link}>
             Products
-          </a>
+          </Link>
         </li>
         <li className={styles.nav__item}>
           <a href="guide" className={styles.nav__link}>

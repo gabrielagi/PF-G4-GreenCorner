@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/favorites" element={<Favorites />} />
         {/* <Route path="/profile" element={<Profile/>} /> */}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };
