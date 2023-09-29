@@ -1,0 +1,38 @@
+.filtros{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: 50px;
+    gap: 20px;
+    color: rgb(0, 133, 0);
+}
+
+.order {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px; 
+    font-size: 18px; 
+    border: none;
+    color: rgb(5, 165, 0); 
+    border-radius: 5px; 
+    appearance: none; 
+    outline: none;
+    cursor: pointer; 
+   
+  }
+  
+
+  .order option {
+    color: rgb(27, 117, 0); 
+  }
+  
+
+  .order option:checked {
+    background-color: #4e4e4e; 
+    color: white; 
+  }
+
+
+
+  
+
+  
