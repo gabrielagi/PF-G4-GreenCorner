@@ -31,7 +31,11 @@
     color: white; 
   }
 
-
+.title {
+  color: #333; 
+  font-weight: bold; 
+  cursor: not-allowed; 
+}
 
   
 

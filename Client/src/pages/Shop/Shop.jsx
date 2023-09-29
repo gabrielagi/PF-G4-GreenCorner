@@ -11,8 +11,9 @@ import { useState } from "react";
 const Shop = () => {
 
   const allProducts= useSelector(state=>state.allProducts)
-  const [orderBy, setOrderBy] = useState(""); 
+  const [nameOrder, setNameOrder] = useState(""); 
   const [priceOrder, setPriceOrder] = useState("");
+
 
   const dispatch = useDispatch();
   useEffect(()=>{
@@ -26,16 +27,21 @@ function handleOrder(e) {
   const selectedValue = e.target.value;
 
   if (selectedValue === "asc" || selectedValue === "desc") {
-    setOrderBy(selectedValue); 
+    setNameOrder(selectedValue); 
     setPriceOrder(""); 
     dispatch(filterByName(selectedValue));
   }
   
   else if (selectedValue === "high" || selectedValue === "low") {
-    setOrderBy(""); 
+    setNameOrder(""); 
     setPriceOrder(selectedValue); 
     dispatch(filterByPrice(selectedValue));
   }
+  else {
+      setNameOrder(""); 
+      setPriceOrder(""); 
+      dispatch(getAllProducts());
+    }
 }
 
 return (
@@ -44,24 +50,24 @@ return (
       <select
         onChange={(e) => handleOrder(e)}
         className={styles.order}
-        value={orderBy} 
+        value={nameOrder} 
       >
-        <option disabled value="">
-          Order ⮟
+        <option  className={styles.title} value="">
+          Name ⮟
         </option>
-        <option value="asc">A - Z</option>
-        <option value="desc">Z - A</option>
+        <option value="asc">A - Z </option>
+        <option value="desc">Z - A </option>
       </select>
       <select
         onChange={(e) => handleOrder(e)}
         className={styles.order}
         value={priceOrder} 
       >
-        <option disabled value="">
+        <option  className={styles.title} value="">
           Price ⮟
         </option>
-        <option value="high">High - Low</option>
-        <option value="low">Low - High</option>
+        <option value="high">High - Low </option>
+        <option value="low">Low - High </option>
       </select>
     </div>
     <Cards allProducts={allProducts} />
