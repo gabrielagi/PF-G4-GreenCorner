@@ -42,6 +42,14 @@ const Nav = () => {
     }
     };
 
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter" && searchValue) {
+        
+        handleSearchMouseEnter();
+      }
+    };
+
+
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
   };
@@ -89,7 +97,7 @@ const Nav = () => {
         <a href="#" className={styles.guide}>
           <BsBook style={{ fontSize: "24px" }} /> <p>Guide</p>
         </a>
-        <div className={styles.search}>
+        <div className={styles.search} onKeyDown={handleKeyDown}>
         <input
           type="text"
           placeholder="Search here..."
