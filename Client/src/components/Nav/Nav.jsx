@@ -26,24 +26,24 @@ const Nav = () => {
           </a>
         </li>
         <li className={styles.nav__item}>
-          <Link to='/shop/' className={styles.nav__link}>
+          <Link to='/shop' className={styles.nav__link}>
             Products
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <a href="guide" className={styles.nav__link}>
+          <Link to="/guide" className={styles.nav__link}>
             Guide
-          </a>
+          </Link>
         </li>
         <li className={styles.nav__item}>
-          <a href="about-us" className={`${styles.nav__link} ${styles.aboutUs}`}>
+          <Link to="/about-us" className={`${styles.nav__link} ${styles.aboutUs}`}>
             About Us
-          </a>
+          </Link>
         </li>
         <li className={styles.nav__item}>
-          <a href="contact-us" className={styles.nav__link}>
+          <Link to="contact-us" className={styles.nav__link}>
             Contact Us
-          </a>
+          </Link>
         </li>
       </ul>
       <div className={styles.nav__toggler}>
