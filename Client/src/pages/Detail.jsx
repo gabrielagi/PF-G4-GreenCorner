@@ -70,7 +70,7 @@ const Detail = () => {
     <Card></Card>
     <Card></Card>
     <Card></Card>
-        <Card></Card>
+    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}/>
 
 
 

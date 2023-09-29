@@ -8,6 +8,7 @@ import LogoutButton from "../Auth0/LogoutButton";
 import {AiFillShop} from "react-icons/ai";
 import {BsBook} from "react-icons/bs";
 import { Link } from "react-router-dom";
+import leaf from "../../assets/leaf.png";
 
 const Nav = () => {
   const { isAuthenticated } = useAuth0();
@@ -16,8 +17,7 @@ const Nav = () => {
   return (
     <nav className={styles.nav}>
       <a href="/" className={styles.nav__brand}>
-        GreenCorner 🍃
-      </a>
+        GreenCorner <img src={leaf} className={styles.logo}   />    </a>
   
       <ul className={styles.nav__menu}>
         <li className={styles.nav__item}>
