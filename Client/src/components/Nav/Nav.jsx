@@ -61,9 +61,6 @@ const Nav = () => {
         </li>
       </ul>
       <div className={styles.nav__toggler}>
-        <div>
-          <Searchbar />
-        </div>
         <a href="/shop" className={styles.shop}>
           <AiFillShop style={{ fontSize: "24px" }} /> <p>Products</p>
         </a>
