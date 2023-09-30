@@ -9,7 +9,7 @@ import { AiFillShop } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import leaf from "../../assets/leaf.png";
-import { useState } from "react";
+import { useState,useRef,useEffect } from "react";
 import { getProductByName } from "../../Redux/actions/product/action";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from 'react-toastify';
@@ -19,10 +19,18 @@ const Nav = ({notify}) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
 
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated } = useAuth0(); 
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    if (isSearchVisible) {
+      inputRef.current.focus();
+    }
+  }, [isSearchVisible]);
+
 
   const handleSearchMouseEnter = () => {
     if(searchValue){
@@ -101,6 +109,7 @@ const Nav = ({notify}) => {
         <input
           type="text"
           placeholder="Search here..."
+          ref={inputRef}
           className={`${styles.searchInput} ${
             isSearchVisible ? styles.searchInputVisible : ""
           }`}
