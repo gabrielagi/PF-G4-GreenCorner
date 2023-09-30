@@ -7,7 +7,8 @@ import {
     GET_CATEGORIES,
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
-    ORDER_BY_PRICE
+    ORDER_BY_PRICE,
+    RESET_ALL_PRODUCT
 
 } from "./actions/action-types"
 
@@ -50,15 +51,23 @@ function rootReducer (state = initialState, action){
     
         case GET_ALL_PRODUCT:
             return {
-                ...state,
-                allProducts: action.payload
+              ...state,
+              allProducts: action.payload,
+              product: state.product.length ? state.product : action.payload,
             }
 
+        case RESET_ALL_PRODUCT:
+                return {
+                    ...state,
+                    product: state.allProducts
+                }
+            
         case GET_PRODUCT_BY_NAME:
                 return {
                     ...state,
-                    allProducts: action.payload
+                    product: action.payload
                 }
+                
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,

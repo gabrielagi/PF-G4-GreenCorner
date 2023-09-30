@@ -3,16 +3,17 @@ import { useEffect  } from "react";
 import "tailwindcss/tailwind.css"
 import Cards from "../../components/Cards/Cards"
 import Categories from "../../components/Categories/Categories";
-import { getAllProducts } from "../../Redux/actions/product/action"
+import { getAllProducts,resetAllProducts } from "../../Redux/actions/product/action"
 import { getAllCategories } from "../../Redux/actions/product/action"
 import { useSelector } from "react-redux";
 import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
 import styles from  "./Shop.module.css"
 import { useState } from "react";
+import {FiRefreshCw} from "react-icons/fi"
 
 const Shop = () => {
 
-  const allProducts= useSelector(state=>state.allProducts)
+  const products = useSelector(state=>state.product)
   const allCategories = useSelector(state=>state.categories);
   const [nameOrder, setNameOrder] = useState(""); 
   const [priceOrder, setPriceOrder] = useState("");
@@ -21,6 +22,11 @@ const Shop = () => {
   const dispatch = useDispatch();
 
 
+useEffect(() => {
+  dispatch(getAllProducts());
+  dispatch(getAllCategories());
+  
+}, [dispatch]);
 
 
 
@@ -39,15 +45,21 @@ function handleOrder(e) {
     dispatch(filterByPrice(selectedValue));
   }
   else {
+    
       setNameOrder(""); 
       setPriceOrder(""); 
-      /* dispatch(getAllProducts()); */
+      dispatch(getAllProducts());
+    
     }
 }
 
+
+
 return (
+  
   <div>
     <div className={styles.filtros}>
+      <FiRefreshCw className={styles.refresh} onClick={()=>dispatch(resetAllProducts())}/>
       <select
         onChange={(e) => handleOrder(e)}
         className={styles.order}
@@ -79,7 +91,7 @@ return (
       </div>
 
       <div className="lg:w-2/3 ml-4">
-        <Cards allProducts={allProducts} />
+        <Cards allProducts={products} />
       </div>
 
     </div>

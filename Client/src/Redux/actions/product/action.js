@@ -7,7 +7,8 @@ import {
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
-  ORDER_BY_PRICE
+  ORDER_BY_PRICE,
+  RESET_ALL_PRODUCT,
 } from "../action-types";
 
 import axios from "axios";
@@ -22,6 +23,21 @@ export const getAllProducts = () => {
       
       dispatch({
         type: GET_ALL_PRODUCT,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message );
+    }
+  };
+};
+
+export const resetAllProducts = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(endpoint);
+      
+      dispatch({
+        type: RESET_ALL_PRODUCT,
         payload: data,
       });
     } catch (error) {
@@ -90,7 +106,6 @@ export const getAllCategories = () => {
       });
     } catch (error) {
       console.log(error.message);
-      alert ("Hubo un problema trayendo las categorías")
     }
   };
 };

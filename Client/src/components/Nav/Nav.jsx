@@ -28,9 +28,7 @@ const Nav = ({notify}) => {
     if(searchValue){
       dispatch(getProductByName(searchValue))
       .then((response) => {
-        console.log(response);
         if(response){
-          console.log("hola :D")
           navigate("/shop");
           setSearchValue("");
         }
