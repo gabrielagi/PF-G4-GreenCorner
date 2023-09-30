@@ -38,7 +38,6 @@ const Nav = ({notify}) => {
       .then((response) => {
         if(response){
           navigate("/shop");
-          setSearchValue("");
         }
       })
       .catch((error) => {
@@ -52,8 +51,9 @@ const Nav = ({notify}) => {
 
     const handleKeyDown = (e) => {
       if (e.key === "Enter" && searchValue) {
-        
         handleSearchMouseEnter();
+      }else if(e.key === "Enter" && !searchValue){
+        dispatch(getProductByName(searchValue))
       }
     };
 
