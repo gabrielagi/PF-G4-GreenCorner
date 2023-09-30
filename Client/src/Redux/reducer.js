@@ -115,7 +115,7 @@ function rootReducer (state = initialState, action){
             })
             return {
                 ...state,
-                allProducts: productSorted
+                product: productSorted
             }
 
             case ORDER_BY_PRICE:
@@ -126,7 +126,7 @@ function rootReducer (state = initialState, action){
 
   return {
     ...state,
-    allProducts: productSorted
+    product: productSorted
   }
            
         default:
