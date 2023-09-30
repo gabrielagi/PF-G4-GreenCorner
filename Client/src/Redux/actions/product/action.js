@@ -30,21 +30,14 @@ export const getAllProducts = () => {
   };
 };
 
-export const getProductByName = (name) => {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.get(`${endpoint}/?name=${name}`);
-      if (Array.isArray(data) && data.length > 0) {
-        dispatch({
-          type: GET_PRODUCT_BY_NAME,
-          payload: data,
-        });
-      } else {
-        alert("El Producto no se encuentra en la lista");
-      }
-    } catch (error) {
-      alert("Hubo un error al buscar el Producto por el name");
-    }
+export function getProductByName(name){
+  return async function (dispatch) {
+    const response = await axios.get(endpoint +"?name=" + name);
+    dispatch({
+      type: GET_PRODUCT_BY_NAME,
+      payload: response.data,
+    });
+    return response.data;
   };
 };
 
