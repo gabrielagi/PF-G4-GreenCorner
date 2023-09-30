@@ -113,7 +113,7 @@ a p {
 .searchInput {
 position: absolute;
   top: -2px;
-  right: 45px;
+  right: 0px;
   width: 0;
   opacity: 0;
   transition: width 0.3s, opacity 0.3s, transform 0.3s;
@@ -141,12 +141,15 @@ position: absolute;
 
 @media (max-width: 1505px)  {
 .searchInput{
-    top: 50px;
-    right: -160px;
+    width: 190px;
+}
 }
 
-
-}
+@media (max-width: 1350px)  {
+  .searchInput{
+      width: 140px;
+  }
+  }
 
 
 @media (max-width: 1180px) {
@@ -157,6 +160,11 @@ position: absolute;
     gap: 2rem;
     height: auto;
     align-items: center;
+  }
+  .searchInput{
+    width: 200px;
+    top: 0px;
+    right: 0px;
   }
 }
 
@@ -188,10 +196,12 @@ position: absolute;
     }
 
     .searchInput{
+      right: -160px;
       top: 55px;
       width:350px;
       height: 40px;
   }
+  
 
 }
 
@@ -220,7 +230,8 @@ position: absolute;
     }
 
   .searchInput{
-     top: 43px;
+     top: 40px;
+     height: 38px;
       width:300px;
       }
 }
