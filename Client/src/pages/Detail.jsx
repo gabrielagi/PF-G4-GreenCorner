@@ -11,7 +11,7 @@ const Detail = () => {
   const dispatch=useDispatch()
 
  console.log(id)
- const product = useSelector((state=>state.searchProduct))
+ const product = useSelector((state=>state.productDetail))
 
   useEffect(()=>{
     dispatch( getProductById(id))
@@ -34,7 +34,7 @@ const Detail = () => {
 
           <div className=" px-10 bg-[#f6f6f6] justify-between">
               
-            <h2 className="mt-10 pt-5 text-6xl text-[#444444]">{product.name}</h2>
+            <h2 className="mt-10 pt-5 text-6xl text-[#444444]">{product?.name}</h2>
             <p className="py-5">rating</p>
             <p className="py-t text-5xl text-[#444444]">{product.price}</p>
             <p className="py-20">{product.description }</p>
@@ -67,9 +67,9 @@ const Detail = () => {
       </div>
     <h3 className="my-20 mt-20 text-center text-5xl ">Related products</h3>
     <div className="grid grid-cols-4 gap-x-6 ml-28 px-20 mb-60">
-    <Card></Card>
-    <Card></Card>
-    <Card></Card>
+    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}></Card>
+    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}></Card>
+    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}></Card>
     <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}/>
 
 
