@@ -31,7 +31,7 @@ useEffect(() => {
 
 
 function handleOrder(e) {
-  const selectedValue = e.target.value;
+  const selectedValue = e? e.target.value : e;
 
   if (selectedValue === "asc" || selectedValue === "desc") {
     setNameOrder(selectedValue); 
@@ -45,10 +45,9 @@ function handleOrder(e) {
     dispatch(filterByPrice(selectedValue));
   }
   else {
-    
       setNameOrder(""); 
       setPriceOrder(""); 
-      dispatch(getAllProducts());
+      dispatch(resetAllProducts());
     
     }
 }
@@ -59,7 +58,7 @@ return (
   
   <div>
     <div className={styles.filtros}>
-      <FiRefreshCw className={styles.refresh} onClick={()=>dispatch(resetAllProducts())}/>
+      <FiRefreshCw className={styles.refresh} value="" onClick={()=>{handleOrder()}}/>
       <select
         onChange={(e) => handleOrder(e)}
         className={styles.order}
