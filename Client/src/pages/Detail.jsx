@@ -29,7 +29,7 @@ const Detail = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2  gap-12 text-[#a9a9a9]">
         
           <div className="bg-red-500 ml-28" >
-            <img src="https://png.pngtree.com/png-clipart/20220829/ourlarge/pngtree-indoor-plant-png-image_6129530.png" className="  items-baseline justify-end align-bottom"></img >
+            <img src={product?.image} className="  items-baseline justify-end align-bottom"></img >
           </div>
 
           <div className=" px-10 bg-[#f6f6f6] justify-between">

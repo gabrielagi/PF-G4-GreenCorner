@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { filterCategory } from "../../Redux/actions/product/action"
 import { useDispatch } from "react-redux";
-const Category = ({ name, id }) => {
+const Category = ({ name }) => {
 
   const dispatch = useDispatch();
 

@@ -71,7 +71,7 @@ function rootReducer(state = initialState, action) {
 
             return {
                 ...state,
-                searchByName: action.payload
+                product: action.payload
             }
 
         case GET_PRODUCT_TRENDING:
@@ -103,7 +103,8 @@ function rootReducer(state = initialState, action) {
 
             return {
                 ...state,
-                allProducts: state.product.filter((products) => {
+                
+                product: state.allProducts.filter((products) => {
                     return products.categories.some((category) => category.name === action.payload);
                 }),
             };
