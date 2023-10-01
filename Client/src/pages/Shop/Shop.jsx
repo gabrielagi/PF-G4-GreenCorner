@@ -1,21 +1,14 @@
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import "tailwindcss/tailwind.css";
-import Cards from "../../components/Cards/Cards";
+import { useEffect  } from "react";
+import "tailwindcss/tailwind.css"
+import Cards from "../../components/Cards/Cards"
 import Categories from "../../components/Categories/Categories";
-
-import FeatureProducts from "../../components/Feature Products/FeatureProducts";
-import { getProductsTrending } from "../../Redux/actions/product/action";
 import { getAllProducts,resetAllProducts } from "../../Redux/actions/product/action"
 import { getAllCategories } from "../../Redux/actions/product/action"
 import { useSelector } from "react-redux";
-import {
-  filterByName,
-  filterByPrice,
-} from "../../Redux/actions/product/action";
-import styles from "./Shop.module.css";
+import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
+import styles from  "./Shop.module.css"
 import { useState } from "react";
-import plantgif from "../../assets/plantgif.gif";
 import {FiRefreshCw} from "react-icons/fi"
 
 const Shop = () => {
@@ -23,17 +16,16 @@ const Shop = () => {
   const products = useSelector(state=>state.product)
   const allCategories = useSelector(state=>state.categories);
   const [nameOrder, setNameOrder] = useState(""); 
-   const productTrending = useSelector((state) => state.productTrending);
-  const [nameOrder, setNameOrder] = useState("");
-
   const [priceOrder, setPriceOrder] = useState("");
 
+
   const dispatch = useDispatch();
+
 
 useEffect(() => {
   dispatch(getAllProducts());
   dispatch(getAllCategories());
-  dispatch(getProductsTrending());
+  
 }, [dispatch]);
 
 
@@ -58,7 +50,9 @@ function handleOrder(e) {
       dispatch(resetAllProducts());
     
     }
-  }
+}
+
+
 
 return (
   
@@ -89,21 +83,20 @@ return (
       </select>
     </div>
 
-      <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 mr-4"></div>
+    <div className="flex flex-col lg:flex-row">
+     
+      <div className="lg:w-1/3 mr-4">
 
-        <div className="lg:w-2/3 ml-4">
-          <Cards allProducts={allProducts} />
-        </div>
       </div>
 
       <div className="lg:w-2/3 ml-4">
         <Cards allProducts={products} />
-
       </div>
- <FeatureProducts productTrending={productTrending} />
+
     </div>
-  );
+    <Categories allCategories={allCategories}/>
+  </div>
+);
 };
 
 export default Shop;
