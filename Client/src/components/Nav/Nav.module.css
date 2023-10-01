@@ -23,6 +23,20 @@ a {
   color: darkgray;
 }
 
+.search {
+    display: flex;
+    padding: 5px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.1s, font-size 0.3s; 
+  }
+  
+  .search:active {
+    background-color: #28a745; 
+    scale: 0.98;
+  }   
+
 .nav {
   display: flex;
   gap: 10rem;
@@ -82,6 +96,7 @@ a {
   align-items: center;
 }
 
+
 .shop,
 .guide {
   display: none;
@@ -91,6 +106,52 @@ a p {
   display: none;
 }
 
+.search{
+    position: relative;
+}
+
+.searchInput {
+position: absolute;
+  top: -2px;
+  right: 0px;
+  width: 0;
+  opacity: 0;
+  transition: width 0.3s, opacity 0.3s, transform 0.3s;
+  border: 2px solid transparent;
+  border-color: green;
+  border-radius: 30px;
+  padding: 10px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 15px;
+  transform-origin: right;
+  color: rgb(78, 78, 78);
+
+  }
+  
+  
+
+  .searchInputVisible {
+    padding: 10px;
+  border-color: green;
+  width: 200px;
+  opacity: 1;
+  transform: scaleX(1);
+  margin-left: -206px; 
+  }
+
+@media (max-width: 1505px)  {
+.searchInput{
+    width: 190px;
+}
+}
+
+@media (max-width: 1350px)  {
+  .searchInput{
+      width: 140px;
+  }
+  }
+
+
 @media (max-width: 1180px) {
   .nav {
     flex-direction: column;
@@ -99,6 +160,11 @@ a p {
     gap: 2rem;
     height: auto;
     align-items: center;
+  }
+  .searchInput{
+    width: 200px;
+    top: 0px;
+    right: 0px;
   }
 }
 
@@ -124,8 +190,25 @@ a p {
     justify-content: center;
   }
 
-  a p {
-    display: block;
+    a p{
+        display: block;
+      
+    }
+
+    .searchInput{
+      right: -160px;
+      top: 55px;
+      width:350px;
+      height: 40px;
+  }
+  
+
+}
+
+@media (max-width: 400px){
+  .searchInput{
+  right: -140px;
+  width:340px;
   }
 }
 
@@ -137,12 +220,19 @@ a p {
     width: 40px;
   }
 
-  .shop,
-  .guide,
-  a {
-    font-size: 2px;
-  }
-  a p {
-    display: none;
-  }
+    .shop,
+    .guide,
+    a {
+        font-size: 2px;
+    }
+    a p{
+        display: none;
+    }
+
+  .searchInput{
+     top: 40px;
+     height: 38px;
+      width:300px;
+      }
 }
+

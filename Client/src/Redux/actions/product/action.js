@@ -9,7 +9,9 @@ import {
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
-  FILTER_CATEGORY
+  FILTER_CATEGORY,
+  RESET_ALL_PRODUCT
+
 } from "../action-types";
 
 import axios from "axios";
@@ -49,21 +51,30 @@ export const getProductsTrending = () => {
   };
 };
 
-export const getProductByName = (name) => {
+
+export const resetAllProducts = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${endpoint}/?name=${name}`);
-      if (Array.isArray(data) && data.length > 0) {
-        dispatch({
-          type: GET_PRODUCT_BY_NAME,
-          payload: data,
-        });
-      } else {
-        alert("El Producto no se encuentra en la lista");
-      }
+      const { data } = await axios.get(endpoint);
+      
+      dispatch({
+        type: RESET_ALL_PRODUCT,
+        payload: data,
+      });
     } catch (error) {
-      alert("Hubo un error al buscar el Producto por el name");
+      console.log(error.message );
     }
+  };
+};
+
+export function getProductByName(name){
+  return async function (dispatch) {
+    const response = await axios.get(endpoint +"?name=" + name);
+    dispatch({
+      type: GET_PRODUCT_BY_NAME,
+      payload: response.data,
+    });
+    return response.data;
   };
 };
 
@@ -116,7 +127,6 @@ export const getAllCategories = () => {
       });
     } catch (error) {
       console.log(error.message);
-      alert ("Hubo un problema trayendo las categorías")
     }
   };
 };

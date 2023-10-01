@@ -9,7 +9,8 @@ import {
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
     ORDER_BY_PRICE,
-    FILTER_CATEGORY
+    FILTER_CATEGORY,
+    RESET_ALL_PRODUCT
 
 } from "./actions/action-types"
 
@@ -54,12 +55,20 @@ function rootReducer(state = initialState, action) {
         case GET_ALL_PRODUCT:
 
             return {
-                ...state,
-                allProducts: action.payload,
-                product: action.payload
+              ...state,
+              allProducts: action.payload,
+              product: state.product.length ? state.product : action.payload,
+
             }
 
+        case RESET_ALL_PRODUCT:
+                return {
+                    ...state,
+                    product: state.allProducts
+                }
+            
         case GET_PRODUCT_BY_NAME:
+
             return {
                 ...state,
                 searchByName: action.payload
@@ -71,9 +80,7 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 productTrending: state.allProducts.filter((product) => product.isTrending === true)
             };
-
-
-
+        
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
@@ -132,19 +139,21 @@ function rootReducer(state = initialState, action) {
             })
             return {
                 ...state,
-                allProducts: productSorted
+                product: productSorted
             }
 
-        case ORDER_BY_PRICE:
-            products = [...state.allProducts];
-            productSorted = action.payload === 'low' ?
-                products.sort((a, b) => a.price - b.price) :
-                products.sort((a, b) => b.price - a.price);
 
-            return {
-                ...state,
-                allProducts: productSorted
-            }
+            case ORDER_BY_PRICE:
+            products = [...state.allProducts]; 
+            productSorted = action.payload === 'low' ? 
+            products.sort((a, b) => a.price - b.price) :   
+            products.sort((a, b) => b.price - a.price);
+
+  return {
+    ...state,
+    product: productSorted
+  }
+           
 
         default:
             return { ...state };
