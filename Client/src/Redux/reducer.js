@@ -3,8 +3,10 @@ import {
     DELETE_PRODUCT_BY_ID,
     UPDATE_PRODUCT_BY_ID,
     GET_ALL_PRODUCT,
+    GET_PRODUCT_TRENDING,
     GET_PRODUCT_BY_NAME,
     GET_CATEGORIES,
+    FILTER_CATEGORY,
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
     ORDER_BY_PRICE,
@@ -15,6 +17,7 @@ import {
 const initialState = {
     allProducts : [],
     product: [],
+    productTrending: [],
     categories: [],
     searchProduct:[],
     searchByName: [],
@@ -74,6 +77,12 @@ function rootReducer (state = initialState, action){
                 productDetail: action.payload
 
             }
+            case GET_PRODUCT_TRENDING:
+
+            return {
+                ...state,
+                productTrending: state.allProducts.filter((product) => product.isTrending === true)
+            };
 
         case POST_PRODUCT:
             return {

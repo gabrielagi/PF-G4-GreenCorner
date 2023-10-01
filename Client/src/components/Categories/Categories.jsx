@@ -1,6 +1,5 @@
 import plantgif from "../../assets/plantgif.gif";
 import Category from "./Categorie";
-import Card from "../Cards/Card/Card";
 const Categories = ({ allCategories }) => {
   return (
     <div className=" ml-4 rounded-none  ml-[70px] border border-solid w-[200px] mt-[-200px] rounded-[20px] bg-gradient-to-br from-gray-600 via-transparent to-gray-300">

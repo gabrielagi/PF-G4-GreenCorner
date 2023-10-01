@@ -2,12 +2,13 @@ import { useDispatch } from "react-redux";
 import { useEffect  } from "react";
 import "tailwindcss/tailwind.css"
 import Cards from "../../components/Cards/Cards"
-import Categories from "../../components/Categories/Categories";
+import Category from "../../components/Categories/Categories";
 import {
   getAllProducts,
   resetAllProducts,
 } from "../../Redux/actions/product/action";
 import { getAllCategories } from "../../Redux/actions/product/action";
+import { getProductsTrending } from "../../Redux/actions/product/action";
 import { useSelector } from "react-redux";
 import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
 import styles from  "./Shop.module.css"
@@ -94,13 +95,13 @@ const Shop = () => {
       </div>
     
       <div className="lg:w-2/3 ml-4">
-        <Categories allCategories={allCategories} />
+        <Category allCategories={allCategories} />
       </div>
 
      
     </div>
-    <Categories allCategories={allCategories}/>
-  </div>
+  
+ 
 );
 };
 
