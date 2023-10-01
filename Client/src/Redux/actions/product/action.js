@@ -2,16 +2,13 @@ import {
   GET_ALL_PRODUCT,
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
-  GET_PRODUCT_TRENDING,
   POST_PRODUCT,
   GET_CATEGORIES,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
-  FILTER_CATEGORY,
-  RESET_ALL_PRODUCT
-
+  RESET_ALL_PRODUCT,
 } from "../action-types";
 
 import axios from "axios";
@@ -33,24 +30,6 @@ export const getAllProducts = () => {
     }
   };
 };
-
-export const getProductsTrending = () => {
-  return async (dispatch) => {
-    const { data } = await axios.get(endpoint);
-
-    try {
-      
-      dispatch({
-        type: GET_PRODUCT_TRENDING,
-        payload: data,
-      });
-    } catch (error) {
-      console.log(error.message);
-      alert ("Hubo un problema trayendo las categorías")
-    }
-  };
-};
-
 
 export const resetAllProducts = () => {
   return async (dispatch) => {
@@ -127,21 +106,6 @@ export const getAllCategories = () => {
       });
     } catch (error) {
       console.log(error.message);
-    }
-  };
-};
-
-export const filterCategory = (category) => {
-  return async (dispatch) => {
-    try {
-      
-      dispatch({
-        type: FILTER_CATEGORY,
-        payload: category,
-      });
-    } catch (error) {
-      console.log(error.message);
-      alert ("Hubo un problema trayendo las categorías")
     }
   };
 };
