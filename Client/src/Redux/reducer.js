@@ -85,6 +85,17 @@ function rootReducer (state = initialState, action){
                 ...state,
                 categories: action.payload
             }
+
+        case FILTER_CATEGORY:
+
+            return {
+                ...state,
+                allProducts: state.product.filter((products) => {
+                    return products.categories.some((category) => category.name === action.payload);
+                }),
+            };
+
+
         case DELETE_PRODUCT_BY_ID:
             return {
                 ...state,
