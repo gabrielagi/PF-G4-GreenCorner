@@ -43,7 +43,7 @@ const Card = ({name, image, price, id}) => {
                 <p className="text-xl font-medium ml-6">{name}</p>
             </div>
           
-            <div className="flex justify-between items-center mt-3 w-full">
+            <div className="flex justify-between items-center mt-3 w-full relative">
                 <p className="text-lg font-bold mx-6">${price}</p>
                 <button className="bg-green-500 hover:bg-green-700 font-bold py-1 px-2 rounded text-xs mx-4" onClick={()=>handleAdd(notify)}>Add</button>
             </div>

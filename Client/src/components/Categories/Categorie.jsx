@@ -10,11 +10,11 @@ const Category = ({ name }) => {
   };
 
   return (
-    <div>
-      <Link onClick={() => handleChange(name)}>
+    <div className="flex flex-wrap ml-4">
+      <Link>
         <h1>{name}</h1>
       </Link>
     </div>
   );
 };
-export default Category;
+export default Categorie;

@@ -1,22 +1,16 @@
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import "tailwindcss/tailwind.css";
-import Cards from "../../components/Cards/Cards";
+import { useEffect  } from "react";
+import "tailwindcss/tailwind.css"
+import Cards from "../../components/Cards/Cards"
 import Categories from "../../components/Categories/Categories";
-
-import FeatureProducts from "../../components/Feature Products/FeatureProducts";
-import { getProductsTrending } from "../../Redux/actions/product/action";
 import {
   getAllProducts,
   resetAllProducts,
 } from "../../Redux/actions/product/action";
 import { getAllCategories } from "../../Redux/actions/product/action";
 import { useSelector } from "react-redux";
-import {
-  filterByName,
-  filterByPrice,
-} from "../../Redux/actions/product/action";
-import styles from "./Shop.module.css";
+import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
+import styles from  "./Shop.module.css"
 import { useState } from "react";
 import plantgif from "../../assets/plantgif.gif";
 import { FiRefreshCw } from "react-icons/fi";
@@ -28,6 +22,7 @@ const Shop = () => {
   const productTrending = useSelector((state) => state.productTrending);
 
   const [priceOrder, setPriceOrder] = useState("");
+
 
   const dispatch = useDispatch();
 
@@ -53,7 +48,7 @@ const Shop = () => {
       setPriceOrder("");
       dispatch(resetAllProducts());
     }
-  }
+}
 
   return (
     <div>
@@ -102,9 +97,11 @@ const Shop = () => {
         <Categories allCategories={allCategories} />
       </div>
 
-      <FeatureProducts productTrending={productTrending} />
+     
     </div>
-  );
+    <Categories allCategories={allCategories}/>
+  </div>
+);
 };
 
 export default Shop;
