@@ -3,6 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import OpinionCard from "./Opinion.testimonial";
 import opinions from "./mock.json";
+import AliceCarousel from "react-alice-carousel";
 
 const Testimonial = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -21,9 +22,9 @@ const Testimonial = () => {
 
   const calculateCenterSlidePercentage = () => {
     if (windowWidth <= 768) {
-      return 70;
+      return 99;
     } else {
-      return 18;
+      return 26;
     }
   };
 
