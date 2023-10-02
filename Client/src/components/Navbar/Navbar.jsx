@@ -11,8 +11,9 @@ import leaf from "../../assets/leaf.png";
 import { useState,useRef,useEffect } from "react";
 import { getProductByName } from "../../Redux/actions/product/action";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-const Nav = ({notify}) => {
+const Nav = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -29,6 +30,18 @@ const Nav = ({notify}) => {
     }
   }, [isSearchVisible]);
 
+
+  const notify = () =>
+    toast.error("Product not found, try again.🪴", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light ",
+    });
 
 
   const handleSearchMouseEnter = () => {
