@@ -32,6 +32,7 @@ const Home = () => {
         data-aos-duration="1000"
       >
         <BannerHome />
+       
       </section>
 
       <section className="bg-white" data-aos="fade-up" data-aos-duration="1000">
