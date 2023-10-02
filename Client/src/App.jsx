@@ -28,14 +28,10 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/favorites" element={<Favorites />} />
-<<<<<<< HEAD
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
-        {/* <Route path="/profile" element={<Profile/>} /> */}
-=======
         <Route path="/create" element={<Create/>} />
         { <Route path="/profile" element={<Profile/>} /> }
->>>>>>> 66c9241bb349ad1f59c699ba5fc1e1d9e7496e38
       </Routes>
       <Footer />
     </div>
