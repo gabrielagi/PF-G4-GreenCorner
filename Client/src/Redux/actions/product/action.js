@@ -3,7 +3,9 @@ import {
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
   POST_PRODUCT,
+  GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
+  FILTER_CATEGORY,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
@@ -93,8 +95,26 @@ export const addProduct = (productdata) => {
     }
 
   }
+  
 
 }
+
+export const getProductsTrending = () => {
+  return async (dispatch) => {
+    const { data } = await axios.get(endpoint);
+
+    try {
+
+      dispatch({
+        type: GET_PRODUCT_TRENDING,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert ("Hubo un problema trayendo las categorías")
+    }
+  };
+};
 
 export const getAllCategories = () => {
   return async (dispatch) => {
@@ -106,6 +126,21 @@ export const getAllCategories = () => {
       });
     } catch (error) {
       console.log(error.message);
+    }
+  };
+};
+
+export const filterCategory = (category) => {
+  return async (dispatch) => {
+    try {
+
+      dispatch({
+        type: FILTER_CATEGORY,
+        payload: category,
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert ("Hubo un problema trayendo las categorías")
     }
   };
 };

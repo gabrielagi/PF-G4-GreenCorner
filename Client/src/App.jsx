@@ -12,6 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
+import Create from "./pages/Create";
 
 const App = () => {
   const notify = () =>
@@ -28,6 +29,7 @@ const App = () => {
 
   return (
     <div>
+      
       <Nav notify={notify} />
       <ToastContainer />
       <Profile />{" "}
@@ -38,6 +40,7 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/create" element={<Create/>} />
         {/* <Route path="/profile" element={<Profile/>} /> */}
       </Routes>
       <Footer />
