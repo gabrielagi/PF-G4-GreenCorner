@@ -32,7 +32,7 @@ const App = () => {
       
       <Nav notify={notify} />
       <ToastContainer />
-      <Profile />{" "}
+     {/*  <Profile /> */}
       {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
       <Routes>
         <Route path="/" element={<Home />} />
