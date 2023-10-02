@@ -13,15 +13,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
 import Create from "./pages/Create";
+import Guides from "./pages/Guides/Guides";
 
 const App = () => {
-
   return (
     <div>
-      
       <Navbar />
       <ToastContainer />
-     {/*  <Profile /> */}
+      {/*  <Profile /> */}
       {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -29,7 +28,8 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/favorites" element={<Favorites />} />
-        <Route path="/create" element={<Create/>} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/guides" element={<Guides />} />
         {/* <Route path="/profile" element={<Profile/>} /> */}
       </Routes>
       <Footer />
