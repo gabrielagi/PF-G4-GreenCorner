@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Card = ({name, image, price, id}) => {
+const Card = ({name, images, price, id}) => {
     const [corazon, setCorazon] = useState(false)
 
         const notify = () => toast.info('This button dont succesfull', {
@@ -27,7 +27,7 @@ const Card = ({name, image, price, id}) => {
          const handleHeart = (notify) => {
             notify();
          }
-
+         console.log(images)
     return (
         <div className="bg-slate-100 rounded-md box-border h-85 w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">
            
@@ -37,7 +37,7 @@ const Card = ({name, image, price, id}) => {
                </button>
             </div>
             <Link to={`/detail/${id}`}>
-            <img className="rounded-xl overflow-hidden w-60 h-75 object-cover mb-3" src={image} alt="producto" />
+            <img className="rounded-xl overflow-hidden w-60 h-75 object-cover mb-3" src={images} alt="producto" />
             </Link>
             <div className="text-left w-full">
                 <p className="text-xl font-medium ml-6">{name}</p>
