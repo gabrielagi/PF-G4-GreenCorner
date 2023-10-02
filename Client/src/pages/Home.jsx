@@ -41,11 +41,7 @@ const Home = () => {
       <section data-aos="fade-up" data-aos-duration="1000">
         <ImagesBanner />
       </section>
-      <section
-        className="min-h-screen"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-      >
+      <section data-aos="fade-up" data-aos-duration="1000">
         <Testimonial />
       </section>
     </div>
