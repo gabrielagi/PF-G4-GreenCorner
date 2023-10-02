@@ -1,0 +1,72 @@
+/* OpinionCard.css */
+/* Estilos para la tarjeta individual en el carrusel de opiniones */
+
+.card {
+  width: 13em; /* Incrementar el ancho de la tarjeta en 1 píxel */
+  height: 81%; /* Incrementar la altura de la tarjeta en 1 píxel */
+  background-color: #fff;
+  border-radius: 1.1em; /* Incrementar el radio del borde en 1 píxel */
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+  padding: 1.1em 0.6em; /* Incrementar el espacio interno en 1 píxel */
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  margin: 0 0.6em; /* Incrementar los márgenes entre las tarjetas en 1 píxel */
+  transition: filter 0.3s ease; /* Transición para el desenfoque */
+}
+
+.card.active {
+  filter: none;
+}
+
+.card__image {
+  width: 8em; /* Incrementar el tamaño de la imagen en 1 píxel */
+  height: 8em; /* Incrementar el tamaño de la imagen en 1 píxel */
+  border-radius: 51%; /* Incrementar el radio del borde en 1 píxel */
+  border: 4px solid #22c55e; /* Cambiar el color del borde */
+  padding: 2px; /* Incrementar el ancho del borde en 1 píxel */
+
+  margin-bottom: 1.1em; /* Incrementar el espacio entre la imagen y el contenido en 1 píxel */
+}
+
+.card__image img {
+  width: 100%;
+  height: 100%;
+  border-radius: 51%; /* Incrementar el radio del borde en 1 píxel */
+  object-fit: cover;
+}
+
+.card__content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card__title {
+  font-size: 1.5rem; /* Incrementar el tamaño del título en 1 píxel */
+  font-weight: 500;
+  position: relative;
+  top: 0.2em;
+  color: #22c55e; /* Cambiar el color del título */
+}
+
+.card__text {
+  text-align: center;
+  font-size: 1.2rem; /* Incrementar el tamaño del texto en 1 píxel */
+  margin: 0.6em 0; /* Incrementar el espacio entre el texto en 1 píxel */
+}
+
+.card__btn {
+  background-color: var(--color);
+  color: #fff;
+  font-size: 0.9rem; /* Incrementar el tamaño del botón en 1 píxel */
+  text-transform: uppercase;
+  font-weight: 600;
+  border: none;
+  padding: 0.4em 0.7em; /* Incrementar el tamaño del botón en 1 píxel */
+  border-radius: 0.4em; /* Incrementar el radio del borde en 1 píxel */
+  margin-top: 0.4em; /* Incrementar el espacio superior del botón en 1 píxel */
+  cursor: pointer;
+}

@@ -7,18 +7,19 @@ import InformationHome from "../components/Banner/Information.home";
 import ImagesBanner from "../components/Banner/imageshover.home";
 import { useDispatch } from "react-redux";
 import { getAllProducts } from "../Redux/actions/product/action";
+import Testimonial from "./../components/Testimonial/Testimonial.home";
 
 const Home = () => {
   // Inicializo AOS al momento del montaje del componente
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getAllProducts());
-},[dispatch]);
+  }, [dispatch]);
 
   useEffect(() => {
     Aos.init({
-      duration: 1800,
+      duration: 2200,
       offset: 0,
     });
   }, []);
@@ -37,12 +38,11 @@ const Home = () => {
         <InformationHome />
       </section>
 
-      <section
-        className="min-h-screen"
-        data-aos="fade-up"
-        data-aos-duration="1000"
-      >
+      <section data-aos="fade-up" data-aos-duration="1000">
         <ImagesBanner />
+      </section>
+      <section data-aos="fade-up" data-aos-duration="1000">
+        <Testimonial />
       </section>
     </div>
   );

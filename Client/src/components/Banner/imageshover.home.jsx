@@ -29,9 +29,6 @@ const ImagesBanner = () => {
                 <h2 className="text-white text-xl font-semibold mb-2">
                   {titles[index]}
                 </h2>
-                <button className="bg-transparent border border-white text-white px-4 py-2 rounded hover:bg-white hover:text-black transition-all duration-300">
-                  More
-                </button>
               </div>
             </div>
           )
@@ -47,6 +44,8 @@ const ImagesBanner = () => {
           infiniteLoop={true}
           swipeable={true}
           emulateTouch={true}
+          dynamicHeight={false}
+          centerMode={false}
         >
           {[imageBanner1, imageBanner2, imageBanner3, imageBanner4].map(
             (image, index) => (
@@ -57,15 +56,12 @@ const ImagesBanner = () => {
                 <img
                   src={image}
                   alt={`Image ${index + 1}`}
-                  className="w-96 h-96 object-cover transition-transform transform scale-100 group-hover:scale-105 rounded-md "
+                  className="w-96 h-96 object-cover transition-transform transform scale-100 group-hover:scale-105 rounded-md"
                 />
                 <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <h2 className="text-white text-xl font-semibold mb-2">
                     {titles[index]}
                   </h2>
-                  <button className="bg-transparent border border-white text-white px-4 py-2 rounded hover:bg-white hover:text-black transition-all duration-300">
-                    More
-                  </button>
                 </div>
               </div>
             )

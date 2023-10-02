@@ -3,7 +3,8 @@ import "tailwindcss/tailwind.css";
 const Favorites = () => {
   return (
     <div>
-      <h1>Favorites</h1>
+      <p>Texto</p>
+
     </div>
   );
 };

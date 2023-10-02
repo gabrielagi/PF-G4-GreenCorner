@@ -97,6 +97,7 @@ const Shop = () => {
       <div className="lg:w-2/3 ml-4">
         <Category allCategories={allCategories} />
       </div>
+      <section className="my-60"></section>
 
      
     </div>
