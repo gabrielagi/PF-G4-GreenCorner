@@ -123,7 +123,7 @@ const Nav = ({notify}) => {
         <a href="#" className={styles.anotherClass}>
           <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
         </a>
-        {/*isAuthenticated ? <LogoutButton /> : <LoginButton />*/}
+        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
       </div>
     </nav>
     
