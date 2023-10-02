@@ -7,7 +7,7 @@ const Cards = ({ allProducts }) => {
      {allProducts.length !== 0 ? (
         allProducts.map((p, i) => {
          return (
-              <Card key={i} name={p.name} image={p.image} price={p.price} id={p.product_id} />
+              <Card key={i} name={p.name} images={p.images} price={p.price} id={p.product_id} />
           );
         })
       ) : (
