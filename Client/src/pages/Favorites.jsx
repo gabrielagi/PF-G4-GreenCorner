@@ -4,7 +4,6 @@ const Favorites = () => {
   return (
     <div>
       <p>Texto</p>
-
     </div>
   );
 };
