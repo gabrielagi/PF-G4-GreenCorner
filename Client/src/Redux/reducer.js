@@ -93,17 +93,20 @@ function rootReducer (state = initialState, action){
                 //Por ahora no va
             case GET_CATEGORIES:
 
-            const categorias = [];
+            const categories = [];
 
             state.product.forEach((product) => {
               product.categories.forEach((category) => {
-                categorias.push(category);
+                categories.push(category);
               });
             });
+
+            const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
+            
             
             return {
               ...state,
-              categories: categorias
+              categories: Category
             };
 
                 

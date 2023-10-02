@@ -26,12 +26,12 @@ const Detail = () => {
     console.log(id)
     console.log('llegó '+id)
   },[])
-  
+
   const [activeImg, setActiveImg]=useState(images.img1)
 
   const [amount, setAmount]=useState(1)
 
-
+  console.log(product)
 
 
 
