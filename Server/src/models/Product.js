@@ -22,8 +22,7 @@ module.exports = (sequelize) => {
     },
     images: {
       type: DataTypes.ARRAY(DataTypes.STRING),
-      defaultValue: ["https://img.lovepik.com/free_png/32/28/43/58PIC3358PICa1Ut458PICf58PIC79sUT_PIC2018.png_300.png"],
-      allowNull: true,
+      allowNull: false,
     },
     stock: {
       type: DataTypes.INTEGER,
