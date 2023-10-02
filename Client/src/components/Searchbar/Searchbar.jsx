@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { getProductByName } from "../../Redux/actions/product/action";
+import { getProductByName} from "../../Redux/actions/product/action";
 
 const Searchbar = () => {
   const [inputValue, setInputValue] = useState("");
@@ -12,8 +12,8 @@ const Searchbar = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const input = inputValue.trim();
-    if (/^[a-zA-Z]+$/.test(input)) {
-      dispatch(getProductByName(inputValue));
+    if (/^[a-zA-Z]+$/.test(input)) { 
+      dispatch(getProductByName(inputValue));      
     } else {
       window.alert("El nombre ingresado contiene campos erroneos");
     }
