@@ -3,17 +3,21 @@ import {
     DELETE_PRODUCT_BY_ID,
     UPDATE_PRODUCT_BY_ID,
     GET_ALL_PRODUCT,
+    GET_PRODUCT_TRENDING,
     GET_PRODUCT_BY_NAME,
     GET_CATEGORIES,
+    FILTER_CATEGORY,
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
-    ORDER_BY_PRICE
+    ORDER_BY_PRICE,
+    RESET_ALL_PRODUCT
 
 } from "./actions/action-types"
 
 const initialState = {
     allProducts : [],
     product: [],
+    productTrending: [],
     categories: [],
     searchProduct:[],
     searchByName: [],
@@ -50,21 +54,35 @@ function rootReducer (state = initialState, action){
     
         case GET_ALL_PRODUCT:
             return {
-                ...state,
-                allProducts: action.payload
+              ...state,
+              allProducts: action.payload,
+              product: state.product.length ? state.product : action.payload,
             }
 
+        case RESET_ALL_PRODUCT:
+                return {
+                    ...state,
+                    product: state.allProducts
+                }
+            
         case GET_PRODUCT_BY_NAME:
                 return {
                     ...state,
-                    allProducts: action.payload
+                    product: action.payload
                 }
+                
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
                 productDetail: action.payload
 
             }
+            case GET_PRODUCT_TRENDING:
+
+            return {
+                ...state,
+                productTrending: state.allProducts.filter((product) => product.isTrending === true)
+            };
 
         case POST_PRODUCT:
             return {
@@ -76,6 +94,17 @@ function rootReducer (state = initialState, action){
                 ...state,
                 categories: action.payload
             }
+
+        case FILTER_CATEGORY:
+
+            return {
+                ...state,
+                allProducts: state.product.filter((products) => {
+                    return products.categories.some((category) => category.name === action.payload);
+                }),
+            };
+
+
         case DELETE_PRODUCT_BY_ID:
             return {
                 ...state,
@@ -106,7 +135,7 @@ function rootReducer (state = initialState, action){
             })
             return {
                 ...state,
-                allProducts: productSorted
+                product: productSorted
             }
 
             case ORDER_BY_PRICE:
@@ -117,7 +146,7 @@ function rootReducer (state = initialState, action){
 
   return {
     ...state,
-    allProducts: productSorted
+    product: productSorted
   }
            
         default:

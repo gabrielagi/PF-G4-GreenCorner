@@ -3,11 +3,14 @@ import {
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
   POST_PRODUCT,
+  GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
+  FILTER_CATEGORY,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
-  ORDER_BY_PRICE
+  ORDER_BY_PRICE,
+  RESET_ALL_PRODUCT,
 } from "../action-types";
 
 import axios from "axios";
@@ -22,6 +25,21 @@ export const getAllProducts = () => {
       
       dispatch({
         type: GET_ALL_PRODUCT,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message );
+    }
+  };
+};
+
+export const resetAllProducts = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(endpoint);
+      
+      dispatch({
+        type: RESET_ALL_PRODUCT,
         payload: data,
       });
     } catch (error) {
@@ -77,8 +95,26 @@ export const addProduct = (productdata) => {
     }
 
   }
+  
 
 }
+
+export const getProductsTrending = () => {
+  return async (dispatch) => {
+    const { data } = await axios.get(endpoint);
+
+    try {
+
+      dispatch({
+        type: GET_PRODUCT_TRENDING,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert ("Hubo un problema trayendo las categorías")
+    }
+  };
+};
 
 export const getAllCategories = () => {
   return async (dispatch) => {
@@ -87,6 +123,20 @@ export const getAllCategories = () => {
       dispatch({
         type: GET_CATEGORIES,
         payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const filterCategory = (category) => {
+  return async (dispatch) => {
+    try {
+
+      dispatch({
+        type: FILTER_CATEGORY,
+        payload: category,
       });
     } catch (error) {
       console.log(error.message);
