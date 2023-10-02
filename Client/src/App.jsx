@@ -15,22 +15,11 @@ import Footer from "./components/Footer/Footer";
 import Create from "./pages/Create";
 
 const App = () => {
-  const notify = () =>
-    toast.error("Product not found, try again.🪴", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light ",
-    });
 
   return (
     <div>
       
-      <Navbar notify={notify} />
+      <Navbar />
       <ToastContainer />
      {/*  <Profile /> */}
       {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
