@@ -89,17 +89,31 @@ function rootReducer (state = initialState, action){
                 ...state,
                 product: [...state.product, action.payload]
             }
-        case GET_CATEGORIES:
+    
+                //Por ahora no va
+            case GET_CATEGORIES:
+
+            const categorias = [];
+
+            state.product.forEach((product) => {
+              product.categories.forEach((category) => {
+                categorias.push(category);
+              });
+            });
+            
             return {
-                ...state,
-                categories: action.payload
-            }
+              ...state,
+              categories: categorias
+            };
+
+                
+                
 
         case FILTER_CATEGORY:
 
             return {
                 ...state,
-                allProducts: state.product.filter((products) => {
+                product: state.allProducts.filter((products) => {
                     return products.categories.some((category) => category.name === action.payload);
                 }),
             };

@@ -6,6 +6,7 @@ const Category = ({ name }) => {
   const dispatch = useDispatch();
 
   const handleChange = (name) => {
+    console.log(name);
     dispatch(filterCategory(name));
   };
 
