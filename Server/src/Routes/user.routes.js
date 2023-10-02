@@ -4,6 +4,7 @@ const {
   // getuserByIdHandler,
   // postuserHandler,
   // deleteuserHandler,
+  //getAllFavoritesHandler
 } = require("../Handler/product.handler");
 
 const userRouter = Router();
@@ -15,5 +16,7 @@ const userRouter = Router();
 //userRouter.post("/", postuserHandler);
 
 //userRouter.delete("/:id", deleteuserHandler);
+
+// userRouter.get("/:id/falvorites", getAllFavoritesHandler);
 
 module.exports = userRouter;
