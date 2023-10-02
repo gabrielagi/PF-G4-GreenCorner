@@ -36,8 +36,8 @@ const Detail = () => {
 
       <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
         
-          <div className="imagen bg-red-500 border-blue-600 m-auto" >
-            <img src="https://c8.alamy.com/compes/bftc5t/chimpance-alegre-con-los-brazos-levantados-delante-de-un-fondo-blanco-foto-de-estudio-bftc5t.jpg"></img>
+          <div className="image border-blue-600 m-auto" >
+            <img src="https://png.pngtree.com/png-clipart/20220829/ourlarge/pngtree-indoor-plant-png-image_6129530.png"></img>
           </div>
 
           <div className=" px-10 bg-[#f6f6f6] justify-between">
