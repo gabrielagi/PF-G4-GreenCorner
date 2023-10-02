@@ -1,4 +1,4 @@
-import styles from "./Nav.module.css";
+import styles from "./Navbar.module.css";
 import { CiUser } from "react-icons/ci";
 import { GrCart } from "react-icons/gr";
 import { GrSearch } from "react-icons/gr";

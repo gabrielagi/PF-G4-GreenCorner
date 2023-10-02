@@ -7,7 +7,7 @@ import Shop from "./pages/Shop/Shop";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import AboutUs from "./components/About Us/AboutUs";
-import Nav from "./components/Nav/Nav";
+import Navbar from "./components/Navbar/Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,7 +30,7 @@ const App = () => {
   return (
     <div>
       
-      <Nav notify={notify} />
+      <Navbar notify={notify} />
       <ToastContainer />
      {/*  <Profile /> */}
       {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
