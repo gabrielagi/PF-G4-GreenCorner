@@ -1,5 +1,4 @@
 import styles from "./Navbar.module.css";
-import { CiUser } from "react-icons/ci";
 import { GrCart } from "react-icons/gr";
 import { GrSearch } from "react-icons/gr";
 import LoginButton from "../Auth0/LoginButton";
@@ -12,8 +11,6 @@ import leaf from "../../assets/leaf.png";
 import { useState,useRef,useEffect } from "react";
 import { getProductByName } from "../../Redux/actions/product/action";
 import { useDispatch } from "react-redux";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Nav = ({notify}) => {
 
@@ -21,15 +18,17 @@ const Nav = ({notify}) => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
-  const { isAuthenticated } = useAuth0(); 
+  const { isAuthenticated,user } = useAuth0(); 
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [isUserMenuOpen, setUserMenuOpen] = useState(false);
 
   useEffect(() => {
     if (isSearchVisible) {
       inputRef.current.focus();
     }
   }, [isSearchVisible]);
+
 
 
   const handleSearchMouseEnter = () => {
@@ -60,6 +59,11 @@ const Nav = ({notify}) => {
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
+  };
+
+
+  const toggleUserMenu = () => {
+    setUserMenuOpen(!isUserMenuOpen);
   };
 
   return (
@@ -123,7 +127,18 @@ const Nav = ({notify}) => {
         <a href="#" className={styles.anotherClass}>
           <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
         </a>
-        {isAuthenticated ? <LogoutButton /> : <LoginButton />}
+        {isAuthenticated 
+        ?   <a href="#" className={styles.anotherClass}  onClick={toggleUserMenu} >
+            <img src={user.picture} alt={user.name} style={{ width: "35px", borderRadius: "50px" }}/>
+            {isUserMenuOpen && (                /* ACA VA EL MENU  */
+            <div className={styles.userMenu}>
+            <a href="#">Profile</a>
+            <a href="#">Settings</a>
+            <LogoutButton />
+            </div>)}                          {/* HASTA ACA */}
+            </a>
+        : <LoginButton />
+        }
       </div>
     </nav>
     
