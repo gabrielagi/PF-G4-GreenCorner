@@ -33,7 +33,7 @@ const App = () => {
         <Route path="/create" element={<Create/>} />
         { <Route path="/profile" element={<Profile/>} /> }
       </Routes>
-      <Footer />
+      {/*<Footer />*/}
     </div>
   );
 };
