@@ -14,6 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
 import Create from "./pages/Create";
 import Guides from "./pages/Guides/Guides";
+import ContactUs from "./pages/Contact-Us/ContactUs";
+  
+
 
 const App = () => {
   return (
@@ -31,7 +34,9 @@ const App = () => {
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/create" element={<Create/>} />
+        <Route path="/contact-us" element={<ContactUs/>} />
         { <Route path="/profile" element={<Profile/>} /> }
+       
       </Routes>
       {/*<Footer />*/}
     </div>
