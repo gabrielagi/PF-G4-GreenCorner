@@ -3,7 +3,7 @@ import Category from "./Categorie";
 const Categories = ({ allCategories }) => {
  
   return (
-    <div className=" ml-4 rounded-none  ml-[60px] border border-solid w-[200px] mt-[-200px] rounded-[30px] bg-gradient-to-br from-gray-600 via-transparent to-gray-300">
+    <div className=" ml-4 rounded-none sm:relative ml-[60px] border border-solid w-[200px] mt-[-200px] rounded-[40px] bg-gradient-to-br from-gray-600 via-transparent to-gray-300">
       <h1 className=" font-semibold text-4xl italic text-center">
         All Categories
       </h1>

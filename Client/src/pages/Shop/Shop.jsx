@@ -1,18 +1,12 @@
 import { useDispatch } from "react-redux";
-import { useEffect  } from "react";
-import "tailwindcss/tailwind.css"
-import Cards from "../../components/Cards/Cards"
+import { useEffect, useState } from "react";
+import "tailwindcss/tailwind.css";
+import styles from "./Shop.module.css";
+import Cards from "../../components/Cards/Cards";
 import Category from "../../components/Categories/Categories";
-import {
-  getAllProducts,
-  resetAllProducts,
-} from "../../Redux/actions/product/action";
-import { getAllCategories } from "../../Redux/actions/product/action";
-import { getProductsTrending } from "../../Redux/actions/product/action";
+import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
+import { getAllProducts, resetAllProducts, getAllCategories, getProductsTrending, filterByName,filterByPrice} from "../../Redux/actions/product/action";
 import { useSelector } from "react-redux";
-import { filterByName, filterByPrice  } from "../../Redux/actions/product/action";
-import styles from  "./Shop.module.css"
-import { useState } from "react";
 import plantgif from "../../assets/plantgif.gif";
 import { FiRefreshCw } from "react-icons/fi";
 
@@ -23,7 +17,6 @@ const Shop = () => {
   const productTrending = useSelector((state) => state.productTrending);
 
   const [priceOrder, setPriceOrder] = useState("");
-
 
   const dispatch = useDispatch();
 
@@ -49,7 +42,7 @@ const Shop = () => {
       setPriceOrder("");
       dispatch(resetAllProducts());
     }
-}
+  }
 
   return (
     <div>
@@ -83,9 +76,8 @@ const Shop = () => {
           <option value="high">High - Low </option>
           <option value="low">Low - High </option>
         </select>
-       
       </div>
-      
+
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/3 mr-4"></div>
 
@@ -93,17 +85,18 @@ const Shop = () => {
           <Cards allProducts={products} />
         </div>
       </div>
-    
-      <div className="lg:w-2/3 ml-4">
+
+      <div className="sm:w[10px]">
         <Category allCategories={allCategories} />
       </div>
-      <section className="my-60"></section>
+          <br /><br /><br />
 
-     
+      <div className="">
+        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px] ">Featured Products</strong>       
+        <ProductsTrending productTrending={productTrending} />
+      </div>
     </div>
-  
- 
-);
+  );
 };
 
 export default Shop;

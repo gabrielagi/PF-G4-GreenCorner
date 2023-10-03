@@ -78,7 +78,7 @@ function rootReducer (state = initialState, action){
 
             }
             case GET_PRODUCT_TRENDING:
-
+                
             return {
                 ...state,
                 productTrending: state.allProducts.filter((product) => product.isTrending === true)
