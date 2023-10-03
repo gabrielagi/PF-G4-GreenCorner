@@ -11,27 +11,26 @@ const Detail = () => {
   const {id} = useParams()
   const dispatch=useDispatch()
 
- console.log(id)
+
  const product = useSelector((state=>state.productDetail))
+ 
+ const [activeImg, setActiveImg]=useState()
+ const [amount, setAmount]=useState(1)
+ 
+ 
+ useEffect(() => {
+  dispatch(getProductById(id))
+  
+
+}, []);
+ 
+  
+    
+ 
 
  
- const [images, setImages]=useState({
-   img1: 'https://png.pngtree.com/png-clipart/20220829/ourlarge/pngtree-indoor-plant-png-image_6129530.png',
-   img2: 'https://images.rawpixel.com/image_png_social_square/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvcGYtczEtdGVkLTA5ODgucG5n.png?s=NBr-myAqigX97wmro0xxh3LAOCVH1Cf4vTEdxaT3OEY',
-   img3: 'https://img.lovepik.com/free-png/20210924/lovepik-plant-pot-png-image_401306819_wh1200.png'
-  })
-  
-  useEffect(()=>{
-    dispatch( getProductById(id))
-    console.log(id)
-    console.log('llegó '+id)
-  },[])
-  
-  const [activeImg, setActiveImg]=useState(images.img1)
 
-  const [amount, setAmount]=useState(1)
-
-
+  console.log(product)
 
 
 
@@ -47,16 +46,18 @@ const Detail = () => {
 
 
       <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-        
-          <div className=" grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto" >
-                <img src={activeImg} alt=''/>
+      {product.name && <div className=" grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto" >
+              <img src={activeImg || product.images[0]} alt=''/> 
+                
                 
                 <div className="imagen flex flex-row justify-between gap-10  h-60   bg-green-100  mb-20 ">
-                  <img src={images.img1} className=" rounded-md w-60 cursor-pointer" onClick={()=> setActiveImg(images.img1)} />
-                  <img src={images.img2} className=" rounded-md w-60 cursor-pointer" onClick={()=> setActiveImg(images.img2)} />
-                  <img src={images.img3} className=" rounded-md w-60 cursor-pointer" onClick={()=> setActiveImg(images.img3)} />
+                  {product.images?.map((imagen,i)=> {
+                  return (<img key={i} src={imagen} className=" rounded-md w-60 cursor-pointer" onClick={()=> setActiveImg(imagen)} />)
+                })}
+            
               </div>
-          </div>
+          </div>}
+          
 
           <div className=" px-10 bg-[#f6f6f6] justify-between">
               
@@ -96,11 +97,11 @@ const Detail = () => {
       </div>
     <h3 className="my-20 mt-20 text-center text-5xl ">Related products</h3>
     <div className="grid grid-cols-1   sm:grid-cols-2 sm:gap-x-10 sm:mx-auto sm:px-auto    md:grid-cols-4 mb-60">
-    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}></Card>
-    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}></Card>
-    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}></Card>
-    <Card name={product.name} image={product.image} productrice={product.price} id={product.product_id}/>
-
+    {/* <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}></Card>
+    <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}></Card>
+    <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}></Card>
+    <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}/>
+ */}
 
 
     </div>

@@ -16,7 +16,7 @@ const OpinionCard = ({ card }) => {
       <img
         src={rating}
         alt=""
-        className="ml-20 mr-20 w-12 h-12" // Tamaño más pequeño
+        className="ml-50 mr-50 w-10 h-10" // Tamaño más pequeño
       />
     </div>
   );
