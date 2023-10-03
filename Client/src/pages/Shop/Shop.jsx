@@ -91,8 +91,8 @@ const Shop = () => {
       </div>
           <br /><br /><br />
 
-      <div className="">
-        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px] ">Featured Products</strong>       
+      <div >
+        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">Featured Products</strong>       
         <ProductsTrending productTrending={productTrending} />
       </div>
     </div>

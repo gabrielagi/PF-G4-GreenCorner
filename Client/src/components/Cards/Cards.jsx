@@ -3,7 +3,7 @@ import plantgif from "../../assets/plantgif.gif";
 
 const Cards = ({ allProducts }) => {
   return (
-    <div className="relative flex-wrap ml-4 flex">
+    <div className="relative flex-wrap ml-4 flex gap-[100px]">
      {allProducts.length !== 0 ? (
         allProducts.map((p, i) => {
           
