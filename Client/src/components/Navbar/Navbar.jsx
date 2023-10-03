@@ -8,20 +8,33 @@ import { AiFillShop } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import leaf from "../../assets/leaf.png";
-import { useState,useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { getProductByName } from "../../Redux/actions/product/action";
 import { useDispatch } from "react-redux";
+import person from "../../assets/person.png"
+import fav from "../../assets/favorito.png"
+import logout from "../../assets/cerrar-sesion.png"
 
-const Nav = ({notify}) => {
-
+const Nav = ({ notify }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-
-  const { isAuthenticated,user } = useAuth0(); 
+  const [open, setOpen] = useState(true)
+  const { isAuthenticated, user } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [isUserMenuOpen, setUserMenuOpen] = useState(false);
+
+
+  const menuRef = useRef()
+  const imgRef = useRef()
+
+  window.addEventListener("click", (e) => {
+    if ( e.target !== menuRef.current &&e.target !== imgRef.current){
+      setOpen(false)
+    }
+  })
+
 
   useEffect(() => {
     if (isSearchVisible) {
@@ -32,29 +45,29 @@ const Nav = ({notify}) => {
 
 
   const handleSearchMouseEnter = () => {
-    if(searchValue){
+    if (searchValue) {
       dispatch(getProductByName(searchValue))
-      .then((response) => {
-        if(response){
-          navigate("/shop");
-        }
-      })
-      .catch((error) => {
-        console.log(error); 
-        notify();
-      });
-    }else{
+        .then((response) => {
+          if (response) {
+            navigate("/shop");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          notify();
+        });
+    } else {
       setSearchVisible(!isSearchVisible);
     }
-    };
+  };
 
-    const handleKeyDown = (e) => {
-      if (e.key === "Enter" && searchValue) {
-        handleSearchMouseEnter();
-      }else if(e.key === "Enter" && !searchValue){
-        dispatch(getProductByName(searchValue))
-      }
-    };
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && searchValue) {
+      handleSearchMouseEnter();
+    } else if (e.key === "Enter" && !searchValue) {
+      dispatch(getProductByName(searchValue))
+    }
+  };
 
 
   const handleInputChange = (e) => {
@@ -62,9 +75,9 @@ const Nav = ({notify}) => {
   };
 
 
-  const toggleUserMenu = () => {
-    setUserMenuOpen(!isUserMenuOpen);
-  };
+  // const toggleUserMenu = () => {
+  //   setUserMenuOpen(!isUserMenuOpen);
+  // };
 
   return (
     <nav className={styles.nav}>
@@ -110,38 +123,61 @@ const Nav = ({notify}) => {
           <BsBook style={{ fontSize: "24px" }} /> <p>Guide</p>
         </a>
         <div className={styles.search} onKeyDown={handleKeyDown}>
-        <input
-          type="text"
-          placeholder="Search here..."
-          ref={inputRef}
-          className={`${styles.searchInput} ${
-            isSearchVisible ? styles.searchInputVisible : ""
-          }`}
-          value={searchValue}
-          onChange={handleInputChange}
-        />
-        <a href="#" className={styles.search}>
-          <GrSearch onClick={handleSearchMouseEnter}  style={{ fontSize: "24px" }} /> <p>Search</p>
-        </a>
+          <input
+            type="text"
+            placeholder="Search here..."
+            ref={inputRef}
+            className={`${styles.searchInput} ${isSearchVisible ? styles.searchInputVisible : ""
+              }`}
+            value={searchValue}
+            onChange={handleInputChange}
+          />
+          <a href="#" className={styles.search}>
+            <GrSearch onClick={handleSearchMouseEnter} style={{ fontSize: "24px" }} /> <p>Search</p>
+          </a>
         </div>
         <a href="#" className={styles.anotherClass}>
           <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
         </a>
-        {isAuthenticated 
-        ?   <a href="#" className={styles.anotherClass}  onClick={toggleUserMenu} >
-            <img src={user.picture} alt={user.name} style={{ width: "35px", borderRadius: "50px" }}/>
-            {isUserMenuOpen && (                /* ACA VA EL MENU  */
-            <div className={styles.userMenu}>
-            <a href="#">Profile</a>
-            <a href="#">Settings</a>
-            <LogoutButton />
-            </div>)}                          {/* HASTA ACA */}
-            </a>
-        : <LoginButton />
+        {isAuthenticated
+          ?
+          <div className={styles.conteiner} >
+
+            <img
+              ref={imgRef}
+              onClick={() => setOpen(!open)}
+              src={user.picture}
+              alt={user.name}
+              style={{ width: "35px", borderRadius: "50px" }}
+            />
+            {
+              open &&
+
+              <div ref={menuRef} className={styles.userMenu}>
+                <ul>
+                  <li className={styles.li} onClick={() => setOpen(false)}>
+                    <img src={person} />
+                    <a> Profile </a>
+                  </li>
+                  <li className={styles.li} onClick={() => setOpen(false)}>
+                    <img src={fav} />
+                    <a href="#">My Garden</a>
+                  </li>
+                  <li className={styles.li} onClick={() => setOpen(false)}>
+                    <img src={logout} />
+
+                    <LogoutButton />
+                  </li>
+
+                </ul>
+              </div>
+            }
+          </div>
+          : <LoginButton />
         }
       </div>
     </nav>
-    
+
   );
 };
 
