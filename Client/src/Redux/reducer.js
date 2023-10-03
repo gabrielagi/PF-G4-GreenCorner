@@ -99,7 +99,9 @@ function rootReducer (state = initialState, action){
               product.categories.forEach((category) => {
                 categories.push(category);
               });
-            });
+            }); 
+
+            
 
             const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
             
