@@ -13,26 +13,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
 import Create from "./pages/Create";
+import Guides from "./pages/Guides/Guides";
+import ContactUs from "./pages/Contact-Us/ContactUs";
+  
+
 
 const App = () => {
-  const notify = () =>
-    toast.error("Product not found, try again.🪴", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light ",
-    });
-
   return (
     <div>
-      
-      <Navbar notify={notify} />
+      <Navbar />
       <ToastContainer />
-     {/*  <Profile /> */}
+      {/*  <Profile /> */}
       {/*  ESTO BORRARLO SOLO ESTA PARA VER COMO FUNCIONA EL LOGIN*/}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -40,10 +31,14 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/guides" element={<Guides />} />
         <Route path="/create" element={<Create/>} />
-        {/* <Route path="/profile" element={<Profile/>} /> */}
+        <Route path="/contact-us" element={<ContactUs/>} />
+        { <Route path="/profile" element={<Profile/>} /> }
+       
       </Routes>
-      <Footer />
+      {/*<Footer />*/}
     </div>
   );
 };

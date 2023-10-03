@@ -15,8 +15,8 @@ const AboutUs = () => {
   return (
     <div>
     <SectionOne/>
-    <SectionTwo/>
-    <SectionThree/>
+   {/* <SectionTwo/>
+    <SectionThree/>*/}
     </div>
   );
 };

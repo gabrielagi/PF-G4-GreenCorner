@@ -14,8 +14,12 @@ import { useDispatch } from "react-redux";
 import person from "../../assets/person.png"
 import fav from "../../assets/favorito.png"
 import logout from "../../assets/cerrar-sesion.png"
+import { toast } from "react-toastify";
 
 const Nav = ({ notify }) => {
+  
+  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
@@ -42,6 +46,18 @@ const Nav = ({ notify }) => {
     }
   }, [isSearchVisible]);
 
+
+  const notify = () =>
+    toast.error("Product not found, try again.🪴", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light ",
+    });
 
 
   const handleSearchMouseEnter = () => {

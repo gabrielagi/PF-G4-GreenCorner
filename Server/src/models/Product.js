@@ -20,10 +20,9 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    image: {
-      type: DataTypes.STRING,
-      defaultValue: "https://img.lovepik.com/free_png/32/28/43/58PIC3358PICa1Ut458PICf58PIC79sUT_PIC2018.png_300.png",
-      allowNull: true,
+    images: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false,
     },
     stock: {
       type: DataTypes.INTEGER,
