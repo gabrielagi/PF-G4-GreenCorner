@@ -113,7 +113,7 @@ const Nav = () => {
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <Link to="/guide" className={styles.nav__link}>
+          <Link to="/guides" className={styles.nav__link}>
             Guide
           </Link>
         </li>
