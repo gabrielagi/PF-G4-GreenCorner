@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Inclusive+Sans&family=Martian+Mono:wght@500&family=Noto+Sans+JP:wght@700&display=swap");
-
 *,
 *::after,
 *::before {
@@ -25,18 +24,18 @@ a {
 }
 
 .search {
-  display: flex;
-  padding: 5px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background-color 0.1s, font-size 0.3s;
-}
-
-.search:active {
-  background-color: #28a745;
-  scale: 0.98;
-}
+    display: flex;
+    padding: 5px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.1s, font-size 0.3s; 
+  }
+  
+  .search:active {
+    background-color: #28a745; 
+    scale: 0.98;
+  }   
 
 .nav {
   display: flex;
@@ -70,7 +69,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: rem;
+  gap: 5rem;
 }
 
 .nav__link {
@@ -107,12 +106,12 @@ a p {
   display: none;
 }
 
-.search {
-  position: relative;
+.search{
+    position: relative;
 }
 
 .searchInput {
-  position: absolute;
+position: absolute;
   top: -2px;
   right: 0px;
   width: 0;
@@ -127,18 +126,18 @@ a p {
   transform-origin: right;
   color: rgb(78, 78, 78);
 
-}
+  }
+  
+  
 
-
-
-.searchInputVisible {
-  padding: 10px;
+  .searchInputVisible {
+    padding: 10px;
   border-color: green;
   width: 200px;
   opacity: 1;
   transform: scaleX(1);
-  margin-left: -206px;
-}
+  margin-left: -206px; 
+  }
 
 
 
@@ -204,103 +203,101 @@ a p {
 
 
 
-@media (max-width: 1505px) {
-  .searchInput {
-    width: 190px;
+@media (max-width: 1505px)  {
+  .searchInput{
+      width: 190px;
   }
-}
-
-@media (max-width: 1350px) {
-  .searchInput {
-    width: 140px;
   }
-}
-
-
-@media (max-width: 1180px) {
-  .nav {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 2rem;
-    height: auto;
-    align-items: center;
+  
+  @media (max-width: 1350px)  {
+    .searchInput{
+        width: 140px;
+    }
+    }
+  
+  
+  @media (max-width: 1180px) {
+    .nav {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      height: auto;
+      align-items: center;
+    }
+    .searchInput{
+      width: 200px;
+      top: 0px;
+      right: 0px;
+    }
   }
-
-  .searchInput {
-    width: 200px;
-    top: 0px;
-    right: 0px;
+  
+  @media (max-width: 650px) {
+    .nav__menu {
+      display: none;
+    }
+    .nav__brand {
+      font-size: 30px;
+    }
+  
+    .logo {
+      width: 50px;
+    }
+  
+    .shop,
+    .guide,
+    a {
+      font-size: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  
+      a p{
+          display: block;
+        
+      }
+  
+      .searchInput{
+        right: -160px;
+        top: 55px;
+        width:350px;
+        height: 40px;
+    }
+    
+  
   }
-}
-
-@media (max-width: 650px) {
-  .nav__menu {
-    display: none;
-  }
-
-  .nav__brand {
-    font-size: 30px;
-  }
-
-  .logo {
-    width: 50px;
-  }
-
-  .shop,
-  .guide,
-  a {
-    font-size: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  a p {
-    display: block;
-
-  }
-
-  .searchInput {
-    right: -160px;
-    top: 55px;
-    width: 350px;
-    height: 40px;
-  }
-
-
-}
-
-@media (max-width: 400px) {
-  .searchInput {
+  
+  @media (max-width: 400px){
+    .searchInput{
     right: -140px;
-    width: 340px;
+    width:340px;
+    }
   }
-}
-
-@media (max-width: 350px) {
-  .nav__brand {
-    font-size: 25px;
+  
+  @media (max-width: 350px) {
+    .nav__brand {
+      font-size: 25px;
+    }
+    .logo {
+      width: 40px;
+    }
+  
+      .shop,
+      .guide,
+      a {
+          font-size: 2px;
+      }
+      a p{
+          display: none;
+      }
+  
+    .searchInput{
+       top: 40px;
+       height: 38px;
+        width:300px;
+        }
   }
-
-  .logo {
-    width: 40px;
-  }
-
-  .shop,
-  .guide,
-  a {
-    font-size: 2px;
-  }
-
-  a p {
-    display: none;
-  }
-
-  .searchInput {
-    top: 40px;
-    height: 38px;
-    width: 300px;
-  }
-}
+  
+  
