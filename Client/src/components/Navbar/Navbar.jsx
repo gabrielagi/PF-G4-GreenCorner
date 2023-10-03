@@ -16,7 +16,7 @@ import fav from "../../assets/favorito.png"
 import logout from "../../assets/cerrar-sesion.png"
 import { toast } from "react-toastify";
 
-const Nav = ({ notify }) => {
+const Nav = () => {
   
   
 
