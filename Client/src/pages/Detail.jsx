@@ -11,7 +11,7 @@ const Detail = () => {
   const {id} = useParams()
   const dispatch=useDispatch()
 
-
+ const allProducts= useSelector((state=>state.allProducts))
  const product = useSelector((state=>state.productDetail))
  
  const [activeImg, setActiveImg]=useState()
@@ -22,7 +22,7 @@ const Detail = () => {
   dispatch(getProductById(id))
   
 
-}, []);
+}, [id]);
  
   
     
@@ -31,10 +31,10 @@ const Detail = () => {
  
 
   console.log(product)
+  console.log(allProducts)
 
-
-
- return (
+  if(product.name){return (
+  
  <div>
      
 <Link className="ml-16 mt-20" to='/shop'><button ><VscArrowCircleLeft color='gray'size='5rem'/></button></Link>
@@ -96,23 +96,25 @@ const Detail = () => {
         <div className="">Nullam ultricies lacus in feugiat viverra. Nunc gravida sagittis elit, sed sodales lacus posuere in. Aliquam mi turpis, imperdiet ac sollicitudin at, ultrices ac est. Praesent consectetur, neque sed dictum pharetra, purus ante fringilla metus, in egestas dui lacus quis justo. Maecenas lacus augue, vulputate quis ullamcorper et, porta et velit. Sed aliquet neque elit. Nunc non sagittis nisl. Sed tempus mollis diam eget laoreet. In ut pulvinar tellus, nec tincidunt nulla. Morbi a hendrerit sapien. Nulla nec turpis sed eros lobortis ornare. Morbi sodales interdum ipsum.</div>
       </div>
     <h3 className="my-20 mt-20 text-center text-5xl ">Related products</h3>
-    <div className="grid grid-cols-1   sm:grid-cols-2 sm:gap-x-10 sm:mx-auto sm:px-auto    md:grid-cols-4 mb-60">
-    {/* <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}></Card>
-    <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}></Card>
-    <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}></Card>
-    <Card name={product.name} image={product.images[0]} productrice={product.price} id={product.product_id}/>
- */}
-
+    <div className="flex flex-row gap-20 justify-center mx-auto my-10">
+    {allProducts.map(( p)=>{ 
+    if(p.categories.name === product.categories.name)
+     return  (<Card key={p.id} id={p.product_id} name={p.name} images={p.images} price={p.price}/>)
+   } ).slice(0,4)
+      }
 
     </div>
      
+
+
 
 
       
 
     </div>
     </div>
-  );
+  );}
+ 
 }
 
 export default Detail;

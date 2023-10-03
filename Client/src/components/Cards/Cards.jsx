@@ -6,6 +6,7 @@ const Cards = ({ allProducts }) => {
     <div className="relative flex-wrap ml-4 flex">
      {allProducts.length !== 0 ? (
         allProducts.map((p, i) => {
+          
          return (
               <Card key={i} name={p.name} images={p.images} price={p.price} id={p.product_id} />
           );

@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "react-alice-carousel": "^2.7.1",
-    "react-responsive-carousel": "^3.2.23",
-    "react-toastify": "^9.1.3"
-  }
-}

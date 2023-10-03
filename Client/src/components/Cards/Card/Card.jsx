@@ -40,7 +40,7 @@ const Card = ({name, images, price, id}) => {
         notifyII();
         setCorazon(!corazon)
     }
-
+console.log(images)
     return (
         <div className="bg-slate-100 rounded-md box-border h-85 w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">
            
