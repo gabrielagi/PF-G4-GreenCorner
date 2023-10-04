@@ -14,7 +14,7 @@ mercadopago.configure({
 const createOrder = async (req, res) => {
   // El product puede ser un objeto individual desde Detail o un array desde Cart
   const product = req.body.product;
-  const amount = req.body.amount;
+  const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
 
   // Guardo los items que se van a vender
   let itemsToSell = [];
