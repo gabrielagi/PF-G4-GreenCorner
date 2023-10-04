@@ -5,7 +5,14 @@ import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
 import Category from "../../components/Categories/Categories";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
-import { getAllProducts, resetAllProducts, getAllCategories, getProductsTrending, filterByName,filterByPrice} from "../../Redux/actions/product/action";
+import {
+  getAllProducts,
+  resetAllProducts,
+  getAllCategories,
+  getProductsTrending,
+  filterByName,
+  filterByPrice,
+} from "../../Redux/actions/product/action";
 import { useSelector } from "react-redux";
 import plantgif from "../../assets/plantgif.gif";
 import { FiRefreshCw } from "react-icons/fi";
@@ -43,6 +50,20 @@ const Shop = () => {
       dispatch(resetAllProducts());
     }
   }
+
+  // // Se realiza el checkout
+  // const handleCheckout = async () => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://localhost:3001/payment/create-order",
+  //       { ...product, quantity }
+  //     );
+
+  //     location.href = data.body.init_point;
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   return (
     <div>
@@ -89,12 +110,18 @@ const Shop = () => {
       <div className="sm:w[10px]">
         <Category allCategories={allCategories} />
       </div>
-          <br /><br /><br />
+      <br />
+      <br />
+      <br />
 
       <div className="">
-        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px] ">Featured Products</strong>       
+        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px] ">
+          Featured Products
+        </strong>
         <ProductsTrending productTrending={productTrending} />
       </div>
+
+      {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
   );
 };
