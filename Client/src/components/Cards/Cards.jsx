@@ -13,7 +13,6 @@ const Cards = ({ allProducts }) => {
         })
       ) : (
         <div className="flex justify-center items-center ml-[70px]">
-          <h1>Product Not found</h1>
           <img src={plantgif} alt="loading" />
         </div>
       )}
