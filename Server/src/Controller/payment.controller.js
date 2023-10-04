@@ -12,19 +12,46 @@ mercadopago.configure({
 });
 
 const createOrder = async (req, res) => {
-  // Ahora estoy en Detail testeando, el product puede ser un objeto individual o un array
+  // El product puede ser un objeto individual desde Detail o un array desde Cart
   const product = req.body.product;
   const amount = req.body.amount;
 
+  // Guardo los items que se van a vender
+  let itemsToSell = [];
+
+  // Si viene de Detail es un objeto
+  let convertProdcutFromDetail = {};
+  if (typeof product === "object") {
+    convertProdcutFromDetail = {
+      id: product.id,
+      quantity: amount,
+      title: product.name,
+      unit_price: product.price,
+      currency_id: "ARS",
+    };
+  }
+
+  // Verifico si es un producto individual o un conjunto de Productos
+  convertProdcutFromDetail
+    ? itemsToSell.push(convertProdcutFromDetail)
+    : product.forEach((product) =>
+        itemsToSell.push({
+          id: product.id,
+          quantity: amount,
+          title: product.name,
+          unit_price: product.price,
+          currency_id: "ARS",
+        })
+      );
+
+  // Datos del usuario que realiza la compra
+  let payer = {
+    name: user.given_name,
+    surname: user.family_name,
+  };
+
   const result = await mercadopago.preferences.create({
-    items: [
-      {
-        title: "Laptop",
-        quantity: 2,
-        unit_price: 500,
-        currency_id: "ARS",
-      },
-    ],
+    items: itemsToSell,
     // URLs de redirección
     back_urls: {
       success: `${HOST}/success`,
