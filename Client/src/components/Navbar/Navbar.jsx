@@ -31,6 +31,22 @@ const Nav = () => {
     }
   }, [isSearchVisible]);
 
+  useEffect(() => {
+    const closeMenuOnClickOutside = (e) => {
+      if (open && !e.target.closest(`.${styles.userMenu}`) && !e.target.closest(`.${styles.container}`)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("click", closeMenuOnClickOutside);
+
+    return () => {
+      document.removeEventListener("click", closeMenuOnClickOutside);
+    };
+  }, [open]);
+
+
+
   const handleSearchMouseEnter = () => {
     if (searchValue) {
       dispatch(getProductByName(searchValue))
@@ -147,16 +163,16 @@ const Nav = () => {
               {open && (
                 <div className={styles.userMenu}>
                   <ul>
-                    <li className={styles.li}>
-                      <a>
-                        <img src={person} alt="Profile" /> Profile
-                      </a>
-                    </li>
-                    <li className={styles.li}>
-                      <a>
-                        <img src={fav} alt="My Garden" /> My Garden
-                      </a>
-                    </li>
+                  <li className={styles.li}>
+                    <Link to="/profile">
+                      <img src={person} alt="Profile" /> Profile
+                    </Link>
+                  </li>
+                  <li className={styles.li}>
+                    <Link to="/favorites">
+                       <img src={fav} alt="My Garden" /> My Garden
+                     </Link>
+                  </li>
                     <li className={styles.li}>
                       <a>
                         <img src={logout} alt="Logout" />
