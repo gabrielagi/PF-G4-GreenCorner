@@ -1,23 +1,18 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 const ProductTrending = ({ name, images, price, id }) => {
-  const dispatch = useDispatch();
-
-  const handleChange = (id) => {
-    //dispatch(filterCategory(name));
-  };
 
   return (
     <div className="flex flex-wrap ml-4">
-      <br /><br />
+   
       
-      <Link onClick={() => handleChange(id)}>
+   <Link to={`/detail/${id}`}>
         <img src={images} className="flex sm:w-[70px]  w-[70px]" />
       </Link>
-        {/*Aca esta el error de que se agrupan los nombres*/}
-      <strong className="sm:absolute sm:ml-[80px] sm:-top-[-20px] absolute ml-[80px] -top-[-20px]">{name}</strong>
+       
+      <strong className=" sm:relative sm:-top-[-20px] sm:ml-[10px]  relative -top-[-20px] ml-[10px] ">{name}</strong>
         
-      <h3 className="sm:absolute sm:ml-[80px] sm:-top-[-40px] sm:l-[20px] sm:text-green-600 absolute ml-[80px] -top-[-40px] l-[20px] text-green-600">${price}</h3>
+      <h3 className="sm:relative sm:ml-[-50px] sm:-top-[-50px] sm:l-[20px] sm:text-green-600 relative ml-[-50px] -top-[-40px] l-[20px] text-green-600">${price}</h3>
+      
     </div>
   );
 };
