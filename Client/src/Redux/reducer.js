@@ -10,7 +10,8 @@ import {
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
     ORDER_BY_PRICE,
-    RESET_ALL_PRODUCT
+    RESET_ALL_PRODUCT,
+    SET_PAGE,
 
 } from "./actions/action-types"
 
@@ -22,6 +23,7 @@ const initialState = {
     searchProduct:[],
     searchByName: [],
     productDetail: [],
+    currentPage: 1,
 };
 
 /* 
@@ -51,7 +53,12 @@ let products = []
 function rootReducer (state = initialState, action){
     switch (action.type) {
     
-    
+        case SET_PAGE:
+            return {
+                ...state,
+                currentPage: payload
+            }
+
         case GET_ALL_PRODUCT:
             return {
               ...state,

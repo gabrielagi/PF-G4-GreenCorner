@@ -195,3 +195,10 @@ export function filterByPrice(payload){
       payload
   }
 }
+
+export const setPage = (newPage) => {
+  return {
+      type: SET_PAGE,
+      payload: newPage
+  }
+}
