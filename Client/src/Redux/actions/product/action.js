@@ -196,9 +196,3 @@ export function filterByPrice(payload){
   }
 }
 
-export const setPage = (newPage) => {
-  return {
-      type: SET_PAGE,
-      payload: newPage
-  }
-}

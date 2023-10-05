@@ -11,4 +11,3 @@ export const POST_PRODUCT = "POST_PRODUCT";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_CATEGORIES_BY_ID = "GET_CATEGORIES_BY_ID";
 export const FILTER_CATEGORY = "FILTER_CATEGORY";
-export const SET_PAGE = "SET_PAGE";
