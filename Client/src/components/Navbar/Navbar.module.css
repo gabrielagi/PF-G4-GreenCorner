@@ -285,7 +285,7 @@ position: absolute;
       }
   
       .searchInput{
-        right: -160px;
+        right: -130px;
         top: 55px;
         width:350px;
         height: 40px;
@@ -297,8 +297,8 @@ position: absolute;
   
   @media (max-width: 400px){
     .searchInput{
-    right: -140px;
-    width:340px;
+    right: -130px;
+    width:330px;
     }
   }
   
@@ -322,7 +322,8 @@ position: absolute;
     .searchInput{
        top: 40px;
        height: 38px;
-        width:300px;
+       right: -120px;
+        width:270px;
         }
   }
   
