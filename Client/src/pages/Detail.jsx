@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { getProductById } from "../Redux/actions/product/action";
 import Card from "../components/Cards/Card/Card";
 import { VscArrowCircleLeft } from "react-icons/vsc";
+import loading from "../assets/loading.gif";
 
 const Detail = () => {
   const { id } = useParams();
@@ -21,20 +22,33 @@ const Detail = () => {
     dispatch(getProductById(id));
   }, [id]);
 
-  const [quantity, setQuantity] = useState(1);
+  // Hasta cuánto se puede incrementar
+  const amountIncrement = () =>
+    product.stock > amount
+      ? setAmount(amount + 1)
+      : alert(
+          `You have reached the maximum amount of ${product.name} available`
+        );
 
-  // hasta cuánto puedo incrementar
-  const quantityIncrement = () =>
-    product.stock > quantity
-      ? setQuantity(quantity + 1)
-      : alert("Alcanzaste la cantidad máxima de artículos existentes");
-
-  // hasta cuánto puedo disminuir
-  const quantityDecrement = () =>
-    quantity > 1 ? setQuantity(quantity - 1) : null;
+  // Hasta cuánto se puedo decrecentar
+  const amountDecrement = () => (amount > 1 ? setAmount(amount - 1) : null);
 
   console.log(product);
   console.log(allProducts);
+
+  // Se realiza el checkout
+  const handleCheckout = async () => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3001/payment/create-order",
+        { ...product, amount }
+      );
+
+      location.href = data.body.init_point;
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   if (product.name) {
     return (
@@ -80,31 +94,27 @@ const Detail = () => {
               </select>
 
               <div className=" grid grid-cols-2  sm:  my-10  ">
-                <div className="flex flex-row items-center">
-                  <button
-                    className="bg-gray-200 py-8 px-10 rounded-lg text-green-800 text-4xl"
-                    onClick={() => {
-                      if (amount === 1) {
-                        return;
-                      } else {
-                        setAmount((any) => any - 1);
-                      }
-                    }}
-                  >
-                    -
-                  </button>
-                  <span className="py-8 px-10 text-4xl rounded-lg">
-                    {amount}
-                  </span>
-                  <button
-                    className="bg-gray-200 py-8 px-10 rounded-lg text-green-800 text-4xl"
-                    onClick={() => setAmount((any) => any + 1)}
-                  >
-                    +
-                  </button>
-                </div>
+                <button
+                  onClick={amountDecrement}
+                  className="bg-gray-200 py-8 px-10 rounded-lg text-green-800 text-4xl"
+                >
+                  -
+                </button>
+                <span>{amount}</span>
+                <button
+                  onClick={amountIncrement}
+                  className="bg-gray-200 py-8 px-10 rounded-lg text-green-800 text-4xl"
+                >
+                  +
+                </button>
                 <button className="py-4 sm: bg-[#75da5c] col-span-1 rounded-3xl">
                   ADD TO CART
+                </button>
+                <button
+                  onClick={handleCheckout}
+                  className="py-4 sm: bg-[#ce39f7] col-span-1 rounded-3xl"
+                >
+                  Checkout
                 </button>
               </div>
               <button className="p-8 my-10 pl-24 rounded-2xl border border-gray-400bg-[#cec6c6]">
@@ -162,6 +172,8 @@ const Detail = () => {
         </div>
       </div>
     );
+  } else {
+    <img src={loading} alt="Loading product detail" />;
   }
 };
 

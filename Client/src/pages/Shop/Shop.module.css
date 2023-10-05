@@ -1,6 +1,7 @@
 .filtros{
     display: flex;
-    align-items: center;
+    align-items:center ;
+    justify-content:flex-start;
     margin-top: 20px;
     margin-left: 50px;
     gap: 20px;
@@ -22,6 +23,7 @@
   
   .refresh{
     cursor: pointer;
+    min-width: 20px;
   }
 
   
@@ -75,6 +77,4 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-  
-
   

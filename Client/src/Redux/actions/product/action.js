@@ -15,8 +15,13 @@ import {
 
 import axios from "axios";
 
+
+/* const endpoint = "https://greencorner.onrender.com/product";
+const categories = "https://greencorner.onrender.com/category" */
 const endpoint = "http://localhost:3001/product";
 const categories = "http://localhost:3001/category"
+
+
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -84,7 +89,7 @@ export const addProduct = (productdata) => {
   return async (dispatch) => {
 
     try {
-      const { data } = await axios.post( endpoint, productdata)
+      const  data  = await axios.post( endpoint, productdata)
       dispatch({
         type: POST_PRODUCT,
         payload: data
