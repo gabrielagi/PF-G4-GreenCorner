@@ -10,26 +10,18 @@ import {
     GET_PRODUCT_BY_ID,
     ORDER_BY_NAME,
     ORDER_BY_PRICE,
-    RESET_ALL_PRODUCT,
-    GET_ALL_USER,
-    GET_USER_BY_NAME,
-    GET_USER_BY_ROL,
-    GET_USER_BY_ID,
-    DELETE_USER,
-    POST_USER
+    RESET_ALL_PRODUCT
 
 } from "./actions/action-types"
 
 const initialState = {
-    allProducts: [],
+    allProducts : [],
     product: [],
     productTrending: [],
     categories: [],
-    searchProduct: [],
+    searchProduct:[],
     searchByName: [],
     productDetail: [],
-    user: [],
-    userDetail: []
 };
 
 /* 
@@ -56,37 +48,37 @@ function updater(product, id, updatedProductData) {
 let productSorted = []
 let products = []
 
-function rootReducer(state = initialState, action) {
+function rootReducer (state = initialState, action){
     switch (action.type) {
-
-
+    
+    
         case GET_ALL_PRODUCT:
             return {
-                ...state,
-                allProducts: action.payload,
-                product: state.product.length ? state.product : action.payload,
+              ...state,
+              allProducts: action.payload,
+              product: state.product.length ? state.product : action.payload,
             }
 
         case RESET_ALL_PRODUCT:
-            return {
-                ...state,
-                product: state.allProducts
-            }
-
+                return {
+                    ...state,
+                    product: state.allProducts
+                }
+            
         case GET_PRODUCT_BY_NAME:
-            return {
-                ...state,
-                product: action.payload
-            }
-
+                return {
+                    ...state,
+                    product: action.payload
+                }
+                
         case GET_PRODUCT_BY_ID:
             return {
                 ...state,
                 productDetail: action.payload
 
             }
-        case GET_PRODUCT_TRENDING:
-
+            case GET_PRODUCT_TRENDING:
+                
             return {
                 ...state,
                 productTrending: state.allProducts.filter((product) => product.isTrending === true)
@@ -97,9 +89,9 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 product: [...state.product, action.payload]
             }
-
-        //Por ahora no va
-        case GET_CATEGORIES:
+    
+                //Por ahora no va
+            case GET_CATEGORIES:
 
             // const categories = [];
 
@@ -109,6 +101,7 @@ function rootReducer(state = initialState, action) {
             //   });
             // }); 
 
+            
 
             // const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
                 
@@ -118,8 +111,8 @@ function rootReducer(state = initialState, action) {
               categories: action.payload
             };
 
-
-
+                
+                
 
         case FILTER_CATEGORY:
 
@@ -137,17 +130,16 @@ function rootReducer(state = initialState, action) {
                 product: state.product.filter((product) => product.id !== action.payload.id)
             }
 
-        /*       case UPDATE_PRODUCT_BY_ID:
-                  const { id, updatedProductData } = action.payload;
-                  const newProducts = [...state.product]
-      
-                  updater(newProducts, id, updatedProductData)
-                  return {
-                      ...state,
-                      product: newProducts
-      
-                  } */
+  /*       case UPDATE_PRODUCT_BY_ID:
+            const { id, updatedProductData } = action.payload;
+            const newProducts = [...state.product]
 
+            updater(newProducts, id, updatedProductData)
+            return {
+                ...state,
+                product: newProducts
+
+            } */
 
         case ORDER_BY_NAME:
             products = [...state.allProducts]
@@ -165,59 +157,22 @@ function rootReducer(state = initialState, action) {
                 product: productSorted
             }
 
-        case ORDER_BY_PRICE:
-            products = [...state.allProducts];
-            productSorted = action.payload === 'low' ?
-                products.sort((a, b) => a.price - b.price) :
-                products.sort((a, b) => b.price - a.price);
+            case ORDER_BY_PRICE:
+            products = [...state.allProducts]; 
+            productSorted = action.payload === 'low' ? 
+            products.sort((a, b) => a.price - b.price) :   
+            products.sort((a, b) => b.price - a.price);
 
-            return {
-                ...state,
-                product: productSorted
-            }
-
-        case GET_ALL_USER:
-            return {
-                ...state,
-                user: state.user
-            }
-
-        case GET_USER_BY_NAME:
-            return {
-                ...state,
-                userDetail: payload 
-            }
-
-        case GET_PRODUCT_BY_ID:
-            return{
-                ...state,
-                userDetail: payload
-            }
-
-        case GET_USER_BY_ROL:
-            return{
-                ...state,
-                userDetail: payload
-            }
-
-        case GET_USER_BY_ID:
-            return{
-                ...state,
-                userDetail: payload
-            }
-        
-        case POST_USER:
-            return{
-                ...state,
-                user: [...user, payload]
-            }
+  return {
+    ...state,
+    product: productSorted
+  }
+           
         default:
-            return { 
-                ...state
-            };
+            return { ...state };
 
 
-
+        
 
 
     }
