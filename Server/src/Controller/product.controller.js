@@ -79,6 +79,7 @@ const postProduct = async (productData) => {
     if (!name || !price || !stock) {
       throw new Error("Faltan completar campos obligatorios");
     }
+    
 
     const imagesResult = await uploadImages(images);
 

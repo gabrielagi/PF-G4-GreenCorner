@@ -5,17 +5,26 @@ import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
 import Category from "../../components/Categories/Categories";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
-import { getAllProducts, resetAllProducts, getAllCategories, getProductsTrending, filterByName,filterByPrice} from "../../Redux/actions/product/action";
+import {
+  getAllProducts,
+  resetAllProducts,
+  getAllCategories,
+  getProductsTrending,
+  filterByName,
+  filterByPrice,
+} from "../../Redux/actions/product/action";
 import { useSelector } from "react-redux";
-import plantgif from "../../assets/plantgif.gif";
 import { FiRefreshCw } from "react-icons/fi";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const Shop = () => {
   const products = useSelector((state) => state.product);
   const allCategories = useSelector((state) => state.categories);
   const [nameOrder, setNameOrder] = useState("");
   const productTrending = useSelector((state) => state.productTrending);
-
   const [priceOrder, setPriceOrder] = useState("");
 
   const dispatch = useDispatch();
@@ -44,6 +53,20 @@ const Shop = () => {
     }
   }
 
+  // // Se realiza el checkout
+  // const handleCheckout = async () => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://localhost:3001/payment/create-order",
+  //       { ...product, quantity }
+  //     );
+
+  //     location.href = data.body.init_point;
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
   return (
     <div>
       <div className={styles.filtros}>
@@ -54,29 +77,80 @@ const Shop = () => {
             handleOrder();
           }}
         />
-        <select
-          onChange={(e) => handleOrder(e)}
-          className={styles.order}
-          value={nameOrder}
-        >
-          <option className={styles.title} value="">
-            Name ⮟
-          </option>
-          <option value="asc">A - Z </option>
-          <option value="desc">Z - A </option>
-        </select>
-        <select
-          onChange={(e) => handleOrder(e)}
-          className={styles.order}
-          value={priceOrder}
-        >
-          <option className={styles.title} value="">
-            Price ⮟
-          </option>
-          <option value="high">High - Low </option>
-          <option value="low">Low - High </option>
-        </select>
+       <FormControl
+  sx={{
+    border: 'none',
+    minWidth: 100,
+    '& label': {
+      fontSize: '18px', 
+      color: 'rgb(0, 133, 0)',
+    },
+    '& label.MuiInputLabel-shrink': {
+      color: 'rgb(0, 133, 0)'
+    },
+    '.MuiOutlinedInput-notchedOutline': { 
+      border: 'none',
+    },
+    '& .MuiInputBase-input': {
+      fontSize: '15px',  
+      color:"black"
+    },
+    '& .MuiSelect-icon': {
+      color: 'rgb(0, 133, 0)' 
+    },
+  }}
+>
+  <InputLabel htmlFor="nameOrder" >Name</InputLabel>
+  <Select
+   
+    id="nameOrder"
+    name="nameOrder"
+    value={nameOrder}
+    onChange={handleOrder}
+    label="Name"
+  >
+    <MenuItem value="asc" style={{ fontSize: '15px' }}>A - Z</MenuItem>
+    <MenuItem value="desc" style={{ fontSize: '15px' }}>Z - A</MenuItem>
+  </Select>
+</FormControl>
+        <FormControl sx={{
+    border: 'none',
+    minWidth: 100,
+    '& label': {
+      fontSize: '18px', 
+      color: 'rgb(0, 133, 0)',
+    },
+    '& label.MuiInputLabel-shrink': {
+      color: 'rgb(0, 133, 0)'
+    },
+    '.MuiOutlinedInput-notchedOutline': { 
+      border: 'none',
+    },
+    '& .MuiInputBase-input': {
+      fontSize: '15px',  
+      color:"black"
+    },
+    '& .MuiSelect-icon': {
+      color: 'rgb(0, 133, 0)' 
+    },
+  }}>
+          <InputLabel htmlFor="priceOrder">Price</InputLabel>
+          <Select
+            id="priceOrder"
+            name="priceOrder"
+            value={priceOrder}
+            onChange={handleOrder}
+            label="Price"
+          >
+            <MenuItem value="high" style={{ fontSize: '15px' }}>High - Low</MenuItem>
+            <MenuItem value="low" style={{ fontSize: '15px' }}>Low - High</MenuItem>
+          </Select>
+        </FormControl>        
       </div>
+
+
+      
+      
 
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/3 mr-4"></div>
@@ -89,12 +163,18 @@ const Shop = () => {
       <div className="sm:w[10px]">
         <Category allCategories={allCategories} />
       </div>
-          <br /><br /><br />
+      <br />
+      <br />
+      <br />
 
       <div >
-        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">Featured Products</strong>       
+        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">
+          Featured Products
+        </strong>
         <ProductsTrending productTrending={productTrending} />
       </div>
+
+      {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
   );
 };

@@ -5,29 +5,29 @@ sequelize.define('User', {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    allowNull: false,
+    allowNull: true,
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true 
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
     unique: true,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: true
   },
   role: {
     type: DataTypes.ENUM('admin', 'user'),
     defaultValue: 'user',
-    allowNull: false 
+    allowNull: true 
   },
   image: {
     type: DataTypes.STRING,
