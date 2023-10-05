@@ -15,8 +15,8 @@ import {
 
 import axios from "axios";
 
-const endpoint = "http://localhost:3001/product";
-const categories = "http://localhost:3001/category"
+const endpoint = "http://localhost:3000/product";
+const categories = "http://localhost:3000/category"
 
 export const getAllProducts = () => {
   return async (dispatch) => {

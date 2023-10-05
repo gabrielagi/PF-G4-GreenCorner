@@ -29,7 +29,7 @@ const addOrderHandler = async (req, res) => {
     }
     try {
         const newOrder = await postOrder(date, status, shippingAddress, addressHouseNumber, total);
-        res.status(201).json(newOrder);
+        res.status(200).json(newOrder);
     } catch (error) {
         console.error("Error al agregar orden:", error);
         res.status(500).json({ error: "Error en el servidor al agregar orden" });

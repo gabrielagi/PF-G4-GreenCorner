@@ -15,11 +15,13 @@ import person from "../../assets/person.png"
 import fav from "../../assets/favorito.png"
 import logout from "../../assets/cerrar-sesion.png"
 import { toast } from "react-toastify";
+// import {postUser} from "../../Redux/actions/user/user-actions"
+
+
 
 const Nav = () => {
   
   
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
@@ -27,7 +29,7 @@ const Nav = () => {
   const { isAuthenticated, user } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [isUserMenuOpen, setUserMenuOpen] = useState(false);
+  // const [isUserMenuOpen, setUserMenuOpen] = useState(false);
 
 
   const menuRef = useRef()
@@ -181,7 +183,7 @@ const Nav = () => {
                   </li>
                   <li className={styles.li} onClick={() => setOpen(false)}>
                     <img src={logout} />
-
+{/* {console.log(user)}; */}
                     <LogoutButton />
                   </li>
 

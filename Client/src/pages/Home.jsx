@@ -8,10 +8,13 @@ import ImagesBanner from "../components/Banner/imageshover.home";
 import { useDispatch } from "react-redux";
 import { getAllProducts } from "../Redux/actions/product/action";
 import Testimonial from "./../components/Testimonial/Testimonial.home";
-
+import { useAuth0 } from "@auth0/auth0-react";
+import {postUser} from "../Redux/actions/user/user-actions"
 const Home = () => {
   // Inicializo AOS al momento del montaje del componente
+  const {  user } = useAuth0();
   const dispatch = useDispatch();
+  ;
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -23,9 +26,23 @@ const Home = () => {
       offset: 0,
     });
   }, []);
-
+  useEffect(() => {
+    if(user === undefined){
+    console.log("user es undefined");}
+    else{
+      const userData = {
+        name: user.name,
+        email: user.email,
+        image: user.picture,
+      }
+      dispatch(postUser(userData)),
+    [dispatch]}
+  })
   return (
     <div>
+{console.log(user)};
+
+
       <section
         className="bg-[#f6f6f6] min-h-[40vh]"
         data-aos="fade-up"

@@ -15,12 +15,13 @@ import Footer from "./components/Footer/Footer";
 import Create from "./pages/Create";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
-  
 
 
 const App = () => {
+
   return (
     <div>
+
       <Navbar />
       <ToastContainer />
       {/*  <Profile /> */}

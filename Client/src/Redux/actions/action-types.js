@@ -11,3 +11,11 @@ export const POST_PRODUCT = "POST_PRODUCT";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_CATEGORIES_BY_ID = "GET_CATEGORIES_BY_ID";
 export const FILTER_CATEGORY = "FILTER_CATEGORY";
+export const GET_ALL_USER = "GET_ALL_USER";
+export const GET_USER_BY_ID = "GET_USER_BY_ID";
+export const GET_USER_BY_NAME = "GET_USER_BY_NAME";
+export const GET_USER_BY_ROL = "GET_USER_BY_ROL";
+export const DELETE_USER = "DELETE_USER";
+export const POST_USER = "POST_USER";
+
+
