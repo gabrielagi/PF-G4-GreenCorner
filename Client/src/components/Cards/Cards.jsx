@@ -3,7 +3,7 @@ import plantgif from "../../assets/plantgif.gif";
 
 const Cards = ({ allProducts }) => {
   return (
-    <div className="relative flex-wrap ml-4 flex">
+    <div className="relative flex-wrap ml-4 flex gap-[100px]">
      {allProducts.length !== 0 ? (
         allProducts.map((p, i) => {
           
@@ -13,7 +13,6 @@ const Cards = ({ allProducts }) => {
         })
       ) : (
         <div className="flex justify-center items-center ml-[70px]">
-          <h1>Product Not found</h1>
           <img src={plantgif} alt="loading" />
         </div>
       )}

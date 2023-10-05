@@ -1,20 +1,20 @@
-import styles from "./Navbar.module.css";
-import { GrCart } from "react-icons/gr";
-import { GrSearch } from "react-icons/gr";
-import LoginButton from "../Auth0/LoginButton";
+import React, { useState, useRef, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
-import LogoutButton from "../Auth0/LogoutButton";
+import { GrCart, GrSearch } from "react-icons/gr";
 import { AiFillShop } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { Badge } from '@mui/material';
+import LoginButton from "../Auth0/LoginButton";
+import LogoutButton from "../Auth0/LogoutButton";
 import leaf from "../../assets/leaf.png";
-import { useState, useRef, useEffect } from "react";
+import person from "../../assets/person.png";
+import fav from "../../assets/favorito.png";
+import logout from "../../assets/cerrar-sesion.png";
 import { getProductByName } from "../../Redux/actions/product/action";
-import { useDispatch } from "react-redux";
-import person from "../../assets/person.png"
-import fav from "../../assets/favorito.png"
-import logout from "../../assets/cerrar-sesion.png"
 import { toast } from "react-toastify";
+<<<<<<< HEAD
 // import {postUser} from "../../Redux/actions/user/user-actions"
 
 
@@ -22,13 +22,19 @@ import { toast } from "react-toastify";
 const Nav = () => {
   
   
+=======
+import styles from "./Navbar.module.css";
+
+const Nav = () => {
+>>>>>>> 054c2875c800be4306fcc30eb9fd58200186173f
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false);
   const { isAuthenticated, user } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+<<<<<<< HEAD
   // const [isUserMenuOpen, setUserMenuOpen] = useState(false);
 
 
@@ -41,6 +47,8 @@ const Nav = () => {
     }
   })
 
+=======
+>>>>>>> 054c2875c800be4306fcc30eb9fd58200186173f
 
   useEffect(() => {
     if (isSearchVisible) {
@@ -48,18 +56,20 @@ const Nav = () => {
     }
   }, [isSearchVisible]);
 
+  useEffect(() => {
+    const closeMenuOnClickOutside = (e) => {
+      if (open && !e.target.closest(`.${styles.userMenu}`) && !e.target.closest(`.${styles.container}`)) {
+        setOpen(false);
+      }
+    };
 
-  const notify = () =>
-    toast.error("Product not found, try again.🪴", {
-      position: "bottom-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light ",
-    });
+    document.addEventListener("click", closeMenuOnClickOutside);
+
+    return () => {
+      document.removeEventListener("click", closeMenuOnClickOutside);
+    };
+  }, [open]);
+
 
 
   const handleSearchMouseEnter = () => {
@@ -83,24 +93,32 @@ const Nav = () => {
     if (e.key === "Enter" && searchValue) {
       handleSearchMouseEnter();
     } else if (e.key === "Enter" && !searchValue) {
-      dispatch(getProductByName(searchValue))
+      dispatch(getProductByName(searchValue));
     }
   };
-
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
   };
 
+  const notify = () =>
+    toast.error("Product not found, try again.🪴", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
-  // const toggleUserMenu = () => {
-  //   setUserMenuOpen(!isUserMenuOpen);
-  // };
+
 
   return (
     <nav className={styles.nav}>
       <a href="/" className={styles.nav__brand}>
-        GreenCorner <img src={leaf} className={styles.logo} />{" "}
+        GreenCorner <img src={leaf} className={styles.logo} alt="GreenCorner Logo" />{" "}
       </a>
 
       <ul className={styles.nav__menu}>
@@ -145,8 +163,7 @@ const Nav = () => {
             type="text"
             placeholder="Search here..."
             ref={inputRef}
-            className={`${styles.searchInput} ${isSearchVisible ? styles.searchInputVisible : ""
-              }`}
+            className={`${styles.searchInput} ${isSearchVisible ? styles.searchInputVisible : ""}`}
             value={searchValue}
             onChange={handleInputChange}
           />
@@ -154,33 +171,34 @@ const Nav = () => {
             <GrSearch onClick={handleSearchMouseEnter} style={{ fontSize: "24px" }} /> <p>Search</p>
           </a>
         </div>
-        <a href="#" className={styles.anotherClass}>
-          <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
-        </a>
+        <Badge badgeContent={1} color="success">
+          <a href="#" className={styles.anotherClass}>
+            <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
+          </a>
+        </Badge>
         {isAuthenticated
-          ?
-          <div className={styles.conteiner} >
-
-            <img
-              ref={imgRef}
-              onClick={() => setOpen(!open)}
-              src={user.picture}
-              alt={user.name}
-              style={{ width: "35px", borderRadius: "50px" }}
-            />
-            {
-              open &&
-
-              <div ref={menuRef} className={styles.userMenu}>
-                <ul>
-                  <li className={styles.li} onClick={() => setOpen(false)}>
-                    <img src={person} />
-                    <a> Profile </a>
+          ? (
+            <div className={styles.container}>
+              <img
+                onClick={() => setOpen(!open)}
+                src={user.picture}
+                alt={user.name}
+                style={{ width: "35px", borderRadius: "50px" }}
+              />
+              {open && (
+                <div className={styles.userMenu}>
+                  <ul>
+                  <li className={styles.li}>
+                    <Link to="/profile">
+                      <img src={person} alt="Profile" /> Profile
+                    </Link>
                   </li>
-                  <li className={styles.li} onClick={() => setOpen(false)}>
-                    <img src={fav} />
-                    <a href="#">My Garden</a>
+                  <li className={styles.li}>
+                    <Link to="/favorites">
+                       <img src={fav} alt="My Garden" /> My Garden
+                     </Link>
                   </li>
+<<<<<<< HEAD
                   <li className={styles.li} onClick={() => setOpen(false)}>
                     <img src={logout} />
 {/* {console.log(user)}; */}
@@ -193,12 +211,24 @@ const Nav = () => {
           </div>
           : <LoginButton />
         }
+=======
+                    <li className={styles.li}>
+                      <a>
+                        <img src={logout} alt="Logout" />
+                        <LogoutButton/>
+                      </a>
+                    </li>
+                  </ul>
+                  <div className={styles.arrow}></div>
+                </div>
+              )}
+            </div>
+          )
+          : <LoginButton />}
+>>>>>>> 054c2875c800be4306fcc30eb9fd58200186173f
       </div>
     </nav>
-
   );
 };
 
 export default Nav;
-
-//.

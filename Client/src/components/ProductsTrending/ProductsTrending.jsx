@@ -3,7 +3,7 @@ import ProductTrending from "./ProductTrending";
 const ProductsTrending = ({ productTrending }) => {
     
   return (
-    <div className="sm:relative sm:ml-[90px] relative ml-[90px]">
+    <div className="sm:relative sm:ml-[90px] relative ml-[90px] ">
         <br />
      {productTrending ? (
         productTrending.map((p, i) => {
