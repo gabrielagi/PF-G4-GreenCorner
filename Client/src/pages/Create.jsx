@@ -1,19 +1,4 @@
 
-// import {useForm} from 'react-hook-form'
-// import  { useState, useEffect } from "react";
-// import axios from "axios";
-// import { useDispatch, useSelector } from 'react-redux';
-// import { addProduct, getAllProducts, getAllCategories } from '../Redux/actions/product/action'
-
-
-
-
-
-
-
-
-
-
 
 
 
