@@ -84,7 +84,7 @@ export const addProduct = (productdata) => {
   return async (dispatch) => {
 
     try {
-      const { data } = await axios.post( endpoint, productdata)
+      const  data  = await axios.post( endpoint, productdata)
       dispatch({
         type: POST_PRODUCT,
         payload: data

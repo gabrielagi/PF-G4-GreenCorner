@@ -15,7 +15,8 @@ import Footer from "./components/Footer/Footer";
 import Create from "./pages/Create";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
-  
+import Intento from "./components/Intento cloudinary/intento";
+
 
 
 const App = () => {
@@ -36,7 +37,7 @@ const App = () => {
         <Route path="/create" element={<Create/>} />
         <Route path="/contact-us" element={<ContactUs/>} />
         { <Route path="/profile" element={<Profile/>} /> }
-       
+        <Route path="/intento" element={<Intento/>} />
       </Routes>
       {/*<Footer />*/}
     </div>
