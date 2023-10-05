@@ -12,52 +12,42 @@ mercadopago.configure({
 });
 const createOrder = async (req, res) => {
   // El product puede ser un objeto individual desde Detail o un array desde Cart
-  // const product = req.body.product;
-  // const amount = req.body.amount || null; // Si amount no es enviado asumo un valor predeterminado en 1
+  const product = req.body.product;
+  const amount = req.body.amount || null; // Si amount no es enviado asumo un valor predeterminado en 1
 
-  // // Guardo los items que se van a vender
-  // let itemsToSell = [];
+  // Guardo los items que se van a vender
+  let items = [];
 
-  // // Si viene de Detail es un objeto
-  // let convertProdcutFromDetail = {};
-  // if (typeof product === "object") {
-  //   convertProdcutFromDetail = {
-  //     id: product.id,
-  //     quantity: amount,
-  //     title: product.name,
-  //     unit_price: product.price,
-  //     currency_id: "ARS",
-  //   };
-  // }
+  // Si viene de Detail es un objeto
+  let convertProdcutFromDetail = {};
+  if (typeof product === "object") {
+    convertProdcutFromDetail = {
+      id: product.id,
+      quantity: amount,
+      title: product.name,
+      unit_price: product.price,
+      currency_id: "ARS",
+    };
+  }
 
-  // // Verifico si es un producto individual o un conjunto de Productos
-  // convertProdcutFromDetail
-  //   ? itemsToSell.push(convertProdcutFromDetail)
-  //   : product.forEach((product) =>
-  //       itemsToSell.push({
-  //         id: product.id,
-  //         quantity: product.amount,
-  //         title: product.name,
-  //         unit_price: product.price,
-  //         currency_id: "ARS",
-  //       })
-  //     );
+  // Verifico si es un producto individual o un conjunto de Productos
+  convertProdcutFromDetail
+    ? items.push(convertProdcutFromDetail)
+    : product.forEach((product) =>
+        items.push({
+          id: product.id,
+          quantity: product.amount,
+          title: product.name,
+          unit_price: product.price,
+          currency_id: "ARS",
+        })
+      );
 
   // Creo los items para la preferencia
   // let payer = {
   //   name: user.given_name,
   //   surname: user.family_name,
   // };
-
-  const items = [
-    {
-      id: 3,
-      quantity: 5,
-      title: "Laptop",
-      unit_price: 500,
-      currency_id: "ARS",
-    },
-  ];
 
   try {
     const result = await mercadopago.preferences.create({
