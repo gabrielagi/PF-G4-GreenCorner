@@ -14,19 +14,9 @@ import fav from "../../assets/favorito.png";
 import logout from "../../assets/cerrar-sesion.png";
 import { getProductByName } from "../../Redux/actions/product/action";
 import { toast } from "react-toastify";
-<<<<<<< HEAD
-// import {postUser} from "../../Redux/actions/user/user-actions"
-
-
-
-const Nav = () => {
-  
-  
-=======
 import styles from "./Navbar.module.css";
 
 const Nav = () => {
->>>>>>> 054c2875c800be4306fcc30eb9fd58200186173f
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
@@ -34,21 +24,6 @@ const Nav = () => {
   const { isAuthenticated, user } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-<<<<<<< HEAD
-  // const [isUserMenuOpen, setUserMenuOpen] = useState(false);
-
-
-  const menuRef = useRef()
-  const imgRef = useRef()
-
-  window.addEventListener("click", (e) => {
-    if ( e.target !== menuRef.current &&e.target !== imgRef.current){
-      setOpen(false)
-    }
-  })
-
-=======
->>>>>>> 054c2875c800be4306fcc30eb9fd58200186173f
 
   useEffect(() => {
     if (isSearchVisible) {
@@ -198,20 +173,6 @@ const Nav = () => {
                        <img src={fav} alt="My Garden" /> My Garden
                      </Link>
                   </li>
-<<<<<<< HEAD
-                  <li className={styles.li} onClick={() => setOpen(false)}>
-                    <img src={logout} />
-{/* {console.log(user)}; */}
-                    <LogoutButton />
-                  </li>
-
-                </ul>
-              </div>
-            }
-          </div>
-          : <LoginButton />
-        }
-=======
                     <li className={styles.li}>
                       <a>
                         <img src={logout} alt="Logout" />
@@ -225,7 +186,6 @@ const Nav = () => {
             </div>
           )
           : <LoginButton />}
->>>>>>> 054c2875c800be4306fcc30eb9fd58200186173f
       </div>
     </nav>
   );
