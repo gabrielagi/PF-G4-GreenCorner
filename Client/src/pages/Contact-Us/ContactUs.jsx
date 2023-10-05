@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./ContactUs.module.css";
-import  formimg  from "../../assets/formimg.png";
+
 
 
 const ContactUs = () => {
@@ -44,7 +44,7 @@ const ContactUs = () => {
       <input
         type="text"
         id="name"
-        placeholder="Your Name" /* Agregamos el atributo placeholder */
+        placeholder="Your Name" 
         value={name}
         onChange={(e) => setName(e.target.value)}
         required
@@ -55,7 +55,7 @@ const ContactUs = () => {
       <input
         type="tel"
         id="phoneNumber"
-        placeholder="Phone Number (optional)" /* Agregamos el atributo placeholder */
+        placeholder="Phone Number (optional)" 
         value={phoneNumber}
         onChange={(e) => setPhoneNumber(e.target.value)}
         className={styles.contactInput}
@@ -64,7 +64,7 @@ const ContactUs = () => {
     <div className={styles.formGroup}>
       <textarea
         id="message"
-        placeholder="Enter your message here" /* Agregamos el atributo placeholder */
+        placeholder="Enter your message here" 
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         required
