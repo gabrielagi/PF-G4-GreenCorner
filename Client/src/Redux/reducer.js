@@ -139,7 +139,6 @@ function rootReducer(state = initialState, action) {
 
 
 
-
         case FILTER_CATEGORY:
 
             return {
