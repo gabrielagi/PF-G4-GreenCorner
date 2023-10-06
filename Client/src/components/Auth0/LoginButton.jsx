@@ -4,11 +4,7 @@ import styles from "./LoginButton.module.css";
 import { AiOutlineUserAdd } from "react-icons/ai";
 
 export const LoginButton = () => {
-  const { loginWithRedirect, user } = useAuth0();
-
-
-
-
+  const { loginWithRedirect } = useAuth0();
   return (
     <div className={styles.buttonContainer}>
       <button
@@ -24,7 +20,7 @@ export const LoginButton = () => {
         id={styles.buttonSmall}
       >
         <AiOutlineUserAdd style={{ fontSize: "17px" }} />
-        {console.log(user)}
+
       </button>
     </div>
   );

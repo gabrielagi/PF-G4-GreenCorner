@@ -1,13 +1,14 @@
 const { emit } = require("process");
 const { WelcomeEmail } = require("../../nodemailer/mailer")
 const { getAllUsers,
-    getUSerbyId,
+    getUserById,
     postFavorite,
     getAllFavorites,
     getByRol,
     getUserbyName,
-    postUser,
-    deleteUser
+    createUser,
+    deleteUser,
+    updateUser
 } = require("../Controller/user.controller")
 
 
@@ -40,49 +41,53 @@ const postFavoritesHandler = async (req, res) => {
     }
 };
 
+
+//CREA NUEVO USUARIO
 const newUserHandler = async (req, res) => {
-    const {
-        nickname,
-        email,
-        picture,
-        // lastName,
-        email_verified,
-        rating
-    } = req.body
+    const { nickname, email, picture } = req.body;
 
-    if (!nickname) {
-        return res.status(500).send("nickname missing")
-    } if (!email) {
-        return res.status(500).send("email missing")
-    } if (!picture) {
-        return res.status(500).send("picture missing")
+    if (!nickname || !email || !picture) {
+        return res.status(400).json({ message: "Nickname, email, and picture are required fields." });
     }
+
     try {
-        const newUser = await postUser(
-            nickname,
-            email,
-            picture,
-            lastName,
-            email_verified,
-            rating)
-        console.log("estoy en el post :D");
-        const userEmail = newUser.email;
-        const userName = newUser.nickname;
-        await WelcomeEmail(userEmail, userName)
-        res.status(200).json(newUser)
+        const newUser = await createUser(nickname, email, picture);
+        console.log("Nuevo usuario creado:", newUser);
+        res.status(201).json(newUser);
     } catch (error) {
-        console.log(error.message);
-        return res.status(500).send("Something went wrong")
+        console.error(error.message);
+        return res.status(500).json({ message: "Something went wrong" });
     }
+};
 
-}
+
+//ACTUALIZA USUARIO
+const updateUserHandler = async (req, res) => {
+    const userId = req.params.id;
+    const userData = req.body;
+
+    try {
+        const user = await getUserById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const updatedUser = await updateUser(userId, userData);
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+};
 
 
-const byIdHander = async (req, res) => {
+const byIdHandler = async (req, res) => {
     const id = req.params.id
 
     try {
-        const user = await getUSerbyId(id)
+        const user = await getUserById(id)
         if (!user) {
             return res.status(404).send("Not found")
         }
@@ -94,7 +99,7 @@ const byIdHander = async (req, res) => {
 }
 
 
-const byNameHander = async (req, res) => {
+const byNameHandler = async (req, res) => {
     const name = req.params.name
     try {
         const user = await getUserbyName(name)
@@ -147,9 +152,10 @@ module.exports = {
     newUserHandler,
     postFavoritesHandler,
     getFavoritesHandler,
-    byIdHander,
-    byNameHander,
+    byIdHandler,
+    byNameHandler,
     allUsers,
     byRolHandler,
-    deleteHandler
+    deleteHandler,
+    updateUserHandler
 }
