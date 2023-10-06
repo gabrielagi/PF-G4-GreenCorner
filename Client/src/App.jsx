@@ -5,7 +5,8 @@ import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Shop from "./pages/Shop/Shop";
 import Favorites from "./pages/Favorites";
-import Profile from "./pages/Profile/Profile";
+// import Profile from "./pages/Profile/Profile"
+import ProfileUser from "./pages/Profile/Profile.user";
 import AboutUs from "./components/About Us/AboutUs";
 import Navbar from "./components/Navbar/Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -19,12 +20,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
 
-
-
-
 const App = () => {
-
-
   //Carga de usuarios
   const { user, isAuthenticated, isLoading } = useAuth0();
   const dispatch = useDispatch();
@@ -41,8 +37,6 @@ const App = () => {
     }
   }, [user, isAuthenticated, isLoading, dispatch]);
 
-
-  
   return (
     <div>
       <Navbar />
@@ -57,7 +51,7 @@ const App = () => {
         <Route path="/guides" element={<Guides />} />
         <Route path="/create" element={<Create />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        {<Route path="/profile" element={<Profile />} />}
+        <Route path="/profile-user" element={<ProfileUser />} />
       </Routes>
       {/*<Footer />*/}
     </div>

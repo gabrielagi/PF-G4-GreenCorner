@@ -1,18 +1,26 @@
 import "tailwindcss/tailwind.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import NavUser from "../../components/Navbar/Navbar.user";
+import ProfileUser from "./Profile.user";
+import ProfileAdmin from "./Profile.admin";
+import { getUserByRol } from "../../Redux/actions/user/user-actions";
 
-const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-  return (
-    isAuthenticated && (
-      <div>
-        {/*   <NavUser /> */}
-        <pre>{JSON.stringify(user, null, 2)}</pre>
-      </div>
-    )
-  );
+const ProfileUser = () => {
+  const { user, isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    dispatch(getUserByRol(user.id));
+  }, [id]);
+
+  // Verifico si el rol es "user"
+  if (isAuthenticated) {
+    if (userRole === "user") {
+      return <ProfileUser />;
+    } else {
+      return <ProfileAdmin />;
+    }
+  } else {
+  }
 };
 
-export default Profile;
+export default ProfileUser;
