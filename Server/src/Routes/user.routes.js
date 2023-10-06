@@ -7,7 +7,8 @@ const {
   postFavoritesHandler,
   byRolHandler,
   newUserHandler,
-  deleteHandler
+  deleteHandler,
+  updateUserHandler,
 } = require("../Handler/user.handler");
 
 const userRouter = Router();
@@ -28,5 +29,7 @@ userRouter.post("/favorites", postFavoritesHandler);
 userRouter.post("/", newUserHandler)
 
 userRouter.delete("/:id", deleteHandler)
+
+userRouter.put("/:id", updateUserHandler);
 
 module.exports = userRouter;

@@ -2,6 +2,7 @@ const { User, Favorite, Product } = require("../db")
 const { Op } = require('sequelize');
 
 
+//CREA NUEVO USUARIO
 const createUser = async (nickname, email, picture) => {
     try {
         const [user, created] = await User.findOrCreate({
@@ -27,6 +28,40 @@ const createUser = async (nickname, email, picture) => {
         throw error; 
     }
 };
+
+//OBTIENE USUARIO POR ID
+const getUserById = async (userId) => {
+    try {
+        const user = await User.findOne({
+            where: { id: userId },
+        });
+        return user;
+    } catch (error) {
+        console.error(error.message);
+        throw error;
+    }
+};
+
+
+//ACTUALIZA USUARIO
+const updateUser = async (userId, userData) => {
+    try {
+        const [updatedCount, updatedUser] = await User.update(userData, {
+            where: { id: userId },
+            returning: true, // Para obtener el registro actualizado
+        });
+
+        if (updatedCount === 0) {
+            throw new Error("User not found or no changes made.");
+        }
+
+        return updatedUser[0]; // Devuelve el usuario actualizado
+    } catch (error) {
+        console.error(error.message);
+        throw error;
+    }
+};
+
 
 const getAllFavorites = async (req, res) => {
     try {
@@ -59,24 +94,12 @@ const postFavorite = async (product) => {
 };
 
 
-const getUSerbyId = async (id) => {
-    try {
-        const user = await User.findByPk(id)
-        console.log(id);
-        if (!user) {
-            return ("user not found")
-        }
-        return user
-    } catch (error) {
-        console.log(error.message);
-    }
-}
 
 const getUserbyName = async (name) => {
     const userName = name
     try {
         const user = await User.findOne({
-            where: { name: userName }
+            where: { nickname: userName }
         })
         return user
     } catch (error) {
@@ -133,10 +156,11 @@ const deleteUser = async (id) => {
 module.exports = {
     getAllUsers,
     getByRol,
-    getUSerbyId,
+    getUserById,
     getUserbyName,
     getAllFavorites,
     postFavorite,
     createUser,
-    deleteUser
+    deleteUser,
+    updateUser
 }

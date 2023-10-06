@@ -1,13 +1,14 @@
 const { emit } = require("process");
 const { WelcomeEmail } = require("../../nodemailer/mailer")
 const { getAllUsers,
-    getUSerbyId,
+    getUserById,
     postFavorite,
     getAllFavorites,
     getByRol,
     getUserbyName,
     createUser,
-    deleteUser
+    deleteUser,
+    updateUser
 } = require("../Controller/user.controller")
 
 
@@ -40,6 +41,8 @@ const postFavoritesHandler = async (req, res) => {
     }
 };
 
+
+//CREA NUEVO USUARIO
 const newUserHandler = async (req, res) => {
     const { nickname, email, picture } = req.body;
 
@@ -58,12 +61,33 @@ const newUserHandler = async (req, res) => {
 };
 
 
+//ACTUALIZA USUARIO
+const updateUserHandler = async (req, res) => {
+    const userId = req.params.id;
+    const userData = req.body;
+
+    try {
+        const user = await getUserById(userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const updatedUser = await updateUser(userId, userData);
+
+        return res.status(200).json(updatedUser);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
 
 const byIdHander = async (req, res) => {
     const id = req.params.id
 
     try {
-        const user = await getUSerbyId(id)
+        const user = await getUserById(id)
         if (!user) {
             return res.status(404).send("Not found")
         }
@@ -132,5 +156,6 @@ module.exports = {
     byNameHander,
     allUsers,
     byRolHandler,
-    deleteHandler
+    deleteHandler,
+    updateUserHandler
 }
