@@ -1,7 +1,7 @@
-/*const { Product } = require("../db");
-const { ShoppingCart } = require("../db");
-const { Category } = require("../db");*/
-const { Product, User, ShoppingCart, Category } = require("../db");
+const { Product,User,ShoppingCart } = require("../db");
+const { Category } = require("../db");
+
+
 //Obtiene todos los productos con sus categorías asociadas (home)
 const getAllProduct = async (req, res) => {
   try {
@@ -83,19 +83,22 @@ const postProduct = async (productData) => {
   try {
     const { name, description, price, images, stock, available, categories } = productData;
 
-    if(!categories){
-      throw new Error("Las categorias son obligatorias");
+    if (!categories) {
+      throw new Error("Las categorías son obligatorias");
     }
 
     if (!name || !price || !stock) {
       throw new Error("Faltan completar campos obligatorios");
     }
+    
+
+    const imagesResult = await uploadImages(images);
 
     const newProduct = await Product.create({
       name,
       description,
       price,
-      images,
+      images: imagesResult,
       stock,
       available,
     });
@@ -104,25 +107,7 @@ const postProduct = async (productData) => {
       await newProduct.addCategory(categories);
     }
 
-   return newProduct;
-  } catch (error) {
-    console.error("Error en postProduct:", error.message);
-    throw new Error("Error en el servidor");
-  }
-};
-
-
-const postProductCart = async (productData) => {
-  try {
-    const { email, product_id, amount} = productData;
-
-    const newProductCart = await ShoppingCart.create({
-      email,
-      product_id,
-      amount
-    });
-
-   return newProductCart;
+    return newProduct;
   } catch (error) {
     console.error("Error en postProduct:", error.message);
     throw new Error("Error en el servidor");
@@ -211,6 +196,7 @@ const deleteProduct = async (id) => {
 
 
 
+
 module.exports = {
   getAllProduct,
   getProductById,
@@ -220,5 +206,6 @@ module.exports = {
   updateProduct,
   findRelatedProducts,
   getAllTrending,
-  deleteProduct
+  deleteProduct,
+  uploadImage
 };
