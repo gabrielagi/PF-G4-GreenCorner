@@ -11,7 +11,8 @@ import {
 
 import axios from "axios";
 
-const endpoint = "https://localhost:3000/user";
+const endpoint = "http://localhost:3001/user"
+/* const endpoint = "https://greencorner.onrender.com/user" */
 
 export const getAllUsers = () => {
   return async (dispatch) => {
@@ -93,20 +94,39 @@ export function getUserByRol(rol) {
   };
 }
 
-export function postUser(userData, endpoint) {
-  return async (dispatch) => {
-    try {
-      const { data } = await axios.post(endpoint, userData);
-      dispatch({
-        type: POST_USER,
-        payload: data,
-      });
-    } catch (error) {
-      console.error(error);
-      return error.message;
+
+export function postUser(userData) {
+    return async (dispatch) => {
+      try {
+        const { data } = await axios.post(endpoint, userData);
+        dispatch({
+          type: POST_USER,
+          payload: data,
+        });
+      } catch (error) {
+        console.log(error);
+        return error.message;
+      }
+    };
+  }
+
+export function postFavorites(userData) {
+    return async (dispatch) => {
+        
+        try {
+            const { data } = await axios.post(`${endpoint}/favorites`, userData)
+            
+            dispatch({
+                type: POST_FAVORITE,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error.message); // Corregido aquí
+            return error.message;
+        }
     }
   };
-}
+
 
 export function postFavorites(userData) {
   return async (dispatch) => {

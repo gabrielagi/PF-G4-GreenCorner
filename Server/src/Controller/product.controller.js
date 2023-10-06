@@ -1,5 +1,18 @@
 const { Product,User,ShoppingCart,Category } = require("../db");
 
+
+var cloudinary = require("cloudinary").v2;
+
+const cloud_name = process.env.CLOUD_NAME;
+const api_key = process.env.API_KEY;
+const api_secret = process.env.API_SECRET;
+
+cloudinary.config({
+  cloud_name: cloud_name,
+  api_key: api_key,
+  api_secret: api_secret,
+});
+
 //Obtiene todos los productos con sus categorías asociadas (home)
 const getAllProduct = async (req, res) => {
   try {
@@ -75,15 +88,24 @@ const getProductById = async (id) => {
   }
 };
 
-const uploadImage = async (image) => {
-  try {
 
-    const result = await cloudinary.uploader.upload(image);
-    return result.url;
+async function uploadImages(images) {
+  try {
+    const uploadedImageURLs = [];
+
+    for (const image of images) {
+      const result = await cloudinary.uploader.upload(image);
+      uploadedImageURLs.push(result.url);
+    }
+
+    console.log("URLs de imágenes subidas a Cloudinary:", uploadedImageURLs);
+    return uploadedImageURLs;
   } catch (error) {
-    throw new Error("Error al subir la imagen");
+    console.error("Error al subir imágenes a Cloudinary:", error);
+    throw error;
   }
-};
+}
+
 
 const postProductCart = async (cart) => {
   try {
@@ -231,5 +253,4 @@ module.exports = {
   findRelatedProducts,
   getAllTrending,
   deleteProduct,
-  uploadImage
 };
