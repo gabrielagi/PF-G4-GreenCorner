@@ -21,7 +21,7 @@ const BannerHome = () => {
             sanctuary.
           </p>
           <Link to="/shop">
-            <button className="mt-16 bg-red-500 text-white font-semibold py-4 px-8 rounded hover:bg-green-600 font-poppins flex mx-auto">
+            <button className="mt-16 bg-blue-500 text-white font-semibold py-4 px-8 rounded hover:bg-green-600 font-poppins flex mx-auto">
               {`Visit our Shop `}
               <CiLocationArrow1 className="ml-2 text-2xl sm:text-4xl" />
             </button>
