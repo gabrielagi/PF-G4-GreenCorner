@@ -5,6 +5,7 @@ import {
   POST_PRODUCT,
   GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
+  GET_CATEGORIES_SHOP,
   FILTER_CATEGORY,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
@@ -127,6 +128,20 @@ export const getAllCategories = () => {
       const { data } = await axios.get(categories);
       dispatch({
         type: GET_CATEGORIES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
+export const getAllCategoriesShop = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(categories);
+      dispatch({
+        type: GET_CATEGORIES_SHOP,
         payload: data,
       });
     } catch (error) {

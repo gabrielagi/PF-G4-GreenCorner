@@ -8,7 +8,7 @@ import ProductsTrending from "../../components/ProductsTrending/ProductsTrending
 import {
   getAllProducts,
   resetAllProducts,
-  getAllCategories,
+  getAllCategoriesShop,
   getProductsTrending,
   filterByName,
   filterByPrice,
@@ -31,7 +31,7 @@ const Shop = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
-    dispatch(getAllCategories());
+    dispatch(getAllCategoriesShop());
     dispatch(getProductsTrending());
   }, [dispatch]);
 

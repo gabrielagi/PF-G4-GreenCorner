@@ -4,12 +4,13 @@ import {
     GET_USER_BY_ROL,
     GET_USER_BY_ID,
     DELETE_USER,
+    POST_FAVORITE,
     POST_USER
 } from "../action-types"
 
 import axios from "axios"
 
-const endpoint = "http://localhost:3000/user"
+const endpoint = "http://localhost:3001/user"
 
 export const getAllUsers = () => {
     return async (dispatch) => {
@@ -42,7 +43,7 @@ export function getUserByName(name) {
 
         }
     };
-};
+}
 
 
 export function getUserById(id) {
@@ -61,7 +62,7 @@ export function getUserById(id) {
 
         }
     };
-};
+}
 
 
 export function getUserByRol(rol) {
@@ -80,7 +81,7 @@ export function getUserByRol(rol) {
 
         }
     };
-};
+}
 
 
 export function postUser ( userData) {
@@ -98,6 +99,25 @@ export function postUser ( userData) {
         }
     }
 }
+
+export function postFavorites(userData) {
+    return async (dispatch) => {
+        
+        try {
+            const { data } = await axios.post(`${endpoint}/favorites`, userData)
+                console.log(data+ " sadsa");
+            
+            dispatch({
+                type: POST_FAVORITE,
+                payload: data
+            })
+        } catch (error) {
+            console.log(error.message); // Corregido aquí
+            return error.message;
+        }
+    }
+}
+
 
 export function deleteUser ( id ) {
     return async (dispatch) => {

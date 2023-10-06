@@ -1,6 +1,4 @@
-const { Product,User,ShoppingCart } = require("../db");
-const { Category } = require("../db");
-
+const { Product,User,ShoppingCart,Category } = require("../db");
 
 //Obtiene todos los productos con sus categorías asociadas (home)
 const getAllProduct = async (req, res) => {
@@ -77,6 +75,32 @@ const getProductById = async (id) => {
   }
 };
 
+const uploadImage = async (image) => {
+  try {
+
+    const result = await cloudinary.uploader.upload(image);
+    return result.url;
+  } catch (error) {
+    throw new Error("Error al subir la imagen");
+  }
+};
+
+const postProductCart = async (cart) => {
+  try {
+    const { product_id, email, amount} = cart;
+
+    const newShoppingCart = await ShoppingCart.create({
+      product_id,
+      email,
+      amount
+    });
+
+   return newShoppingCart;
+  } catch (error) {
+    console.error("Error en postProductCart:", error.message);
+    throw new Error("Error en el servidor");
+  }
+};
 
 //Crea un producto y lo guarda en la base de datos con sus categorías asociadas (admin dashboard) (falta imagen por defecto)
 const postProduct = async (productData) => {

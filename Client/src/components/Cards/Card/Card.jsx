@@ -6,9 +6,12 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
+import { postFavorites } from "../../../Redux/actions/user/user-actions";
 const Card = ({ name, images, price, id }) => {
   const [corazon, setCorazon] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const dispatch = useDispatch();
 
   const notify = () =>
     toast.success("Added to your cart 🛒", {
@@ -44,9 +47,16 @@ const Card = ({ name, images, price, id }) => {
 
     isAuthenticated ? notify() : loginWithRedirect();
   };
-  const handleHeart = () => {
+  const handleHeart = (product_id) => {
     if (isAuthenticated) {
       notifyII();
+      let favorite = {
+        email: user.email,
+        product_id: product_id
+      };
+
+
+      dispatch(postFavorites(favorite));
       setCorazon(!corazon);
     } else {
       loginWithRedirect();
@@ -55,7 +65,7 @@ const Card = ({ name, images, price, id }) => {
   return (
     <div className="bg-slate-100 rounded-md box-border h-85 w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">
       <div className="corazon absolute hover:scale-110 top-2 right-2 text-3xl">
-        <button onClick={handleHeart}>
+        <button onClick={()=>handleHeart(id)}>
           <AiFillHeart
             color={corazon ? "red" : "grey"}
             style={{ opacity: "0.7" }}

@@ -16,7 +16,7 @@ userRouter.get( "/", allUsers);
 
 userRouter.get( "/:id", byIdHander  )
 
-  userRouter.get("/getfavorites", getFavoritesHandler);
+userRouter.get("/getfavorites", getFavoritesHandler);
 
 userRouter.get("/find/:name", byNameHander)
 
