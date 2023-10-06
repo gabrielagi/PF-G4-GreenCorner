@@ -29,18 +29,15 @@ export const getAllUsers = () => {
 }
 export function getUserByName(name) {
     return async function (dispatch) {
-        
         try {
             const { data } = await axios.get(`${endpoint}/find/${name}`);
             dispatch({
                 type: GET_USER_BY_NAME,
                 payload: data,
-            });
-            
+            });   
         } catch (error) {
             console.log(error.mesage);
             return(error.mesage);
-
         }
     };
 }
@@ -48,18 +45,15 @@ export function getUserByName(name) {
 
 export function getUserById(id) {
     return async function (dispatch) {
-        
         try {
             const { data } = await axios.get(`${endpoint}/${id}`);
             dispatch({
                 type: GET_USER_BY_ID,
                 payload: data,
-            });
-            
+            }); 
         } catch (error) {
             console.log(error.mesage);
             return(error.mesage);
-
         }
     };
 }
@@ -67,14 +61,12 @@ export function getUserById(id) {
 
 export function getUserByRol(rol) {
     return async function (dispatch) {
-        
         try {
             const { data } = await axios.get(`${endpoint}/rol/${rol}`);
             dispatch({
                 type: GET_USER_BY_ROL,
                 payload: data,
-            });
-            
+            });  
         } catch (error) {
             console.log(error.mesage);
             return(error.mesage);
@@ -107,7 +99,6 @@ export function postUser ( {name,
         } catch (error) {
             console.log(error);
             return(error.mesage);
-
         }
     }
 }

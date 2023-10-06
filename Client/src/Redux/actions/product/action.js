@@ -88,29 +88,22 @@ console.log('está por entrar al try')
 
 export const addProduct = (productdata) => {
   return async (dispatch) => {
-
     try {
       const  data  = await axios.post( endpoint, productdata)
       dispatch({
         type: POST_PRODUCT,
         payload: data
-
       })
     } catch (error) {
       alert ("Hubo un problema al crear el producto")
     }
-
   }
-  
-
 }
 
 export const getProductsTrending = () => {
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
-
     try {
-
       dispatch({
         type: GET_PRODUCT_TRENDING,
         payload: data,
@@ -153,7 +146,6 @@ export const getAllCategoriesShop = () => {
 export const filterCategory = (category) => {
   return async (dispatch) => {
     try {
-
       dispatch({
         type: FILTER_CATEGORY,
         payload: category,
@@ -182,6 +174,7 @@ export const deleteProduct = (id) => {
     }
     }
 } 
+
 export const updateProduct = (id, updatedProductData) => {
   return async (dispatch) => {
     try {
