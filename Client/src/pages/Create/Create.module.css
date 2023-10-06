@@ -10,7 +10,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 400px;
+    width: auto;
     border: 1px solid #030303; 
   }
   
@@ -22,7 +22,7 @@
   
   .form {
     display: flex;
-    flex-direction: column; 
+    flex-direction: row; 
   }
   
   .izq,
@@ -30,6 +30,7 @@
     padding: 10px;
     flex: 1;
     display: flex;
+    margin-right: 10px;
     flex-direction: column; 
   }
   
@@ -65,9 +66,27 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
-  
-  textarea {
-    resize: none; 
-    height: 100px; 
+
+  .imageContainer {
+    position: relative;
+    margin-right: 10px; 
   }
   
+  .previewImage {
+    width: 100px; 
+    height: 100px; 
+    cursor: pointer; 
+  }
+  
+  .deleteButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 100%;
+    font-size: 14px;
+    cursor: pointer;
+  }
