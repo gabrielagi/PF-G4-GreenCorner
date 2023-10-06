@@ -113,7 +113,7 @@ export default function Create() {
           categories: [],
           images: [],
         });
-        navigate("/home"); 
+        navigate("/"); 
       } catch (error) {
         console.error("Error submitting form:", error);
       }
