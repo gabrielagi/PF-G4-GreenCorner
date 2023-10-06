@@ -30,6 +30,18 @@ async function uploadImages(images) {
   }
 }
 
+
+const uploadImage = async (image) => {
+  try {
+  
+    const result = await cloudinary.uploader.upload(image);
+    return result.url;
+  } catch (error) {
+    throw new Error("Error al subir la imagen");
+  }
+};
+
+
 //Obtiene todos los productos con sus categorías asociadas (home)
 const getAllProduct = async (req, res) => {
   try {
@@ -102,7 +114,6 @@ const postProduct = async (productData) => {
     throw new Error("Error en el servidor");
   }
 };
-
 
 //Actualiza un producto por id (admin dashboard)
 const updateProduct = async (id, updatedData) => {
@@ -185,6 +196,7 @@ const deleteProduct = async (id) => {
 
 
 
+
 module.exports = {
   getAllProduct,
   getProductById,
@@ -192,5 +204,6 @@ module.exports = {
   updateProduct,
   findRelatedProducts,
   getAllTrending,
-  deleteProduct
+  deleteProduct,
+  uploadImage
 };
