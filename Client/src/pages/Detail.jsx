@@ -83,8 +83,8 @@ const Detail = () => {
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
                 {product?.name}
               </h2>
-              <p className="py-5">rating</p>
-              <p className="py-t text-5xl text-[#444444]">{product.price}</p>
+              <hr className="my-10"></hr>
+              <p className="py-t text-5xl text-[#444444]">${product.price}</p>
               <p className="py-20">{product.description}</p>
               <h2 className="text-5xl text-[#343434]">Variante</h2>
 
@@ -93,33 +93,41 @@ const Detail = () => {
                 <option>dos</option>
               </select>
 
-              <div className=" grid grid-cols-2  sm:  my-10  ">
-                <button
-                  onClick={amountDecrement}
-                  className="bg-gray-200 py-8 px-10 rounded-lg text-green-800 text-4xl"
-                >
-                  -
-                </button>
-                <span>{amount}</span>
-                <button
-                  onClick={amountIncrement}
-                  className="bg-gray-200 py-8 px-10 rounded-lg text-green-800 text-4xl"
-                >
-                  +
-                </button>
-                <button className="py-4 sm: bg-[#75da5c] col-span-1 rounded-3xl">
+              <div className="my-10 grid grid-cols-2  md:my-10 gap-y-10    ">
+                  <div>
+                   <button
+                      onClick={amountDecrement}
+                      className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
+                    >
+                      -
+                    </button>
+                    <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">{amount}</span>
+                    <button
+                      onClick={amountIncrement}
+                      className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
+                    >
+                      +
+                    </button> 
+                  </div>
+                    
+                <button className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
                   ADD TO CART
                 </button>
-                <button
+                
+              </div>
+              <div className="flex  md: justify-between gap-x-10 " >
+                <button className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]">
+                Add to my Garden
+              </button>
+
+              <button
                   onClick={handleCheckout}
-                  className="py-4 sm: bg-[#ce39f7] col-span-1 rounded-3xl"
+                  className="p-4 my-10 md:p-8 md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6] "
                 >
                   Checkout
                 </button>
               </div>
-              <button className="p-8 my-10 pl-24 rounded-2xl border border-gray-400bg-[#cec6c6]">
-                Add to my Garden
-              </button>
+              
             </div>
           </div>
 

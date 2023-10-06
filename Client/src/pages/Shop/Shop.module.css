@@ -43,4 +43,45 @@
   cursor: not-allowed; 
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.paginationButton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.paginationButton:hover {
+  background-color: #0056b3;
+}
+
+.currentPage {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 0 5px;
+}
+
+.divCountries {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+.pagination{
+  justify-content: center;
+  margin-left: 35%  !important;
   
+}
+

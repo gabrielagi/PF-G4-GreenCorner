@@ -7,9 +7,9 @@ const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 const HOST = `http://${DB_HOST}:${SERVER_PORT}/payment`;
 
 // Configuro mercado pago
-mercadopago.configure({
-  access_token: ACCESS_TOKEN,
-});
+// mercadopago.configure({
+//   access_token: ACCESS_TOKEN,
+// });
 const createOrder = async (req, res) => {
   // El product puede ser un objeto individual desde Detail o un array desde Cart
   const product = req.body.product;
