@@ -227,7 +227,7 @@ function rootReducer(state = initialState, action) {
         case POST_USER:
             return{
                 ...state,
-                user: [...AllUsers, payload]
+                userDetail: action.payload
             }
         default:
             return { 

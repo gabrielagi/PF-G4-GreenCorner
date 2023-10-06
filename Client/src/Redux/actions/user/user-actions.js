@@ -10,7 +10,7 @@ import {
 
 import axios from "axios"
 
-const endpoint = "https://localhost:3001/user"
+const endpoint = "https://localhost:3000/user"
 
 export const getAllUsers = () => {
     return async (dispatch) => {
