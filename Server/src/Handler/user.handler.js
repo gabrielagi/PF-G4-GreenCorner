@@ -83,7 +83,7 @@ const updateUserHandler = async (req, res) => {
 };
 
 
-const byIdHander = async (req, res) => {
+const byIdHandler = async (req, res) => {
     const id = req.params.id
 
     try {
@@ -99,7 +99,7 @@ const byIdHander = async (req, res) => {
 }
 
 
-const byNameHander = async (req, res) => {
+const byNameHandler = async (req, res) => {
     const name = req.params.name
     try {
         const user = await getUserbyName(name)
@@ -152,8 +152,8 @@ module.exports = {
     newUserHandler,
     postFavoritesHandler,
     getFavoritesHandler,
-    byIdHander,
-    byNameHander,
+    byIdHandler,
+    byNameHandler,
     allUsers,
     byRolHandler,
     deleteHandler,
