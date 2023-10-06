@@ -33,7 +33,7 @@ const Home = () => {
         lastName: user.family_name,
         email: user.email,
         password: "si",
-        role: "si",
+        role: "",
         image: user.picture,
       }
       dispatch(postUser(userData)),

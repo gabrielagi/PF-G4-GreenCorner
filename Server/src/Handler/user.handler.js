@@ -29,8 +29,6 @@ const newUserHandler = async (req, res) => {
         return res.status(500).send("email missing")
     }if (!password){
         return res.status(500).send("pass missing")
-    }if (!role){
-        return res.status(500).send("role missing")
     }if (!image){
         return res.status(500).send("image missing")
     }if (!rating){
