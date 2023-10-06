@@ -9,7 +9,7 @@ import {
 
 import axios from "axios"
 
-const endpoint = "http://localhost:3000/user"
+const endpoint = "https://localhost:3000/user"
 
 export const getAllUsers = () => {
     return async (dispatch) => {
@@ -83,16 +83,28 @@ export function getUserByRol(rol) {
 };
 
 
-export function postUser ( userData) {
+export function postUser ( {name,
+    lastName,
+    email,
+    password,
+    role,
+    image,
+    rating}) {
     return async (dispatch) => {
         try {
-            const { data } = await axios.post(endpoint, userData)
+            const { data } = await axios.post(endpoint, {name,
+                lastName,
+                email,
+                password,
+                role,
+                image,
+                rating})
             dispatch({
                 type: POST_USER,
                 payload: data
             })
         } catch (error) {
-            console.log(error.mesage);
+            console.log(error);
             return(error.mesage);
 
         }
@@ -108,7 +120,7 @@ export function deleteUser ( id ) {
                 payload: data
             })
         } catch (error) {
-            console.log(error.mesage);
+            console.log(error);
             return(error.mesage);
         }
     }

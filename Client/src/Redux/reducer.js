@@ -58,8 +58,7 @@ let products = []
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-
-
+    
         case GET_ALL_PRODUCT:
             return {
                 ...state,
@@ -152,10 +151,10 @@ function rootReducer(state = initialState, action) {
         case ORDER_BY_NAME:
             products = [...state.allProducts]
             productSorted = products.sort(function (a, b) {
-                if (a.name > b.name) {
+                if (a.name < b.name) {
                     return action.payload === 'asc' ? 1 : -1
                 }
-                if (a.name < b.name) {
+                if (a.name > b.name) {
                     return action.payload === 'asc' ? -1 : 1
                 }
                 return 0;
