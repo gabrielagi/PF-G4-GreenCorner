@@ -9,7 +9,7 @@ sequelize.define('User', {
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: true 
+    allowNull: false
   },
   lastName: {
     type: DataTypes.STRING,
@@ -17,7 +17,7 @@ sequelize.define('User', {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     unique: true,
   },
   password: {
@@ -31,7 +31,7 @@ sequelize.define('User', {
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     defaultValue: '' //hay que modificar aca por la imagen por defecto  
   },
   rating: {

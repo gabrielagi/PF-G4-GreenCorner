@@ -20,10 +20,12 @@ const Testimonial = () => {
   }, []);
 
   const calculateCenterSlidePercentage = () => {
-    if (windowWidth <= 768) {
+    if (windowWidth <= 400) {
       return 99;
+    } else if (windowWidth >= 400 && windowWidth <= 1100) {
+      return 50;
     } else {
-      return 26;
+      return 30;
     }
   };
 

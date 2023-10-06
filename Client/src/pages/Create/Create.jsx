@@ -97,6 +97,14 @@ export default function Create() {
     });
   };
 
+  function handleImageDelete(index) {
+   
+    const updatedImages = [...input.images];
+    updatedImages.splice(index, 1);
+    setInput({ ...input, images: updatedImages });
+    
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.keys(errors).length === 0) {
@@ -199,6 +207,7 @@ export default function Create() {
                 <div>Description:</div>
                   <textarea
                     name="description"
+                    style={{resize: "none", height: "100px"}}
                     value={input.description}
                     onChange={(e) => handleChange(e)}
                     className={styles.inputs}
@@ -228,14 +237,26 @@ export default function Create() {
                 </div>
 
                 <div>
-                  <div>Images:</div>
-                  <input
-                    type="file"
-                    name="photo"
-                    onChange={(e) => handlePhotoChange(e)}
-                    multiple
+                 <div>Images:</div>
+                    <input
+                     type="file"
+                      name="photo"
+                      onChange={(e) => handlePhotoChange(e)}
+                      multiple
                   />
-                </div>
+                  </div>
+                  <div className={styles.imagePreview}>
+  {input.images.map((image, index) => (
+    <div key={index} className={styles.imageContainer}>
+      <img
+        src={image}
+        alt={`Preview ${index}`}
+        className={`${styles.previewImage} ${styles.imageHoverEffect}`} // Aplicamos las clases CSS aquí
+        onClick={() => handleImageDelete(index)}
+      />
+    </div>
+  ))}
+</div>
 
                 <button
                   id="bt"

@@ -4,8 +4,12 @@ const postUser = async (name, lastName, email, password, role, image, rating) =>
     try {
         const newUser = await User.create({
             name,
+            lastName,
             email,
+            password,
+            role,
             image,
+            rating
         })
         console.log(newUser.dataValues);
         return newUser

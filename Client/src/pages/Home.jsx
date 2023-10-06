@@ -9,13 +9,11 @@ import { useDispatch } from "react-redux";
 import { getAllProducts } from "../Redux/actions/product/action";
 import Testimonial from "./../components/Testimonial/Testimonial.home";
 import { useAuth0 } from "@auth0/auth0-react";
-import {postUser} from "../Redux/actions/user/user-actions"
+import {  postUser  } from "../Redux/actions/user/user-actions";
 const Home = () => {
   // Inicializo AOS al momento del montaje del componente
-  const {  user } = useAuth0();
+  const { user } = useAuth0();
   const dispatch = useDispatch();
-  ;
-
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
@@ -31,8 +29,11 @@ const Home = () => {
     console.log("user es undefined");}
     else{
       const userData = {
-        name: user.name,
+        name: user.given_name,
+        lastName: user.family_name,
         email: user.email,
+        password: "si",
+        role: "si",
         image: user.picture,
       }
       dispatch(postUser(userData)),
