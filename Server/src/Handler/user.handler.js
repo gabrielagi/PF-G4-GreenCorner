@@ -14,68 +14,60 @@ const { getAllUsers,
 
 const getFavoritesHandler = async (req, res) => {
     try {
-  
-      const allFavorites= await getAllFavorites();
-      res.status(200).json(allFavorites);
-  
-    } catch (error) {
-      console.error("Error en getFavoritesHandler:", error.message);
-    }
-  };
 
-  const postFavoritesHandler = async (req, res) => {
-    
-    try {
-        
-      const productData = req.body;
-      const productFavorite = await postFavorite(productData);
-  
-      if (productFavorite) {
-        res.status(201).json({ success: true, message: "This product has been add in favorite", data: productFavorite });
-      } else {
-        res.status(400).json({ success: false, message: "Cannot add in favorite" });
-      }
+        const allFavorites = await getAllFavorites();
+        res.status(200).json(allFavorites);
+
     } catch (error) {
-      res.status(400).json({ success: false, error: error.message });
+        console.error("Error en getFavoritesHandler:", error.message);
     }
-  };
+};
+
+const postFavoritesHandler = async (req, res) => {
+
+    try {
+
+        const productData = req.body;
+        const productFavorite = await postFavorite(productData);
+
+        if (productFavorite) {
+            res.status(201).json({ success: true, message: "This product has been add in favorite", data: productFavorite });
+        } else {
+            res.status(400).json({ success: false, message: "Cannot add in favorite" });
+        }
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+};
 
 const newUserHandler = async (req, res) => {
     const {
-        name, 
-        lastName,
+        nickname,
         email,
-        password,
-        role,
-        image,
+        picture,
+        lastname,
+        email_verified,
         rating
     } = req.body
 
-    console.log(rating);
-    if ( !name ) {
-        return res.status(500).send("name missing")
-    } if (!lastName){
-        return res.status(500).send("lastname missing")
-    }if (!email){
+    if (!nickname) {
+        return res.status(500).send("nickname missing")
+    } if (!email) {
         return res.status(500).send("email missing")
-    }if (!password){
-        return res.status(500).send("pass missing")
-    }if (!image){
-        return res.status(500).send("image missing")
-    }if (!rating){
-        return res.status(500).send("rating missing")
+    } if (!picture) {
+        return res.status(500).send("picture missing")
     }
     try {
         const newUser = await postUser(
-            name,
-            lastName,
+            nickname,
             email,
-            password,
-            role,
-            image,
+            picture,
+            lastname,
+            email_verified,
             rating)
+        console.log("estoy en el post :D");
         const userEmail = newUser.email;
-        const userName = newUser.name;
+        const userName = newUser.nickname;
         await WelcomeEmail(userEmail, userName)
         res.status(200).json(newUser)
     } catch (error) {
@@ -86,12 +78,12 @@ const newUserHandler = async (req, res) => {
 }
 
 
-const byIdHander = async(req, res) => {
+const byIdHander = async (req, res) => {
     const id = req.params.id
 
     try {
         const user = await getUSerbyId(id)
-        if(!user){
+        if (!user) {
             return res.status(404).send("Not found")
         }
         return res.status(200).json(user)
@@ -102,11 +94,11 @@ const byIdHander = async(req, res) => {
 }
 
 
-const byNameHander = async( req, res) => {
-    const name  = req.params.name
+const byNameHander = async (req, res) => {
+    const name = req.params.name
     try {
         const user = await getUserbyName(name)
-        if(!user){
+        if (!user) {
             return res.status(404).send("Not found")
         }
         return res.status(200).json(user)
@@ -116,10 +108,10 @@ const byNameHander = async( req, res) => {
     }
 }
 
-const allUsers = async(req, res ) => {
-    try{
+const allUsers = async (req, res) => {
+    try {
         const users = await getAllUsers()
-        if(!users){ñ
+        if (!users) {
             return res.status(404).send("Not users yet")
         }
         return res.status(200).json(users)
@@ -129,11 +121,11 @@ const allUsers = async(req, res ) => {
     }
 }
 
-const byRolHandler = async (req , res ) => {
+const byRolHandler = async (req, res) => {
     const userRol = req.params.rol;
     try {
         const user = await getByRol(userRol)
-        return  res.status(200).json(user)
+        return res.status(200).json(user)
 
     } catch (error) {
         console.log(error);
