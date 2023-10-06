@@ -6,7 +6,7 @@ const { getAllUsers,
     getAllFavorites,
     getByRol,
     getUserbyName,
-    postUser,
+    createUser,
     deleteUser
 } = require("../Controller/user.controller")
 
@@ -41,41 +41,22 @@ const postFavoritesHandler = async (req, res) => {
 };
 
 const newUserHandler = async (req, res) => {
-    const {
-        nickname,
-        email,
-        picture,
-        lastname,
-        email_verified,
-        rating
-    } = req.body
+    const { nickname, email, picture } = req.body;
 
-    if (!nickname) {
-        return res.status(500).send("nickname missing")
-    } if (!email) {
-        return res.status(500).send("email missing")
-    } if (!picture) {
-        return res.status(500).send("picture missing")
+    if (!nickname || !email || !picture) {
+        return res.status(400).json({ message: "Nickname, email, and picture are required fields." });
     }
+
     try {
-        const newUser = await postUser(
-            nickname,
-            email,
-            picture,
-            lastname,
-            email_verified,
-            rating)
-        console.log("estoy en el post :D");
-        const userEmail = newUser.email;
-        const userName = newUser.nickname;
-        await WelcomeEmail(userEmail, userName)
-        res.status(200).json(newUser)
+        const newUser = await createUser(nickname, email, picture);
+        console.log("Nuevo usuario creado:", newUser);
+        res.status(201).json(newUser);
     } catch (error) {
-        console.log(error.message);
-        return res.status(500).send("Something went wrong")
+        console.error(error.message);
+        return res.status(500).json({ message: "Something went wrong" });
     }
+};
 
-}
 
 
 const byIdHander = async (req, res) => {

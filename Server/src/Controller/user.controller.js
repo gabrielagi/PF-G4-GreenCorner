@@ -1,8 +1,9 @@
 const { User, Favorite, Product } = require("../db")
 const { Op } = require('sequelize');
-const postUser = async (nickname, email, picture) => {
+
+
+const createUser = async (nickname, email, picture) => {
     try {
-        // Buscar un usuario existente por nickname o email, o crearlo si no existe
         const [user, created] = await User.findOrCreate({
             where: {
                 [Op.or]: [{ nickname }, { email }],
@@ -11,24 +12,19 @@ const postUser = async (nickname, email, picture) => {
                 nickname,
                 email,
                 picture,
-                lastname,
-                email_verified,
-                rating,
             },
         });
-
+        
         if (created) {
-            // El usuario fue creado
             console.log("Nuevo usuario creado:", user.dataValues);
         } else {
-            // El usuario ya existía
             console.log("El usuario ya existe:", user.dataValues);
         }
 
         return user;
     } catch (error) {
         console.error(error.message);
-        throw error; // Puedes lanzar el error para manejarlo más arriba en tu aplicación si es necesario
+        throw error; 
     }
 };
 
@@ -141,6 +137,6 @@ module.exports = {
     getUserbyName,
     getAllFavorites,
     postFavorite,
-    postUser,
+    createUser,
     deleteUser
 }

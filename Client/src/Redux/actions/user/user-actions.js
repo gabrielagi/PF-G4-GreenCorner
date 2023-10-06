@@ -10,7 +10,8 @@ import {
 
 import axios from "axios"
 
-const endpoint = "https://localhost:3000/user"
+const endpoint = "http://localhost:3001/user"
+/* const endpoint = "https://greencorner.onrender.com/user" */
 
 export const getAllUsers = () => {
     return async (dispatch) => {
@@ -76,7 +77,7 @@ export function getUserByRol(rol) {
 }
 
 
-export function postUser(userData, endpoint) {
+export function postUser(userData) {
     return async (dispatch) => {
       try {
         const { data } = await axios.post(endpoint, userData);
@@ -90,7 +91,6 @@ export function postUser(userData, endpoint) {
       }
     };
   }
-  
 
 export function postFavorites(userData) {
     return async (dispatch) => {
