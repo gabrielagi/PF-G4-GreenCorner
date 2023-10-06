@@ -1,6 +1,7 @@
-const { Product } = require("../db");
-const { Category } = require("../db");
-
+/*const { Product } = require("../db");
+const { ShoppingCart } = require("../db");
+const { Category } = require("../db");*/
+const { Product, User, ShoppingCart, Category } = require("../db");
 //Obtiene todos los productos con sus categorías asociadas (home)
 const getAllProduct = async (req, res) => {
   try {
@@ -17,6 +18,45 @@ const getAllProduct = async (req, res) => {
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
+
+
+  const getProductCart = async (req, res) => {
+    try {
+    
+    let cart = ShoppingCart.findAll({
+      include: [{
+          model: Product,
+          required: true
+      },
+      {
+        model: User,
+        required: true
+      }
+    ]
+  })
+
+/*
+   let cart = ShoppingCart.findAll({
+    where: {
+      email: "Francososa1@hotmail.com"
+    },
+      include: [{
+          model: Product,
+          required: true
+      },
+      {
+        model: User,
+        required: true
+      }
+    ]
+  })*/
+  
+     return cart 
+    } catch (error) {
+      console.error("Error en getProductCart:", error.message);
+      res.status(500).json({ error: "Error en" });
+    }
+  };
 
 
 //Obtiene un producto por id con sus categorías asociadas (product detail)
@@ -65,6 +105,24 @@ const postProduct = async (productData) => {
     }
 
    return newProduct;
+  } catch (error) {
+    console.error("Error en postProduct:", error.message);
+    throw new Error("Error en el servidor");
+  }
+};
+
+
+const postProductCart = async (productData) => {
+  try {
+    const { email, product_id, amount} = productData;
+
+    const newProductCart = await ShoppingCart.create({
+      email,
+      product_id,
+      amount
+    });
+
+   return newProductCart;
   } catch (error) {
     console.error("Error en postProduct:", error.message);
     throw new Error("Error en el servidor");
@@ -156,7 +214,9 @@ const deleteProduct = async (id) => {
 module.exports = {
   getAllProduct,
   getProductById,
+  getProductCart,
   postProduct,
+  postProductCart,
   updateProduct,
   findRelatedProducts,
   getAllTrending,

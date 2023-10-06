@@ -2,7 +2,6 @@ require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const ShoppingCart = require('./models/ShoppingCart');
 const {
   DB_USER, DB_PASSWORD, DB_HOST,DB_NAME,
 } = process.env;
@@ -27,7 +26,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 
 
-const { User, Order, Product, Category, OrderDetail } = sequelize.models;
+const { User, Order, Product, Category, OrderDetail, ShoppingCart, Favorite } = sequelize.models;
 
 // RELACIONES
 User.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
@@ -38,6 +37,30 @@ Product.belongsToMany(Order, { through: OrderDetail, foreignKey: 'productId', as
 
 Product.belongsToMany(Category, { through: "ProductCategory", foreignKey: 'productId', as: 'categories' });
 Category.belongsToMany(Product, { through: "ProductCategory", foreignKey: 'categoryId', as: 'products' });
+
+
+ShoppingCart.belongsTo(Product, {
+  foreignKey: 'product_id' // Clave foránea en el modelo Product
+});
+ShoppingCart.belongsTo(User, {
+  foreignKey: 'email',
+  targetKey: 'email',
+});
+
+Favorite.belongsTo(Product, {
+  foreignKey: 'product_id' // Clave foránea en el modelo Product
+});
+Favorite.belongsTo(User, {
+  foreignKey: 'email',
+  targetKey: 'email',
+});
+
+
+
+/*
+Product.hasMany(ShoppingCart);
+ShoppingCart.hasMany(Product);*/
+
 
 //Descomentar si se importo el modelo ShoppingCart
 //User.hasMany(ShoppingCart, { foreignKey: 'userId', as: 'ShoppingCart' });

@@ -35,7 +35,13 @@ const Card = ({ name, images, price, id }) => {
       theme: "light",
     });
 
-  const handleAdd = () => {
+  const handleAdd = (idProduct) => {
+
+    console.log(user.email);
+    console.log(idProduct);
+    
+
+
     isAuthenticated ? notify() : loginWithRedirect();
   };
   const handleHeart = () => {
@@ -71,7 +77,7 @@ const Card = ({ name, images, price, id }) => {
         <p className="text-lg font-bold mx-6">${price}</p>
         <button
           className="bg-transparent border-2 hover:bg-green-50 hover:scale-110 hover:shadow-lg hover:text-green-500 absolute right-0 bottom-1 text-black font-normal w-16 h-16 rounded-3xl text-2xl mx-4"
-          onClick={handleAdd}
+          onClick={()=>handleAdd(id)}
         >
           +
         </button>
