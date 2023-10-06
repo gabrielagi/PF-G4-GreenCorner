@@ -45,7 +45,7 @@ const newUserHandler = async (req, res) => {
         nickname,
         email,
         picture,
-        lastname,
+        // lastName,
         email_verified,
         rating
     } = req.body
@@ -62,7 +62,7 @@ const newUserHandler = async (req, res) => {
             nickname,
             email,
             picture,
-            lastname,
+            lastName,
             email_verified,
             rating)
         console.log("estoy en el post :D");

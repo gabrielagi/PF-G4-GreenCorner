@@ -11,12 +11,12 @@ const postUser = async (nickname, email, picture) => {
                 nickname,
                 email,
                 picture,
-                lastname,
+                lastName,
                 email_verified,
                 rating,
             },
         });
-
+        
         if (created) {
             // El usuario fue creado
             console.log("Nuevo usuario creado:", user.dataValues);

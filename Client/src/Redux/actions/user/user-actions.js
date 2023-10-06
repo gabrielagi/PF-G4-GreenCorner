@@ -10,7 +10,7 @@ import {
 
 import axios from "axios"
 
-const endpoint = "https://localhost:3000/user"
+const endpoint = "http://localhost:3000/user"
 
 export const getAllUsers = () => {
     return async (dispatch) => {
@@ -85,7 +85,7 @@ export function postUser(userData, endpoint) {
           payload: data,
         });
       } catch (error) {
-        console.error(error);
+        console.log(error);
         return error.message;
       }
     };
