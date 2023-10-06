@@ -70,31 +70,24 @@
 
   .imageContainer {
     position: relative;
-    margin-right: 10px; 
+    overflow: visible;
   }
   
   .previewImage {
-    width: 100px; 
-    height: 100px; 
-    cursor: pointer; 
+    width: 100px;
+    height: 100px;
+    transition: transform 0.3s, filter 0.3s; 
   }
   
-  .deleteButton {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  .previewImage:hover {
     background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 100%;
-    font-size: 14px;
-    cursor: pointer;
+    transform: scale(1.1); /* Hacemos que la imagen sea un 10% más grande */
+    border:solid 5px red;
   }
-
+  
   @media (max-width: 768px) {
     .card {
-        margin-top: 70px;
+    margin-top: 70px;
       width: 100%; 
     }
     
