@@ -8,8 +8,8 @@ const Profile = () => {
   return (
     isAuthenticated && (
       <div>
-        <NavUser />
-        {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
+      {/*   <NavUser /> */}
+        <pre>{JSON.stringify(user, null, 2)}</pre>
       </div>
     )
   );

@@ -16,7 +16,8 @@ import {
     GET_USER_BY_ROL,
     GET_USER_BY_ID,
     DELETE_USER,
-    POST_USER
+    POST_USER,
+    GET_CATEGORIES_SHOP
 
 } from "./actions/action-types"
 
@@ -28,7 +29,7 @@ const initialState = {
     searchProduct: [],
     searchByName: [],
     productDetail: [],
-    user: [],
+    AllUsers: [],
     userDetail: []
 };
 
@@ -117,6 +118,24 @@ function rootReducer(state = initialState, action) {
               categories: action.payload
             };
 
+            
+            case GET_CATEGORIES_SHOP:
+
+             const categories = [];
+
+             state.product.forEach((product) => {
+              product.categories.forEach((category) => {
+                 categories.push(category);
+               });
+             }); 
+
+
+             const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
+                           
+            return {
+              ...state,
+              categories: Category
+            };
 
 
 
@@ -208,7 +227,7 @@ function rootReducer(state = initialState, action) {
         case POST_USER:
             return{
                 ...state,
-                user: [...user, payload]
+                userDetail: action.payload
             }
         default:
             return { 

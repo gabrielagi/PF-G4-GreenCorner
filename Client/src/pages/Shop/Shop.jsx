@@ -8,7 +8,7 @@ import ProductsTrending from "../../components/ProductsTrending/ProductsTrending
 import {
   getAllProducts,
   resetAllProducts,
-  getAllCategories,
+  getAllCategoriesShop,
   getProductsTrending,
   filterByName,
   filterByPrice,
@@ -44,7 +44,7 @@ const Shop = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
-    dispatch(getAllCategories());
+    dispatch(getAllCategoriesShop());
     dispatch(getProductsTrending());
   }, [dispatch]);
 
@@ -190,15 +190,15 @@ const Shop = () => {
         onChange={handleChange}
         className={styles.pagination}
         size= "large" 
-        colour="primary"
+        color="primary"
         sx={{
           '& .Mui-selected': {
             backgroundColor: '#50a050',
-            fontSize: '20px', // Tamaño de fuente personalizado para el botón seleccionado
+            fontSize: '20px', 
             
           },
           '& .MuiPaginationItem-root': {
-            fontSize: '15px' // Tamaño de fuente personalizado para todos los botones
+            fontSize: '15px'
           },
           
         }}
