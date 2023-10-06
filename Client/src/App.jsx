@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Shop from "./pages/Shop/Shop";
 import Favorites from "./pages/Favorites";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/Profile";
 import AboutUs from "./components/About Us/AboutUs";
 import Navbar from "./components/Navbar/Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -16,12 +16,9 @@ import Create from "./pages/Create/Create";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
 
-
 const App = () => {
-
   return (
     <div>
-
       <Navbar />
       <ToastContainer />
       {/*  <Profile /> */}
@@ -34,10 +31,9 @@ const App = () => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
-        <Route path="/create" element={<Create/>} />
-        <Route path="/contact-us" element={<ContactUs/>} />
-        { <Route path="/profile" element={<Profile/>} /> }
-       
+        <Route path="/create" element={<Create />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+        {<Route path="/profile" element={<Profile />} />}
       </Routes>
       {/*<Footer />*/}
     </div>
