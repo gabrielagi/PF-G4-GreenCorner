@@ -4,7 +4,9 @@ const axios = require("axios");
 const {
   getAllProduct,
   getProductById,
+  getProductCart,
   postProduct,
+  postProductCart,
   updateProduct,
   findRelatedProducts,
   getAllTrending,
@@ -12,6 +14,7 @@ const {
 
 } = require("../Controller/product.controller");
 const Product = require("../models/Product");
+const ShoppingCart = require("../models/ShoppingCart");
 
 
 
@@ -46,7 +49,7 @@ const getProductByIdHandler = async (req, res) => {
     }
     res.status(200).json(product);
   } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
+    res.status(500).json({ error: "Error en el servidor." });
   }
 };
 
@@ -54,15 +57,44 @@ const getProductByIdHandler = async (req, res) => {
 const postProductHandler = async (req, res) => {
   try {
     const productData = req.body;
-    const newProduct = await postProduct(productData);
+    const newProductCart = await postProduct(productData);
 
-    if (newProduct) {
-      res.status(201).json({ success: true, message: "Producto creado con éxito", data: newProduct });
+    if (newProductCart) {
+      res.status(201).json({ success: true, message: "Producto creado con éxito", data: newProductCart });
     } else {
       res.status(400).json({ success: false, message: "No se pudo crear el producto" });
     }
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+//Inserta un producto en el carrito
+const postProductCartHandler = async (req, res) => {
+  try {
+    const productData = req.body;
+    const productCart = await postProductCart(productData);
+
+    if (productCart) {
+      res.status(201).json({ success: true, message: "Producto creado con éxito", data: productCart });
+    } else {
+      res.status(400).json({ success: false, message: "No se pudo crear el producto" });
+    }
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+};
+
+
+const getProductCartHandler = async (req, res) => {
+  try {
+    //const name = req.query.name ? req.query.name.toLowerCase() : null;
+    const allProductCart = await getProductCart();
+ 
+      res.status(200).json(allProductCart);
+
+  } catch (error) {
+    console.error("Error en getAllProductHandler:", error.message);
   }
 };
 
@@ -146,7 +178,9 @@ const deleteHandler = async (req, res) => {
 module.exports = {
   getAllProductHandler,
   getProductByIdHandler,
+  getProductCartHandler,
   postProductHandler,
+  postProductCartHandler,
   deleteProductHandler,
   updateProductHandler,
   getRelatedProductsHandler,

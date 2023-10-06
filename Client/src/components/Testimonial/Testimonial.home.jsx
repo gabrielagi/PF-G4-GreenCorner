@@ -20,10 +20,12 @@ const Testimonial = () => {
   }, []);
 
   const calculateCenterSlidePercentage = () => {
-    if (windowWidth <= 768) {
-      return 99;
+    if (windowWidth <= 500) {
+      return 100;
+    } else if (windowWidth >= 400 && windowWidth <= 1000) {
+      return 70;
     } else {
-      return 26;
+      return 30;
     }
   };
 
@@ -35,7 +37,7 @@ const Testimonial = () => {
           Read what others have to say
         </h1>
       </div>
-      <div className="carousel-container">
+      <div className="wrapper">
         <Carousel
           showThumbs={false}
           showStatus={false}
@@ -45,9 +47,9 @@ const Testimonial = () => {
           centerSlidePercentage={calculateCenterSlidePercentage()}
         >
           {opinions.map((card, index) => (
-            <div key={index} className="carousel-card py-5 mb-10">
+            <li key={index} className="carousel-card py-5 mb-10">
               <OpinionCard card={card} />
-            </div>
+            </li>
           ))}
         </Carousel>
       </div>

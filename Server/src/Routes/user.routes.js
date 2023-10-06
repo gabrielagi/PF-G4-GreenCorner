@@ -1,25 +1,35 @@
 const { Router } = require("express");
 const {
   allUsers,
-  byIdHander,
-  byNameHander,
+  byIdHandler,
+  byNameHandler,
+  getFavoritesHandler,
+  postFavoritesHandler,
   byRolHandler,
   newUserHandler,
-  deleteHandler
+  deleteHandler,
+  updateUserHandler,
 } = require("../Handler/user.handler");
 
 const userRouter = Router();
 
 userRouter.get( "/", allUsers);
 
-userRouter.get( "/:id", byIdHander  )
+userRouter.get( "/:id", byIdHandler  )
 
-userRouter.get("/find/:name", byNameHander)
+userRouter.get("/getfavorites", getFavoritesHandler);
+
+userRouter.get("/find/:name", byNameHandler)
 
 userRouter.get( "/rol/:rol", byRolHandler)
+
+//anda
+userRouter.post("/favorites", postFavoritesHandler);
 
 userRouter.post("/", newUserHandler)
 
 userRouter.delete("/:id", deleteHandler)
+
+userRouter.put("/:id", updateUserHandler);
 
 module.exports = userRouter;

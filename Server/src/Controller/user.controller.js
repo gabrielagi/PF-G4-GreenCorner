@@ -1,38 +1,105 @@
-const { User } = require("../db")
+const { User, Favorite, Product } = require("../db")
+const { Op } = require('sequelize');
 
-const postUser = async (name, lastName, email, password, role, image, rating) => {
+
+//CREA NUEVO USUARIO
+const createUser = async (nickname, email, picture) => {
     try {
-        const newUser = await User.create({
-            name,
-            email,
-            image,
-        })
-        console.log(newUser.dataValues);
-        return newUser
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
-
-const getUSerbyId = async (id) => {
-    try {
-        const user = await User.findByPk(id)
-        console.log(id);
-        if (!user) {
-            return ("user not found")
+        const [user, created] = await User.findOrCreate({
+            where: {
+                [Op.or]: [{ nickname }, { email }],
+            },
+            defaults: {
+                nickname,
+                email,
+                picture,
+            },
+        });
+        
+        if (created) {
+            console.log("Nuevo usuario creado:", user.dataValues);
+        } else {
+            console.log("El usuario ya existe:", user.dataValues);
         }
-        return user
+
+        return user;
     } catch (error) {
-        console.log(error.message);
+        console.error(error.message);
+        throw error; 
     }
-}
+};
+
+//OBTIENE USUARIO POR ID
+const getUserById = async (userId) => {
+    try {
+        const user = await User.findOne({
+            where: { id: userId },
+        });
+        return user;
+    } catch (error) {
+        console.error(error.message);
+        throw error;
+    }
+};
+
+
+//ACTUALIZA USUARIO
+const updateUser = async (userId, userData) => {
+    try {
+        const [updatedCount, updatedUser] = await User.update(userData, {
+            where: { id: userId },
+            returning: true, // Para obtener el registro actualizado
+        });
+
+        if (updatedCount === 0) {
+            throw new Error("User not found or no changes made.");
+        }
+
+        return updatedUser[0]; // Devuelve el usuario actualizado
+    } catch (error) {
+        console.error(error.message);
+        throw error;
+    }
+};
+
+
+const getAllFavorites = async (req, res) => {
+    try {
+        const favorites = await Favorite.findAll({
+            include: [{
+                model: Product,
+                required: true
+            }
+            ]
+        });
+        return favorites;
+    } catch (error) {
+        res.status(500).json({ error: "Error en el servidor" });
+    }
+};
+const postFavorite = async (product) => {
+    try {
+        const { product_id, email } = product;
+
+        const newFavorite = await Favorite.create({
+            product_id,
+            email
+        });
+
+        return newFavorite;
+    } catch (error) {
+        console.error("Error en postFavorite:", error.message);
+        throw new Error("Error en el servidor");
+    }
+};
+
+
 
 const getUserbyName = async (name) => {
     const userName = name
     try {
         const user = await User.findOne({
-            where: { name: userName }
+            where: { nickname: userName }
         })
         return user
     } catch (error) {
@@ -89,8 +156,11 @@ const deleteUser = async (id) => {
 module.exports = {
     getAllUsers,
     getByRol,
-    getUSerbyId,
+    getUserById,
     getUserbyName,
-    postUser,
-    deleteUser
+    getAllFavorites,
+    postFavorite,
+    createUser,
+    deleteUser,
+    updateUser
 }

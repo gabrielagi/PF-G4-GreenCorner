@@ -176,11 +176,7 @@ const Shop = () => {
 
       <div className="flex flex-col lg:flex-row">
         <div className="lg:w-1/3 mr-4"></div>
-        <div className="card mb-2"> {/* Agregar la clase "mb-2" para ajustar el espaciado */}
-        <div className="lg:w-2/3 ml-4">
-        <Cards allProducts={displayedProducts} />
-        </div>
-       </div>
+
         <div className="lg:w-2/3 ml-4">
         <Cards allProducts={displayedProducts} />
         </div>
@@ -194,15 +190,16 @@ const Shop = () => {
         onChange={handleChange}
         className={styles.pagination}
         size= "large" 
-        colour="primary"
+        color="primary"
         sx={{
           '& .Mui-selected': {
             backgroundColor: '#50a050',
             fontSize: '20px',
+            fontSize: '20px', 
             
           },
           '& .MuiPaginationItem-root': {
-            fontSize: '15px' 
+            fontSize: '15px'
           },
           
         }}

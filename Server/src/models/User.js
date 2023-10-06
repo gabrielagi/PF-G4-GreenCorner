@@ -5,34 +5,38 @@ sequelize.define('User', {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    allowNull: true,
+    allowNull: false,
+  },
+  nickname:{
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: true 
+    allowNull: true,
   },
   lastName: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
     unique: true,
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: true
+  email_verified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
   role: {
     type: DataTypes.ENUM('admin', 'user'),
     defaultValue: 'user',
     allowNull: true 
   },
-  image: {
+  picture: {
     type: DataTypes.STRING,
-    allowNull: true,
-    defaultValue: '' //hay que modificar aca por la imagen por defecto  
+    allowNull: false,
   },
   rating: {
     type: DataTypes.INTEGER,
