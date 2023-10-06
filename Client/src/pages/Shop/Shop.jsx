@@ -19,6 +19,8 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import Pagination from "@mui/material/Pagination"
+
 
 const Shop = () => {
   const products = useSelector((state) => state.product);
@@ -26,8 +28,19 @@ const Shop = () => {
   const [nameOrder, setNameOrder] = useState("");
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
+  const [page, setPage] = useState(1);
+  const productsPerPage = 6;
+
+
 
   const dispatch = useDispatch();
+
+  
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -66,6 +79,15 @@ const Shop = () => {
   //     console.log(error.message);
   //   }
   // };
+
+  const totalProducts = products.length;
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+  const startIndex = (page - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+  const displayedProducts = products.slice(startIndex, endIndex);
+
+  
 
   return (
     <div>
@@ -156,10 +178,32 @@ const Shop = () => {
         <div className="lg:w-1/3 mr-4"></div>
 
         <div className="lg:w-2/3 ml-4">
-          <Cards allProducts={products} />
+        <Cards allProducts={displayedProducts} />
         </div>
       </div>
+      <div className={styles.cardsDiv}>
 
+      </div>
+      <Pagination
+        count={totalPages}
+        page={page}
+        onChange={handleChange}
+        className={styles.pagination}
+        size= "large" 
+        colour="primary"
+        sx={{
+          '& .Mui-selected': {
+            backgroundColor: '#50a050',
+            fontSize: '20px', // Tamaño de fuente personalizado para el botón seleccionado
+            
+          },
+          '& .MuiPaginationItem-root': {
+            fontSize: '15px' // Tamaño de fuente personalizado para todos los botones
+          },
+          
+        }}
+        //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
+      />
       <div className="sm:w[10px]">
         <Category allCategories={allCategories} />
       </div>

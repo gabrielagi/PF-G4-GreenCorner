@@ -58,8 +58,7 @@ let products = []
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-
-
+    
         case GET_ALL_PRODUCT:
             return {
                 ...state,
@@ -101,22 +100,21 @@ function rootReducer(state = initialState, action) {
         //Por ahora no va
         case GET_CATEGORIES:
 
-            const categories = [];
+            // const categories = [];
 
-            state.product.forEach((product) => {
-                product.categories.forEach((category) => {
-                    categories.push(category);
-                });
-            });
-
-
-
-            const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
+            // state.product.forEach((product) => {
+            //   product.categories.forEach((category) => {
+            //     categories.push(category);
+            //   });
+            // }); 
 
 
+            // const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
+                
+            
             return {
-                ...state,
-                categories: Category
+              ...state,
+              categories: action.payload
             };
 
 
@@ -153,10 +151,10 @@ function rootReducer(state = initialState, action) {
         case ORDER_BY_NAME:
             products = [...state.allProducts]
             productSorted = products.sort(function (a, b) {
-                if (a.name > b.name) {
+                if (a.name < b.name) {
                     return action.payload === 'asc' ? 1 : -1
                 }
-                if (a.name < b.name) {
+                if (a.name > b.name) {
                     return action.payload === 'asc' ? -1 : 1
                 }
                 return 0;
@@ -218,7 +216,7 @@ function rootReducer(state = initialState, action) {
             };
 
 
-
+        
 
 
     }

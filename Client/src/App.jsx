@@ -12,7 +12,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
-import Create from "./pages/Create";
+import Create from "./pages/Create/Create";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
 
