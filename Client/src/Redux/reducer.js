@@ -18,6 +18,7 @@ import {
   DELETE_USER,
   POST_USER,
   GET_CATEGORIES_SHOP,
+  GET_USER_BY_EMAIL,
 } from "./actions/action-types";
 
 const initialState = {
@@ -211,6 +212,12 @@ function rootReducer(state = initialState, action) {
       };
 
     case GET_USER_BY_ID:
+      return {
+        ...state,
+        userDetail: payload,
+      };
+
+    case GET_USER_BY_EMAIL:
       return {
         ...state,
         userDetail: payload,

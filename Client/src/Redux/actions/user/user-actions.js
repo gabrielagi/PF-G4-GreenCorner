@@ -6,6 +6,7 @@ import {
   DELETE_USER,
   POST_FAVORITE,
   POST_USER,
+  GET_USER_BY_EMAIL,
 } from "../action-types";
 
 import axios from "axios";
@@ -52,6 +53,22 @@ export function getUserById(id) {
       });
     } catch (error) {
       console.log(error.mesage);
+      return error.mesage;
+    }
+  };
+}
+
+export function getUserByEmail(email) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(`${endpoint}/find?email=${email}`);
+
+      dispatch({
+        type: GET_USER_BY_EMAIL,
+        payload: data,
+      });
+    } catch (error) {
+      console.error(error.message);
       return error.mesage;
     }
   };
