@@ -97,7 +97,6 @@ export function postFavorites(userData) {
         
         try {
             const { data } = await axios.post(`${endpoint}/favorites`, userData)
-                console.log(data+ " sadsa");
             
             dispatch({
                 type: POST_FAVORITE,
