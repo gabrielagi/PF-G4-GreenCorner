@@ -253,5 +253,4 @@ module.exports = {
   findRelatedProducts,
   getAllTrending,
   deleteProduct,
-  uploadImages
 };
