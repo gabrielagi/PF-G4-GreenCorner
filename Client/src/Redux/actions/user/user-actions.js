@@ -76,32 +76,21 @@ export function getUserByRol(rol) {
 }
 
 
-export function postUser ( {name,
-    lastName,
-    email,
-    password,
-    role,
-    image,
-    rating}) {
+export function postUser(userData, endpoint) {
     return async (dispatch) => {
-        try {
-            const { data } = await axios.post(endpoint, {name,
-                lastName,
-                email,
-                password,
-                role,
-                image,
-                rating})
-            dispatch({
-                type: POST_USER,
-                payload: data
-            })
-        } catch (error) {
-            console.log(error);
-            return(error.mesage);
-        }
-    }
-}
+      try {
+        const { data } = await axios.post(endpoint, userData);
+        dispatch({
+          type: POST_USER,
+          payload: data,
+        });
+      } catch (error) {
+        console.error(error);
+        return error.message;
+      }
+    };
+  }
+  
 
 export function postFavorites(userData) {
     return async (dispatch) => {

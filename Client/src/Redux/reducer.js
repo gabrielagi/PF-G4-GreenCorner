@@ -29,7 +29,7 @@ const initialState = {
     searchProduct: [],
     searchByName: [],
     productDetail: [],
-    user: [],
+    AllUsers: [],
     userDetail: []
 };
 
@@ -228,7 +228,7 @@ function rootReducer(state = initialState, action) {
         case POST_USER:
             return{
                 ...state,
-                user: [...user, payload]
+                user: [...AllUsers, payload]
             }
         default:
             return { 
