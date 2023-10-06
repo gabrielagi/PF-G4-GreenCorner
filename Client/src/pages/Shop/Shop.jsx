@@ -8,7 +8,7 @@ import ProductsTrending from "../../components/ProductsTrending/ProductsTrending
 import {
   getAllProducts,
   resetAllProducts,
-  getAllCategoriesShop,
+  getAllCategories,
   getProductsTrending,
   filterByName,
   filterByPrice,
@@ -44,7 +44,7 @@ const Shop = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
-    dispatch(getAllCategoriesShop());
+    dispatch(getAllCategories());
     dispatch(getProductsTrending());
   }, [dispatch]);
 
@@ -194,6 +194,7 @@ const Shop = () => {
         sx={{
           '& .Mui-selected': {
             backgroundColor: '#50a050',
+            fontSize: '20px',
             fontSize: '20px', 
             
           },
