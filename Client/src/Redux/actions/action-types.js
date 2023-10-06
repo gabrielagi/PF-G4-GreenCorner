@@ -15,7 +15,6 @@ export const GET_CATEGORIES_BY_ID = "GET_CATEGORIES_BY_ID";
 export const FILTER_CATEGORY = "FILTER_CATEGORY";
 export const GET_ALL_USER = "GET_ALL_USER";
 export const GET_USER_BY_ID = "GET_USER_BY_ID";
-export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
 export const GET_USER_BY_NAME = "GET_USER_BY_NAME";
 export const GET_USER_BY_ROL = "GET_USER_BY_ROL";
 export const DELETE_USER = "DELETE_USER";

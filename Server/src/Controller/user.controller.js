@@ -1,67 +1,64 @@
-const { User, Favorite, Product } = require("../db")
-const { Op } = require('sequelize');
-
+const { User, Favorite, Product } = require("../db");
+const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
 const createUser = async (nickname, email, picture) => {
-    try {
-        const [user, created] = await User.findOrCreate({
-            where: {
-                [Op.or]: [{ nickname }, { email }],
-            },
-            defaults: {
-                nickname,
-                email,
-                picture,
-            },
-        });
-        
-        if (created) {
-            console.log("Nuevo usuario creado:", user.dataValues);
-        } else {
-            console.log("El usuario ya existe:", user.dataValues);
-        }
+  try {
+    const [user, created] = await User.findOrCreate({
+      where: {
+        [Op.or]: [{ nickname }, { email }],
+      },
+      defaults: {
+        nickname,
+        email,
+        picture,
+      },
+    });
 
-        return user;
-    } catch (error) {
-        console.error(error.message);
-        throw error; 
+    if (created) {
+      console.log("Nuevo usuario creado:", user.dataValues);
+    } else {
+      console.log("El usuario ya existe:", user.dataValues);
     }
+
+    return user;
+  } catch (error) {
+    console.error(error.message);
+    throw error;
+  }
 };
 
 //OBTIENE USUARIO POR ID
 const getUserById = async (userId) => {
-    try {
-        const user = await User.findOne({
-            where: { id: userId },
-        });
-        return user;
-    } catch (error) {
-        console.error(error.message);
-        throw error;
-    }
+  try {
+    const user = await User.findOne({
+      where: { id: userId },
+    });
+    return user;
+  } catch (error) {
+    console.error(error.message);
+    throw error;
+  }
 };
-
 
 //ACTUALIZA USUARIO
 const updateUser = async (userId, userData) => {
-    try {
-        const [updatedCount, updatedUser] = await User.update(userData, {
-            where: { id: userId },
-            returning: true, // Para obtener el registro actualizado
-        });
+  try {
+    const [updatedCount, updatedUser] = await User.update(userData, {
+      where: { id: userId },
+      returning: true, // Para obtener el registro actualizado
+    });
 
-        if (updatedCount === 0) {
-            throw new Error("User not found or no changes made.");
-        }
-
-        return updatedUser[0]; // Devuelve el usuario actualizado
-    } catch (error) {
-        console.error(error.message);
-        throw error;
+    if (updatedCount === 0) {
+      throw new Error("User not found or no changes made.");
     }
-};
 
+    return updatedUser[0]; // Devuelve el usuario actualizado
+  } catch (error) {
+    console.error(error.message);
+    throw error;
+  }
+};
 
 const getAllFavorites = async (req, res) => {
   try {
@@ -94,30 +91,17 @@ const postFavorite = async (product) => {
   }
 };
 
-const getUSerbyId = async (id) => {
-    try {
-        const user = await User.findByPk(id)
-        console.log(id);
-        if (!user) {
-            return ("user not found")
-        }
-        return user
-    } catch (error) {
-        console.log(error.message);
-    }
-}
-
 const getUserbyName = async (name) => {
-    const userName = name
-    try {
-        const user = await User.findOne({
-            where: { name: userName }
-        })
-        return user
-    } catch (error) {
-        console.log(error.message);
-    }
-}
+  const userName = name;
+  try {
+    const user = await User.findOne({
+      where: { nickname: userName },
+    });
+    return user;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 const getAllUsers = async () => {
   try {
@@ -128,21 +112,6 @@ const getAllUsers = async () => {
     return users;
   } catch (error) {
     console.log(error.message);
-  }
-};
-
-const getUserbyEmail = async (email) => {
-  try {
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) {
-      throw new Error(`User with email: ${email} not found`);
-    }
-
-    return res.status(200).json(user);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Something went wrong" });
   }
 };
 
@@ -158,6 +127,21 @@ const getByRol = async (rol) => {
     return user;
   } catch (error) {
     console.log(error.message);
+  }
+};
+
+const getUserByEmail = async (email) => {
+  try {
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      throw new Error(`User with email: ${email} not found`);
+    }
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Something went wrong" });
   }
 };
 
@@ -180,12 +164,14 @@ const deleteUser = async (id) => {
 };
 
 module.exports = {
-    getAllUsers,
-    getByRol,
-    getUSerbyId,
-    getUserbyName,
-    getAllFavorites,
-    postFavorite,
-    postUser,
-    deleteUser
-}
+  getAllUsers,
+  getByRol,
+  getUserById,
+  getUserbyName,
+  getAllFavorites,
+  postFavorite,
+  createUser,
+  deleteUser,
+  updateUser,
+  getUserByEmail,
+};

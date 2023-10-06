@@ -3,7 +3,6 @@ import {
   GET_USER_BY_NAME,
   GET_USER_BY_ROL,
   GET_USER_BY_ID,
-  GET_USER_BY_EMAIL,
   DELETE_USER,
   POST_FAVORITE,
   POST_USER,
@@ -11,7 +10,7 @@ import {
 
 import axios from "axios";
 
-const endpoint = "http://localhost:3001/user"
+const endpoint = "http://localhost:3001/user";
 /* const endpoint = "https://greencorner.onrender.com/user" */
 
 export const getAllUsers = () => {
@@ -39,27 +38,6 @@ export function getUserByName(name) {
     } catch (error) {
       console.log(error.mesage);
       return error.mesage;
-    }
-  };
-}
-
-export function getUserByEmail(email) {
-  return async function (dispatch) {
-    try {
-      const { data } = await axios.get(`${endpoint}/find?email=${email}`);
-
-      dispatch({
-        type: GET_USER_BY_EMAIL,
-        payload: data,
-      });
-
-      return user;
-    } catch (error) {
-      console.error(
-        "Error al buscar usuario por correo electrónico:",
-        error.message
-      );
-      throw error; // Lanza una excepción en caso de error
     }
   };
 }
@@ -94,39 +72,20 @@ export function getUserByRol(rol) {
   };
 }
 
-
 export function postUser(userData) {
-    return async (dispatch) => {
-      try {
-        const { data } = await axios.post(endpoint, userData);
-        dispatch({
-          type: POST_USER,
-          payload: data,
-        });
-      } catch (error) {
-        console.log(error);
-        return error.message;
-      }
-    };
-  }
-
-export function postFavorites(userData) {
-    return async (dispatch) => {
-        
-        try {
-            const { data } = await axios.post(`${endpoint}/favorites`, userData)
-            
-            dispatch({
-                type: POST_FAVORITE,
-                payload: data
-            })
-        } catch (error) {
-            console.log(error.message); // Corregido aquí
-            return error.message;
-        }
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.post(endpoint, userData);
+      dispatch({
+        type: POST_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
     }
   };
-
+}
 
 export function postFavorites(userData) {
   return async (dispatch) => {

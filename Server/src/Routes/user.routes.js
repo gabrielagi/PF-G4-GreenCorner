@@ -9,27 +9,27 @@ const {
   newUserHandler,
   deleteHandler,
   updateUserHandler,
-  byEmailHandler,
+  emailHandler,
 } = require("../Handler/user.handler");
 
 const userRouter = Router();
 
 userRouter.get("/", allUsers);
 
-userRouter.get( "/:id", byIdHandler  )
+userRouter.get("/:id", byIdHandler);
 
 userRouter.get("/getfavorites", getFavoritesHandler);
 
-userRouter.get("/find/:name", byNameHandler)
+userRouter.get("/find/:name", byNameHandler);
 
-userRouter.get("/find/:email", byEmailHandler);
+userRouter.get("/find/:email", emailHandler);
 
 //anda
 userRouter.post("/favorites", postFavoritesHandler);
 
 userRouter.post("/", newUserHandler);
 
-userRouter.delete("/:id", deleteHandler)
+userRouter.delete("/:id", deleteHandler);
 
 userRouter.put("/:id", updateUserHandler);
 
