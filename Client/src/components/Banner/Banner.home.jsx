@@ -8,14 +8,14 @@ const BannerHome = () => {
   return (
     <div className="w-full">
       <div className="max-w-[1480px] m-auto grid md:grid-cols-2 md:text-left text-center">
-        <div className="sm:py-[180px] py-20 font-poppins sm:ml-40 ml-10 md:ml-20 mr-10">
+        <div className="sm:py-[180px] py-20 font-poppins sm:ml-40 ml-10 md:ml-40 mr-10">
           <p className="sm:text-2xl text-2xl text-[#1d252d] font-medium block">
             #Be more connected with nature
           </p>
           <h1 className="sm:text-8xl text-4xl font-semibold">
             Welcome to GreenCorner
           </h1>
-          <p className="mt-4 text-[18px] text-[#9a9a9a] block">
+          <p className="mt-4 text-[16px] text-[#9a9a9a]  block">
             We offer plant care guidance and strive to enhance lives through the
             beauty of nature. Explore our catalog and welcome to our green
             sanctuary.
