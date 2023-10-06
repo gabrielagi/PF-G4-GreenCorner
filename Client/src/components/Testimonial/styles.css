@@ -12,7 +12,7 @@
 
   margin: 0px 0px 10px 0px;
   transition: filter 0.3s ease;
-
+}
   /* Estilos para dispositivos móviles */
   @media (max-width: 768px) {
     .card {
@@ -36,7 +36,7 @@
       margin: 0.4em 0; /* Margen inferior reducido */
     }
   }
-}
+
 
 .card.active {
   filter: none;
