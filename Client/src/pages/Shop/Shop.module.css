@@ -77,4 +77,11 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+
+.pagination{
+  justify-content: center;
+  margin-left: 35%  !important;
   
+}
+
