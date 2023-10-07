@@ -5,21 +5,25 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const NotVerified = () => {
     const navigate = useNavigate();
-    const { user,logout } = useAuth0();
+    const { logout } = useAuth0();
 
     useEffect(() => {
-
-      Swal.fire({
+      const sweetAlert = Swal.fire({
         icon: 'warning',
         title: 'Verify your email',
         text: 'You must verify your email before accessing this page.',
-      }).then((result) => {
-        if (result.isConfirmed) {
-        logout();
+        allowOutsideClick: true,
+        showConfirmButton: true,
+        confirmButtonText: 'OK',
+      });
+
+      sweetAlert.then((result) => {
+        if (result.isConfirmed || result.dismiss === Swal.DismissReason.close || result.dismiss === Swal.DismissReason.backdrop) {
+          logout();
           navigate('/');
         }
       });
-    }, [navigate]);
+    }, [navigate, logout]);
   
     return null; 
 };

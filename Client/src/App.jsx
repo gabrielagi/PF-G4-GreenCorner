@@ -25,7 +25,7 @@ import NotVerified from "./components/NotVerified/NotVerified";
 
 const App = () => {
   //Carga de usuarios
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading,  } = useAuth0();
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
