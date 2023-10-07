@@ -27,6 +27,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
+      console.log(user.email_verified);
       const userData = {
         nickname: user.nickname,
         picture: user.picture,

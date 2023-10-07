@@ -2,7 +2,7 @@ const { User, Favorite, Product } = require("../db");
 const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
-const createUser = async (nickname, email, picture) => {
+const createUser = async (nickname, email, picture, email_verified) => {
   try {
     const [user, created] = await User.findOrCreate({
       where: {
@@ -12,13 +12,14 @@ const createUser = async (nickname, email, picture) => {
         nickname,
         email,
         picture,
+        email_verified
       },
     });
 
     if (created) {
       console.log("Nuevo usuario creado:", user.dataValues);
     } else {
-      console.log("El usuario ya existe:", user.dataValues);
+      console.log("El usuario ya existe");
     }
 
     return user;
