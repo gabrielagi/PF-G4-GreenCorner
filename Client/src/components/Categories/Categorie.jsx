@@ -11,7 +11,7 @@ const Category = ({ name }) => {
   };
 
   return (
-    <div className="flex flex-wrap ml-4">
+    <div >
       <Link onClick={()=>handleChange(name)}>
         <h1>{name}</h1>
       </Link >
