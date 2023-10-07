@@ -22,7 +22,7 @@ userRouter.get("/getfavorites", getFavoritesHandler);
 
 userRouter.get("/find/:name", byNameHandler);
 
-userRouter.get("/find/:email", emailHandler);
+userRouter.get("/find", emailHandler);
 
 //anda
 userRouter.post("/favorites", postFavoritesHandler);

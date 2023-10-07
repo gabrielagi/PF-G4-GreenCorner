@@ -104,6 +104,7 @@ const receiveWebhook = async (req, res) => {
       // Puedo guadar la información del usuario una vez que compró
       // Actualizar cantidad de productos en el Stock de los productos vendidos
     }
+    
     res.status(204); // Significa que todo salió bien pero no devuelve nada
   } catch (error) {
     console.log(error);

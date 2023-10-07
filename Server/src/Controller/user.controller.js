@@ -132,16 +132,16 @@ const getByRol = async (rol) => {
 
 const getUserByEmail = async (email) => {
   try {
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) {
-      throw new Error(`User with email: ${email} not found`);
-    }
-
-    return res.status(200).json(user);
+    let userFromDb = await User.find({
+      where: {
+        email: email,
+      },
+    });
+    console.log("El usuario encontrado en el controler", userFromDb);
+    return userFromDb;
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Something went wrong" });
+    console.error("Error en getProductCart:", error.message);
+    res.status(500).json({ error: "Error en" });
   }
 };
 

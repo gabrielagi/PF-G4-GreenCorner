@@ -1,5 +1,8 @@
 import "tailwindcss/tailwind.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserByEmail } from "../../Redux/actions/user/user-actions";
 import { BiMenuAltRight } from "react-icons/bi";
 import { MdOutlineDashboard, MdPayment } from "react-icons/md";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
@@ -8,7 +11,7 @@ import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
-function NavbarUser() {
+function NavbarUser({ user }) {
   const menus = [
     { name: "Home", link: "/", icon: MdOutlineDashboard },
     {
@@ -48,14 +51,12 @@ function NavbarUser() {
   ];
 
   const [open, setOpen] = useState(true);
-
   const [selectedMenu, setSelectedMenu] = useState(null);
 
   return (
     <section className="flex gap-6 py-4">
       <div
-        className={`bg-[#4f944f] min-h-screen ${
-          //bg-[#1d252d]
+        className={`bg-[#4f944f]  h-[100vh] overflow:hidden ${
           open ? "w-76" : "w-20"
         } duration-500 text-gray-100 px-4 font-poppins`}
       >
@@ -68,17 +69,22 @@ function NavbarUser() {
         </div>
         <div className="mt-4 flex flex-col gap-4 relative">
           {menus?.map((menu, i) => (
-            <div
+            <Link
               key={i}
+              to={menu.link}
               className={` ${
                 menu?.margin && "mt-20"
-              } group flex items-center text-md  gap-3.5 font-medium p-2 hover:bg-[#87bd6f] rounded-md`} // hover:bg-gray-800
-              onClick={() => setSelectedMenu(menu?.name)} // Establecer el menú seleccionado
+              } group flex items-center text-md  gap-3.5 font-medium p-2 rounded-md ${
+                selectedMenu === menu.name
+                  ? "bg-[#87bd6f]"
+                  : "hover:bg-[#87bd6f]"
+              }`}
+              onClick={() => setSelectedMenu(menu?.name)}
             >
               <div>{React.createElement(menu?.icon, { size: "22" })}</div>
               <h2
                 style={{
-                  fontSize: "14px", // Ajusta el tamaño de fuente aquí
+                  fontSize: "14px",
                   transitionDelay: `${i + 3}00ms`,
                 }}
                 className={`whitespace-pre duration-500 ${
@@ -94,8 +100,9 @@ function NavbarUser() {
               >
                 {menu?.name}
               </h2>
-            </div>
+            </Link>
           ))}
+          <p>{user.role}</p>
         </div>
       </div>
       <div></div>

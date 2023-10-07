@@ -61,8 +61,12 @@ export function getUserById(id) {
 export function getUserByEmail(email) {
   return async function (dispatch) {
     try {
+      console.log("Llego un email a buscar a la action", email);
+      console.log(`${endpoint}/find/${email}`);
+      // El error esta en la URL
       const { data } = await axios.get(`${endpoint}/find?email=${email}`);
 
+      console.log("Esta es la data que guardo en Reducer", data);
       dispatch({
         type: GET_USER_BY_EMAIL,
         payload: data,

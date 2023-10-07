@@ -5,8 +5,7 @@ import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Shop from "./pages/Shop/Shop";
 import Favorites from "./pages/Favorites";
-// import Profile from "./pages/Profile/Profile"
-import ProfileUser from "./pages/Profile/Profile.user";
+import Profile from "./pages/Profile/Profile";
 import AboutUs from "./components/About Us/AboutUs";
 import Navbar from "./components/Navbar/Navbar";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -51,7 +50,7 @@ const App = () => {
         <Route path="/guides" element={<Guides />} />
         <Route path="/create" element={<Create />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/profile-user" element={<ProfileUser />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       {/*<Footer />*/}
     </div>

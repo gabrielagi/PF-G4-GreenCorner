@@ -115,12 +115,14 @@ const byNameHandler = async (req, res) => {
 
 // Email
 const emailHandler = async (req, res) => {
-  const name = req.params.name;
-
+  const email = req.query.email;
+  console.log("Un email en el handler", email);
   try {
-    const user = await getUserByEmail(name);
+    const userFound = await getUserByEmail(email);
 
-    return res.status(200).json(user);
+    console.log("Un usuario encontrado en el handler", userFound);
+
+    return res.status(200).json(userFound);
   } catch (error) {
     console.log(error);
     res.status(500).send("Something went wrong");
