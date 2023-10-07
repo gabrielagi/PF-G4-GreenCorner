@@ -5,6 +5,7 @@ import {
   POST_PRODUCT,
   GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
+  GET_CATEGORIES_SHOP,
   FILTER_CATEGORY,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
@@ -16,10 +17,10 @@ import {
 import axios from "axios";
 
 
-//  const endpoint = "https://greencorner.onrender.com/product";
-// const categories = "https://greencorner.onrender.com/category" 
-const endpoint = "http://localhost:3001/product";
-const categories = "http://localhost:3001/category"
+const endpoint = "https://greencorner.onrender.com/product";
+const categories = "https://greencorner.onrender.com/category" 
+/* const endpoint = "http://localhost:3001/product";
+const categories = "http://localhost:3001/category" */
 
 
 
@@ -87,29 +88,22 @@ console.log('está por entrar al try')
 
 export const addProduct = (productdata) => {
   return async (dispatch) => {
-
     try {
       const  data  = await axios.post( endpoint, productdata)
       dispatch({
         type: POST_PRODUCT,
         payload: data
-
       })
     } catch (error) {
       alert ("Hubo un problema al crear el producto")
     }
-
   }
-  
-
 }
 
 export const getProductsTrending = () => {
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
-
     try {
-
       dispatch({
         type: GET_PRODUCT_TRENDING,
         payload: data,
@@ -135,10 +129,23 @@ export const getAllCategories = () => {
   };
 };
 
+export const getAllCategoriesShop = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(categories);
+      dispatch({
+        type: GET_CATEGORIES_SHOP,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 export const filterCategory = (category) => {
   return async (dispatch) => {
     try {
-
       dispatch({
         type: FILTER_CATEGORY,
         payload: category,
@@ -167,6 +174,7 @@ export const deleteProduct = (id) => {
     }
     }
 } 
+
 export const updateProduct = (id, updatedProductData) => {
   return async (dispatch) => {
     try {

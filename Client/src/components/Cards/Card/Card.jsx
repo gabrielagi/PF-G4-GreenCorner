@@ -6,9 +6,12 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
+import { postFavorites } from "../../../Redux/actions/user/user-actions";
 const Card = ({ name, images, price, id }) => {
   const [corazon, setCorazon] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const dispatch = useDispatch();
 
   const notify = () =>
     toast.success("Added to your cart 🛒", {
@@ -35,12 +38,25 @@ const Card = ({ name, images, price, id }) => {
       theme: "light",
     });
 
-  const handleAdd = () => {
+  const handleAdd = (idProduct) => {
+
+    console.log(user.email);
+    console.log(idProduct);
+    
+
+
     isAuthenticated ? notify() : loginWithRedirect();
   };
-  const handleHeart = () => {
+  const handleHeart = (product_id) => {
     if (isAuthenticated) {
       notifyII();
+      let favorite = {
+        email: user.email,
+        product_id: product_id
+      };
+
+
+      dispatch(postFavorites(favorite));
       setCorazon(!corazon);
     } else {
       loginWithRedirect();
@@ -49,7 +65,7 @@ const Card = ({ name, images, price, id }) => {
   return (
     <div className="bg-slate-100 rounded-md box-border h-85 w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">
       <div className="corazon absolute hover:scale-110 top-2 right-2 text-3xl">
-        <button onClick={handleHeart}>
+        <button onClick={()=>handleHeart(id)}>
           <AiFillHeart
             color={corazon ? "red" : "grey"}
             style={{ opacity: "0.7" }}
@@ -71,7 +87,7 @@ const Card = ({ name, images, price, id }) => {
         <p className="text-lg font-bold mx-6">${price}</p>
         <button
           className="bg-transparent border-2 hover:bg-green-50 hover:scale-110 hover:shadow-lg hover:text-green-500 absolute right-0 bottom-1 text-black font-normal w-16 h-16 rounded-3xl text-2xl mx-4"
-          onClick={handleAdd}
+          onClick={()=>handleAdd(id)}
         >
           +
         </button>

@@ -1,5 +1,5 @@
-const { Product } = require("../db");
-const { Category } = require("../db");
+const { Product,User,ShoppingCart,Category } = require("../db");
+
 
 var cloudinary = require("cloudinary").v2;
 
@@ -12,35 +12,6 @@ cloudinary.config({
   api_key: api_key,
   api_secret: api_secret,
 });
-
-async function uploadImages(images) {
-  try {
-    const uploadedImageURLs = [];
-
-    for (const image of images) {
-      const result = await cloudinary.uploader.upload(image);
-      uploadedImageURLs.push(result.url);
-    }
-
-    console.log("URLs de imágenes subidas a Cloudinary:", uploadedImageURLs);
-    return uploadedImageURLs;
-  } catch (error) {
-    console.error("Error al subir imágenes a Cloudinary:", error);
-    throw error;
-  }
-}
-
-
-const uploadImage = async (image) => {
-  try {
-  
-    const result = await cloudinary.uploader.upload(image);
-    return result.url;
-  } catch (error) {
-    throw new Error("Error al subir la imagen");
-  }
-};
-
 
 //Obtiene todos los productos con sus categorías asociadas (home)
 const getAllProduct = async (req, res) => {
@@ -58,6 +29,45 @@ const getAllProduct = async (req, res) => {
     res.status(500).json({ error: "Error en el servidor" });
   }
 };
+
+
+  const getProductCart = async (req, res) => {
+    try {
+    
+    let cart = ShoppingCart.findAll({
+      include: [{
+          model: Product,
+          required: true
+      },
+      {
+        model: User,
+        required: true
+      }
+    ]
+  })
+
+/*
+   let cart = ShoppingCart.findAll({
+    where: {
+      email: "Francososa1@hotmail.com"
+    },
+      include: [{
+          model: Product,
+          required: true
+      },
+      {
+        model: User,
+        required: true
+      }
+    ]
+  })*/
+  
+     return cart 
+    } catch (error) {
+      console.error("Error en getProductCart:", error.message);
+      res.status(500).json({ error: "Error en" });
+    }
+  };
 
 
 //Obtiene un producto por id con sus categorías asociadas (product detail)
@@ -78,6 +88,41 @@ const getProductById = async (id) => {
   }
 };
 
+
+async function uploadImages(images) {
+  try {
+    const uploadedImageURLs = [];
+
+    for (const image of images) {
+      const result = await cloudinary.uploader.upload(image);
+      uploadedImageURLs.push(result.url);
+    }
+
+    console.log("URLs de imágenes subidas a Cloudinary:", uploadedImageURLs);
+    return uploadedImageURLs;
+  } catch (error) {
+    console.error("Error al subir imágenes a Cloudinary:", error);
+    throw error;
+  }
+}
+
+
+const postProductCart = async (cart) => {
+  try {
+    const { product_id, email, amount} = cart;
+
+    const newShoppingCart = await ShoppingCart.create({
+      product_id,
+      email,
+      amount
+    });
+
+   return newShoppingCart;
+  } catch (error) {
+    console.error("Error en postProductCart:", error.message);
+    throw new Error("Error en el servidor");
+  }
+};
 
 //Crea un producto y lo guarda en la base de datos con sus categorías asociadas (admin dashboard) (falta imagen por defecto)
 const postProduct = async (productData) => {
@@ -114,6 +159,7 @@ const postProduct = async (productData) => {
     throw new Error("Error en el servidor");
   }
 };
+
 
 //Actualiza un producto por id (admin dashboard)
 const updateProduct = async (id, updatedData) => {
@@ -200,10 +246,11 @@ const deleteProduct = async (id) => {
 module.exports = {
   getAllProduct,
   getProductById,
+  getProductCart,
   postProduct,
+  postProductCart,
   updateProduct,
   findRelatedProducts,
   getAllTrending,
   deleteProduct,
-  uploadImage
 };
