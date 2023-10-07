@@ -51,8 +51,7 @@ const App = () => {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
-          {/* RUTAS PRIVADAS AL INGRESAR SI NO ESTAS LOGIN TE REDIRIGE A HOME */}
-
+        {/* RUTAS PRIVADAS AL INGRESAR SI NO ESTAS LOGIN TE REDIRIGE A HOME */}
         <Route
           path="/favorites"
           element={<PrivateRoute element={<Favorites />} isAuthenticated={isAuthenticated} />}
@@ -61,11 +60,11 @@ const App = () => {
           path="/profile"
           element={<PrivateRoute element={<Profile />} isAuthenticated={isAuthenticated} />}
         />
-    
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
       </Routes>
+
     </div>
   );
 };
