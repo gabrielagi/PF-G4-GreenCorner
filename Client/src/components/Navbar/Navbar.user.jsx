@@ -1,10 +1,15 @@
 import "tailwindcss/tailwind.css";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserByEmail } from "../../Redux/actions/user/user-actions";
 import { BiMenuAltRight } from "react-icons/bi";
-import { MdOutlineDashboard, MdPayment } from "react-icons/md";
+
+import {
+  MdOutlineAdminPanelSettings,
+  MdOutlineDashboard,
+  MdPayment,
+} from "react-icons/md";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiShoppingBag } from "react-icons/fi";
 import { TbGps } from "react-icons/tb";
@@ -56,7 +61,7 @@ function NavbarUser({ user }) {
   return (
     <section className="flex gap-6 py-4">
       <div
-        className={`bg-[#4f944f]  h-[100vh] overflow:hidden ${
+        className={`bg-[#4f944f] h-[83vh] md:h-[93vh] overflow:hidden ${
           open ? "w-76" : "w-20"
         } duration-500 text-gray-100 px-4 font-poppins`}
       >
@@ -72,14 +77,17 @@ function NavbarUser({ user }) {
             <Link
               key={i}
               to={menu.link}
-              className={` ${
+              className={`${
                 menu?.margin && "mt-20"
               } group flex items-center text-md  gap-3.5 font-medium p-2 rounded-md ${
                 selectedMenu === menu.name
                   ? "bg-[#87bd6f]"
                   : "hover:bg-[#87bd6f]"
               }`}
-              onClick={() => setSelectedMenu(menu?.name)}
+              onClick={(e) => {
+                e.preventDefault(); // Evitar la redirección predeterminada
+                setSelectedMenu(menu?.name);
+              }}
             >
               <div>{React.createElement(menu?.icon, { size: "22" })}</div>
               <h2
@@ -102,10 +110,12 @@ function NavbarUser({ user }) {
               </h2>
             </Link>
           ))}
-          <p>{user.role}</p>
+          <div className="bottom-0 left-0 right-0 mt-28 mb-16 bg-[#96B23C] p-2 text-center flex items-center justify-center">
+            <div className="text-white"></div>
+            {open ? <p className="text-white text-2sm">User Account</p> : null}
+          </div>
         </div>
       </div>
-      <div></div>
     </section>
   );
 }
