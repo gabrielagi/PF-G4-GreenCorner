@@ -20,6 +20,8 @@ import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
 import OurTeam from './components/OurTeam/OurTeam'
 import PrivateRoute from "./PrivateRoute";
+import NotVerified from "./components/NotVerified/NotVerified";
+
 
 const App = () => {
   //Carga de usuarios
@@ -45,6 +47,7 @@ const App = () => {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/fail" element={<NotVerified />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
