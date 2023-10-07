@@ -1,63 +1,47 @@
-import "tailwindcss/tailwind.css";
-import React, { useState, useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserByEmail } from "../../Redux/actions/user/user-actions";
+import React, { useState } from "react";
 import { BiMenuAltRight } from "react-icons/bi";
-
-import {
-  MdOutlineAdminPanelSettings,
-  MdOutlineDashboard,
-  MdPayment,
-} from "react-icons/md";
+import { MdOutlineDashboard, MdPayment } from "react-icons/md";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiShoppingBag } from "react-icons/fi";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import styles from "./Navbar.module.css";
 
-function NavbarAdmin({ user }) {
+function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const menus = [
     { name: "Home", link: "/", icon: MdOutlineDashboard },
     {
       name: "Profile",
-      link: "/user/profile",
       icon: AiOutlineUser,
       margin: true,
     },
     {
       name: "Shopping history",
-      link: "/user/shopping-history",
       icon: FiShoppingBag,
       margin: true,
     },
     {
       name: "Payment methods",
-      link: "/user/payment",
       icon: MdPayment,
     },
     {
       name: "My Garden",
-      link: "/user/favorites",
       icon: AiOutlineHeart,
       margin: true,
     },
     {
       name: "Shipping Address",
-      link: "/user/shipping-address",
       icon: TbGps,
       margin: true,
     },
     {
       name: "Customer Support",
-      link: "/user/customer-support",
+      link: "/contact-us",
       icon: RiCustomerService2Fill,
     },
   ];
 
   const [open, setOpen] = useState(true);
-  const [selectedMenu, setSelectedMenu] = useState(null);
 
   return (
     <section className="flex gap-6 py-4">
@@ -86,7 +70,7 @@ function NavbarAdmin({ user }) {
                   : "hover:bg-[#8DCADC]"
               }`}
               onClick={(e) => {
-                e.preventDefault(); // Evitar la redirección predeterminada
+                e.preventDefault();
                 setSelectedMenu(menu?.name);
               }}
             >
@@ -111,11 +95,9 @@ function NavbarAdmin({ user }) {
               </h2>
             </Link>
           ))}
-          <div className="bottom-0 left-0 right-0 mt-28 mb-16 bg-[#8CA8BE] p-2 text-center flex items-center justify-center">
-            <div className="text-white">
-              <MdOutlineAdminPanelSettings size={24} />
-            </div>
-            {open ? <p className="text-white text-2sm">Admin</p> : null}
+          <div className="bottom-0 left-0 right-0 mt-28 mb-16 bg-[#96B23C] p-2 text-center flex items-center justify-center">
+            <div className="text-white"></div>
+            {open ? <p className="text-white text-2sm">User Account</p> : null}
           </div>
         </div>
       </div>

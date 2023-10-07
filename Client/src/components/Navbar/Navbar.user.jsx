@@ -1,10 +1,5 @@
-import "tailwindcss/tailwind.css";
-import React, { useState, useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserByEmail } from "../../Redux/actions/user/user-actions";
+import React, { useState } from "react";
 import { BiMenuAltRight } from "react-icons/bi";
-
 import {
   MdOutlineAdminPanelSettings,
   MdOutlineDashboard,
@@ -16,47 +11,41 @@ import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
-function NavbarUser({ user }) {
+function NavbarUser({ selectedMenu, setSelectedMenu }) {
   const menus = [
     { name: "Home", link: "/", icon: MdOutlineDashboard },
     {
       name: "Profile",
-      link: "/user/profile",
       icon: AiOutlineUser,
       margin: true,
     },
     {
       name: "Shopping history",
-      link: "/user/shopping-history",
       icon: FiShoppingBag,
       margin: true,
     },
     {
       name: "Payment methods",
-      link: "/user/payment",
       icon: MdPayment,
     },
     {
       name: "My Garden",
-      link: "/user/favorites",
       icon: AiOutlineHeart,
       margin: true,
     },
     {
       name: "Shipping Address",
-      link: "/user/shipping-address",
       icon: TbGps,
       margin: true,
     },
     {
       name: "Customer Support",
-      link: "/user/customer-support",
+      link: "/contact-us",
       icon: RiCustomerService2Fill,
     },
   ];
 
   const [open, setOpen] = useState(true);
-  const [selectedMenu, setSelectedMenu] = useState(null);
 
   return (
     <section className="flex gap-6 py-4">
@@ -85,7 +74,7 @@ function NavbarUser({ user }) {
                   : "hover:bg-[#87bd6f]"
               }`}
               onClick={(e) => {
-                e.preventDefault(); // Evitar la redirección predeterminada
+                e.preventDefault();
                 setSelectedMenu(menu?.name);
               }}
             >
