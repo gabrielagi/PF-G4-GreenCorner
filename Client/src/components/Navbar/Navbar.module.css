@@ -101,7 +101,9 @@ a {
   display: none;
 }
 
-a p {
+.shop .guide .p,
+.search .p,
+.cart .p {
   display: none;
 }
 
@@ -259,7 +261,10 @@ a p {
     justify-content: center;
   }
 
-  a p {
+  .shop .p,
+  .guide .p,
+  .search .p,
+  .cart .p {
     display: block;
   }
 
@@ -286,14 +291,22 @@ a p {
     width: 40px;
   }
 
-  .shop,
-  .guide,
-  /* a {
-    font-size: 2px;
-  } */
-  /* a p {
+  .shop .p {
     display: none;
-  } */
+  }
+
+  .guide .p {
+    display: none;
+  }
+
+  .search .p {
+    display: none;
+
+  }
+
+  .cart .p {
+    display: none;
+  }
 
   .searchInput {
     top: 40px;

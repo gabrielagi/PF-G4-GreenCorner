@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
 import OurTeam from './components/OurTeam/OurTeam'
+import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
   //Carga de usuarios
@@ -46,14 +47,20 @@ const App = () => {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
-        <Route path="/favorites" element={<Favorites />} />
+          {/* RUTAS PRIVADAS AL INGRESAR SI NO ESTAS LOGIN TE REDIRIGE A HOME */}
+        <Route
+          path="/favorites"
+          element={<PrivateRoute element={<Favorites />} isAuthenticated={isAuthenticated} />}
+        />
+        <Route
+          path="/profile"
+          element={<PrivateRoute element={<Profile />} isAuthenticated={isAuthenticated} />}
+        />
+    
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
-        <Route path="/create" element={<Create />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/profile" element={<Profile />} />
       </Routes>
-      {/*<Footer />*/}
     </div>
   );
 };

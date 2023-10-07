@@ -133,10 +133,10 @@ const Nav = () => {
       </ul>
       <div className={styles.nav__toggler}>
         <a href="/shop" className={styles.shop}>
-          <AiFillShop style={{ fontSize: "24px" }} /> <p>Products</p>
+          <AiFillShop style={{ fontSize: "24px" }} /> <p className={styles.p}>Products</p>
         </a>
         <a href="#" className={styles.guide}>
-          <BsBook style={{ fontSize: "24px" }} /> <p>Guide</p>
+          <BsBook style={{ fontSize: "24px" }} /> <p className={styles.p}>Guide</p>
         </a>
         <div className={styles.search} onKeyDown={handleKeyDown}>
           <input
@@ -148,12 +148,12 @@ const Nav = () => {
             onChange={handleInputChange}
           />
           <a href="#" className={styles.search}>
-            <GrSearch onClick={handleSearchMouseEnter} style={{ fontSize: "24px" }} /> <p>Search</p>
+            <GrSearch onClick={handleSearchMouseEnter} style={{ fontSize: "24px" }} /> <p className={styles.p}>Search</p>
           </a>
         </div>
         <Badge badgeContent={1} color="success">
-          <a href="#" className={styles.anotherClass}>
-            <GrCart style={{ fontSize: "24px" }} /> <p>Cart</p>
+          <a href="#" className={styles.cart}>
+            <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
           </a>
         </Badge>
         {isAuthenticated
