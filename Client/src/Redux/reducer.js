@@ -5,6 +5,7 @@ import {
     GET_ALL_PRODUCT,
     GET_PRODUCT_TRENDING,
     GET_PRODUCT_BY_NAME,
+    GET_PRODUCT_CART,
     GET_CATEGORIES,
     FILTER_CATEGORY,
     GET_PRODUCT_BY_ID,
@@ -24,6 +25,7 @@ import {
 const initialState = {
     allProducts: [],
     product: [],
+    productCart: [],
     productTrending: [],
     categories: [],
     searchProduct: [],
@@ -59,7 +61,7 @@ let products = []
 
 function rootReducer(state = initialState, action) {
     switch (action.type) {
-    
+
         case GET_ALL_PRODUCT:
             return {
                 ...state,
@@ -85,6 +87,14 @@ function rootReducer(state = initialState, action) {
                 productDetail: action.payload
 
             }
+
+        case GET_PRODUCT_CART:
+
+            return {
+                ...state,
+                productCart: action.payload
+            }
+
         case GET_PRODUCT_TRENDING:
 
             return {
@@ -111,30 +121,30 @@ function rootReducer(state = initialState, action) {
 
 
             // const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
-                
-            
+
+
             return {
-              ...state,
-              categories: action.payload
+                ...state,
+                categories: action.payload
             };
 
-            
-            case GET_CATEGORIES_SHOP:
 
-             const categories = [];
+        case GET_CATEGORIES_SHOP:
 
-             state.product.forEach((product) => {
-              product.categories.forEach((category) => {
-                 categories.push(category);
-               });
-             }); 
+            const categories = [];
+
+            state.product.forEach((product) => {
+                product.categories.forEach((category) => {
+                    categories.push(category);
+                });
+            });
 
 
-             const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
-                           
+            const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
+
             return {
-              ...state,
-              categories: Category
+                ...state,
+                categories: Category
             };
 
 
@@ -203,39 +213,39 @@ function rootReducer(state = initialState, action) {
         case GET_USER_BY_NAME:
             return {
                 ...state,
-                userDetail: payload 
+                userDetail: payload
             }
 
         case GET_PRODUCT_BY_ID:
-            return{
+            return {
                 ...state,
                 userDetail: payload
             }
 
         case GET_USER_BY_ROL:
-            return{
+            return {
                 ...state,
                 userDetail: payload
             }
 
         case GET_USER_BY_ID:
-            return{
+            return {
                 ...state,
                 userDetail: payload
             }
-        
+
         case POST_USER:
-            return{
+            return {
                 ...state,
                 user: [...user, payload]
             }
         default:
-            return { 
+            return {
                 ...state
             };
 
 
-        
+
 
 
     }

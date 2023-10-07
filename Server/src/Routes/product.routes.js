@@ -20,9 +20,7 @@ productRouter.get("/", getAllProductHandler);
 //Anda
 productRouter.get("/cart", getProductCartHandler);
 
-
 productRouter.get("/:id", getProductByIdHandler);
-
 
 productRouter.post("/", postProductHandler);
 

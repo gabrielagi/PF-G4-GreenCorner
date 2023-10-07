@@ -8,6 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
 import { postFavorites } from "../../../Redux/actions/user/user-actions";
+import { postProductCart } from "../../../Redux/actions/product/action";
+
 const Card = ({ name, images, price, id }) => {
   const [corazon, setCorazon] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
@@ -38,14 +40,24 @@ const Card = ({ name, images, price, id }) => {
       theme: "light",
     });
 
-  const handleAdd = (idProduct) => {
-
-    console.log(user.email);
-    console.log(idProduct);
-    
+  const handleAdd = (product_id) => {
 
 
-    isAuthenticated ? notify() : loginWithRedirect();
+      if(isAuthenticated) {
+
+        let cart = {
+          email: user.email,
+          product_id: product_id,
+          amount:1
+        };
+        dispatch(postProductCart(cart));
+        notify()
+      }
+      else {
+        loginWithRedirect()
+      }
+
+      
   };
   const handleHeart = (product_id) => {
     if (isAuthenticated) {

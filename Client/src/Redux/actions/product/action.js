@@ -2,7 +2,9 @@ import {
   GET_ALL_PRODUCT,
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
+  GET_PRODUCT_CART,
   POST_PRODUCT,
+  POST_PRODUCT_CART,
   GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
   GET_CATEGORIES_SHOP,
@@ -17,10 +19,10 @@ import {
 import axios from "axios";
 
 
-const endpoint = "https://greencorner.onrender.com/product";
-const categories = "https://greencorner.onrender.com/category" 
-/* const endpoint = "http://localhost:3001/product";
-const categories = "http://localhost:3001/category" */
+//const endpoint = "https://greencorner.onrender.com/product";
+//const categories = "https://greencorner.onrender.com/category" 
+ const endpoint = "http://localhost:3001/product";
+const categories = "http://localhost:3001/category" 
 
 
 
@@ -63,7 +65,7 @@ export function getProductByName(name){
     });
     return response.data;
   };
-};
+}
 
 export const getProductById = (id) => {
   console.log(id) 
@@ -82,6 +84,25 @@ console.log('está por entrar al try')
       console.log(id)
     } catch (error) {
       alert("El Producto no se encuentra en la lista");
+    }
+  };
+};
+
+//Action
+export const getProductCart = (email) => {
+  return async (dispatch) => {
+    try {
+
+      //const encodedEmail = encodeURIComponent(email);
+      
+      const { data } = await axios.get(`${endpoint}/cart?email=${email}`);
+      
+      dispatch({
+        type: GET_PRODUCT_CART,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message );
     }
   };
 };
@@ -193,6 +214,23 @@ export const updateProduct = (id, updatedProductData) => {
     }
     }
 } 
+
+export function postProductCart(userData) {
+  return async (dispatch) => {
+      
+      try {
+          const { data } = await axios.post(`${endpoint}/cart`, userData)
+          
+          dispatch({
+              type: POST_PRODUCT_CART,
+              payload: data
+          })
+      } catch (error) {
+          console.log(error.message); 
+          return error.message;
+      }
+  }
+}
 
 export function filterByName(payload){
   return{

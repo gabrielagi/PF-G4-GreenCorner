@@ -18,25 +18,12 @@ const getAllProduct = async (req, res) => {
 };
 
 
-  const getProductCart = async (req, res) => {
+  const getProductCart = async (email) => {
     try {
     
-    let cart = ShoppingCart.findAll({
-      include: [{
-          model: Product,
-          required: true
-      },
-      {
-        model: User,
-        required: true
-      }
-    ]
-  })
-
-/*
    let cart = ShoppingCart.findAll({
     where: {
-      email: "Francososa1@hotmail.com"
+      email: email
     },
       include: [{
           model: Product,
@@ -47,9 +34,10 @@ const getAllProduct = async (req, res) => {
         required: true
       }
     ]
-  })*/
+  })
   
      return cart 
+     
     } catch (error) {
       console.error("Error en getProductCart:", error.message);
       res.status(500).json({ error: "Error en" });
