@@ -1,54 +1,58 @@
 import img1 from "../../img/SectionThreeImg1About.jpg";
 const SectionThree = () => {
   return (
-    <div className="mb-20">
-      <section
-        className="relative  bg-green-200 p-4 h-[400px] sm:p-8 md:p-12 lg:p-16 xl:p-20"
+    <div className="font-poppins">
+      <div
+        className=" grid md:grid-cols-2 bg-green-200 gap-20   "
         data-aos="fade-right"
         data-aos-duration="1000"
       >
+        <div>
         <img
           src={img1}
-          className="relative h-[400px] -top-[50px] w-[1000px] ml-[-70px]"
-        />
-        <strong className="relative -top-[430px] ml-[1000px] text-[18px]">
-          The moment is now
-        </strong>
+          className="h-[350px] object-cover object-bottom md:object-center mx-auto w-full"
+        /></div>
+        <div className="">
+           <div className=" text-4xl font-bold mx-10 my-6">
+          The moment is <strong className="font-extrabold text-4xl">now</strong> 
+        </div>
 
-        <div>
-          <strong className="relative -top-[430px] ml-[1000px] text-[12px]">
+        <div className="mx-10">
+          <strong className="">
             The impact of CO2 is real:
           </strong>
-          <p className="relative -top-[430px] ml-[1000px]">
+          <h3 className="font-medium">
             This gas is a product of industrial activity and car emissions.
             Excess CO2 increases heat retention in the atmosphere, increasing
             levels of global warming.
-          </p>
+          </h3>
           <br />
-          <p className="relative -top-[430px] ml-[1000px] ">
+          <h3 className="font-medium ">
             Together we can make a difference and help reduce CO2 levels in our
             cities, helping to avoid climate change that can destroy our planet.
             How can you contribute? Whether your home has just one plant or a
             jungle: more greenery will help in the fight to reduce the amounts
             of toxic gases.
-          </p>
+          </h3>
           <br />
-          <p className="relative -top-[430px] ml-[1000px]">
+          <h3 className="font-medium pb-20 md:pb-0">
             Green Corner collaborates with Eden Reforestation Project to plant
             10,000 trees a year around the world. With every order delivered, we
             help make the world a greener place.
-          </p>
+          </h3>
         </div>
-      </section>
+        </div>
+       
+      </div>
       <br />
 
       <div
-        className="flex relative ml-[450px] space-x-[350px]"
+        className=""
         data-aos="fade-up"
         data-aos-duration="1000"
       >
         <div>
-          <strong className="text-[28px] mb-4">
+          <strong className="text-[28px] ">
             Plants have many benefits!
           </strong>
           <p className="mb-2">💪They help us be healthier</p>

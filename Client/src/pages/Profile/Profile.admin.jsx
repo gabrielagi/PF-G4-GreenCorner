@@ -1,15 +1,15 @@
 import "tailwindcss/tailwind.css";
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import NavbarUser from "../../components/Navbar/Navbar.user";
+import NavbarAdmin from "../../components/Navbar/Navbar.admin";
 
-const ProfileUser = () => {
+const ProfileAdmin = () => {
   const { user } = useAuth0();
   return (
     <div>
-      <NavbarUser />
+      <NavbarAdmin />
     </div>
   );
 };
 
-export default ProfileUser;
+export default ProfileAdmin;
