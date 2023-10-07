@@ -127,7 +127,7 @@ const postProductCart = async (cart) => {
 //Crea un producto y lo guarda en la base de datos con sus categorías asociadas (admin dashboard) (falta imagen por defecto)
 const postProduct = async (productData) => {
   try {
-    const { name, description, price, images, stock, available, categories } = productData;
+    const { name, description, price, images, stock, available, categories , isTrending } = productData;
 
     if (!categories) {
       throw new Error("Las categorías son obligatorias");
@@ -147,6 +147,7 @@ const postProduct = async (productData) => {
       images: imagesResult,
       stock,
       available,
+      isTrending,
     });
 
     if (categories && categories.length > 0) {

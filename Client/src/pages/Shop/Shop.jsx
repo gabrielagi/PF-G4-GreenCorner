@@ -172,7 +172,17 @@ const Shop = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 mr-4"></div>
+        <div className="lg:w-1/3 mr-4">
+          <div>
+        <Category allCategories={allCategories} />
+        </div>
+        <div>
+        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">
+          Featured Products
+        </strong>
+        <ProductsTrending productTrending={productTrending} />
+      </div>
+        </div>
 
         <div className="lg:w-2/3 ml-4">
           <Cards allProducts={displayedProducts} />
@@ -198,19 +208,8 @@ const Shop = () => {
         }}
         //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
       />
-      <div className="sm:w[10px]">
-        <Category allCategories={allCategories} />
-      </div>
-      <br />
-      <br />
-      <br />
 
-      <div>
-        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">
-          Featured Products
-        </strong>
-        <ProductsTrending productTrending={productTrending} />
-      </div>
+      
 
       {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
