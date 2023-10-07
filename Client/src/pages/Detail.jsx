@@ -44,8 +44,9 @@ const Detail = () => {
         "http://localhost:3001/payment/create-order",
         { product, amount }
       );
-      console.log("Init point en el componente Detail", data.body.init_point);
-      location.href = data.body.init_point;
+      console.log("Data en el componente Detail", data);
+      console.log("Init point en el componente Detail", data);
+      location.href = data;
     } catch (error) {
       console.log(error.message);
     }

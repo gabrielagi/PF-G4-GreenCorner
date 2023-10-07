@@ -86,7 +86,7 @@ const createOrder = async (req, res) => {
     res.set("Access-Control-Allow-Credentials", true);
     console.log("URL: ", result.body.init_point);
     res.json({
-      global: result.body.id,
+      result: result.body.init_point,
       // Identificador único que puedes utilizar para referenciar y gestionar esa preferencia en futuras interacciones con la API de Mercado Pago
     });
     console.log("----Fin del Create Order------------");
