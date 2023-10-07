@@ -187,9 +187,10 @@ const Shop = () => {
         size="large"
         color="primary"
         sx={{
-          "& .Mui-selected": {
-            backgroundColor: "#50a050",
-            fontSize: "20px",
+          '& .Mui-selected': {
+            backgroundColor: '#50a050',
+            fontSize: '20px',
+            
           },
           "& .MuiPaginationItem-root": {
             fontSize: "15px",

@@ -18,6 +18,7 @@ import ContactUs from "./pages/Contact-Us/ContactUs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
+import OurTeam from './components/OurTeam/OurTeam'
 
 const App = () => {
   //Carga de usuarios
