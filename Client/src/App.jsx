@@ -15,7 +15,7 @@ import Footer from "./components/Footer/Footer";
 import Create from "./pages/Create/Create";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
-
+import OurTeam from './components/OurTeam/OurTeam'
 
 const App = () => {
 
@@ -37,6 +37,7 @@ const App = () => {
         <Route path="/create" element={<Create/>} />
         <Route path="/contact-us" element={<ContactUs/>} />
         { <Route path="/profile" element={<Profile/>} /> }
+        <Route path="/team" element={<OurTeam/>} />
        
       </Routes>
       {/*<Footer />*/}
