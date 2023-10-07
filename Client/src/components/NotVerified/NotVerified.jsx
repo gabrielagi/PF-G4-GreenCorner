@@ -5,15 +5,17 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const NotVerified = () => {
     const navigate = useNavigate();
-    const { user } = useAuth0();
+    const { user,logout } = useAuth0();
 
     useEffect(() => {
+
       Swal.fire({
         icon: 'warning',
         title: 'Verify your email',
         text: 'You must verify your email before accessing this page.',
       }).then((result) => {
         if (result.isConfirmed) {
+        logout();
           navigate('/');
         }
       });

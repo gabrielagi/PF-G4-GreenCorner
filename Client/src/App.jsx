@@ -29,7 +29,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
-      console.log(user.email_verified);
+      console.log(user);
       const userData = {
         nickname: user.nickname,
         picture: user.picture,
@@ -52,6 +52,7 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
           {/* RUTAS PRIVADAS AL INGRESAR SI NO ESTAS LOGIN TE REDIRIGE A HOME */}
+
         <Route
           path="/favorites"
           element={<PrivateRoute element={<Favorites />} isAuthenticated={isAuthenticated} />}
