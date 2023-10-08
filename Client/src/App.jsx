@@ -25,7 +25,7 @@ import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import ProfileUser from "./pages/Profile/profile.user";
+import ProfileUser from "./pages/Profile/Profile.userpanel";
 
 const App = () => {
   //Carga de usuarios
