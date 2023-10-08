@@ -172,14 +172,14 @@ const Shop = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 mr-4">
+        <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
            <Category allCategories={allCategories} />
           </div>
-          <div className="flex flex-col items-center">
-            <strong className="text-4xl font-semibold italic mt-4 mb-2">
+          <div className="grid items-center text-start ml-4">
+            <h1 className="text-4xl font-poppins italic mt-4 mb-2">
               Featured Products
-            </strong >
+            </h1 >
            <ProductsTrending productTrending={productTrending} />
          </div>
         </div>

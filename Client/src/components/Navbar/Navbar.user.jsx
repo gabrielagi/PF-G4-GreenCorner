@@ -49,11 +49,11 @@ function NavbarUser({ selectedMenu, setSelectedMenu }) {
   const [open, setOpen] = useState(true);
 
   return (
-    <section className="flex gap-6 py-4">
+    <section className="flex gap-6 mt-3 mb-0`">
       <div
-        className={`bg-[#4f944f] h-[83vh] md:h-[93vh] overflow:hidden ${
+        className={`bg-[#4f944f] h-[83vh] md:h-[91vh] overflow:hidden ${
           open ? "w-76" : "w-20"
-        } duration-500 text-gray-100 px-4 font-poppins`}
+        } duration-500 text-gray-100 px-4 font-poppins  mb-0`}
       >
         <div className="py-3 flex justify-end">
           <BiMenuAltRight
@@ -102,7 +102,11 @@ function NavbarUser({ selectedMenu, setSelectedMenu }) {
           ))}
           <div className="bottom-0 left-0 right-0 mt-28 mb-16 bg-[#96B23C] p-2 text-center flex items-center justify-center">
             <div className="text-white"></div>
-            {open ? <p className="text-white text-2sm">User Account</p> : null}
+            {open ? (
+              <p className="text-white ml-2" style={{ fontSize: "14px" }}>
+                User Account
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
