@@ -6,7 +6,7 @@ const ProductTrending = ({ name, images, price, id }) => {
    
       
    <Link to={`/detail/${id}`}>
-        <img src={images} className="" />
+        <img src={images[0]} className="" />
       </Link>
        
       <strong className="">{name}</strong>
