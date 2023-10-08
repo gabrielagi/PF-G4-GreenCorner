@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
 import { GrCart, GrSearch } from "react-icons/gr";
 import { AiFillShop } from "react-icons/ai";
@@ -12,7 +12,7 @@ import leaf from "../../assets/leaf.png";
 import person from "../../assets/person.png";
 import fav from "../../assets/favorito.png";
 import logout from "../../assets/cerrar-sesion.png";
-import { getProductByName } from "../../Redux/actions/product/action";
+import { getProductByName, getProductCart } from "../../Redux/actions/product/action";
 import { toast } from "react-toastify";
 import styles from "./Navbar.module.css";
 
@@ -20,6 +20,8 @@ const Nav = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  const products = useSelector((state) => state.productCart);
+  let count = products.length;
   const [open, setOpen] = useState(false);
   const { isAuthenticated, user } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
@@ -29,7 +31,10 @@ const Nav = () => {
     if (isSearchVisible) {
       inputRef.current.focus();
     }
-  }, [isSearchVisible]);
+    if (user && user.email) {
+      dispatch(getProductCart(user.email));
+    }
+  }, [isSearchVisible,dispatch,user]);
 
   useEffect(() => {
     const closeMenuOnClickOutside = (e) => {
@@ -37,6 +42,8 @@ const Nav = () => {
         setOpen(false);
       }
     };
+
+
 
     document.addEventListener("click", closeMenuOnClickOutside);
 
@@ -151,9 +158,11 @@ const Nav = () => {
             <GrSearch onClick={handleSearchMouseEnter} style={{ fontSize: "24px" }} /> <p className={styles.p}>Search</p>
           </a>
         </div>
-        <Badge badgeContent={1} color="success">
+
+        <Badge badgeContent={count} color="success">
           <a href="#" className={styles.cart}>
             <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
+
           </a>
         </Badge>
         {isAuthenticated

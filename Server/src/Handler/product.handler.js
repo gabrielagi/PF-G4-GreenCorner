@@ -88,8 +88,9 @@ const postProductCartHandler = async (req, res) => {
 
 const getProductCartHandler = async (req, res) => {
   try {
-    //const name = req.query.name ? req.query.name.toLowerCase() : null;
-    const allProductCart = await getProductCart();
+    const email = req.query.email 
+  
+    const allProductCart = await getProductCart(email);
  
       res.status(200).json(allProductCart);
 

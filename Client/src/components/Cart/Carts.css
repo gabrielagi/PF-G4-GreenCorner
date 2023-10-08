@@ -1,0 +1,105 @@
+.title {
+  position: relative;
+  font-size: 42px;
+  text-align: center;
+}
+.content {
+  display: flex;
+}
+.decorationCarts {
+  position: relative;
+  width: 50%;
+  height: 1px;
+  top: 85px;
+  left: 370px;
+  background-color: rgba(128, 128, 128, 0.7);
+}
+.content .name {
+  position: relative;
+  left: 380px;
+  top: 55px;
+  color: rgba(128, 128, 128, 0.7);
+}
+.content .price {
+  position: relative;
+  left: 610px;
+  top: 57px;
+  color: rgba(128, 128, 128, 0.7);
+}
+.content .amount {
+  position: relative;
+  left: 755px;
+  top: 57px;
+  color: rgba(128, 128, 128, 0.7);
+}
+
+.content .total {
+  position: relative;
+  left: 915px;
+  top: 57px;
+  color: rgba(128, 128, 128, 0.7);
+}
+
+.cart {
+  position: relative;
+  left: 20%;
+  top: 80px;
+}
+.containerCarts {
+  position: relative;
+  width: 400px; 
+  height: 400px; 
+  background-color: rgba(226, 223, 223, 0.942);
+  top: -650px;
+  left: 1350px;
+}
+.containerCarts .line {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  top: 85px;
+  left: 0px;
+  background-color: rgba(128, 128, 128, 0.7);
+}
+.containerCarts .line2 {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  top: 300px;
+  left: 0px;
+  background-color: rgba(128, 128, 128, 0.7);
+}
+.containerCarts .ordenSummary {
+  position: relative;
+  text-align: center;
+  top: 15px;
+  font-size: 20px;
+}
+
+.containerCarts .containerCartsTotal {
+  position: relative;
+  top: 320px;
+  left: 300px;
+  font-size: 22px;
+}
+.containerCarts .containerCartsTtotal {
+  position: relative;
+  top: 285px;
+  left: 40px;
+  font-size: 22px;
+}
+.checkoutContainer {
+  position: relative;
+  width: 400px; 
+  height: 55px; 
+  top: -630px;
+  left: 1350px;
+  background-color: rgb(60, 122, 73); 
+}
+.checkout {
+    position: relative;
+    text-align: center;
+    font-size: 22px;
+    top: 10px;
+    color: white;
+  }

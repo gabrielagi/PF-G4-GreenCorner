@@ -4,6 +4,7 @@ import "tailwindcss/tailwind.css";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Shop from "./pages/Shop/Shop";
+import Carts from "./components/Cart/Carts";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile/Profile";
 import AboutUs from "./components/About Us/AboutUs";
@@ -51,6 +52,9 @@ const App = () => {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/shop" element={<Shop />} />
+
+        <Route path="/cart" element={<Carts />} />
+
         {/* RUTAS PRIVADAS AL INGRESAR SI NO ESTAS LOGIN TE REDIRIGE A HOME */}
         <Route
           path="/favorites"
@@ -60,6 +64,7 @@ const App = () => {
           path="/profile"
           element={<PrivateRoute element={<Profile />} isAuthenticated={isAuthenticated} />}
         />
+
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
