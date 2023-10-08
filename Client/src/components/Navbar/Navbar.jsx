@@ -21,6 +21,7 @@ const Nav = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
   const products = useSelector((state) => state.productCart);
+  const userDetail = useSelector((state) => state.userDetail);
   let count = products.length;
   const [open, setOpen] = useState(false);
   const { isAuthenticated, user } = useAuth0();
@@ -170,9 +171,9 @@ const Nav = () => {
             <div className={styles.container}>
               <img
                 onClick={() => setOpen(!open)}
-                src={user.picture}
+                src={userDetail.picture}
                 alt={user.name}
-                style={{ width: "35px", borderRadius: "50px" }}
+                style={{ width: "35px", height:"35px" ,borderRadius: "50px" , objectFit: "fill"}}
               />
               {open && (
                 <div className={styles.userMenu}>
