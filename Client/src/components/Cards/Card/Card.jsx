@@ -66,7 +66,7 @@ const Card = ({ name, images, price, id }) => {
         email: user.email,
         product_id: product_id
       };
-
+      // sm:text-green-600
 
       dispatch(postFavorites(favorite));
       setCorazon(!corazon);
@@ -92,7 +92,7 @@ const Card = ({ name, images, price, id }) => {
         />
       </Link>
       <div className="text-left w-full">
-        <p className="ml-6">{name}</p>
+        <p className="font-poppins ml-6">{name}</p>
       </div>
       {/* object-contain
       object-fill
