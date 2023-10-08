@@ -2,6 +2,7 @@ import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NavbarUser from "../../components/Navbar/Navbar.user";
+import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 
 const ProfileUser = () => {
   const { user } = useAuth0();
@@ -9,8 +10,7 @@ const ProfileUser = () => {
   const renderComponentBasedOnMenu = () => {
     switch (selectedMenu) {
       case "Profile":
-        // return <Profile />;
-        return <p>Esto muestra el Profile</p>;
+      return <ProfileDashboard />;
       case "Shopping history":
         // return <ShoppingHistory />;
         return <p>Esto muestra el Historial de Compra</p>;

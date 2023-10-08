@@ -20,6 +20,7 @@ import {
   POST_USER,
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
+  UPDATE_USER,
 } from "./actions/action-types";
 
 const initialState = {
@@ -58,7 +59,7 @@ let productSorted = [];
 let products = [];
 
 function rootReducer(state = initialState, action) {
-              case UPDATE_PRODUCT_BY_ID:
+
   switch (action.type) {
     case GET_ALL_PRODUCT:
       return {
@@ -240,10 +241,17 @@ function rootReducer(state = initialState, action) {
         ...state,
         userDetail: action.payload,
       };
+    
+      case UPDATE_USER:
+        return {
+          ...state,
+          userDetail: action.payload,
+        };
     default:
       return {
         ...state,
       };
+
   }
 }
 

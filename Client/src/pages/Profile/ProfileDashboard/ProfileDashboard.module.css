@@ -1,0 +1,82 @@
+.heading {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+  
+  .profilePictureContainer {
+    text-align: center;
+  }
+  
+ 
+  .profilePictureWrapper {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 16px;
+    position: relative;
+    background-color: #f0f0f0; 
+  }
+  
+  .profilePicture {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+  
+  .profileInfo {
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+
+  .editableFields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+  }
+  
+  .inputEdit {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .buttonEdit {
+    margin-top: 8px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .staticFields {
+    font-size: 16px;
+    margin-top: 16px;
+  }
+ 
+  .imageUpload {
+    margin-top: 16px;
+  }
+  
+  .uploadLabel {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .uploadInput {
+    display: none;
+  }
+  

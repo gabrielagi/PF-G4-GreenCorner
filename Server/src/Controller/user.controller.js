@@ -47,14 +47,14 @@ const updateUser = async (userId, userData) => {
   try {
     const [updatedCount, updatedUser] = await User.update(userData, {
       where: { id: userId },
-      returning: true, // Para obtener el registro actualizado
+      returning: true, 
     });
 
     if (updatedCount === 0) {
       throw new Error("User not found or no changes made.");
     }
 
-    return updatedUser[0]; // Devuelve el usuario actualizado
+    return updatedUser[0]; 
   } catch (error) {
     console.error(error.message);
     throw error;
