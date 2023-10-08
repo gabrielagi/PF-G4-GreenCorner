@@ -1,19 +1,8 @@
 import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import TextBlock from "./textBlock";
 import "./guides.css";
-import Aos from "aos";
-import "aos/dist/aos.css";
-import { useEffect } from "react";
 
 function Guides() {
-  // Inicializo AOS al momento del montaje del componente
-  useEffect(() => {
-    Aos.init({
-      duration: 2200,
-      offset: 0,
-    });
-  }, []);
-
   return (
     <div>
       <Parallax pages={2} style={{ top: "0", left: "0" }} className="animation">
