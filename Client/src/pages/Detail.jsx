@@ -61,12 +61,12 @@ const Detail = () => {
           </button>
         </Link>
         <div className="mx-10 sm:mx-60">
-          <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
+          <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
             {product.name && (
-              <div className=" grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto">
+              <div className="borde grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto">
                 <img src={activeImg || product.images[0]} alt="" />
 
-                <div className="imagen flex flex-row justify-between gap-10  h-60   bg-green-100  mb-20 ">
+                <div className="imagen flex flex-row gap-10 max-w-fit h-60   bg-green-100  mb-20 ">
                   {product.images?.map((imagen, i) => {
                     return (
                       <img
@@ -95,25 +95,23 @@ const Detail = () => {
                 <option>dos</option>
               </select>
 
-              <div className="my-10 grid grid-cols-2  md:my-10 gap-y-10    ">
-                <div>
-                  <button
-                    onClick={amountDecrement}
-                    className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
-                  >
-                    -
-                  </button>
-                  <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
-                    {amount}
-                  </span>
-                  <button
-                    onClick={amountIncrement}
-                    className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
-                  >
-                    +
-                  </button>
-                </div>
-
+              <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
+                  <div>
+                   <button
+                      onClick={amountDecrement}
+                      className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
+                    >
+                      -
+                    </button>
+                    <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">{amount}</span>
+                    <button
+                      onClick={amountIncrement}
+                      className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
+                    >
+                      +
+                    </button> 
+                  </div>
+                    
                 <button className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
                   ADD TO CART
                 </button>
@@ -165,7 +163,7 @@ const Detail = () => {
           <div className="flex flex-row gap-20 justify-center mx-auto my-10">
             {allProducts
               .map((p) => {
-                if (p.categories.name === product.categories.name)
+                if (p.categories.name === product.categories.name && p.name !== product.name)
                   return (
                     <Card
                       key={p.id}
@@ -176,7 +174,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(0, 4)}
+              .slice(0,4)}
           </div>
         </div>
       </div>

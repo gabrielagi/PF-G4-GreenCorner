@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import "tailwindcss/tailwind.css";
+import "react-alice-carousel/lib/alice-carousel.css";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Shop from "./pages/Shop/Shop";
@@ -23,6 +24,7 @@ import OurTeam from './components/OurTeam/OurTeam'
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 
+import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
 
 const App = () => {
   //Carga de usuarios
@@ -45,6 +47,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
+   
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -68,6 +71,13 @@ const App = () => {
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/profile-user" element={<ProfileUser />} />
+        <Route path="/prueba" element={<DetailCarousel/>} />
+        
+        <Route path="/contact-us" element={<ContactUs/>} />
+        {/* { <Route path="/profile" element={<Profile/>} /> } */}
+       
+       
       </Routes>
 
     </div>
