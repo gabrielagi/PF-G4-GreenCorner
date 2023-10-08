@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import plantgif from "../../assets/plantgif.gif";
 import Category from "./Categorie";
 
-const Categories = ({ allCategories }) => {
+const Categories = ({ allCategories, reset }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+
 
   const handleCategorySelect = (name) => {
     setSelectedCategory(name);
@@ -15,6 +17,7 @@ const Categories = ({ allCategories }) => {
         All Categories
       </h1>
       <br />
+      
       <div className="mt-4 mb-2">
         {allCategories ? (
           allCategories.map((p, i) => (
@@ -31,6 +34,9 @@ const Categories = ({ allCategories }) => {
             <img src={plantgif} alt="loading" />
           </div>
         )}
+        <button onClick={()=>setSelectedCategory(true)}>
+        All categories
+      </button>
       </div>
     </div>
   );

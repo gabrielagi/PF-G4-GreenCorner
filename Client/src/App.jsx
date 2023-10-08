@@ -84,7 +84,7 @@ const App = () => {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/profile-user" element={<ProfileUser/>} />
         <Route path="/prueba" element={<DetailCarousel/>} />
-        
+      
         <Route path="/contact-us" element={<ContactUs/>} />
         {/* { <Route path="/profile" element={<Profile/>} /> } */}
       </Routes>
