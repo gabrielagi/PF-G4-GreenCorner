@@ -59,12 +59,12 @@ const Detail = () => {
           </button>
         </Link>
         <div className="mx-10 sm:mx-60">
-          <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
+          <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
             {product.name && (
-              <div className=" grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto">
+              <div className="borde grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto">
                 <img src={activeImg || product.images[0]} alt="" />
 
-                <div className="imagen flex flex-row justify-between gap-10  h-60   bg-green-100  mb-20 ">
+                <div className="imagen flex flex-row gap-10 max-w-fit h-60   bg-green-100  mb-20 ">
                   {product.images?.map((imagen, i) => {
                     return (
                       <img
@@ -93,7 +93,7 @@ const Detail = () => {
                 <option>dos</option>
               </select>
 
-              <div className="my-10 grid grid-cols-2  md:my-10 gap-y-10    ">
+              <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
                   <div>
                    <button
                       onClick={amountDecrement}
@@ -164,7 +164,7 @@ const Detail = () => {
           <div className="flex flex-row gap-20 justify-center mx-auto my-10">
             {allProducts
               .map((p) => {
-                if (p.categories.name === product.categories.name)
+                if (p.categories.name === product.categories.name && p.name !== product.name)
                   return (
                     <Card
                       key={p.id}
@@ -175,7 +175,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(0, 4)}
+              .slice(0,4)}
           </div>
         </div>
       </div>
