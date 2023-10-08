@@ -66,7 +66,7 @@ const Card = ({ name, images, price, id }) => {
         email: user.email,
         product_id: product_id
       };
-      // sm:text-green-600
+
 
       dispatch(postFavorites(favorite));
       setCorazon(!corazon);

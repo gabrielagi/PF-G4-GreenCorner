@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserByEmail } from "../../Redux/actions/user/user-actions";
 
 import LoadingGif from "../../assets/loading.gif";
-import ProfileUser from "./profile.user";
+import ProfileUser from "./Profile.userpanel";
 import ProfileAdmin from "./Profile.admin";
 
 const Profile = () => {

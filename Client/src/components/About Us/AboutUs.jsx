@@ -14,11 +14,14 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <div className="bg-green-100">
+    <div className="bg-white-100">
     <SectionOne/>
     <section className="my-20">
     <h1 className='text-center my-20 text-4xl font-bold text-[#4b9239] drop-shadow-xl md:text-6xl'>Our happy developers </h1>
-   <OurTeam className/>
+    <div className='bg-white bg-cover bg-no-repeat'>
+         <OurTeam />
+    </div>
+
     </section>
    <SectionTwo/> 
    <hr className="my-10"></hr>

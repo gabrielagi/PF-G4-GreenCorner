@@ -84,7 +84,7 @@ const postFavorite = async (product) => {
       product_id,
       email,
     });
-
+console.log('favorito creado')
     return newFavorite;
   } catch (error) {
     console.error("Error en postFavorite:", error.message);

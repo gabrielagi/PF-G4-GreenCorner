@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { BiMenuAltRight } from "react-icons/bi";
-import { MdOutlineDashboard, MdPayment } from "react-icons/md";
+import {
+  MdOutlineAdminPanelSettings,
+  MdOutlineDashboard,
+  MdPayment,
+} from "react-icons/md";
 import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiShoppingBag } from "react-icons/fi";
 import { TbGps } from "react-icons/tb";
@@ -95,9 +99,15 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
               </h2>
             </Link>
           ))}
-          <div className="bottom-0 left-0 right-0 mt-28 mb-16 bg-[#96B23C] p-2 text-center flex items-center justify-center">
-            <div className="text-white"></div>
-            {open ? <p className="text-white text-2sm">User Account</p> : null}
+          <div className="bottom-0 left-0 right-0 mt-28 mb-16 bg-[#4FB19D] p-2 text-center flex items-center justify-center">
+            <div className="text-white">
+              <MdOutlineAdminPanelSettings size={22} />
+            </div>
+            {open ? (
+              <p className="text-white ml-2" style={{ fontSize: "14px" }}>
+                Admin
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
