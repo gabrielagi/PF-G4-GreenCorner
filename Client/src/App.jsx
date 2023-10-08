@@ -20,7 +20,7 @@ import ContactUs from "./pages/Contact-Us/ContactUs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
-import OurTeam from './components/OurTeam/OurTeam'
+import OurTeam from "./components/OurTeam/OurTeam";
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 
@@ -29,7 +29,7 @@ import ProfileUser from "./pages/Profile/profile.user";
 
 const App = () => {
   //Carga de usuarios
-  const { user, isAuthenticated, isLoading,  } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
@@ -48,7 +48,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-   
+
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -62,11 +62,21 @@ const App = () => {
         {/* RUTAS PRIVADAS AL INGRESAR SI NO ESTAS LOGIN TE REDIRIGE A HOME */}
         <Route
           path="/favorites"
-          element={<PrivateRoute element={<Favorites />} isAuthenticated={isAuthenticated} />}
+          element={
+            <PrivateRoute
+              element={<Favorites />}
+              isAuthenticated={isAuthenticated}
+            />
+          }
         />
         <Route
           path="/profile"
-          element={<PrivateRoute element={<Profile />} isAuthenticated={isAuthenticated} />}
+          element={
+            <PrivateRoute
+              element={<Profile />}
+              isAuthenticated={isAuthenticated}
+            />
+          }
         />
 
         <Route path="/create" element={<Create />} />
@@ -77,10 +87,7 @@ const App = () => {
         
         <Route path="/contact-us" element={<ContactUs/>} />
         {/* { <Route path="/profile" element={<Profile/>} /> } */}
-       
-       
       </Routes>
-
     </div>
   );
 };
