@@ -12,6 +12,7 @@ const ProfileDashboard = () => {
     nickname: "",
     name: "",
     lastName: "",
+    picture: "", 
   });
   const [profileImage, setProfileImage] = useState(""); 
   const [tempProfileImage, setTempProfileImage] = useState(""); 
@@ -22,6 +23,7 @@ const ProfileDashboard = () => {
   }, [dispatch, user.email]);
 
   const userProfile = useSelector((state) => state.userDetail);
+
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -48,17 +50,18 @@ const ProfileDashboard = () => {
       nickname: userProfile.nickname,
       name: userProfile.name,
       lastName: userProfile.lastName,
+      picture: userProfile.picture, 
     });
     setEditMode(true);
     setOriginalProfileImage(profileImage || userProfile.picture);
   };
 
   const handleCancelEdit = () => {
-
     setFormData({
       nickname: "",
       name: "",
       lastName: "",
+      picture: "", 
     });
     setTempProfileImage("");
     setProfileImage(originalProfileImage); 
@@ -67,44 +70,33 @@ const ProfileDashboard = () => {
 
   const handleSaveChanges = async () => {
     try {
-      if (tempProfileImage) {
-        const base64Image = await convertBase64(tempProfileImage);
-
         const updatedUserData = {
           ...formData,
-          picture: base64Image,
         };
         dispatch(updateUser(userProfile.id, updatedUserData));
-
         setTempProfileImage("");
-        setProfileImage(base64Image);
+        setProfileImage(updatedUserData.picture);
         setEditMode(false);
-      } else {
-        dispatch(updateUser(userProfile.id, formData));
 
-        setEditMode(false);
-      }
     } catch (error) {
       console.error("Error al guardar cambios:", error.message);
     }
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      // Verifica si el archivo es de tipo imagen
-      if (file.type.startsWith("image/")) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          setTempProfileImage(e.target.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        console.error("El archivo seleccionado no es una imagen válida.");
-        // Maneja el error o muestra un mensaje al usuario
-      }
-    }
-  };
+            try {
+          const base64Image = await convertBase64(file);
+          setTempProfileImage(base64Image);
+          setFormData({
+            ...formData,
+            picture: base64Image,
+          });
+        } catch (error) {
+          console.error("Error al convertir la imagen:", error.message);
+        }
+      } 
+
 
   return (
     <div>
