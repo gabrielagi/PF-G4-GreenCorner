@@ -10,7 +10,7 @@ const ProfileUser = () => {
   const renderComponentBasedOnMenu = () => {
     switch (selectedMenu) {
       case "Profile":
-      return <ProfileDashboard />;
+        return <ProfileDashboard />;
       case "Shopping history":
         // return <ShoppingHistory />;
         return <p>Esto muestra el Historial de Compra</p>;
