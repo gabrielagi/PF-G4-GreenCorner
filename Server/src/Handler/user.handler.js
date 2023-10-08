@@ -13,6 +13,40 @@ const {
   getUserByEmail,
 } = require("../Controller/user.controller");
 
+
+
+
+var cloudinary = require("cloudinary").v2;
+
+const cloud_name = process.env.CLOUD_NAME;
+const api_key = process.env.API_KEY;
+const api_secret = process.env.API_SECRET;
+
+cloudinary.config({
+  cloud_name: cloud_name,
+  api_key: api_key,
+  api_secret: api_secret,
+});
+
+async function uploadImages(images) {
+  try {
+    const uploadedImageURLs = [];
+
+    for (const image of images) {
+      const result = await cloudinary.uploader.upload(image);
+      uploadedImageURLs.push(result.url);
+    }
+
+    console.log("URLs de imágenes subidas a Cloudinary:", uploadedImageURLs);
+    return uploadedImageURLs;
+  } catch (error) {
+    console.error("Error al subir imágenes a Cloudinary:", error);
+    throw error;
+  }
+}
+
+
+
 const getFavoritesHandler = async (req, res) => {
   try {
     const allFavorites = await getAllFavorites();
@@ -45,8 +79,7 @@ const postFavoritesHandler = async (req, res) => {
 
 //CREA NUEVO USUARIO
 const newUserHandler = async (req, res) => {
-  const { nickname, email, picture } = req.body;
-
+  const { nickname, email, picture, email_verified } = req.body;
   if (!nickname || !email || !picture) {
     return res
       .status(400)
@@ -54,8 +87,7 @@ const newUserHandler = async (req, res) => {
   }
 
   try {
-    const newUser = await createUser(nickname, email, picture);
-    console.log("Nuevo usuario creado:", newUser);
+    const newUser = await createUser(nickname, email, picture, email_verified);
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error.message);
@@ -73,6 +105,12 @@ const updateUserHandler = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+  
+    if (userData.picture) {
+      const uploadedImages = await uploadImages([userData.picture]);
+      userData.picture = uploadedImages[0];
     }
 
     const updatedUser = await updateUser(userId, userData);

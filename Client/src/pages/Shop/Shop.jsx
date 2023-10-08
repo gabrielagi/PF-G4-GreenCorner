@@ -179,7 +179,17 @@ const Shop = () => {
       
 
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 mr-4"></div>
+        <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
+          <div>
+           <Category allCategories={allCategories} />
+          </div>
+          <div className="grid items-center text-start ml-4">
+            <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+              Featured Products
+            </h1 >
+           <ProductsTrending productTrending={productTrending} />
+         </div>
+        </div>
 
         <div className="lg:w-2/3 ml-4">
         <Cards allProducts={displayedProducts} />
@@ -209,19 +219,8 @@ const Shop = () => {
         }}
         //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
       />
-      <div className="sm:w[10px]">
-        <Category allCategories={allCategories} onChange={handleCategoryChange} />
-      </div>
-      <br />
-      <br />
-      <br />
 
-      <div >
-        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">
-          Featured Products
-        </strong>
-        <ProductsTrending productTrending={productTrending} />
-      </div>
+      
 
       {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>

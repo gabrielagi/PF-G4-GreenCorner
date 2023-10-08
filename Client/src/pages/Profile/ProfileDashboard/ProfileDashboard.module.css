@@ -1,0 +1,154 @@
+.heading {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.profilePictureContainer {
+  text-align: center;
+}
+
+.profilePictureWrapper {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 16px;
+  position: relative;
+  background-color: #f0f0f0;
+}
+
+.profilePicture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileInfo {
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.editableFields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.inputEdit {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 400px;
+}
+
+.buttonEdit {
+  margin-top: 20px;
+  padding: 8px 16px;
+  background-color: #68db54;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.buttonEditCancel {
+  padding: 8px 16px;
+  background-color: #f10c0c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.staticFields {
+  font-size: 16px;
+  margin-top: 16px;
+}
+
+.imageUpload {
+  margin-top: 16px;
+}
+
+.uploadLabel {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #b6c796;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.uploadInput {
+  display: none;
+}
+
+/* Cards 2nd version */
+.centeredContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.card2 {
+  width: 42em;
+  background-color: #fff;
+  border-radius: 1.1em;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+  padding: 1.1em 0.6em;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  margin: 0px 0px 10px 0px;
+  transition: filter 0.3s ease;
+}
+
+.card__image2 {
+  width: 10em;
+  height: 10em;
+  border-radius: 51%;
+  border: 4px solid #b6c796;
+  padding: 2px;
+}
+
+.card__image2 img {
+  width: 100%;
+  height: 100%;
+  border-radius: 51%;
+  object-fit: cover;
+}
+
+.card__content2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card__title2 {
+  font-size: 1.8rem;
+  font-weight: 500;
+  position: relative;
+  top: 0.5em;
+  color: #808080;
+  margin-bottom: 20px;
+}
+
+.card__text2 {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin: 0.2em 0;
+  display: flex;
+  color: #22c55e;
+}

@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserByEmail } from "../../Redux/actions/user/user-actions";
-import NavbarUser from "./../../components/Navbar/Navbar.user";
-import NavbarAdmin from "./../../components/Navbar/Navbar.admin";
+
 import LoadingGif from "../../assets/loading.gif";
+import ProfileUser from "./Profile.userpanel";
+import ProfileAdmin from "./Profile.admin";
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -22,9 +23,9 @@ const Profile = () => {
     <div>
       {isAuthenticated ? (
         userDetail && userDetail.role === "user" ? (
-          <NavbarUser user={userDetail} />
+          <ProfileUser />
         ) : (
-          <NavbarAdmin user={userDetail} />
+          <ProfileAdmin />
         )
       ) : (
         // window.redirect("/login")
