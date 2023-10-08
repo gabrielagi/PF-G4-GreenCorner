@@ -1,18 +1,33 @@
+import React, { useState } from 'react';
 import plantgif from "../../assets/plantgif.gif";
 import Category from "./Categorie";
+
 const Categories = ({ allCategories }) => {
- 
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleCategorySelect = (name) => {
+    setSelectedCategory(name);
+  };
+
   return (
-    <div className="flex flex-col items-center">
-      <h1 className="text-4xl font-semibold italic mt-4 mb-2">
+    <div className="grid items-center text-start ml-4">
+      <h1 className="text-4xl font-poppins italic mt-4 mb-2">
         All Categories
       </h1>
       <br />
-      <div className="">
+      <div className="mt-4 mb-2">
         {allCategories ? (
-          allCategories.map((p, i) => <Category key={i} name={p.name} id={p.id} />)
+          allCategories.map((p, i) => (
+            <Category
+              key={i}
+              name={p.name}
+              id={p.id}
+              selected={p.name === selectedCategory}
+              onSelect={handleCategorySelect}
+            />
+          ))
         ) : (
-          <div >
+          <div>
             <img src={plantgif} alt="loading" />
           </div>
         )}
@@ -20,4 +35,5 @@ const Categories = ({ allCategories }) => {
     </div>
   );
 };
+
 export default Categories;

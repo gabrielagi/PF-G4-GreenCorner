@@ -92,7 +92,7 @@ const Card = ({ name, images, price, id }) => {
         />
       </Link>
       <div className="text-left w-full">
-        <p className="ml-6">{name}</p>
+        <p className="font-poppins ml-6">{name}</p>
       </div>
       {/* object-contain
       object-fill
