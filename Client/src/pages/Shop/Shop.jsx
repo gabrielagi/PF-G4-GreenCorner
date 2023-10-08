@@ -29,7 +29,6 @@ const Shop = () => {
   const [priceOrder, setPriceOrder] = useState("");
   const [page, setPage] = useState(1);
   const productsPerPage = 6;
-  const [resetCategory, setResetCategory] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -58,7 +57,7 @@ const Shop = () => {
       setNameOrder("");
       setPriceOrder("");
       dispatch(resetAllProducts());
-      setResetCategory(true)
+     
     }
   }
  
@@ -176,7 +175,7 @@ const Shop = () => {
       <div className="flex flex-col lg:flex-row">
         <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
-           <Category allCategories={allCategories} reset={setResetCategory} />
+           <Category allCategories={allCategories}/>
           </div>
           <div className="grid items-center text-start ml-4">
             <h1 className="text-4xl font-poppins italic mt-4 mb-2">

@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
 import plantgif from "../../assets/plantgif.gif";
 import Category from "./Categorie";
+import { resetAllProducts } from "../../Redux/actions/product/action";
 
-const Categories = ({ allCategories, reset }) => {
+const Categories = ({ allCategories }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const dispatch = useDispatch();
 
 
   const handleCategorySelect = (name) => {
-    setSelectedCategory(name);
+    setSelectedCategory(name);    
   };
+
+  const handleClear = () => {
+    setSelectedCategory(true);
+    dispatch(resetAllProducts());
+  }
 
   return (
     <div className="grid items-center text-start ml-4">
@@ -34,9 +41,9 @@ const Categories = ({ allCategories, reset }) => {
             <img src={plantgif} alt="loading" />
           </div>
         )}
-        <button onClick={()=>setSelectedCategory(true)}>
-        All categories
-      </button>
+        <button onClick={handleClear}>
+          All categories
+        </button>
       </div>
     </div>
   );
