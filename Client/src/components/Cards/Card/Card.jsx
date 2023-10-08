@@ -66,10 +66,11 @@ const Card = ({ name, images, price, id }) => {
         email: user.email,
         product_id: product_id
       };
-      console.log(product_id)
+
 
 
       dispatch(postFavorites(favorite));
+      
       setCorazon(!corazon);
     } else {
       loginWithRedirect();
