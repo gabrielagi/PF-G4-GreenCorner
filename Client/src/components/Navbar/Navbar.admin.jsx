@@ -48,11 +48,11 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const [open, setOpen] = useState(true);
 
   return (
-    <section className="flex gap-6 py-4">
+    <section className="flex gap-6  mt-5 mb-0">
       <div
-        className={`bg-[#315098] h-[83vh] md:h-[93vh] overflow:hidden ${
+        className={`bg-[#315098] h-[83vh] md:h-[91vh] overflow:hidden ${
           open ? "w-76" : "w-20"
-        } duration-500 text-gray-100 px-4 font-poppins`}
+        } duration-500 text-gray-100 px-4 font-poppins mb-0`}
       >
         <div className="py-3 flex justify-end">
           <BiMenuAltRight

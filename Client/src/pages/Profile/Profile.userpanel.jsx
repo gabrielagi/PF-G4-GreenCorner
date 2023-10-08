@@ -29,20 +29,17 @@ const ProfileUser = () => {
 
   return (
     <div className="flex">
-      <div className="flex-grow">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-1">
-            {/* Menú lateral */}
-            <NavbarUser
-              selectedMenu={selectedMenu}
-              setSelectedMenu={setSelectedMenu}
-            />
-          </div>
-          <div className="col-span-1">
-            {/* Componente renderizado */}
-            {renderComponentBasedOnMenu()}
-          </div>
-        </div>
+      <div className="w-1/4">
+        {/* Menú lateral */}
+        <NavbarUser
+          selectedMenu={selectedMenu}
+          setSelectedMenu={setSelectedMenu}
+          style={{ position: "relative", zIndex: 999 }}
+        />
+      </div>
+      <div className="w-3/4" style={{ position: "relative", zIndex: 1 }}>
+        {/* Componente renderizado */}
+        {renderComponentBasedOnMenu()}
       </div>
     </div>
   );
