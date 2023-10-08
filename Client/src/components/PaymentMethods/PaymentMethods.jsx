@@ -1,4 +1,4 @@
-
+import chip from '../../img/chip.png'
 import './PaymentMethods.styles.css'
 const PaymentMethods = () => {
   return (
@@ -8,7 +8,7 @@ const PaymentMethods = () => {
             <div className="front">
               <img src='https://o.remove.bg/downloads/1c234685-fd36-49b9-9983-198140c78662/png-transparent-map-of-asia-globe-world-map-flat-earth-world-map-miscellaneous-world-earth-removebg-preview.png' className='map-img'></img>
               <div className='row -mt-[28px] '>
-                <img  className='-ml-[20px] w-[100px]'src='https://o.remove.bg/downloads/a6fa2064-8b31-4276-a975-67f1fcd7e68c/gratis-png-tarjeta-inteligente-circuito-integrado-chip-de-tarjeta-removebg-preview.png' alt="" />
+                <img  className='-ml-[20px] w-[100px]'src={chip} alt="" />
                 <img src='https://o.remove.bg/downloads/e7a48dfa-e05e-4dce-a842-de62e304c1f6/png-transparent-logo-brand-white-font-design-white-text-logo-removebg-preview.png' alt="" className='w-[80px]'/>
               </div>
              <div className='row   mt-[40px] mb-5 card-no'>
