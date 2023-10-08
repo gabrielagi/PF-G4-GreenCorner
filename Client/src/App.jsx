@@ -25,6 +25,7 @@ import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
+import ProfileUser from "./pages/Profile/profile.user";
 
 const App = () => {
   //Carga de usuarios
@@ -71,7 +72,7 @@ const App = () => {
         <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/profile-user" element={<ProfileUser />} />
+        <Route path="/profile-user" element={<ProfileUser/>} />
         <Route path="/prueba" element={<DetailCarousel/>} />
         
         <Route path="/contact-us" element={<ContactUs/>} />
