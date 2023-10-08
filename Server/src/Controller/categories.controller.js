@@ -66,11 +66,30 @@ const getCategoryByName = async (name) => {
     }
   };
 
+  const deleteCategoryById = async (id) => {
+    try {
+      
+      const category = await Category.findByPk(id);
+  
+      
+      if (!category) {
+        throw new Error("Categoría no encontrada");
+      }
+  
+      
+      await category.destroy();
+  
+      return category;
+    } catch (error) {
+      throw new Error("Error al eliminar la categoría por ID: " + error.message);
+    }
+  };
   
 module.exports = {
     getAllCategories,
     getCategoryById,
     getCategoryByName,
-    postCategory
+    postCategory,
+    deleteCategoryById
 }
 

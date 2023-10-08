@@ -3,6 +3,7 @@ const {
   createOrder,
   receiveWebhook,
   success,
+  failure,
 } = require("../Controller/payment.controller");
 const paymentRouter = Router();
 
@@ -13,9 +14,7 @@ paymentRouter.post("/create-order", createOrder);
 paymentRouter.get("/success", success);
 
 // Redirigir al usuario si el pago sale mal
-paymentRouter.get("/failure", (req, res) => {
-  res.send("failure");
-});
+paymentRouter.get("/failure", failure);
 
 // Redirigir al usuario si el pago esta pendiente de cobro
 paymentRouter.get("/pending", (req, res) => {

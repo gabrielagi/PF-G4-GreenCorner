@@ -86,14 +86,17 @@ const Card = ({ name, images, price, id }) => {
       </div>
       <Link to={`/detail/${id}`}>
         <img
-          className="rounded-xl overflow-hidden w-60 h-75 object-cover mb-3"
+          className="rounded-xl overflow-hidden max-h-60 w-60 h-75 object-scale-down mb-3"
           src={images[0]}
           alt="producto"
         />
       </Link>
       <div className="text-left w-full">
-        <p className="text-xl font-medium ml-6">{name}</p>
+        <p className="ml-6">{name}</p>
       </div>
+      {/* object-contain
+      object-fill
+      object-scale-down */}
 
       <div className="flex justify-between items-center mt-3 w-full relative">
         <p className="text-lg font-bold mx-6">${price}</p>

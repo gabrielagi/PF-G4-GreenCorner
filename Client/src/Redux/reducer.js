@@ -1,41 +1,41 @@
 import {
-    POST_PRODUCT,
-    DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_BY_ID,
-    GET_ALL_PRODUCT,
-    GET_PRODUCT_TRENDING,
-    GET_PRODUCT_BY_NAME,
-    GET_PRODUCT_CART,
-    GET_CATEGORIES,
-    FILTER_CATEGORY,
-    GET_PRODUCT_BY_ID,
-    ORDER_BY_NAME,
-    ORDER_BY_PRICE,
-    RESET_ALL_PRODUCT,
-    GET_ALL_USER,
-    GET_USER_BY_NAME,
-    GET_USER_BY_ROL,
-    GET_USER_BY_ID,
-    DELETE_USER,
-    POST_USER,
-    GET_CATEGORIES_SHOP
-
-} from "./actions/action-types"
+  POST_PRODUCT,
+  DELETE_PRODUCT_BY_ID,
+  UPDATE_PRODUCT_BY_ID,
+  GET_ALL_PRODUCT,
+  GET_PRODUCT_CART,
+  GET_PRODUCT_TRENDING,
+  GET_PRODUCT_BY_NAME,
+  GET_CATEGORIES,
+  FILTER_CATEGORY,
+  GET_PRODUCT_BY_ID,
+  ORDER_BY_NAME,
+  ORDER_BY_PRICE,
+  RESET_ALL_PRODUCT,
+  GET_ALL_USER,
+  GET_USER_BY_NAME,
+  GET_USER_BY_ROL,
+  GET_USER_BY_ID,
+  DELETE_USER,
+  POST_USER,
+  GET_CATEGORIES_SHOP,
+  GET_USER_BY_EMAIL,
+} from "./actions/action-types";
 
 const initialState = {
-    allProducts: [],
-    product: [],
-    productCart: [],
-    productTrending: [],
-    categories: [],
-    searchProduct: [],
-    searchByName: [],
-    productDetail: [],
-    user: [],
-    userDetail: []
+  allProducts: [],
+  product: [],
+  productCart: [],
+  productTrending: [],
+  categories: [],
+  searchProduct: [],
+  searchByName: [],
+  productDetail: [],
+  AllUsers: [],
+  userDetail: [],
 };
 
-/* 
+
 function updater(product, id, updatedProductData) {
     const index = product.findIndex(item => item.id === id);
 
@@ -52,120 +52,115 @@ function updater(product, id, updatedProductData) {
 
         product[index] = currentProduct;
     }
-} */
+} 
 
-
-
-let productSorted = []
-let products = []
+let productSorted = [];
+let products = [];
 
 function rootReducer(state = initialState, action) {
-    switch (action.type) {
+              case UPDATE_PRODUCT_BY_ID:
+  switch (action.type) {
+    case GET_ALL_PRODUCT:
+      return {
+        ...state,
+        allProducts: action.payload,
+        product: state.product.length ? state.product : action.payload,
+      };
 
-        case GET_ALL_PRODUCT:
-            return {
-                ...state,
-                allProducts: action.payload,
-                product: state.product.length ? state.product : action.payload,
-            }
+    case RESET_ALL_PRODUCT:
+      return {
+        ...state,
+        product: state.allProducts,
+      };
 
-        case RESET_ALL_PRODUCT:
-            return {
-                ...state,
-                product: state.allProducts
-            }
-
-        case GET_PRODUCT_BY_NAME:
-            return {
-                ...state,
-                product: action.payload
-            }
-
-        case GET_PRODUCT_BY_ID:
-            return {
-                ...state,
-                productDetail: action.payload
-
-            }
-
-        case GET_PRODUCT_CART:
+    case GET_PRODUCT_BY_NAME:
+      return {
+        ...state,
+        product: action.payload,
+      };
+      
+       case GET_PRODUCT_CART:
 
             return {
                 ...state,
                 productCart: action.payload
             }
 
-        case GET_PRODUCT_TRENDING:
 
-            return {
-                ...state,
-                productTrending: state.allProducts.filter((product) => product.isTrending === true)
-            };
+    case GET_PRODUCT_BY_ID:
+      return {
+        ...state,
+        productDetail: action.payload,
+      };
+    case GET_PRODUCT_TRENDING:
+      return {
+        ...state,
+        productTrending: state.allProducts.filter(
+          (product) => product.isTrending === true
+        ),
+      };
 
-        case POST_PRODUCT:
-            return {
-                ...state,
-                product: [...state.product, action.payload]
-            }
+    case POST_PRODUCT:
+      return {
+        ...state,
+        product: [...state.product, action.payload],
+      };
 
-        //Por ahora no va
-        case GET_CATEGORIES:
+    //Por ahora no va
+    case GET_CATEGORIES:
+      // const categories = [];
 
-            // const categories = [];
+      // state.product.forEach((product) => {
+      //   product.categories.forEach((category) => {
+      //     categories.push(category);
+      //   });
+      // });
 
-            // state.product.forEach((product) => {
-            //   product.categories.forEach((category) => {
-            //     categories.push(category);
-            //   });
-            // }); 
+      // const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
 
+      return {
+        ...state,
+        categories: action.payload,
+      };
 
-            // const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
+    case GET_CATEGORIES_SHOP:
+      const categories = [];
 
+      state.product.forEach((product) => {
+        product.categories.forEach((category) => {
+          categories.push(category);
+        });
+      });
 
-            return {
-                ...state,
-                categories: action.payload
-            };
+      const Category = Array.from(new Set(categories.map(JSON.stringify))).map(
+        JSON.parse
+      );
 
+      return {
+        ...state,
+        categories: Category,
+      };
 
-        case GET_CATEGORIES_SHOP:
+    case FILTER_CATEGORY:
+      return {
+        ...state,
+        product: state.allProducts.filter((products) => {
+          return products.categories.some(
+            (category) => category.name === action.payload
+          );
+        }),
+      };
 
-            const categories = [];
+    case DELETE_PRODUCT_BY_ID:
+      return {
+        ...state,
+        product: state.product.filter(
+          (product) => product.id !== action.payload.id
+        ),
+      };
 
-            state.product.forEach((product) => {
-                product.categories.forEach((category) => {
-                    categories.push(category);
-                });
-            });
+    /*       case UPDATE_PRODUCT_BY_ID:
 
-
-            const Category = Array.from(new Set(categories.map(JSON.stringify))).map(JSON.parse);
-
-            return {
-                ...state,
-                categories: Category
-            };
-
-
-
-        case FILTER_CATEGORY:
-
-            return {
-                ...state,
-                product: state.allProducts.filter((products) => {
-                    return products.categories.some((category) => category.name === action.payload);
-                }),
-            };
-
-
-        case DELETE_PRODUCT_BY_ID:
-            return {
-                ...state,
-                product: state.product.filter((product) => product.id !== action.payload.id)
-            }
-
-        /*       case UPDATE_PRODUCT_BY_ID:
                   const { id, updatedProductData } = action.payload;
                   const newProducts = [...state.product]
       
@@ -176,79 +171,81 @@ function rootReducer(state = initialState, action) {
       
                   } */
 
+    case ORDER_BY_NAME:
+      products = [...state.allProducts];
+      productSorted = products.sort(function (a, b) {
+        if (a.name > b.name) {
+          return action.payload === "asc" ? 1 : -1;
+        }
+        if (a.name < b.name) {
+          return action.payload === "asc" ? -1 : 1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        product: productSorted,
+      };
 
-        case ORDER_BY_NAME:
-            products = [...state.allProducts]
-            productSorted = products.sort(function (a, b) {
-                if (a.name < b.name) {
-                    return action.payload === 'asc' ? 1 : -1
-                }
-                if (a.name > b.name) {
-                    return action.payload === 'asc' ? -1 : 1
-                }
-                return 0;
-            })
-            return {
-                ...state,
-                product: productSorted
-            }
+    case ORDER_BY_PRICE:
+      products = [...state.allProducts];
+      productSorted =
+        action.payload === "low"
+          ? products.sort((a, b) => a.price - b.price)
+          : products.sort((a, b) => b.price - a.price);
 
-        case ORDER_BY_PRICE:
-            products = [...state.allProducts];
-            productSorted = action.payload === 'low' ?
-                products.sort((a, b) => a.price - b.price) :
-                products.sort((a, b) => b.price - a.price);
+      return {
+        ...state,
+        product: productSorted,
+      };
 
-            return {
-                ...state,
-                product: productSorted
-            }
+    case GET_ALL_USER:
+      return {
+        ...state,
+        user: state.user,
+      };
 
-        case GET_ALL_USER:
-            return {
-                ...state,
-                user: state.user
-            }
+    case GET_USER_BY_NAME:
+      return {
+        ...state,
+        userDetail: payload,
+      };
 
-        case GET_USER_BY_NAME:
-            return {
-                ...state,
-                userDetail: payload
-            }
+    case GET_PRODUCT_BY_ID:
+      return {
+        ...state,
+        userDetail: payload,
+      };
 
-        case GET_PRODUCT_BY_ID:
-            return {
-                ...state,
-                userDetail: payload
-            }
+    case GET_USER_BY_ROL:
+      return {
+        ...state,
+        userDetail: payload,
+      };
 
-        case GET_USER_BY_ROL:
-            return {
-                ...state,
-                userDetail: payload
-            }
+    case GET_USER_BY_ID:
+      return {
+        ...state,
+        userDetail: payload,
+      };
 
-        case GET_USER_BY_ID:
-            return {
-                ...state,
-                userDetail: payload
-            }
+    case GET_USER_BY_EMAIL:
+      return {
+        ...state,
+        userDetail: payload,
+      };
 
-        case POST_USER:
-            return {
-                ...state,
-                user: [...user, payload]
-            }
-        default:
-            return {
-                ...state
-            };
+    case POST_USER:
+      return {
+        ...state,
+        userDetail: action.payload,
+      };
+    default:
+      return {
+        ...state,
+      };
+  }
+}
 
+export default rootReducer;
 
-
-
-
-    }
-};
-
-export default rootReducer; 

@@ -1,9 +1,10 @@
 import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import NavbarUser from "../../components/Navbar/Navbar.user";
 
-const ProfileUser = () => {
+import { useAuth0 } from "@auth0/auth0-react";
+import NavbarAdmin from "../../components/Navbar/Navbar.admin";
+
+const ProfileAdmin = () => {
   const { user } = useAuth0();
 
   const renderComponentBasedOnMenu = () => {
@@ -33,7 +34,7 @@ const ProfileUser = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="col-span-1">
             {/* Menú lateral */}
-            <NavbarUser
+            <NavbarAdmin
               selectedMenu={selectedMenu}
               setSelectedMenu={setSelectedMenu}
             />
@@ -48,4 +49,4 @@ const ProfileUser = () => {
   );
 };
 
-export default ProfileUser;
+export default ProfileAdmin;

@@ -7,6 +7,7 @@ import { getProductById } from "../Redux/actions/product/action";
 import Card from "../components/Cards/Card/Card";
 import { VscArrowCircleLeft } from "react-icons/vsc";
 import loading from "../assets/loading.gif";
+import axios from "axios";
 
 const Detail = () => {
   const { id } = useParams();
@@ -41,10 +42,11 @@ const Detail = () => {
     try {
       const { data } = await axios.post(
         "http://localhost:3001/payment/create-order",
-        { ...product, amount }
+        { product, amount }
       );
-
-      location.href = data.body.init_point;
+      console.log("Data en el componente Detail", data);
+      console.log("Init point en el componente Detail", data);
+      location.href = data;
     } catch (error) {
       console.log(error.message);
     }
@@ -94,40 +96,39 @@ const Detail = () => {
               </select>
 
               <div className="my-10 grid grid-cols-2  md:my-10 gap-y-10    ">
-                  <div>
-                   <button
-                      onClick={amountDecrement}
-                      className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
-                    >
-                      -
-                    </button>
-                    <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">{amount}</span>
-                    <button
-                      onClick={amountIncrement}
-                      className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
-                    >
-                      +
-                    </button> 
-                  </div>
-                    
+                <div>
+                  <button
+                    onClick={amountDecrement}
+                    className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
+                  >
+                    -
+                  </button>
+                  <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
+                    {amount}
+                  </span>
+                  <button
+                    onClick={amountIncrement}
+                    className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
+                  >
+                    +
+                  </button>
+                </div>
+
                 <button className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
                   ADD TO CART
                 </button>
-                
               </div>
-              <div className="flex  md: justify-between gap-x-10 " >
+              <div className="flex  md: justify-between gap-x-10 ">
                 <button className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]">
-                Add to my Garden
-              </button>
-
-              <button
+                  Add to my Garden
+                </button>
+                <button
                   onClick={handleCheckout}
                   className="p-4 my-10 md:p-8 md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6] "
                 >
                   Checkout
                 </button>
               </div>
-              
             </div>
           </div>
 

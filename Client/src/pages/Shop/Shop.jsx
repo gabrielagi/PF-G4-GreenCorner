@@ -8,7 +8,7 @@ import ProductsTrending from "../../components/ProductsTrending/ProductsTrending
 import {
   getAllProducts,
   resetAllProducts,
-  getAllCategoriesShop,
+  getAllCategories,
   getProductsTrending,
   filterByName,
   filterByPrice,
@@ -19,8 +19,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Pagination from "@mui/material/Pagination"
-
+import Pagination from "@mui/material/Pagination";
 
 const Shop = () => {
   const products = useSelector((state) => state.product);
@@ -31,20 +30,15 @@ const Shop = () => {
   const [page, setPage] = useState(1);
   const productsPerPage = 6;
 
-
-
   const dispatch = useDispatch();
 
-  
   const handleChange = (event, value) => {
     setPage(value);
   };
 
-
-
   useEffect(() => {
     dispatch(getAllProducts());
-    dispatch(getAllCategoriesShop());
+    dispatch(getAllCategories());
     dispatch(getProductsTrending());
   }, [dispatch]);
 
@@ -87,8 +81,6 @@ const Shop = () => {
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
 
-  
-
   return (
     <div>
       <div className={styles.filtros}>
@@ -99,63 +91,68 @@ const Shop = () => {
             handleOrder();
           }}
         />
-       <FormControl
-  sx={{
-    border: 'none',
-    minWidth: 100,
-    '& label': {
-      fontSize: '18px', 
-      color: 'rgb(0, 133, 0)',
-    },
-    '& label.MuiInputLabel-shrink': {
-      color: 'rgb(0, 133, 0)'
-    },
-    '.MuiOutlinedInput-notchedOutline': { 
-      border: 'none',
-    },
-    '& .MuiInputBase-input': {
-      fontSize: '15px',  
-      color:"black"
-    },
-    '& .MuiSelect-icon': {
-      color: 'rgb(0, 133, 0)' 
-    },
-  }}
->
-  <InputLabel htmlFor="nameOrder" >Name</InputLabel>
-  <Select
-   
-    id="nameOrder"
-    name="nameOrder"
-    value={nameOrder}
-    onChange={handleOrder}
-    label="Name"
-  >
-    <MenuItem value="asc" style={{ fontSize: '15px' }}>A - Z</MenuItem>
-    <MenuItem value="desc" style={{ fontSize: '15px' }}>Z - A</MenuItem>
-  </Select>
-</FormControl>
-        <FormControl sx={{
-    border: 'none',
-    minWidth: 100,
-    '& label': {
-      fontSize: '18px', 
-      color: 'rgb(0, 133, 0)',
-    },
-    '& label.MuiInputLabel-shrink': {
-      color: 'rgb(0, 133, 0)'
-    },
-    '.MuiOutlinedInput-notchedOutline': { 
-      border: 'none',
-    },
-    '& .MuiInputBase-input': {
-      fontSize: '15px',  
-      color:"black"
-    },
-    '& .MuiSelect-icon': {
-      color: 'rgb(0, 133, 0)' 
-    },
-  }}>
+        <FormControl
+          sx={{
+            border: "none",
+            minWidth: 100,
+            "& label": {
+              fontSize: "18px",
+              color: "rgb(0, 133, 0)",
+            },
+            "& label.MuiInputLabel-shrink": {
+              color: "rgb(0, 133, 0)",
+            },
+            ".MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "& .MuiInputBase-input": {
+              fontSize: "15px",
+              color: "black",
+            },
+            "& .MuiSelect-icon": {
+              color: "rgb(0, 133, 0)",
+            },
+          }}
+        >
+          <InputLabel htmlFor="nameOrder">Name</InputLabel>
+          <Select
+            id="nameOrder"
+            name="nameOrder"
+            value={nameOrder}
+            onChange={handleOrder}
+            label="Name"
+          >
+            <MenuItem value="asc" style={{ fontSize: "15px" }}>
+              A - Z
+            </MenuItem>
+            <MenuItem value="desc" style={{ fontSize: "15px" }}>
+              Z - A
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          sx={{
+            border: "none",
+            minWidth: 100,
+            "& label": {
+              fontSize: "18px",
+              color: "rgb(0, 133, 0)",
+            },
+            "& label.MuiInputLabel-shrink": {
+              color: "rgb(0, 133, 0)",
+            },
+            ".MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "& .MuiInputBase-input": {
+              fontSize: "15px",
+              color: "black",
+            },
+            "& .MuiSelect-icon": {
+              color: "rgb(0, 133, 0)",
+            },
+          }}
+        >
           <InputLabel htmlFor="priceOrder">Price</InputLabel>
           <Select
             id="priceOrder"
@@ -164,59 +161,55 @@ const Shop = () => {
             onChange={handleOrder}
             label="Price"
           >
-            <MenuItem value="high" style={{ fontSize: '15px' }}>High - Low</MenuItem>
-            <MenuItem value="low" style={{ fontSize: '15px' }}>Low - High</MenuItem>
+            <MenuItem value="high" style={{ fontSize: "15px" }}>
+              High - Low
+            </MenuItem>
+            <MenuItem value="low" style={{ fontSize: "15px" }}>
+              Low - High
+            </MenuItem>
           </Select>
-        </FormControl>        
+        </FormControl>
       </div>
-
-
-      
-      
 
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 mr-4"></div>
+        <div className="lg:w-1/3 mr-4">
+          <div>
+           <Category allCategories={allCategories} />
+          </div>
+          <div className="flex flex-col items-center">
+            <strong className="text-4xl font-semibold italic mt-4 mb-2">
+              Featured Products
+            </strong >
+           <ProductsTrending productTrending={productTrending} />
+         </div>
+        </div>
 
         <div className="lg:w-2/3 ml-4">
-        <Cards allProducts={displayedProducts} />
+          <Cards allProducts={displayedProducts} />
         </div>
       </div>
-      <div className={styles.cardsDiv}>
-
-      </div>
+      <div className={styles.cardsDiv}></div>
       <Pagination
         count={totalPages}
         page={page}
         onChange={handleChange}
         className={styles.pagination}
-        size= "large" 
+        size="large"
         color="primary"
         sx={{
           '& .Mui-selected': {
             backgroundColor: '#50a050',
-            fontSize: '20px', 
+            fontSize: '20px',
             
           },
-          '& .MuiPaginationItem-root': {
-            fontSize: '15px'
+          "& .MuiPaginationItem-root": {
+            fontSize: "15px",
           },
-          
         }}
         //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
       />
-      <div className="sm:w[10px]">
-        <Category allCategories={allCategories} />
-      </div>
-      <br />
-      <br />
-      <br />
 
-      <div >
-        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">
-          Featured Products
-        </strong>
-        <ProductsTrending productTrending={productTrending} />
-      </div>
+      
 
       {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
