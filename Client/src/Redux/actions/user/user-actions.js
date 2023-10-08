@@ -7,6 +7,7 @@ import {
   POST_FAVORITE,
   POST_USER,
   GET_USER_BY_EMAIL,
+  UPDATE_USER,
 } from "../action-types";
 
 import axios from "axios";
@@ -61,8 +62,12 @@ export function getUserById(id) {
 export function getUserByEmail(email) {
   return async function (dispatch) {
     try {
+      console.log("Llego un email a buscar a la action", email);
+      console.log(`${endpoint}/find/${email}`);
+      // El error esta en la URL
       const { data } = await axios.get(`${endpoint}/find?email=${email}`);
 
+      console.log("Esta es la data que guardo en Reducer", data);
       dispatch({
         type: GET_USER_BY_EMAIL,
         payload: data,
@@ -131,6 +136,21 @@ export function deleteUser(id) {
     } catch (error) {
       console.log(error);
       return error.mesage;
+    }
+  };
+}
+
+export function updateUser(id, userData) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${endpoint}/${id}`, userData);
+      dispatch({
+        type: UPDATE_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
     }
   };
 }

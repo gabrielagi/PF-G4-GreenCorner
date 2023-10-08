@@ -3,16 +3,16 @@ import Category from "./Categorie";
 const Categories = ({ allCategories }) => {
  
   return (
-    <div className=" sm:ml-4 sm:rounded-none sm:relative sm:ml-[60px] sm:border sm:border-solid sm:w-[200px] sm:mt-[-200px] sm:rounded-[40px] sm:bg-gradient-to-br from-gray-600 via-transparent to-gray-300   mt-[-100px]">
-      <h1 className=" sm:font-semibold sm:text-4xl sm:iralic sm:text-center font-semibold text-4xl italic text-center">
+    <div className="flex flex-col items-center">
+      <h1 className="text-4xl font-semibold italic mt-4 mb-2">
         All Categories
       </h1>
       <br />
-      <div className="flex justify-center items-center">
+      <div className="">
         {allCategories ? (
           allCategories.map((p, i) => <Category key={i} name={p.name} id={p.id} />)
         ) : (
-          <div className="flex justify-center items-center">
+          <div >
             <img src={plantgif} alt="loading" />
           </div>
         )}

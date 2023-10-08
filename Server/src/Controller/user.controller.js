@@ -2,7 +2,7 @@ const { User, Favorite, Product } = require("../db");
 const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
-const createUser = async (nickname, email, picture) => {
+const createUser = async (nickname, email, picture, email_verified) => {
   try {
     const [user, created] = await User.findOrCreate({
       where: {
@@ -12,13 +12,14 @@ const createUser = async (nickname, email, picture) => {
         nickname,
         email,
         picture,
+        email_verified
       },
     });
 
     if (created) {
       console.log("Nuevo usuario creado:", user.dataValues);
     } else {
-      console.log("El usuario ya existe:", user.dataValues);
+      console.log("El usuario ya existe");
     }
 
     return user;
@@ -46,14 +47,14 @@ const updateUser = async (userId, userData) => {
   try {
     const [updatedCount, updatedUser] = await User.update(userData, {
       where: { id: userId },
-      returning: true, // Para obtener el registro actualizado
+      returning: true, 
     });
 
     if (updatedCount === 0) {
       throw new Error("User not found or no changes made.");
     }
 
-    return updatedUser[0]; // Devuelve el usuario actualizado
+    return updatedUser[0]; 
   } catch (error) {
     console.error(error.message);
     throw error;
@@ -132,16 +133,16 @@ const getByRol = async (rol) => {
 
 const getUserByEmail = async (email) => {
   try {
-    const user = await User.findOne({ where: { email } });
-
-    if (!user) {
-      throw new Error(`User with email: ${email} not found`);
-    }
-
-    return res.status(200).json(user);
+    let userFromDb = await User.find({
+      where: {
+        email: email,
+      },
+    });
+    console.log("El usuario encontrado en el controler", userFromDb);
+    return userFromDb;
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Something went wrong" });
+    console.error("Error en getProductCart:", error.message);
+    res.status(500).json({ error: "Error en" });
   }
 };
 

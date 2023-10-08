@@ -1,26 +1,38 @@
-import "tailwindcss/tailwind.css";
 import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import ProfileUser from "./Profile.user";
-import ProfileAdmin from "./Profile.admin";
-import { getUserByRol } from "../../Redux/actions/user/user-actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserByEmail } from "../../Redux/actions/user/user-actions";
 
-const ProfileUser = () => {
+import LoadingGif from "../../assets/loading.gif";
+import ProfileUser from "./profile.user";
+import ProfileAdmin from "./Profile.admin";
+
+const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
+  const dispatch = useDispatch();
+  const userDetail = useSelector((state) => state.userDetail);
 
   useEffect(() => {
-    dispatch(getUserByRol(user.id));
-  }, [id]);
-
-  // Verifico si el rol es "user"
-  if (isAuthenticated) {
-    if (userRole === "user") {
-      return <ProfileUser />;
-    } else {
-      return <ProfileAdmin />;
+    if (user && user.email) {
+      console.log("Un email a buscar", user.email);
+      dispatch(getUserByEmail(user.email));
     }
-  } else {
-  }
+  }, [dispatch, user]);
+
+  return (
+    <div>
+      {isAuthenticated ? (
+        userDetail && userDetail.role === "user" ? (
+          <ProfileUser />
+        ) : (
+          <ProfileAdmin />
+        )
+      ) : (
+        // window.redirect("/login")
+        <img src={LoadingGif} alt="Loading information profile" />
+      )}
+    </div>
+  );
 };
 
-export default ProfileUser;
+export default Profile;
