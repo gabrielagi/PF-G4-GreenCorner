@@ -41,7 +41,7 @@ const Categories = ({ allCategories }) => {
             <img src={plantgif} alt="loading" />
           </div>
         )}
-        <button onClick={handleClear}>
+        <button className="font-bold hover:scale-110" onClick={handleClear}>
           All categories
         </button>
       </div>
