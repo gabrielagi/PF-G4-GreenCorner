@@ -112,6 +112,7 @@ export function postUser(userData) {
 export function postFavorites(userData) {
   return async (dispatch) => {
     try {
+  
       const { data } = await axios.post(`${endpoint}/favorites`, userData);
 
       dispatch({

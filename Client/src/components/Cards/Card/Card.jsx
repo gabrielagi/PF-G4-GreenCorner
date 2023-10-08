@@ -68,7 +68,9 @@ const Card = ({ name, images, price, id }) => {
       };
 
 
+
       dispatch(postFavorites(favorite));
+      
       setCorazon(!corazon);
     } else {
       loginWithRedirect();

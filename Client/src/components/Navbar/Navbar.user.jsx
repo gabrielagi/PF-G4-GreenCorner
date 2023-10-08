@@ -32,6 +32,7 @@ function NavbarUser({ selectedMenu, setSelectedMenu }) {
       name: "My Garden",
       icon: AiOutlineHeart,
       margin: true,
+      link:'/about-us',
     },
     {
       name: "Shipping Address",

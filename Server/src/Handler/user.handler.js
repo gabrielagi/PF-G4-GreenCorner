@@ -57,8 +57,10 @@ const getFavoritesHandler = async (req, res) => {
 };
 
 const postFavoritesHandler = async (req, res) => {
+ 
   try {
     const productData = req.body;
+    console.log(productData+'este es el productData')
     const productFavorite = await postFavorite(productData);
 
     if (productFavorite) {
