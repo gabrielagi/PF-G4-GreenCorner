@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
 import { postFavorites } from "../../../Redux/actions/user/user-actions";
-import { postProductCart } from "../../../Redux/actions/product/action";
+import { getAllProducts, postProductCart } from "../../../Redux/actions/product/action";
+
 
 const Card = ({ name, images, price, id }) => {
   const [corazon, setCorazon] = useState(false);
@@ -44,7 +45,6 @@ const Card = ({ name, images, price, id }) => {
   const handleAdd = (product_id) => {
     if (isAuthenticated) {
       if (!addToCartClicked) {
-        // Evita múltiples clics en el botón
         setAddToCartClicked(true);
 
         let cart = {
@@ -54,8 +54,6 @@ const Card = ({ name, images, price, id }) => {
         };
         dispatch(postProductCart(cart));
         notify();
-
-        // Restablece el botón después de 3 segundos
         setTimeout(() => {
           setAddToCartClicked(false);
         }, 3000);
@@ -79,6 +77,7 @@ const Card = ({ name, images, price, id }) => {
       loginWithRedirect();
     }
   };
+
 
   return (
     <div className="bg-slate-100 rounded-md box-border h-85 w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">

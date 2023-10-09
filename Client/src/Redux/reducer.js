@@ -22,6 +22,7 @@ import {
   GET_USER_BY_EMAIL,
   UPDATE_USER,
   GET_FAVORITES,
+  POST_PRODUCT_CART
 } from "./actions/action-types";
 
 const initialState = {
@@ -88,6 +89,12 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 productCart: action.payload
             }
+
+    case POST_PRODUCT_CART:
+      return {
+        ...state,
+        productCart: [...state.productCart, action.payload],
+      };
 
 
     case GET_PRODUCT_BY_ID:
