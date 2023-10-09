@@ -14,6 +14,7 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   RESET_ALL_PRODUCT,
+  SET_CURRENT_PAGE,
   DELETE_PRODUCT_CART,
 } from "../action-types";
 
@@ -267,3 +268,9 @@ export function filterByPrice(payload){
   }
 }
 
+export const setCurrentPage = (page) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload: page,
+  };
+};
