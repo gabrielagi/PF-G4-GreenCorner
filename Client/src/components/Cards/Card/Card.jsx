@@ -8,13 +8,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
 import { postFavorites } from "../../../Redux/actions/user/user-actions";
-import { postProductCart } from "../../../Redux/actions/product/action";
+import { postProductCart,getProductCart } from "../../../Redux/actions/product/action";
 
 const Card = ({ name, images, price, id }) => {
   const [corazon, setCorazon] = useState(false);
   const [addToCartClicked, setAddToCartClicked] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   const dispatch = useDispatch();
+
 
   const notify = () =>
     toast.success("Added to your cart 🛒", {
