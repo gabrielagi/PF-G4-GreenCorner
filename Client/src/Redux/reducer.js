@@ -250,6 +250,7 @@ function rootReducer(state = initialState, action) {
           userDetail: action.payload,
         };
       case GET_FAVORITES:
+        console.log(action.payload)
         return{
           ...state,
           allFavorites:action.payload

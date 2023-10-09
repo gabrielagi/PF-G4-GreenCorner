@@ -61,9 +61,11 @@ const updateUser = async (userId, userData) => {
   }
 };
 
-const getAllFavorites = async (req, res) => {
+const getAllFavorites = async (email) => {
   try {
+ 
     const favorites = await Favorite.findAll({
+      where:{email:email},
       include: [
         {
           model: Product,
@@ -73,7 +75,7 @@ const getAllFavorites = async (req, res) => {
     });
     return favorites;
   } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
+  console.log({ error: "Error en el servidor" });
   }
 };
 const postFavorite = async (product) => {
