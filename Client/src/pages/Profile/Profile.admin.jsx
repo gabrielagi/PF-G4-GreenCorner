@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import NavbarAdmin from "../../components/Navbar/Navbar.admin";
+import PaymentMethods from "../../components/PaymentMethods/PaymentMethods";
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
@@ -16,8 +17,8 @@ const ProfileAdmin = () => {
         // return <ShoppingHistory />;
         return <p>Esto muestra el Historial de Compra</p>;
       case "Payment methods":
-        // return <PaymentMethods />;
-        return <p>Esto muestra los métodos de pago</p>;
+        return <PaymentMethods />
+
       case "My Garden":
         // return <PaymentMethods />;
         return <p>Esto muestra mis favoritos</p>;

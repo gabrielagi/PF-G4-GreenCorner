@@ -17,7 +17,7 @@ const Favorites = () => {
   return (
     <div className="font-poppins mx-5">
 <h1 className="text-center  font-poppins font-extrabold py-10 my-10 text-4xl sm:text-5xl bg-yellow-200">Mis productos favoritos</h1>
-      <div className="grid md:grid-cols-2 gap-x-20 md:gap-x-10  my-10  ">
+      <div className="grid md:grid-cols-2 gap-x-20 md:gap-x-10  my-10 ">
         <div className="py-10  my-10 place-self-center align-top  w-full col-span-1 bg-green-500 grid md:h-full max-h-max md:w-[400px] md:ml-20  ">
           <div className="bg-red-500 px-10 text-center h-20 mb-10 ">
            

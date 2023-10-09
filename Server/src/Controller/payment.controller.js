@@ -24,7 +24,7 @@ const createOrder = async (req, res) => {
   if (typeof product === "object") {
     convertProdcutFromDetail = {
       id: product.id,
-      quantity: 2,
+      quantity: amount,
       title: product.name,
       unit_price: parseInt(product.price),
       currency_id: "ARS",
