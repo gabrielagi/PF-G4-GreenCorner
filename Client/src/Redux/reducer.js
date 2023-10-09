@@ -175,7 +175,7 @@ function rootReducer(state = initialState, action) {
                   } */
 
     case ORDER_BY_NAME:
-      products = [...state.allProducts];
+      products = [...state.product];
       productSorted = products.sort(function (a, b) {
         if (a.name > b.name) {
           return action.payload === "asc" ? 1 : -1;
@@ -191,7 +191,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case ORDER_BY_PRICE:
-      products = [...state.allProducts];
+      products = [...state.product];
       productSorted =
         action.payload === "low"
           ? products.sort((a, b) => a.price - b.price)

@@ -5,7 +5,7 @@ const Cart = ({name, price, image, amount}) => {
 
 return(
     <div>
-        <div className="image"><img src={image}/></div>
+        <div className="image"><img src={image[0]}/></div>
         <div className="name"><strong>{name}</strong></div>
         <div className="price"><strong>${pricee}</strong></div>
         <div className="amount"><h3>{amount}</h3></div>
