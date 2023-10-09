@@ -139,11 +139,9 @@ export function postFavorites(userData) {
     try {
   
       const { data } = await axios.post(`${endpoint}/favorites`, userData);
+       
+      return data;
 
-      dispatch({
-        type: POST_FAVORITE,
-        payload: data,
-      });
     } catch (error) {
       console.log(error.message); // Corregido aquí
       return error.message;

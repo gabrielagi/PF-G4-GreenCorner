@@ -241,10 +241,11 @@ export function postProductCart(userData) {
       try {
           const { data } = await axios.post(`${endpoint}/cart`, userData)
           
-          dispatch({
+          return data
+          /*dispatch({
               type: POST_PRODUCT_CART,
               payload: data
-          })
+          })*/
       } catch (error) {
           console.log(error.message); 
           return error.message;

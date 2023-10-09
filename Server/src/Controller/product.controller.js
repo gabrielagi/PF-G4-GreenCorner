@@ -99,13 +99,20 @@ const postProductCart = async (cart) => {
   try {
     const { product_id, email, amount} = cart;
 
-    const newShoppingCart = await ShoppingCart.create({
-      product_id,
-      email,
-      amount
+    const [shoppingCart, created] = await ShoppingCart.findOrCreate({
+      where: {
+        product_id: product_id,
+        email: email,
+        amount: amount
+      }
     });
 
-   return newShoppingCart;
+  if (!created) {
+      return "This product already in the cart";
+  } else {
+     return "This product has been add in the cart";
+  }
+
   } catch (error) {
     console.error("Error en postProductCart:", error.message);
     throw new Error("Error en el servidor");
