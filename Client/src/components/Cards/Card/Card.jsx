@@ -17,8 +17,8 @@ const Card = ({ name, images, price, id }) => {
   const dispatch = useDispatch();
 
 
-  const notify = () =>
-    toast.success("Added to your cart 🛒", {
+  const notify = (message) =>
+    toast.success(message + "🛒", {
       position: "bottom-left",
       autoClose: 5000,
       hideProgressBar: false,
@@ -29,8 +29,8 @@ const Card = ({ name, images, price, id }) => {
       theme: "light ",
     });
 
-  const notifyII = () =>
-    toast.error("Added to favorite ", {
+  const notifyII = (message) =>
+    toast.error(message, {
       icon: "❤️",
       position: "bottom-right",
       autoClose: 5000,
@@ -53,8 +53,11 @@ const Card = ({ name, images, price, id }) => {
           product_id: product_id,
           amount: 1,
         };
-        dispatch(postProductCart(cart));
-        notify();
+
+        dispatch(postProductCart(cart)).then((result) => {
+          notify(result);
+        })
+        
 
         // Restablece el botón después de 3 segundos
         setTimeout(() => {
@@ -68,14 +71,17 @@ const Card = ({ name, images, price, id }) => {
 
   const handleHeart = (product_id) => {
     if (isAuthenticated) {
-      notifyII();
+      
       let favorite = {
         email: user.email,
         product_id: product_id,
       };
-
-      dispatch(postFavorites(favorite));
+     
+   dispatch(postFavorites(favorite)).then((result) => {
+    notifyII(result);
+  })
       setCorazon(!corazon);
+
     } else {
       loginWithRedirect();
     }

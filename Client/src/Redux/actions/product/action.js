@@ -22,7 +22,7 @@ import axios from "axios";
 
 const endpoint = "https://greencorner.onrender.com/product";
  const categories = "https://greencorner.onrender.com/category"
-/* const endpoint = "http://localhost:3001/product";
+ /*const endpoint = "http://localhost:3001/product";
 const categories = "http://localhost:3001/category"
  */
 
@@ -235,10 +235,11 @@ export function postProductCart(userData) {
       try {
           const { data } = await axios.post(`${endpoint}/cart`, userData)
           
-          dispatch({
+          return data
+          /*dispatch({
               type: POST_PRODUCT_CART,
               payload: data
-          })
+          })*/
       } catch (error) {
           console.log(error.message); 
           return error.message;

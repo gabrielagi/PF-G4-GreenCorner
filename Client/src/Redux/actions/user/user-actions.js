@@ -13,7 +13,7 @@ import {
 
 import axios from "axios";
 
-/* const endpoint = "http://localhost:3001/user"; */
+ //const endpoint = "http://localhost:3001/user"; 
 const endpoint = "https://greencorner.onrender.com/user"
 
 
@@ -133,11 +133,9 @@ export function postFavorites(userData) {
     try {
   
       const { data } = await axios.post(`${endpoint}/favorites`, userData);
+       
+      return data;
 
-      dispatch({
-        type: POST_FAVORITE,
-        payload: data,
-      });
     } catch (error) {
       console.log(error.message); // Corregido aquí
       return error.message;
