@@ -8,7 +8,7 @@ import Card from "../components/Cards/Card/Card";
 import { VscArrowCircleLeft } from "react-icons/vsc";
 import loading from "../assets/loading.gif";
 import axios from "axios";
-
+import Carousel from "../components/DetailCarousel/DetailCarousel";
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -63,24 +63,7 @@ const Detail = () => {
         </Link>
         <div className="mx-10 sm:mx-60">
           <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-            {product.name && (
-              <div className="borde grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto">
-                <img src={activeImg || product.images[0]} alt="" />
-
-                <div className="imagen flex flex-row gap-10 max-w-fit h-60   bg-green-100  mb-20 ">
-                  {product.images?.map((imagen, i) => {
-                    return (
-                      <img
-                        key={i}
-                        src={imagen}
-                        className=" rounded-md w-60 cursor-pointer"
-                        onClick={() => setActiveImg(imagen)}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+            <Carousel images={product.images}/>
 
             <div className=" px-10 bg-[#f6f6f6] justify-between">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
@@ -89,12 +72,12 @@ const Detail = () => {
               <hr className="my-10"></hr>
               <p className="py-t text-5xl text-[#444444]">${product.price}</p>
               <p className="py-20">{product.description}</p>
-              <h2 className="text-5xl text-[#343434]">Variante</h2>
+              {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
                 <option>uno</option>
                 <option>dos</option>
-              </select>
+              </select> */}
 
               <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
                   <div>
