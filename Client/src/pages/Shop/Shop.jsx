@@ -1,10 +1,9 @@
-// Shop.js
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { setCurrentPage } from "../../Redux/actions/product/action";
 import "tailwindcss/tailwind.css";
 import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
+import { setCurrentPage } from "../../Redux/actions/product/action";
 import Category from "../../components/Categories/Categorie";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
 import plantgif from "../../assets/plantgif.gif";
@@ -24,7 +23,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 
-
 const Shop = () => {
   const products = useSelector((state) => state.product);
   const allCategories = useSelector((state) => state.categories);
@@ -32,11 +30,14 @@ const Shop = () => {
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const currentPage = useSelector((state) => state.pagination.currentPage); // Obtén la página actual desde Redux
+  const currentPage = useSelector((state) => state.pagination.currentPage); 
   const productsPerPage = 9;
- 
 
   const dispatch = useDispatch();
+
+  const handleChangePage = (event, value) => {
+    dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
+  };
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -51,16 +52,32 @@ const Shop = () => {
       setNameOrder(selectedValue);
       setPriceOrder("");
       dispatch(filterByName(selectedValue));
+      dispatch(setCurrentPage(1))
     } else if (selectedValue === "high" || selectedValue === "low") {
       setNameOrder("");
       setPriceOrder(selectedValue);
       dispatch(filterByPrice(selectedValue));
+      dispatch(setCurrentPage(1))
     } else {
       setNameOrder("");
       setPriceOrder("");
       setSelectedCategory(true);
+      dispatch(setCurrentPage(1))
       dispatch(resetAllProducts());
+     
     }
+  }
+
+  const handleCategorySelect = (name) => {
+    setSelectedCategory(name);   
+    setNameOrder("");
+    setPriceOrder("");
+    dispatch(setCurrentPage(1))
+  };
+
+  const handleClear = () => {
+    setSelectedCategory(true);
+    dispatch(resetAllProducts());
   }
  
   // // Se realiza el checkout
@@ -80,21 +97,8 @@ const Shop = () => {
   const totalProducts = products.length;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
 
-  const handleChangePage = (event, value) => {
-    dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
-  };
-  
 
-  
-  const handleCategoryChange = (event) => {
-    // Establece la página actual en 1 al cambiar de categoría
-    dispatch(setCurrentPage(1)); // Actualiza la página actual en el estado de Redux
-  
-    // Restablece los filtros de orden
-    handleOrder("");
-  };
 
- 
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
@@ -190,7 +194,7 @@ const Shop = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row">
-        <div className="mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
+        <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
                   <div className="grid items-center text-start ml-4">
               <h1 className="text-4xl font-poppins italic mt-4 mb-2">
@@ -207,7 +211,6 @@ const Shop = () => {
                       id={p.id}
                       selected={p.name === selectedCategory}
                       onSelect={handleCategorySelect}
-                      onCategoryChange={handleCategoryChange}
                     />
                   ))
                 ) : (
@@ -222,9 +225,11 @@ const Shop = () => {
             </div>
           </div>
           <div className="grid items-center text-start ml-4">
-            <h1 className="text-4xl font-poppins italic mt-4 mb-2">Featured Products</h1>
-            <ProductsTrending productTrending={productTrending} />
-          </div>
+            <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+              Featured Products
+            </h1 >
+           <ProductsTrending productTrending={productTrending} />
+         </div>
         </div>
 
         <div className="lg:w-2/3 ml-4">
@@ -251,6 +256,10 @@ const Shop = () => {
           }
         }}
       />
+
+      
+
+      {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
   );
 };
