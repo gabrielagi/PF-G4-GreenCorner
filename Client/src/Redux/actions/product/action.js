@@ -33,7 +33,6 @@ const categories =`https://greencorner.onrender.com/category`
 
 
 export const getAllProducts = () => {
-  console.log(link)
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
