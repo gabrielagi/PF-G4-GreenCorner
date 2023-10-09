@@ -15,19 +15,22 @@ import {
   ORDER_BY_PRICE,
   RESET_ALL_PRODUCT,
   SET_CURRENT_PAGE,
+  DELETE_PRODUCT_CART,
 } from "../action-types";
 
 import axios from "axios";
 
+const link= import.meta.env.VITE_ENDPOINT
+const endpoint = `${link}/product`;
+const categories =`${link}/category`
 
- const endpoint = "https://greencorner.onrender.com/product";
- const categories = "https://greencorner.onrender.com/category"
-//const endpoint = "http://localhost:3001/product";
-//const categories = "http://localhost:3001/category"
 
+
+ 
 
 
 export const getAllProducts = () => {
+  console.log(link)
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
@@ -118,6 +121,19 @@ export const addProduct = (productdata) => {
       })
     } catch (error) {
       alert ("Hubo un problema al crear el producto")
+    }
+  }
+}
+
+export const deleteProductCart = (productId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DELETE_PRODUCT_CART,
+        payload: productId
+      })
+    } catch (error) {
+      alert ("Hubo un problema al eliminar el producto")
     }
   }
 }
@@ -222,10 +238,11 @@ export function postProductCart(userData) {
       try {
           const { data } = await axios.post(`${endpoint}/cart`, userData)
           
-          dispatch({
+          return data
+          /*dispatch({
               type: POST_PRODUCT_CART,
               payload: data
-          })
+          })*/
       } catch (error) {
           console.log(error.message); 
           return error.message;

@@ -22,6 +22,9 @@ import {
   GET_USER_BY_EMAIL,
   UPDATE_USER,
   SET_CURRENT_PAGE,
+  GET_FAVORITES,
+  POST_PRODUCT_CART,
+  DELETE_PRODUCT_CART,
 } from "./actions/action-types";
 
 const initialState = {
@@ -38,6 +41,7 @@ const initialState = {
   pagination: { 
     currentPage: 1, 
   },
+  allFavorites:[]
 };
 
 
@@ -90,6 +94,12 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 productCart: action.payload
             }
+
+    case POST_PRODUCT_CART:
+      return {
+        ...state,
+        productCart: [...state.productCart, action.payload],
+      };
 
 
     case GET_PRODUCT_BY_ID:
@@ -177,7 +187,7 @@ function rootReducer(state = initialState, action) {
                   } */
 
     case ORDER_BY_NAME:
-      products = [...state.allProducts];
+      products = [...state.product];
       productSorted = products.sort(function (a, b) {
         if (a.name > b.name) {
           return action.payload === "asc" ? 1 : -1;
@@ -193,7 +203,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case ORDER_BY_PRICE:
-      products = [...state.allProducts];
+      products = [...state.product];
       productSorted =
         action.payload === "low"
           ? products.sort((a, b) => a.price - b.price)
@@ -261,10 +271,23 @@ function rootReducer(state = initialState, action) {
             currentPage: action.payload,
           },
         };
+        
+      case GET_FAVORITES:
+        console.log(action.payload)
+        return{
+          ...state,
+          allFavorites:action.payload
+        }
+        case DELETE_PRODUCT_CART:
+          return{
+            ...state,
+            productCart: state.productCart.filter(product => product.id !== action.payload)
+          }
     default:
       return {
         ...state,
       };
+
 
   }
 }

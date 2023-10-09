@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NavbarAdmin from "../../components/Navbar/Navbar.admin";
 import PaymentMethods from "../../components/PaymentMethods/PaymentMethods";
+import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
+import Create from "../Create/Create";
+
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
@@ -11,8 +14,9 @@ const ProfileAdmin = () => {
   const renderComponentBasedOnMenu = () => {
     switch (selectedMenu) {
       case "Profile":
-        // return <Profile />;
-        return <p>Esto muestra el Profile</p>;
+        return <ProfileDashboard />;
+      case "Create Product":
+        return <Create />;
       case "Shopping history":
         // return <ShoppingHistory />;
         return <p>Esto muestra el Historial de Compra</p>;
@@ -23,8 +27,8 @@ const ProfileAdmin = () => {
         // return <PaymentMethods />;
         return <p>Esto muestra mis favoritos</p>;
       // Resto de componentes en el menu
-      default:
-        return null;
+      default: 
+      return <ProfileDashboard />;
     }
   };
   const [selectedMenu, setSelectedMenu] = useState(null);

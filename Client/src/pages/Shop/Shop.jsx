@@ -5,8 +5,9 @@ import { setCurrentPage } from "../../Redux/actions/product/action";
 import "tailwindcss/tailwind.css";
 import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
-import Category from "../../components/Categories/Categories";
+import Category from "../../components/Categories/Categorie";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
+import plantgif from "../../assets/plantgif.gif";
 import {
   getAllProducts,
   resetAllProducts,
@@ -30,6 +31,7 @@ const Shop = () => {
   const [nameOrder, setNameOrder] = useState("");
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const currentPage = useSelector((state) => state.pagination.currentPage); // Obtén la página actual desde Redux
   const productsPerPage = 9;
  
@@ -56,9 +58,24 @@ const Shop = () => {
     } else {
       setNameOrder("");
       setPriceOrder("");
+      setSelectedCategory(true);
       dispatch(resetAllProducts());
     }
   }
+ 
+  // // Se realiza el checkout
+  // const handleCheckout = async () => {
+  //   try {
+  //     const { data } = await axios.post(
+  //       "http://localhost:3001/payment/create-order",
+  //       { ...product, quantity }
+  //     );
+
+  //     location.href = data.body.init_point;
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
 
   const totalProducts = products.length;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
@@ -68,7 +85,7 @@ const Shop = () => {
   };
   
 
-  // Función para cambiar la categoría
+  
   const handleCategoryChange = (event) => {
     // Establece la página actual en 1 al cambiar de categoría
     dispatch(setCurrentPage(1)); // Actualiza la página actual en el estado de Redux
@@ -77,7 +94,7 @@ const Shop = () => {
     handleOrder("");
   };
 
-  // Cálculo de los índices de inicio y fin de los productos en la página actual
+ 
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
@@ -175,7 +192,34 @@ const Shop = () => {
       <div className="flex flex-col lg:flex-row">
         <div className="mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
-            <Category allCategories={allCategories} onPageChange={handleChangePage} onCategoryChange={handleCategoryChange}/>
+                  <div className="grid items-center text-start ml-4">
+              <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+                All Categories
+              </h1>
+              <br />
+
+              <div className="mt-4 mb-2">
+                {allCategories ? (
+                  allCategories.map((p, i) => (
+                    <Category
+                      key={i}
+                      name={p.name}
+                      id={p.id}
+                      selected={p.name === selectedCategory}
+                      onSelect={handleCategorySelect}
+                      onCategoryChange={handleCategoryChange}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <img src={plantgif} alt="loading" />
+                  </div>
+                )}
+                <button className="font-bold hover:scale-110" onClick={handleClear}>
+                  All categories
+                </button>
+              </div>
+            </div>
           </div>
           <div className="grid items-center text-start ml-4">
             <h1 className="text-4xl font-poppins italic mt-4 mb-2">Featured Products</h1>
@@ -190,7 +234,7 @@ const Shop = () => {
       <div className={styles.cardsDiv}></div>
       <Pagination
         count={totalPages}
-        page={currentPage} // Cambia 'categoryPage' a 'currentPage' aquí
+        page={currentPage} 
         onChange={handleChangePage}
         className={styles.pagination}
         size="large"

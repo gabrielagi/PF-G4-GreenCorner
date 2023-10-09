@@ -61,9 +61,11 @@ const updateUser = async (userId, userData) => {
   }
 };
 
-const getAllFavorites = async (req, res) => {
+const getAllFavorites = async (email) => {
   try {
+ 
     const favorites = await Favorite.findAll({
+      where:{email:email},
       include: [
         {
           model: Product,
@@ -73,19 +75,27 @@ const getAllFavorites = async (req, res) => {
     });
     return favorites;
   } catch (error) {
-    res.status(500).json({ error: "Error en el servidor" });
+  console.log({ error: "Error en el servidor" });
   }
 };
+
 const postFavorite = async (product) => {
   try {
     const { product_id, email } = product;
 
-    const newFavorite = await Favorite.create({
-      product_id,
-      email,
+    const [favorite, created] = await Favorite.findOrCreate({
+      where: {
+        product_id: product_id,
+        email: email
+      }
     });
-console.log('favorito creado')
-    return newFavorite;
+
+  if (!created) {
+      return "This product already in the favorites";
+  } else {
+     return "This product has been add in the favorites";
+  }
+
   } catch (error) {
     console.error("Error en postFavorite:", error.message);
     throw new Error("Error en el servidor");
