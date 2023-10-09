@@ -65,7 +65,9 @@ const Shop = () => {
   }
 
   const handleCategorySelect = (name) => {
-    setSelectedCategory(name);    
+    setSelectedCategory(name);   
+    setNameOrder("");
+    setPriceOrder("");
   };
 
   const handleClear = () => {

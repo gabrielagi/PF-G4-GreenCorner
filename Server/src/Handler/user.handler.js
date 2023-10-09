@@ -49,7 +49,8 @@ async function uploadImages(images) {
 
 const getFavoritesHandler = async (req, res) => {
   try {
-    const allFavorites = await getAllFavorites();
+    const {email}=req.query
+    const allFavorites = await getAllFavorites(email);
     res.status(200).json(allFavorites);
   } catch (error) {
     console.error("Error en getFavoritesHandler:", error.message);

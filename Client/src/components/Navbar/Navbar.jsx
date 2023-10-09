@@ -133,11 +133,7 @@ const Nav = () => {
             Contact Us
           </Link>
         </li>
-        <li className={styles.nav__item}>
-          <Link to="/create" className={styles.nav__link}>
-           +
-          </Link>
-        </li>
+       
       </ul>
       <div className={styles.nav__toggler}>
         <a href="/shop" className={styles.shop}>
