@@ -1,0 +1,28 @@
+.FooterAll {
+  display: flex;
+  justify-content: space-between;
+}
+.element1 {
+  background-color: chartreuse;
+  width: 20%;
+}
+
+.element2 {
+  background-color: chocolate;
+  width: 20%;
+}
+
+.element3 {
+  background-color: brown;
+  width: 20%;
+}
+
+.element4 {
+  background-color: crimson;
+  width: 20%;
+}
+
+.element5 {
+  background-color: darkgoldenrod;
+  width: 20%;
+}
