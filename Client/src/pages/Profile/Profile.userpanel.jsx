@@ -22,7 +22,7 @@ const ProfileUser = () => {
         // return <PaymentMethods />;
         return <Link to='/about-us'></Link>
       default:
-        return null;
+        return <ProfileDashboard />;
     }
   };
   const [selectedMenu, setSelectedMenu] = useState(null);

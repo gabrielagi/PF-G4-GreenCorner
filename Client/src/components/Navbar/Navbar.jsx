@@ -161,17 +161,16 @@ const Nav = () => {
         </div>
 
         <Badge badgeContent={count} color="success">
-          <a href="#" className={styles.cart}>
+          <Link to="/cart" className={styles.cart}>
             <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
-
-          </a>
+          </Link>
         </Badge>
         {isAuthenticated
           ? (
             <div className={styles.container}>
               <img
                 onClick={() => setOpen(!open)}
-                src={userDetail.picture}
+                src={userDetail.picture || user.picture}
                 alt={user.name}
                 style={{ width: "35px", height:"35px" ,borderRadius: "50px" , objectFit: "fill"}}
               />
