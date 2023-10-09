@@ -17,7 +17,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const link = import.meta.env.VITE_ENDPOINT
+/*   const link = import.meta.env.VITE_ENDPOINT */
   const { user } = useAuth0();
 
   const allProducts = useSelector((state) => state.allProducts);
@@ -98,7 +98,7 @@ const Detail = () => {
   const handleCheckout = async () => {
     try {
       const { data } = await axios.post(
-        `${link}/payment/create-order`,
+        `https://greencorner.onrender.com/payment/create-order`,
         { product, amount }
       );
       console.log("Data en el componente Detail", data);

@@ -19,10 +19,14 @@ import {
 
 import axios from "axios";
 
-const link= import.meta.env.VITE_ENDPOINT
+/* const link= import.meta.env.VITE_ENDPOINT
 const endpoint = `${link}/product`;
 const categories =`${link}/category`
 
+ */
+
+const endpoint = `https://greencorner.onrender.com/product`;
+const categories =`https://greencorner.onrender.com/category`
 
 
  
