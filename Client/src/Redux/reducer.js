@@ -23,6 +23,7 @@ import {
   UPDATE_USER,
   GET_FAVORITES,
   POST_PRODUCT_CART
+  DELETE_PRODUCT_CART,
 } from "./actions/action-types";
 
 const initialState = {
@@ -257,10 +258,16 @@ function rootReducer(state = initialState, action) {
           userDetail: action.payload,
         };
       case GET_FAVORITES:
+        console.log(action.payload)
         return{
           ...state,
           allFavorites:action.payload
         }
+        case DELETE_PRODUCT_CART:
+          return{
+            ...state,
+            productCart: state.productCart.filter(product => product.id !== action.payload)
+          }
     default:
       return {
         ...state,

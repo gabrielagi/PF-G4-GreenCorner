@@ -13,23 +13,26 @@ import {
 
 import axios from "axios";
 
-/* const endpoint = "http://localhost:3001/user"; */
-const endpoint = "https://greencorner.onrender.com/user"
+const endpoint = "http://localhost:3001/user";
+//  const endpoint = "https://greencorner.onrender.com/user" 
 
 
 
 
-export const getFavorites = () => {
+export const getFavorites = (email) => {
+  console.log(email)
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`${endpoint}/getfavorites`);
+
+      const { data } = await axios.get(`${endpoint}/getfavorites?email=${email}`);
+      console.log(data)
       dispatch({
         type: GET_FAVORITES,
         payload: data,
       });
     } catch (error) {
-      console.log(error.mesage);
-      return error.mesage;
+      console.log(error.message);
+      return error.message;
     }
   };
 };
