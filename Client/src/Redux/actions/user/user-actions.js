@@ -13,8 +13,10 @@ import {
 
 import axios from "axios";
 
-const endpoint = "http://localhost:3001/user";
-//  const endpoint = "https://greencorner.onrender.com/user" 
+
+const link= import.meta.env.VITE_ENDPOINT
+const endpoint = `${link}/user`; 
+
 
 
 

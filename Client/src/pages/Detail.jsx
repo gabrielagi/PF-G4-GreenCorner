@@ -9,9 +9,16 @@ import { VscArrowCircleLeft } from "react-icons/vsc";
 import loading from "../assets/loading.gif";
 import axios from "axios";
 import Carousel from "../components/DetailCarousel/DetailCarousel";
+import { toast } from "react-toastify"
+import { postFavorites} from "../Redux/actions/user/user-actions";
+import { postProductCart } from "../Redux/actions/product/action";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const link = import.meta.env.VITE_ENDPOINT
+  const { user } = useAuth0();
 
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
@@ -23,6 +30,55 @@ const Detail = () => {
     dispatch(getProductById(id));
     console.log('entré y la cagué' + id)
   }, [dispatch,id]);
+
+
+  const notify = () =>
+  toast.success("Added to your cart 🛒", {
+    position: "bottom-left",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
+  const notifyII = () => {
+    toast.error("Added to favorite ", {
+      icon: "❤️",
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const handleAddToMyGarden = () => {
+    let favorite = {
+      email: user.email,
+      product_id: product.product_id,
+    };
+    dispatch(postFavorites(favorite));
+    
+    notifyII();
+  };
+
+  const handleAddToCart = () => {
+    let cart = {
+      email: user.email,
+      product_id: product.product_id,
+      amount: amount,
+    };
+    dispatch(postProductCart(cart));
+    console.log(cart);
+    notify();
+  };
+
 
   // Hasta cuánto se puede incrementar
   const amountIncrement = () =>
@@ -42,7 +98,7 @@ const Detail = () => {
   const handleCheckout = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3001/payment/create-order",
+        `${link}/payment/create-order`,
         { product, amount }
       );
       console.log("Data en el componente Detail", data);
@@ -96,12 +152,14 @@ const Detail = () => {
                     </button> 
                   </div>
                     
-                <button className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
+                <button 
+                onClick={handleAddToCart}
+                className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
                   ADD TO CART
                 </button>
               </div>
               <div className="flex  md: justify-between gap-x-10 ">
-                <button className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]">
+                <button onClick={handleAddToMyGarden} className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]">
                   Add to my Garden
                 </button>
                 <button

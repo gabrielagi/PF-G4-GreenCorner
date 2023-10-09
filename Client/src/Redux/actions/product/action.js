@@ -19,15 +19,17 @@ import {
 
 import axios from "axios";
 
+const link= import.meta.env.VITE_ENDPOINT
+const endpoint = `${link}/product`;
+const categories =`${link}/category`
 
-// const endpoint = "https://greencorner.onrender.com/product";
-//  const categories = "https://greencorner.onrender.com/category"
- const endpoint = "http://localhost:3001/product";
-const categories = "http://localhost:3001/category"
+
+
  
 
 
 export const getAllProducts = () => {
+  console.log(link)
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
