@@ -98,7 +98,7 @@ const Detail = () => {
   const handleCheckout = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:3001/payment/create-order`,
+        `https://greencorner.onrender.com/payment/create-order`,
         { product, amount }
       );
       console.log("Data en el componente Detail", data);
