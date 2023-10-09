@@ -126,7 +126,7 @@ export const addProduct = (productdata) => {
     }
   }
 }
-
+/* ca */
 export const deleteProductCart = (productId) => {
   return async (dispatch) => {
     try {
