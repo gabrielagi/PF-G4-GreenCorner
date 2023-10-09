@@ -7,6 +7,7 @@ import {
   POST_FAVORITE,
   POST_USER,
   GET_USER_BY_EMAIL,
+  UPDATE_USER,
 } from "../action-types";
 
 import axios from "axios";
@@ -111,6 +112,7 @@ export function postUser(userData) {
 export function postFavorites(userData) {
   return async (dispatch) => {
     try {
+  
       const { data } = await axios.post(`${endpoint}/favorites`, userData);
 
       dispatch({
@@ -135,6 +137,21 @@ export function deleteUser(id) {
     } catch (error) {
       console.log(error);
       return error.mesage;
+    }
+  };
+}
+
+export function updateUser(id, userData) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${endpoint}/${id}`, userData);
+      dispatch({
+        type: UPDATE_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
     }
   };
 }

@@ -7,13 +7,14 @@ const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 const HOST = `http://${DB_HOST}:${SERVER_PORT}/payment`;
 
 // Configuro mercado pago
-// mercadopago.configure({
-//   access_token: ACCESS_TOKEN,
-// });
+mercadopago.configure({
+  access_token: ACCESS_TOKEN,
+});
+
 const createOrder = async (req, res) => {
   // El product puede ser un objeto individual desde Detail o un array desde Cart
   const product = req.body.product;
-  const amount = req.body.amount || null; // Si amount no es enviado asumo un valor predeterminado en 1
+  const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
 
   // Guardo los items que se van a vender
   let items = [];
@@ -25,7 +26,7 @@ const createOrder = async (req, res) => {
       id: product.id,
       quantity: amount,
       title: product.name,
-      unit_price: product.price,
+      unit_price: parseInt(product.price),
       currency_id: "ARS",
     };
   }
@@ -48,6 +49,17 @@ const createOrder = async (req, res) => {
   //   name: user.given_name,
   //   surname: user.family_name,
   // };
+
+  // Item de prueba
+  // items: [
+  //       {
+  //         id: 2,
+  //         title: "Laptop",
+  //         unit_price: 500,
+  //         quantity: 3,
+  //         currency_id: "ARS",
+  //       },
+  //     ],
 
   try {
     const result = await mercadopago.preferences.create({
@@ -74,7 +86,7 @@ const createOrder = async (req, res) => {
     res.set("Access-Control-Allow-Credentials", true);
     console.log("URL: ", result.body.init_point);
     res.json({
-      global: result.body.id,
+      result: result.body.init_point,
       // Identificador único que puedes utilizar para referenciar y gestionar esa preferencia en futuras interacciones con la API de Mercado Pago
     });
     console.log("----Fin del Create Order------------");
@@ -88,6 +100,12 @@ const success = (req, res) => {
   console.log(req.query);
   // res.send('Pago realizado')
   res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir
+};
+
+const failure = (req, res) => {
+  console.log(req.query);
+  // res.send('Pago realizado')
+  res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir si sale mal
 };
 
 const receiveWebhook = async (req, res) => {
@@ -104,7 +122,7 @@ const receiveWebhook = async (req, res) => {
       // Puedo guadar la información del usuario una vez que compró
       // Actualizar cantidad de productos en el Stock de los productos vendidos
     }
-    
+
     res.status(204); // Significa que todo salió bien pero no devuelve nada
   } catch (error) {
     console.log(error);
@@ -116,4 +134,4 @@ const receiveWebhook = async (req, res) => {
   res.send("procesando pago");
 };
 
-module.exports = { createOrder, receiveWebhook, success };
+module.exports = { createOrder, receiveWebhook, success, failure };

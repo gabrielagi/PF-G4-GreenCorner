@@ -3,6 +3,7 @@ import {
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   GET_ALL_PRODUCT,
+  GET_PRODUCT_CART,
   GET_PRODUCT_TRENDING,
   GET_PRODUCT_BY_NAME,
   GET_CATEGORIES,
@@ -19,11 +20,13 @@ import {
   POST_USER,
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
+  UPDATE_USER,
 } from "./actions/action-types";
 
 const initialState = {
   allProducts: [],
   product: [],
+  productCart: [],
   productTrending: [],
   categories: [],
   searchProduct: [],
@@ -33,7 +36,7 @@ const initialState = {
   userDetail: [],
 };
 
-/* 
+
 function updater(product, id, updatedProductData) {
     const index = product.findIndex(item => item.id === id);
 
@@ -50,12 +53,13 @@ function updater(product, id, updatedProductData) {
 
         product[index] = currentProduct;
     }
-} */
+} 
 
 let productSorted = [];
 let products = [];
 
 function rootReducer(state = initialState, action) {
+
   switch (action.type) {
     case GET_ALL_PRODUCT:
       return {
@@ -75,6 +79,14 @@ function rootReducer(state = initialState, action) {
         ...state,
         product: action.payload,
       };
+      
+       case GET_PRODUCT_CART:
+
+            return {
+                ...state,
+                productCart: action.payload
+            }
+
 
     case GET_PRODUCT_BY_ID:
       return {
@@ -149,6 +161,7 @@ function rootReducer(state = initialState, action) {
       };
 
     /*       case UPDATE_PRODUCT_BY_ID:
+
                   const { id, updatedProductData } = action.payload;
                   const newProducts = [...state.product]
       
@@ -228,11 +241,19 @@ function rootReducer(state = initialState, action) {
         ...state,
         userDetail: action.payload,
       };
+    
+      case UPDATE_USER:
+        return {
+          ...state,
+          userDetail: action.payload,
+        };
     default:
       return {
         ...state,
       };
+
   }
 }
 
 export default rootReducer;
+

@@ -55,7 +55,7 @@
 .animation_layer {
   background-position: bottom center;
   background-size: auto 1038px;
-  background-repeat: repeat-x;
+  background-repeat: no-repeat;
   width: 100%;
   position: absolute;
 }
@@ -68,11 +68,11 @@
 }
 
 #mountain {
-  background-image: url(../../assets/mountains.png);
+  background-image: url(../../assets/Capa3.png);
 }
 
 #logoland {
-  background-image: url(../../assets/logo_land.png);
+  background-image: url(../../assets/Capa2.png);
 }
 
 #jungle1 {

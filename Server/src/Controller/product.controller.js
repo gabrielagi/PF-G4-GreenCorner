@@ -31,25 +31,12 @@ const getAllProduct = async (req, res) => {
 };
 
 
-  const getProductCart = async (req, res) => {
+  const getProductCart = async (email) => {
     try {
     
-    let cart = ShoppingCart.findAll({
-      include: [{
-          model: Product,
-          required: true
-      },
-      {
-        model: User,
-        required: true
-      }
-    ]
-  })
-
-/*
    let cart = ShoppingCart.findAll({
     where: {
-      email: "Francososa1@hotmail.com"
+      email: email
     },
       include: [{
           model: Product,
@@ -60,9 +47,10 @@ const getAllProduct = async (req, res) => {
         required: true
       }
     ]
-  })*/
+  })
   
      return cart 
+     
     } catch (error) {
       console.error("Error en getProductCart:", error.message);
       res.status(500).json({ error: "Error en" });
@@ -127,7 +115,7 @@ const postProductCart = async (cart) => {
 //Crea un producto y lo guarda en la base de datos con sus categorías asociadas (admin dashboard) (falta imagen por defecto)
 const postProduct = async (productData) => {
   try {
-    const { name, description, price, images, stock, available, categories } = productData;
+    const { name, description, price, images, stock, available, categories , isTrending } = productData;
 
     if (!categories) {
       throw new Error("Las categorías son obligatorias");
@@ -147,6 +135,7 @@ const postProduct = async (productData) => {
       images: imagesResult,
       stock,
       available,
+      isTrending,
     });
 
     if (categories && categories.length > 0) {

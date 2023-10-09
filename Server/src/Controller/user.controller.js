@@ -2,7 +2,7 @@ const { User, Favorite, Product } = require("../db");
 const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
-const createUser = async (nickname, email, picture) => {
+const createUser = async (nickname, email, picture, email_verified) => {
   try {
     const [user, created] = await User.findOrCreate({
       where: {
@@ -12,13 +12,14 @@ const createUser = async (nickname, email, picture) => {
         nickname,
         email,
         picture,
+        email_verified
       },
     });
 
     if (created) {
       console.log("Nuevo usuario creado:", user.dataValues);
     } else {
-      console.log("El usuario ya existe:", user.dataValues);
+      console.log("El usuario ya existe");
     }
 
     return user;
@@ -46,14 +47,14 @@ const updateUser = async (userId, userData) => {
   try {
     const [updatedCount, updatedUser] = await User.update(userData, {
       where: { id: userId },
-      returning: true, // Para obtener el registro actualizado
+      returning: true, 
     });
 
     if (updatedCount === 0) {
       throw new Error("User not found or no changes made.");
     }
 
-    return updatedUser[0]; // Devuelve el usuario actualizado
+    return updatedUser[0]; 
   } catch (error) {
     console.error(error.message);
     throw error;
@@ -83,7 +84,7 @@ const postFavorite = async (product) => {
       product_id,
       email,
     });
-
+console.log('favorito creado')
     return newFavorite;
   } catch (error) {
     console.error("Error en postFavorite:", error.message);

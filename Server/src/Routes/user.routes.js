@@ -16,14 +16,16 @@ const userRouter = Router();
 
 userRouter.get("/", allUsers);
 
-userRouter.get("/:id", byIdHandler);
-
 userRouter.get("/getfavorites", getFavoritesHandler);
+
+
+
 
 userRouter.get("/find/:name", byNameHandler);
 
 userRouter.get("/find", emailHandler);
 
+userRouter.get("/:id", byIdHandler);
 //anda
 userRouter.post("/favorites", postFavoritesHandler);
 
