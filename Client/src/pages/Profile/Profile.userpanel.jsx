@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NavbarUser from "../../components/Navbar/Navbar.user";
 import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 import { Link } from "react-router-dom";
+import PaymentMethods from "../../components/PaymentMethods/PaymentMethods";
 const ProfileUser = () => {
   const { user } = useAuth0();
 
@@ -15,8 +16,8 @@ const ProfileUser = () => {
         // return <ShoppingHistory />;
         return <p>Esto muestra el Historial de Compra</p>;
       case "Payment methods":
-        // return <PaymentMethods />;
-        return <p>Esto muestra los métodos de pago</p>;
+      return <PaymentMethods />;
+        
       case "My Garden":
         // return <PaymentMethods />;
         return <Link to='/about-us'></Link>

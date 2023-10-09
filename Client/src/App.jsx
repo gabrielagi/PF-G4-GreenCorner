@@ -20,7 +20,7 @@ import ContactUs from "./pages/Contact-Us/ContactUs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
-import OurTeam from "./components/OurTeam/OurTeam";
+
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
@@ -92,4 +92,5 @@ const App = () => {
     </div>
   );
 };
-export default App
+
+export default App;
