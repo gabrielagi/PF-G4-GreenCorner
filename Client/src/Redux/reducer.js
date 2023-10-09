@@ -21,6 +21,7 @@ import {
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  GET_FAVORITES,
 } from "./actions/action-types";
 
 const initialState = {
@@ -34,6 +35,7 @@ const initialState = {
   productDetail: [],
   AllUsers: [],
   userDetail: [],
+  allFavorites:[]
 };
 
 
@@ -247,10 +249,16 @@ function rootReducer(state = initialState, action) {
           ...state,
           userDetail: action.payload,
         };
+      case GET_FAVORITES:
+        return{
+          ...state,
+          allFavorites:action.payload
+        }
     default:
       return {
         ...state,
       };
+
 
   }
 }

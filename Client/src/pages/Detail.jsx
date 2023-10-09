@@ -22,7 +22,7 @@ const Detail = () => {
   useEffect(() => {
     dispatch(getProductById(id));
     console.log('entré y la cagué' + id)
-  }, [dispatch]);
+  }, [dispatch,id]);
 
   // Hasta cuánto se puede incrementar
   const amountIncrement = () =>
