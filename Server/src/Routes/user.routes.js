@@ -18,9 +18,6 @@ userRouter.get("/", allUsers);
 
 userRouter.get("/getfavorites", getFavoritesHandler);
 
-
-
-
 userRouter.get("/find/:name", byNameHandler);
 
 userRouter.get("/find", emailHandler);

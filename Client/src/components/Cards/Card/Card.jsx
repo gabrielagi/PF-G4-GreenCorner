@@ -67,8 +67,6 @@ const Card = ({ name, images, price, id }) => {
         product_id: product_id
       };
 
-
-
       dispatch(postFavorites(favorite));
       
       setCorazon(!corazon);

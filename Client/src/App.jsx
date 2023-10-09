@@ -23,7 +23,6 @@ import { postUser } from "./Redux/actions/user/user-actions";
 
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
-
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
 import ProfileUser from "./pages/Profile/Profile.userpanel";
 import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
