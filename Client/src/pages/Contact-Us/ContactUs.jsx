@@ -30,9 +30,9 @@ const ContactUs = () => {
       <h2>get in touch</h2>
     </div>
     <div className={styles.lowerHalf}>
-      <p>Phone: +1234567890</p>
-      <p>Email: info@greencorner.com</p>
-      <p>Location: GreenCorner HQ, City, Country</p>
+      <p className={styles.p}>Phone: +1234567890</p>
+      <p className={styles.p}>Email: info@greencorner.com</p>
+      <p className={styles.p}>Location: GreenCorner HQ, City, Country</p>
     </div>
   </div>
 </div>

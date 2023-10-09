@@ -2,7 +2,9 @@ const { Router } = require("express");
 const {
   getAllProductHandler,
   getProductByIdHandler,
+  getProductCartHandler,
   postProductHandler,
+  postProductCartHandler,
   deleteHandler,
   updateProductHandler,
   getRelatedProductsHandler,
@@ -15,9 +17,15 @@ const productRouter = Router();
 
 productRouter.get("/", getAllProductHandler);
 
+//Anda
+productRouter.get("/cart", getProductCartHandler);
+
 productRouter.get("/:id", getProductByIdHandler);
 
 productRouter.post("/", postProductHandler);
+
+//Anda
+productRouter.post("/cart", postProductCartHandler);
 
 productRouter.delete("/:id", deleteHandler);
 

@@ -4,7 +4,7 @@
   background-color: #fff;
   border-radius: 1.1em;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
-  padding: 2em 0.6em;
+  padding: 1.1em 0.6em;
 
   display: flex;
   align-items: center;
@@ -12,30 +12,6 @@
 
   margin: 0px 0px 10px 0px;
   transition: filter 0.3s ease;
-
-  /* Estilos para dispositivos móviles */
-  @media (max-width: 768px) {
-    .card {
-      width: 90%; /* Ancho del 90% de la pantalla */
-      height: auto; /* Altura automática según el contenido */
-      margin: 0 auto; /* Centrar horizontalmente */
-      padding: 1em; /* Espaciado interior reducido */
-    }
-
-    .card__image {
-      width: 4em; /* Tamaño más pequeño para la imagen */
-      height: 4em;
-    }
-
-    .card__title {
-      font-size: 1rem; /* Tamaño de fuente más pequeño */
-    }
-
-    .card__text {
-      font-size: 1rem; /* Tamaño de fuente más pequeño */
-      margin: 0.4em 0; /* Margen inferior reducido */
-    }
-  }
 }
 
 .card.active {
@@ -77,4 +53,5 @@
   text-align: center;
   font-size: 1.2rem;
   margin: 0.6em 0;
+  display: flex;
 }

@@ -2,7 +2,8 @@ const {
     getAllCategories,
     getCategoryById,
     getCategoryByName,
-    postCategory
+    postCategory,
+    deleteCategoryById
   } = require("../Controller/categories.controller");
 const { Category } = require("../db");
 
@@ -82,9 +83,30 @@ const getCategoryByNameHandler = async (req, res) => {
   }
 };
 
+const deleteCategoryByIdHandler = async (req, res) => {
+  const categoryId = req.params.id; 
+
+  try {
+    
+    const deletedCategory = await deleteCategoryById(categoryId);
+
+    
+    if (!deletedCategory) {
+      return res.status(404).json({ message: "Categoría no encontrada." });
+    }
+
+    
+    return res.status(200).json({ message: "Categoría eliminada correctamente." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error en el servidor" });
+  }
+};
+
 module.exports = {
   getAllCategoriesHandler,
   getCategoryByIdHandler,
   getCategoryByNameHandler,
-  addCategoriesHandler
+  addCategoriesHandler,
+  deleteCategoryByIdHandler
 };

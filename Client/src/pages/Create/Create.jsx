@@ -246,17 +246,17 @@ export default function Create() {
                   />
                   </div>
                   <div className={styles.imagePreview}>
-  {input.images.map((image, index) => (
-    <div key={index} className={styles.imageContainer}>
-      <img
-        src={image}
-        alt={`Preview ${index}`}
-        className={`${styles.previewImage} ${styles.imageHoverEffect}`} // Aplicamos las clases CSS aquí
-        onClick={() => handleImageDelete(index)}
-      />
-    </div>
-  ))}
-</div>
+                    {input.images.map((image, index) => (
+                      <div key={index} className={styles.imageContainer}>
+                        <img
+                          src={image}
+                          alt={`Preview ${index}`}
+                          className={`${styles.previewImage} ${styles.imageHoverEffect}`} 
+                          onClick={() => handleImageDelete(index)}
+                        />
+                      </div>
+                    ))}
+                  </div>
 
                 <button
                   id="bt"

@@ -81,7 +81,7 @@
   
   .previewImage:hover {
     background-color: red;
-    transform: scale(1.1); /* Hacemos que la imagen sea un 10% más grande */
+    transform: scale(1.1); 
     border:solid 5px red;
   }
   

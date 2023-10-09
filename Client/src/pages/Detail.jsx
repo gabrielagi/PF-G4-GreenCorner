@@ -7,10 +7,18 @@ import { getProductById } from "../Redux/actions/product/action";
 import Card from "../components/Cards/Card/Card";
 import { VscArrowCircleLeft } from "react-icons/vsc";
 import loading from "../assets/loading.gif";
+import axios from "axios";
+import Carousel from "../components/DetailCarousel/DetailCarousel";
+import { toast } from "react-toastify"
+import { postFavorites} from "../Redux/actions/user/user-actions";
+import { postProductCart } from "../Redux/actions/product/action";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const link = import.meta.env.VITE_ENDPOINT
+  const { user } = useAuth0();
 
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
@@ -20,7 +28,57 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getProductById(id));
-  }, [id]);
+    console.log('entré y la cagué' + id)
+  }, [dispatch,id]);
+
+
+  const notify = () =>
+  toast.success("Added to your cart 🛒", {
+    position: "bottom-left",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
+  const notifyII = () => {
+    toast.error("Added to favorite ", {
+      icon: "❤️",
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const handleAddToMyGarden = () => {
+    let favorite = {
+      email: user.email,
+      product_id: product.product_id,
+    };
+    dispatch(postFavorites(favorite));
+    
+    notifyII();
+  };
+
+  const handleAddToCart = () => {
+    let cart = {
+      email: user.email,
+      product_id: product.product_id,
+      amount: amount,
+    };
+    dispatch(postProductCart(cart));
+    console.log(cart);
+    notify();
+  };
+
 
   // Hasta cuánto se puede incrementar
   const amountIncrement = () =>
@@ -40,11 +98,12 @@ const Detail = () => {
   const handleCheckout = async () => {
     try {
       const { data } = await axios.post(
-        "http://localhost:3001/payment/create-order",
-        { ...product, amount }
+        `${link}/payment/create-order`,
+        { product, amount }
       );
-
-      location.href = data.body.init_point;
+      console.log("Data en el componente Detail", data);
+      console.log("Init point en el componente Detail", data);
+      location.href = data.result;
     } catch (error) {
       console.log(error.message);
     }
@@ -59,25 +118,8 @@ const Detail = () => {
           </button>
         </Link>
         <div className="mx-10 sm:mx-60">
-          <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-            {product.name && (
-              <div className=" grid grid-cols-1 sm:grid-cols-1   gap-6 justify-between lg:w-4/5 border-blue-600 m-auto">
-                <img src={activeImg || product.images[0]} alt="" />
-
-                <div className="imagen flex flex-row justify-between gap-10  h-60   bg-green-100  mb-20 ">
-                  {product.images?.map((imagen, i) => {
-                    return (
-                      <img
-                        key={i}
-                        src={imagen}
-                        className=" rounded-md w-60 cursor-pointer"
-                        onClick={() => setActiveImg(imagen)}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+          <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
+            <Carousel images={product.images}/>
 
             <div className=" px-10 bg-[#f6f6f6] justify-between">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
@@ -86,14 +128,14 @@ const Detail = () => {
               <hr className="my-10"></hr>
               <p className="py-t text-5xl text-[#444444]">${product.price}</p>
               <p className="py-20">{product.description}</p>
-              <h2 className="text-5xl text-[#343434]">Variante</h2>
+              {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
                 <option>uno</option>
                 <option>dos</option>
-              </select>
+              </select> */}
 
-              <div className="my-10 grid grid-cols-2  md:my-10 gap-y-10    ">
+              <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
                   <div>
                    <button
                       onClick={amountDecrement}
@@ -110,24 +152,23 @@ const Detail = () => {
                     </button> 
                   </div>
                     
-                <button className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
+                <button 
+                onClick={handleAddToCart}
+                className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
                   ADD TO CART
                 </button>
-                
               </div>
-              <div className="flex  md: justify-between gap-x-10 " >
-                <button className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]">
-                Add to my Garden
-              </button>
-
-              <button
+              <div className="flex  md: justify-between gap-x-10 ">
+                <button onClick={handleAddToMyGarden} className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]">
+                  Add to my Garden
+                </button>
+                <button
                   onClick={handleCheckout}
                   className="p-4 my-10 md:p-8 md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6] "
                 >
                   Checkout
                 </button>
               </div>
-              
             </div>
           </div>
 
@@ -164,7 +205,7 @@ const Detail = () => {
           <div className="flex flex-row gap-20 justify-center mx-auto my-10">
             {allProducts
               .map((p) => {
-                if (p.categories.name === product.categories.name)
+                if (p.categories.name === product.categories.name && p.name !== product.name)
                   return (
                     <Card
                       key={p.id}
@@ -175,7 +216,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(0, 4)}
+              .slice(0,4)}
           </div>
         </div>
       </div>

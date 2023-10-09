@@ -10,10 +10,14 @@ const OpinionCard = ({ card }) => {
       </div>
 
       <div className="card__content">
-        <p className="card__title text-[#1d252d]">{card.title}</p>
+        <span className="card__title">{card.title}</span>
         <p className="card__text">{card.text}</p>
       </div>
-      <img src={rating} alt="" className="ml-50 mr-50 w-10 h-10" />
+      <img
+        src={rating}
+        alt=""
+        className="ml-50 mr-50 w-10 h-10" // Tamaño más pequeño
+      />
     </div>
   );
 };

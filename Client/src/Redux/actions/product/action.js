@@ -2,28 +2,34 @@ import {
   GET_ALL_PRODUCT,
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
+  GET_PRODUCT_CART,
   POST_PRODUCT,
+  POST_PRODUCT_CART,
   GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
+  GET_CATEGORIES_SHOP,
   FILTER_CATEGORY,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   RESET_ALL_PRODUCT,
+  DELETE_PRODUCT_CART,
 } from "../action-types";
 
 import axios from "axios";
 
+const link= import.meta.env.VITE_ENDPOINT
+const endpoint = `${link}/product`;
+const categories =`${link}/category`
 
-const endpoint = "https://greencorner.onrender.com/product";
-const categories = "https://greencorner.onrender.com/category" 
-/* const endpoint = "http://localhost:3001/product";
-const categories = "http://localhost:3001/category" */
 
+
+ 
 
 
 export const getAllProducts = () => {
+  console.log(link)
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
@@ -62,7 +68,7 @@ export function getProductByName(name){
     });
     return response.data;
   };
-};
+}
 
 export const getProductById = (id) => {
   console.log(id) 
@@ -85,31 +91,56 @@ console.log('está por entrar al try')
   };
 };
 
+//Action
+export const getProductCart = (email) => {
+  return async (dispatch) => {
+    try {
+
+      //const encodedEmail = encodeURIComponent(email);
+      
+      const { data } = await axios.get(`${endpoint}/cart?email=${email}`);
+      
+      dispatch({
+        type: GET_PRODUCT_CART,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message );
+    }
+  };
+};
+
 export const addProduct = (productdata) => {
   return async (dispatch) => {
-
     try {
       const  data  = await axios.post( endpoint, productdata)
       dispatch({
         type: POST_PRODUCT,
         payload: data
-
       })
     } catch (error) {
       alert ("Hubo un problema al crear el producto")
     }
-
   }
-  
+}
 
+export const deleteProductCart = (productId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DELETE_PRODUCT_CART,
+        payload: productId
+      })
+    } catch (error) {
+      alert ("Hubo un problema al eliminar el producto")
+    }
+  }
 }
 
 export const getProductsTrending = () => {
   return async (dispatch) => {
     const { data } = await axios.get(endpoint);
-
     try {
-
       dispatch({
         type: GET_PRODUCT_TRENDING,
         payload: data,
@@ -135,10 +166,23 @@ export const getAllCategories = () => {
   };
 };
 
+export const getAllCategoriesShop = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(categories);
+      dispatch({
+        type: GET_CATEGORIES_SHOP,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+};
+
 export const filterCategory = (category) => {
   return async (dispatch) => {
     try {
-
       dispatch({
         type: FILTER_CATEGORY,
         payload: category,
@@ -167,6 +211,7 @@ export const deleteProduct = (id) => {
     }
     }
 } 
+
 export const updateProduct = (id, updatedProductData) => {
   return async (dispatch) => {
     try {
@@ -185,6 +230,24 @@ export const updateProduct = (id, updatedProductData) => {
     }
     }
 } 
+
+export function postProductCart(userData) {
+  return async (dispatch) => {
+      
+      try {
+          const { data } = await axios.post(`${endpoint}/cart`, userData)
+          
+          return data
+          /*dispatch({
+              type: POST_PRODUCT_CART,
+              payload: data
+          })*/
+      } catch (error) {
+          console.log(error.message); 
+          return error.message;
+      }
+  }
+}
 
 export function filterByName(payload){
   return{

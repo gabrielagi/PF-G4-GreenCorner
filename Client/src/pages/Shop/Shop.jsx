@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
-import Category from "../../components/Categories/Categories";
+import Category from "../../components/Categories/Categorie";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
+import plantgif from "../../assets/plantgif.gif";
 import {
   getAllProducts,
   resetAllProducts,
@@ -19,8 +20,7 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Pagination from "@mui/material/Pagination"
-
+import Pagination from "@mui/material/Pagination";
 
 const Shop = () => {
   const products = useSelector((state) => state.product);
@@ -28,19 +28,15 @@ const Shop = () => {
   const [nameOrder, setNameOrder] = useState("");
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [page, setPage] = useState(1);
   const productsPerPage = 6;
 
-
-
   const dispatch = useDispatch();
 
-  
   const handleChange = (event, value) => {
     setPage(value);
   };
-
-
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -62,10 +58,23 @@ const Shop = () => {
     } else {
       setNameOrder("");
       setPriceOrder("");
+      setSelectedCategory(true);
       dispatch(resetAllProducts());
+     
     }
   }
 
+  const handleCategorySelect = (name) => {
+    setSelectedCategory(name);   
+    setNameOrder("");
+    setPriceOrder("");
+  };
+
+  const handleClear = () => {
+    setSelectedCategory(true);
+    dispatch(resetAllProducts());
+  }
+ 
   // // Se realiza el checkout
   // const handleCheckout = async () => {
   //   try {
@@ -87,8 +96,6 @@ const Shop = () => {
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
 
-  
-
   return (
     <div>
       <div className={styles.filtros}>
@@ -99,63 +106,68 @@ const Shop = () => {
             handleOrder();
           }}
         />
-       <FormControl
-  sx={{
-    border: 'none',
-    minWidth: 100,
-    '& label': {
-      fontSize: '18px', 
-      color: 'rgb(0, 133, 0)',
-    },
-    '& label.MuiInputLabel-shrink': {
-      color: 'rgb(0, 133, 0)'
-    },
-    '.MuiOutlinedInput-notchedOutline': { 
-      border: 'none',
-    },
-    '& .MuiInputBase-input': {
-      fontSize: '15px',  
-      color:"black"
-    },
-    '& .MuiSelect-icon': {
-      color: 'rgb(0, 133, 0)' 
-    },
-  }}
->
-  <InputLabel htmlFor="nameOrder" >Name</InputLabel>
-  <Select
-   
-    id="nameOrder"
-    name="nameOrder"
-    value={nameOrder}
-    onChange={handleOrder}
-    label="Name"
-  >
-    <MenuItem value="asc" style={{ fontSize: '15px' }}>A - Z</MenuItem>
-    <MenuItem value="desc" style={{ fontSize: '15px' }}>Z - A</MenuItem>
-  </Select>
-</FormControl>
-        <FormControl sx={{
-    border: 'none',
-    minWidth: 100,
-    '& label': {
-      fontSize: '18px', 
-      color: 'rgb(0, 133, 0)',
-    },
-    '& label.MuiInputLabel-shrink': {
-      color: 'rgb(0, 133, 0)'
-    },
-    '.MuiOutlinedInput-notchedOutline': { 
-      border: 'none',
-    },
-    '& .MuiInputBase-input': {
-      fontSize: '15px',  
-      color:"black"
-    },
-    '& .MuiSelect-icon': {
-      color: 'rgb(0, 133, 0)' 
-    },
-  }}>
+        <FormControl
+          sx={{
+            border: "none",
+            minWidth: 100,
+            "& label": {
+              fontSize: "18px",
+              color: "rgb(0, 133, 0)",
+            },
+            "& label.MuiInputLabel-shrink": {
+              color: "rgb(0, 133, 0)",
+            },
+            ".MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "& .MuiInputBase-input": {
+              fontSize: "15px",
+              color: "black",
+            },
+            "& .MuiSelect-icon": {
+              color: "rgb(0, 133, 0)",
+            },
+          }}
+        >
+          <InputLabel htmlFor="nameOrder">Name</InputLabel>
+          <Select
+            id="nameOrder"
+            name="nameOrder"
+            value={nameOrder}
+            onChange={handleOrder}
+            label="Name"
+          >
+            <MenuItem value="asc" style={{ fontSize: "15px" }}>
+              A - Z
+            </MenuItem>
+            <MenuItem value="desc" style={{ fontSize: "15px" }}>
+              Z - A
+            </MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          sx={{
+            border: "none",
+            minWidth: 100,
+            "& label": {
+              fontSize: "18px",
+              color: "rgb(0, 133, 0)",
+            },
+            "& label.MuiInputLabel-shrink": {
+              color: "rgb(0, 133, 0)",
+            },
+            ".MuiOutlinedInput-notchedOutline": {
+              border: "none",
+            },
+            "& .MuiInputBase-input": {
+              fontSize: "15px",
+              color: "black",
+            },
+            "& .MuiSelect-icon": {
+              color: "rgb(0, 133, 0)",
+            },
+          }}
+        >
           <InputLabel htmlFor="priceOrder">Price</InputLabel>
           <Select
             id="priceOrder"
@@ -164,59 +176,81 @@ const Shop = () => {
             onChange={handleOrder}
             label="Price"
           >
-            <MenuItem value="high" style={{ fontSize: '15px' }}>High - Low</MenuItem>
-            <MenuItem value="low" style={{ fontSize: '15px' }}>Low - High</MenuItem>
+            <MenuItem value="high" style={{ fontSize: "15px" }}>
+              High - Low
+            </MenuItem>
+            <MenuItem value="low" style={{ fontSize: "15px" }}>
+              Low - High
+            </MenuItem>
           </Select>
-        </FormControl>        
+        </FormControl>
       </div>
-
-
-      
-      
 
       <div className="flex flex-col lg:flex-row">
-        <div className="lg:w-1/3 mr-4"></div>
+        <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
+          <div>
+                  <div className="grid items-center text-start ml-4">
+              <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+                All Categories
+              </h1>
+              <br />
+
+              <div className="mt-4 mb-2">
+                {allCategories ? (
+                  allCategories.map((p, i) => (
+                    <Category
+                      key={i}
+                      name={p.name}
+                      id={p.id}
+                      selected={p.name === selectedCategory}
+                      onSelect={handleCategorySelect}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <img src={plantgif} alt="loading" />
+                  </div>
+                )}
+                <button className="font-bold hover:scale-110" onClick={handleClear}>
+                  All categories
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="grid items-center text-start ml-4">
+            <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+              Featured Products
+            </h1 >
+           <ProductsTrending productTrending={productTrending} />
+         </div>
+        </div>
 
         <div className="lg:w-2/3 ml-4">
-        <Cards allProducts={displayedProducts} />
+          <Cards allProducts={displayedProducts} />
         </div>
       </div>
-      <div className={styles.cardsDiv}>
-
-      </div>
+      <div className={styles.cardsDiv}></div>
       <Pagination
         count={totalPages}
         page={page}
         onChange={handleChange}
         className={styles.pagination}
-        size= "large" 
-        colour="primary"
+        size="large"
+        color="primary"
         sx={{
           '& .Mui-selected': {
             backgroundColor: '#50a050',
-            fontSize: '20px', // Tamaño de fuente personalizado para el botón seleccionado
+            fontSize: '20px',
             
           },
-          '& .MuiPaginationItem-root': {
-            fontSize: '15px' // Tamaño de fuente personalizado para todos los botones
+          "& .MuiPaginationItem-root": {
+            fontSize: "15px",
           },
-          
         }}
         //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
       />
-      <div className="sm:w[10px]">
-        <Category allCategories={allCategories} />
-      </div>
-      <br />
-      <br />
-      <br />
 
-      <div >
-        <strong className="relative ml-[90px] sm:ml-[90px] sm:text-[20px]">
-          Featured Products
-        </strong>
-        <ProductsTrending productTrending={productTrending} />
-      </div>
+      
 
       {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
