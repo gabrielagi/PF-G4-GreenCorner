@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import plantgif from "../../assets/plantgif.gif";
 import Category from "./Categorie";
 import { resetAllProducts } from "../../Redux/actions/product/action";
+import { setCurrentPage } from "../../Redux/actions/product/action";
+
 
 const Categories = ({ allCategories }) => {
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -10,12 +12,14 @@ const Categories = ({ allCategories }) => {
 
 
   const handleCategorySelect = (name) => {
-    setSelectedCategory(name);    
+    setSelectedCategory(name);
+    dispatch(setCurrentPage(1)); // Esto restablecerá la página actual a 1
   };
 
   const handleClear = () => {
-    setSelectedCategory(true);
-    dispatch(resetAllProducts());
+    setSelectedCategory(null); // Limpiar la categoría seleccionada
+    dispatch(resetAllProducts()); // Restablecer los productos
+    dispatch(setCurrentPage(1)); // Establecer la página actual en 1
   }
 
   return (

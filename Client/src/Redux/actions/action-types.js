@@ -23,3 +23,4 @@ export const UPDATE_USER = "UPDATE_USER";
 export const POST_FAVORITE = "POST_FAVORITE";
 export const POST_USER = "POST_USER";
 export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
+export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";

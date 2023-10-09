@@ -21,6 +21,7 @@ import {
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  SET_CURRENT_PAGE,
 } from "./actions/action-types";
 
 const initialState = {
@@ -34,6 +35,9 @@ const initialState = {
   productDetail: [],
   AllUsers: [],
   userDetail: [],
+  pagination: { 
+    currentPage: 1, 
+  },
 };
 
 
@@ -246,6 +250,16 @@ function rootReducer(state = initialState, action) {
         return {
           ...state,
           userDetail: action.payload,
+        };
+
+
+        case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
+        return {
+          ...state,
+          pagination: {
+            ...state.pagination,
+            currentPage: action.payload,
+          },
         };
     default:
       return {
