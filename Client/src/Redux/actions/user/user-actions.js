@@ -8,12 +8,31 @@ import {
   POST_USER,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  GET_FAVORITES
 } from "../action-types";
 
 import axios from "axios";
 
 const endpoint = "http://localhost:3001/user";
 /* const endpoint = "https://greencorner.onrender.com/user" */
+
+
+
+
+export const getFavorites = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`${endpoint}/getfavorites`);
+      dispatch({
+        type: GET_FAVORITES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.mesage);
+      return error.mesage;
+    }
+  };
+};
 
 export const getAllUsers = () => {
   return async (dispatch) => {

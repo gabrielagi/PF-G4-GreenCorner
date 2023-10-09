@@ -1,16 +1,20 @@
+import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getFavorites } from "../Redux/actions/user/user-actions";
 
 
 const Favorites = () => {
+const dispatch=useDispatch()
+  const favorites =useSelector((state) => state.allFavorites);
 
+  useEffect(() => {
+    dispatch(getFavorites());
   
-
+  }, [dispatch]);
+console.log(favorites)
   const products=[
-  //   {product_id:'cde539c0-2b91-4803-9d5c-c8e7ecd89347',
-  //   name:'Suculenta'
-  //   stock:'10'
-  //   images:['https://png.pngtree.com/png-clipart/20220829/ourmid/pngtree-indoor-plant-png-image_6129530.png',]
-  // },
+  
   {value:2},{value:3},{value:4},{value:5},{value:6},{value:7},{value:8},{value:9},{value:10}
 ]
 
