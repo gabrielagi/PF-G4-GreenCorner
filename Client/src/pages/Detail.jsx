@@ -21,7 +21,8 @@ const Detail = () => {
 
   useEffect(() => {
     dispatch(getProductById(id));
-  }, [id]);
+    console.log('entré y la cagué' + id)
+  }, [dispatch]);
 
   // Hasta cuánto se puede incrementar
   const amountIncrement = () =>
@@ -46,7 +47,7 @@ const Detail = () => {
       );
       console.log("Data en el componente Detail", data);
       console.log("Init point en el componente Detail", data);
-      location.href = data;
+      location.href = data.result;
     } catch (error) {
       console.log(error.message);
     }
