@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
-import Category from "../../components/Categories/Categories";
+import Category from "../../components/Categories/Categorie";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
+import plantgif from "../../assets/plantgif.gif";
 import {
   getAllProducts,
   resetAllProducts,
@@ -27,6 +28,7 @@ const Shop = () => {
   const [nameOrder, setNameOrder] = useState("");
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [page, setPage] = useState(1);
   const productsPerPage = 6;
 
@@ -56,9 +58,19 @@ const Shop = () => {
     } else {
       setNameOrder("");
       setPriceOrder("");
+      setSelectedCategory(true);
       dispatch(resetAllProducts());
      
     }
+  }
+
+  const handleCategorySelect = (name) => {
+    setSelectedCategory(name);    
+  };
+
+  const handleClear = () => {
+    setSelectedCategory(true);
+    dispatch(resetAllProducts());
   }
  
   // // Se realiza el checkout
@@ -175,7 +187,33 @@ const Shop = () => {
       <div className="flex flex-col lg:flex-row">
         <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
-           <Category allCategories={allCategories}/>
+                  <div className="grid items-center text-start ml-4">
+              <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+                All Categories
+              </h1>
+              <br />
+
+              <div className="mt-4 mb-2">
+                {allCategories ? (
+                  allCategories.map((p, i) => (
+                    <Category
+                      key={i}
+                      name={p.name}
+                      id={p.id}
+                      selected={p.name === selectedCategory}
+                      onSelect={handleCategorySelect}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <img src={plantgif} alt="loading" />
+                  </div>
+                )}
+                <button className="font-bold hover:scale-110" onClick={handleClear}>
+                  All categories
+                </button>
+              </div>
+            </div>
           </div>
           <div className="grid items-center text-start ml-4">
             <h1 className="text-4xl font-poppins italic mt-4 mb-2">
