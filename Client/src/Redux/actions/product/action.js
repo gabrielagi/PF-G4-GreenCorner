@@ -14,6 +14,7 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   RESET_ALL_PRODUCT,
+  DELETE_PRODUCT_CART,
 } from "../action-types";
 
 import axios from "axios";
@@ -117,6 +118,19 @@ export const addProduct = (productdata) => {
       })
     } catch (error) {
       alert ("Hubo un problema al crear el producto")
+    }
+  }
+}
+
+export const deleteProductCart = (productId) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: DELETE_PRODUCT_CART,
+        payload: productId
+      })
+    } catch (error) {
+      alert ("Hubo un problema al eliminar el producto")
     }
   }
 }
