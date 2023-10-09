@@ -220,6 +220,7 @@ const Shop = () => {
         }}
         //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
       />
+<<<<<<<<< Temporary merge branch 1
       <div className="sm:w[10px]">
         <Category allCategories={allCategories} onChange={handleCategoryChange} />
       </div>
@@ -233,6 +234,10 @@ const Shop = () => {
         </strong>
         <ProductsTrending productTrending={productTrending} />
       </div>
+=========
+
+      
+>>>>>>>>> Temporary merge branch 2
 
       {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
