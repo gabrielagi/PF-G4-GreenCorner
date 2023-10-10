@@ -143,7 +143,7 @@ export default function Create() {
   return (
     <div>
       <div className={styles.contGral}>
-        <div className={styles.card}>
+        <div className={styles.card_create}>
           <div className={styles.contTitle}>
             <div className={styles.title}>Create your product</div>
           </div>
