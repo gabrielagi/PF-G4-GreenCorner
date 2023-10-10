@@ -79,12 +79,12 @@ a {
   transition: color 0.7s;
 }
 
-.nav__link .home {
+.nav__link:hover {
   color: rgb(0, 133, 0);
 }
 
-.nav__link:hover {
-  color: rgb(0, 133, 0);
+.activeLink {
+  color: rgb(56, 165, 56); 
 }
 
 .nav__toggler {

@@ -16,10 +16,12 @@ import { getProductByName, getProductCart } from "../../Redux/actions/product/ac
 import { toast } from "react-toastify";
 import styles from "./Navbar.module.css";
 import loading from "../../assets/loading.gif";
+import { useLocation } from "react-router-dom";
 
 const Nav = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const inputRef = useRef(null);
   const products = useSelector((state) => state.productCart);
   const userDetail = useSelector((state) => state.userDetail);
@@ -81,6 +83,12 @@ const Nav = () => {
     setSearchValue(e.target.value);
   };
 
+  const isLinkActive = (path) => {
+    return location.pathname === path;
+  };
+
+
+
   const notify = () =>
     toast.error("Product not found, try again.🪴", {
       position: "bottom-right",
@@ -101,30 +109,27 @@ const Nav = () => {
 
       <ul className={styles.nav__menu}>
         <li className={styles.nav__item}>
-          <a href="/" className={styles.nav__link}>
+          <a href="/" className={`${styles.nav__link} ${isLinkActive("/") ? styles.activeLink : ""}`}>
             <div className={styles.home}>Home</div>
           </a>
         </li>
         <li className={styles.nav__item}>
-          <Link to="/shop" className={styles.nav__link}>
+          <Link to="/shop" className={`${styles.nav__link} ${isLinkActive("/shop") ? styles.activeLink : ""}`}>
             Products
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <Link to="/guides" className={styles.nav__link}>
+          <Link to="/guides" className={`${styles.nav__link} ${isLinkActive("/guides") ? styles.activeLink : ""}`}>
             Guide
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <Link
-            to="/about-us"
-            className={`${styles.nav__link} ${styles.aboutUs}`}
-          >
+          <Link to="/about-us" className={`${styles.nav__link} ${isLinkActive("/about-us") ? styles.activeLink : ""}`}>
             About Us
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <Link to="contact-us" className={styles.nav__link}>
+          <Link to="/contact-us" className={`${styles.nav__link} ${isLinkActive("/contact-us") ? styles.activeLink : ""}`}>
             Contact Us
           </Link>
         </li>
