@@ -65,27 +65,33 @@ function updater(product, id, updatedProductData) {
 
 let productSorted = [];
 let products = [];
+let availableProducts = [];
+let availableSearchbar = [];
 
 function rootReducer(state = initialState, action) {
 
   switch (action.type) {
     case GET_ALL_PRODUCT:
+      availableProducts = action.payload.filter((product) => product.available === true);
+      console.log (availableProducts)
       return {
         ...state,
         allProducts: action.payload,
-        product: state.product.length ? state.product : action.payload,
+        product: state.product.length ? state.product : availableProducts,
       };
+    
 
     case RESET_ALL_PRODUCT:
       return {
         ...state,
-        product: state.allProducts,
+        product: availableProducts,
       };
 
     case GET_PRODUCT_BY_NAME:
+      availableSearchbar = action.payload.filter((product) => product.available === true);
       return {
         ...state,
-        product: action.payload,
+        product: availableSearchbar,
       };
       
     case GET_PRODUCT_CART:
