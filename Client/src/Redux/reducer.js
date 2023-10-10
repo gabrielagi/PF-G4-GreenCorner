@@ -21,6 +21,7 @@ import {
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  SET_CURRENT_PAGE,
   GET_FAVORITES,
   POST_PRODUCT_CART,
   DELETE_PRODUCT_CART,
@@ -37,6 +38,9 @@ const initialState = {
   productDetail: [],
   AllUsers: [],
   userDetail: [],
+  pagination: { 
+    currentPage: 1, 
+  },
   allFavorites:[]
 };
 
@@ -257,6 +261,17 @@ function rootReducer(state = initialState, action) {
           ...state,
           userDetail: action.payload,
         };
+
+
+        case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
+        return {
+          ...state,
+          pagination: {
+            ...state.pagination,
+            currentPage: action.payload,
+          },
+        };
+        
       case GET_FAVORITES:
         console.log(action.payload)
         return{

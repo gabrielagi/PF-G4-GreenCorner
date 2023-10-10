@@ -22,10 +22,10 @@ const Profile = () => {
   return (
     <div>
       {isAuthenticated ? (
-        userDetail && userDetail.role === "user" ? (
-          <ProfileUser />
-        ) : (
+        userDetail && userDetail.role === "admin" ? (
           <ProfileAdmin />
+        ) : (
+          <ProfileUser />
         )
       ) : (
         // window.redirect("/login")
