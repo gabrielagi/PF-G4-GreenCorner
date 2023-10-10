@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NavbarAdmin from "../../../components/Navbar/Navbar.admin";
 import Create from "./Create/Create";
+import ShowUsers from "./UserSettings/ShowUsers";
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
@@ -16,7 +17,7 @@ const ProfileAdmin = () => {
         return <Create />;
       case "Profile":
         // return <Profile />;
-        return <p>Esto muestra el Profile</p>;
+        return <ShowUsers />;
       case "Shopping history":
         // return <ShoppingHistory />;
         return <p>Esto muestra el Historial de Compra</p>;
