@@ -39,6 +39,7 @@ const Carts = () => {
             return (
               <Cart
                 key={i}
+                id={p.id}
                 amount={p.amount}
                 name={p.Product.name}
                 price={p.Product.price}

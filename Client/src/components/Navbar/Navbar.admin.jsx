@@ -10,6 +10,10 @@ import { FiShoppingBag } from "react-icons/fi";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import {IoCreateOutline} from 'react-icons/io5'
+
+
+
 
 function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const menus = [
@@ -22,6 +26,11 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
     {
       name: "Profile",
       icon: AiOutlineUser,
+      margin: true,
+    },
+    {
+      name: "Create Product",
+      icon: IoCreateOutline,
       margin: true,
     },
     {
@@ -43,6 +52,7 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
       icon: TbGps,
       margin: true,
     },
+
     {
       name: "Customer Support",
       link: "/contact-us",

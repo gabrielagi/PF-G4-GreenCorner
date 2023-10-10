@@ -21,6 +21,10 @@ import {
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  SET_CURRENT_PAGE,
+  GET_FAVORITES,
+  POST_PRODUCT_CART,
+  DELETE_PRODUCT_CART,
 } from "./actions/action-types";
 
 const initialState = {
@@ -34,6 +38,10 @@ const initialState = {
   productDetail: [],
   AllUsers: [],
   userDetail: [],
+  pagination: { 
+    currentPage: 1, 
+  },
+  allFavorites:[]
 };
 
 
@@ -57,35 +65,47 @@ function updater(product, id, updatedProductData) {
 
 let productSorted = [];
 let products = [];
+let availableProducts = [];
+let availableSearchbar = [];
 
 function rootReducer(state = initialState, action) {
 
   switch (action.type) {
     case GET_ALL_PRODUCT:
+      availableProducts = action.payload.filter((product) => product.available === true);
+      console.log (availableProducts)
       return {
         ...state,
         allProducts: action.payload,
-        product: state.product.length ? state.product : action.payload,
+        product: state.product.length ? state.product : availableProducts,
       };
+    
 
     case RESET_ALL_PRODUCT:
       return {
         ...state,
-        product: state.allProducts,
+        product: availableProducts,
       };
 
     case GET_PRODUCT_BY_NAME:
+      availableSearchbar = action.payload.filter((product) => product.available === true);
       return {
         ...state,
-        product: action.payload,
+        product: availableSearchbar,
       };
       
-       case GET_PRODUCT_CART:
+    case GET_PRODUCT_CART:
 
             return {
                 ...state,
                 productCart: action.payload
             }
+
+    case POST_PRODUCT_CART:
+      return {
+        ...state,
+        productCart: [...state.productCart, action.payload],
+      };
 
 
     case GET_PRODUCT_BY_ID:
@@ -173,7 +193,7 @@ function rootReducer(state = initialState, action) {
                   } */
 
     case ORDER_BY_NAME:
-      products = [...state.allProducts];
+      products = [...state.product];
       productSorted = products.sort(function (a, b) {
         if (a.name > b.name) {
           return action.payload === "asc" ? 1 : -1;
@@ -189,7 +209,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case ORDER_BY_PRICE:
-      products = [...state.allProducts];
+      products = [...state.product];
       productSorted =
         action.payload === "low"
           ? products.sort((a, b) => a.price - b.price)
@@ -247,10 +267,33 @@ function rootReducer(state = initialState, action) {
           ...state,
           userDetail: action.payload,
         };
+
+
+        case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
+        return {
+          ...state,
+          pagination: {
+            ...state.pagination,
+            currentPage: action.payload,
+          },
+        };
+        
+      case GET_FAVORITES:
+        console.log(action.payload)
+        return{
+          ...state,
+          allFavorites:action.payload
+        }
+        case DELETE_PRODUCT_CART:
+          return{
+            ...state,
+            productCart: state.productCart.filter(product => product.id !== action.payload)
+          }
     default:
       return {
         ...state,
       };
+
 
   }
 }

@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { GrCart, GrSearch } from "react-icons/gr";
 import { AiFillShop } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
-import { Badge } from '@mui/material';
+import { Badge } from "@mui/material";
 import LoginButton from "../Auth0/LoginButton";
 import LogoutButton from "../Auth0/LogoutButton";
 import leaf from "../../assets/leaf.png";
@@ -15,16 +15,19 @@ import logout from "../../assets/cerrar-sesion.png";
 import { getProductByName, getProductCart } from "../../Redux/actions/product/action";
 import { toast } from "react-toastify";
 import styles from "./Navbar.module.css";
+import loading from "../../assets/loading.gif";
+import { useLocation } from "react-router-dom";
 
 const Nav = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const inputRef = useRef(null);
   const products = useSelector((state) => state.productCart);
   const userDetail = useSelector((state) => state.userDetail);
   let count = products.length;
   const [open, setOpen] = useState(false);
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, isLoading } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -35,7 +38,7 @@ const Nav = () => {
     if (user && user.email) {
       dispatch(getProductCart(user.email));
     }
-  }, [isSearchVisible,dispatch,user]);
+  }, [isSearchVisible, dispatch, user]);
 
   useEffect(() => {
     const closeMenuOnClickOutside = (e) => {
@@ -44,16 +47,12 @@ const Nav = () => {
       }
     };
 
-
-
     document.addEventListener("click", closeMenuOnClickOutside);
 
     return () => {
       document.removeEventListener("click", closeMenuOnClickOutside);
     };
   }, [open]);
-
-
 
   const handleSearchMouseEnter = () => {
     if (searchValue) {
@@ -84,6 +83,12 @@ const Nav = () => {
     setSearchValue(e.target.value);
   };
 
+  const isLinkActive = (path) => {
+    return location.pathname === path;
+  };
+
+
+
   const notify = () =>
     toast.error("Product not found, try again.🪴", {
       position: "bottom-right",
@@ -96,8 +101,6 @@ const Nav = () => {
       theme: "light",
     });
 
-
-
   return (
     <nav className={styles.nav}>
       <a href="/" className={styles.nav__brand}>
@@ -106,102 +109,115 @@ const Nav = () => {
 
       <ul className={styles.nav__menu}>
         <li className={styles.nav__item}>
-          <a href="/" className={styles.nav__link}>
+          <a href="/" className={`${styles.nav__link} ${isLinkActive("/") ? styles.activeLink : ""}`}>
             <div className={styles.home}>Home</div>
           </a>
         </li>
         <li className={styles.nav__item}>
-          <Link to="/shop" className={styles.nav__link}>
+          <Link to="/shop" className={`${styles.nav__link} ${isLinkActive("/shop") ? styles.activeLink : ""}`}>
             Products
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <Link to="/guides" className={styles.nav__link}>
+          <Link to="/guides" className={`${styles.nav__link} ${isLinkActive("/guides") ? styles.activeLink : ""}`}>
             Guide
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <Link
-            to="/about-us"
-            className={`${styles.nav__link} ${styles.aboutUs}`}
-          >
+          <Link to="/about-us" className={`${styles.nav__link} ${isLinkActive("/about-us") ? styles.activeLink : ""}`}>
             About Us
           </Link>
         </li>
         <li className={styles.nav__item}>
-          <Link to="contact-us" className={styles.nav__link}>
+          <Link to="/contact-us" className={`${styles.nav__link} ${isLinkActive("/contact-us") ? styles.activeLink : ""}`}>
             Contact Us
-          </Link>
-        </li>
-        <li className={styles.nav__item}>
-          <Link to="/create" className={styles.nav__link}>
-           +
           </Link>
         </li>
       </ul>
       <div className={styles.nav__toggler}>
-        <a href="/shop" className={styles.shop}>
-          <AiFillShop style={{ fontSize: "24px" }} /> <p className={styles.p}>Products</p>
-        </a>
-        <a href="#" className={styles.guide}>
-          <BsBook style={{ fontSize: "24px" }} /> <p className={styles.p}>Guide</p>
-        </a>
-        <div className={styles.search} onKeyDown={handleKeyDown}>
-          <input
-            type="text"
-            placeholder="Search here..."
-            ref={inputRef}
-            className={`${styles.searchInput} ${isSearchVisible ? styles.searchInputVisible : ""}`}
-            value={searchValue}
-            onChange={handleInputChange}
-          />
-          <a href="#" className={styles.search}>
-            <GrSearch onClick={handleSearchMouseEnter} style={{ fontSize: "24px" }} /> <p className={styles.p}>Search</p>
-          </a>
-        </div>
-
-        <Badge badgeContent={count} color="success">
-          <a href="#" className={styles.cart}>
-            <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
-
-          </a>
-        </Badge>
-        {isAuthenticated
-          ? (
-            <div className={styles.container}>
-              <img
-                onClick={() => setOpen(!open)}
-                src={userDetail.picture}
-                alt={user.name}
-                style={{ width: "35px", height:"35px" ,borderRadius: "50px" , objectFit: "fill"}}
+        
+        {!isLoading ? (
+          <>
+            <a href="/shop" className={styles.shop}>
+              <AiFillShop style={{ fontSize: "24px" }} /> <p className={styles.p}>Products</p>
+            </a>
+            <a href="#" className={styles.guide}>
+              <BsBook style={{ fontSize: "24px" }} /> <p className={styles.p}>Guide</p>
+            </a>
+            <div className={styles.search} onKeyDown={handleKeyDown}>
+              <input
+                type="text"
+                placeholder="Search here..."
+                ref={inputRef}
+                className={`${styles.searchInput} ${
+                  isSearchVisible ? styles.searchInputVisible : ""
+                }`}
+                value={searchValue}
+                onChange={handleInputChange}
               />
-              {open && (
-                <div className={styles.userMenu}>
-                  <ul>
-                  <li className={styles.li}>
-                    <Link to="/profile">
-                      <img src={person} alt="Profile" /> Profile
-                    </Link>
-                  </li>
-                  <li className={styles.li}>
-                    <Link to="/favorites">
-                       <img src={fav} alt="My Garden" /> My Garden
-                     </Link>
-                  </li>
-                    <li className={styles.li}>
-                      <a>
-                        <img src={logout} alt="Logout" />
-                        <LogoutButton/>
-                      </a>
-                    </li>
-                    
-                  </ul>
-                  <div className={styles.arrow}></div>
-                </div>
-              )}
+              <a href="#" className={styles.search}>
+                <GrSearch
+                  onClick={handleSearchMouseEnter}
+                  style={{ fontSize: "24px" }}
+                />{" "}
+                <p className={styles.p}>Search</p>
+              </a>
             </div>
-          )
-          : <LoginButton />}
+
+            <Badge badgeContent={count} color="success">
+              <Link to="/cart" className={styles.cart}>
+                <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
+              </Link>
+            </Badge>
+            {isAuthenticated ? (
+              <div className={styles.container}>
+                <img
+                  onClick={() => setOpen(!open)}
+                  src={userDetail.picture || user.picture}
+                  alt={user.name}
+                  style={{
+                    width: "35px",
+                    height: "35px",
+                    borderRadius: "50px",
+                    objectFit: "fill",
+                  }}
+                />
+                {open && (
+                  <div className={styles.userMenu}>
+                    <ul>
+                      <li className={styles.li}>
+                        <Link to="/profile">
+                          <img src={person} alt="Profile" /> Profile
+                        </Link>
+                      </li>
+                      <li className={styles.li}>
+                        <Link to="/favorites">
+                          <img src={fav} alt="My Garden" /> My Garden
+                        </Link>
+                      </li>
+                      <li className={styles.li}>
+                        <a>
+                          <img src={logout} alt="Logout" />
+                          <LogoutButton />
+                        </a>
+                      </li>
+                    </ul>
+                    <div className={styles.arrow}></div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <LoginButton />
+            )}
+          </>
+        ) : (
+          <div className={styles.loading}>
+          <img src={loading} alt="Loading" />
+        </div>
+        )
+
+        
+        }
       </div>
     </nav>
   );

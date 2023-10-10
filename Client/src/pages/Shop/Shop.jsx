@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
-import Category from "../../components/Categories/Categories";
+import { setCurrentPage } from "../../Redux/actions/product/action";
+import Category from "../../components/Categories/Categorie";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
+import plantgif from "../../assets/plantgif.gif";
 import {
   getAllProducts,
   resetAllProducts,
@@ -27,14 +29,14 @@ const Shop = () => {
   const [nameOrder, setNameOrder] = useState("");
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
-  const [page, setPage] = useState(1);
-  const productsPerPage = 6;
-  const [resetCategory, setResetCategory] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const currentPage = useSelector((state) => state.pagination.currentPage); 
+  const productsPerPage = 9;
 
   const dispatch = useDispatch();
 
-  const handleChange = (event, value) => {
-    setPage(value);
+  const handleChangePage = (event, value) => {
+    dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
   };
 
   useEffect(() => {
@@ -50,16 +52,32 @@ const Shop = () => {
       setNameOrder(selectedValue);
       setPriceOrder("");
       dispatch(filterByName(selectedValue));
+      dispatch(setCurrentPage(1))
     } else if (selectedValue === "high" || selectedValue === "low") {
       setNameOrder("");
       setPriceOrder(selectedValue);
       dispatch(filterByPrice(selectedValue));
+      dispatch(setCurrentPage(1))
     } else {
       setNameOrder("");
       setPriceOrder("");
+      setSelectedCategory(true);
+      dispatch(setCurrentPage(1))
       dispatch(resetAllProducts());
-      setResetCategory(true)
+     
     }
+  }
+
+  const handleCategorySelect = (name) => {
+    setSelectedCategory(name);   
+    setNameOrder("");
+    setPriceOrder("");
+    dispatch(setCurrentPage(1))
+  };
+
+  const handleClear = () => {
+    setSelectedCategory(true);
+    dispatch(resetAllProducts());
   }
  
   // // Se realiza el checkout
@@ -79,7 +97,9 @@ const Shop = () => {
   const totalProducts = products.length;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
 
-  const startIndex = (page - 1) * productsPerPage;
+
+
+  const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
 
@@ -176,7 +196,33 @@ const Shop = () => {
       <div className="flex flex-col lg:flex-row">
         <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
-           <Category allCategories={allCategories} reset={setResetCategory} />
+                  <div className="grid items-center text-start ml-4">
+              <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+                All Categories
+              </h1>
+              <br />
+
+              <div className="mt-4 mb-2">
+                {allCategories ? (
+                  allCategories.map((p, i) => (
+                    <Category
+                      key={i}
+                      name={p.name}
+                      id={p.id}
+                      selected={p.name === selectedCategory}
+                      onSelect={handleCategorySelect}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <img src={plantgif} alt="loading" />
+                  </div>
+                )}
+                <button className="font-bold hover:scale-110" onClick={handleClear}>
+                  All categories
+                </button>
+              </div>
+            </div>
           </div>
           <div className="grid items-center text-start ml-4">
             <h1 className="text-4xl font-poppins italic mt-4 mb-2">
@@ -193,22 +239,22 @@ const Shop = () => {
       <div className={styles.cardsDiv}></div>
       <Pagination
         count={totalPages}
-        page={page}
-        onChange={handleChange}
+        page={currentPage} 
+        onChange={handleChangePage}
         className={styles.pagination}
         size="large"
-        color="primary"
         sx={{
-          '& .Mui-selected': {
-            backgroundColor: '#50a050',
-            fontSize: '20px',
-            
+          "& .Mui-selected": {
+            backgroundColor: "#50a050",
+            fontSize: "20px",
           },
           "& .MuiPaginationItem-root": {
             fontSize: "15px",
           },
+          "& .paginationButton": {
+            backgroundColor: "#50a100"
+          }
         }}
-        //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
       />
 
       

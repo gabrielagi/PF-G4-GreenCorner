@@ -19,11 +19,13 @@ import ContactUs from "./pages/Contact-Us/ContactUs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
-import OurTeam from "./components/OurTeam/OurTeam";
+
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
-
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
+import ProfileUser from "./pages/Profile/Profile.userpanel";
+import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
+import Slider from "./components/Slider/Slider";
 
 const App = () => {
   //Carga de usuarios
@@ -79,10 +81,12 @@ const App = () => {
 
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/prueba" element={<DetailCarousel />} />
-
-        <Route path="/contact-us" element={<ContactUs />} />
+        <Route path="/profile-user" element={<ProfileUser/>} />
+        <Route path="/prueba" element={ <Slider/>} />
+            <Route path="/payment-method" element={<PaymentMethods/>} />
+        <Route path="/contact-us" element={<ContactUs/>} />
       </Routes>
+
     </div>
   );
 };
