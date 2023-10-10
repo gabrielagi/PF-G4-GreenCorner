@@ -19,18 +19,13 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const menus = [
     { name: "Home", link: "/", icon: MdOutlineDashboard },
     {
-      name: "Create Product",
-      icon: BiEdit,
-      margin: true,
-    },
-    {
       name: "Profile",
       icon: AiOutlineUser,
       margin: true,
     },
     {
       name: "Create Product",
-      icon: IoCreateOutline,
+      icon: BiEdit,
       margin: true,
     },
     {

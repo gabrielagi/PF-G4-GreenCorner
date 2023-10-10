@@ -13,7 +13,7 @@ import {
 
 import axios from "axios";
 
-// const endpoint = `https://greencorner.onrender.com/user`;
+/* const endpoint = `https://greencorner.onrender.com/user`; */
 const endpoint = "http://localhost:3001/user";
 
 export const getFavorites = (email) => {
