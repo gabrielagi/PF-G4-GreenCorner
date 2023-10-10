@@ -17,7 +17,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-/*   const link = import.meta.env.VITE_ENDPOINT; */
+  /*   const link = import.meta.env.VITE_ENDPOINT; */
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
 
   const allProducts = useSelector((state) => state.allProducts);
@@ -73,18 +73,17 @@ const Detail = () => {
 
   const handleAddToCart = () => {
     if (isAuthenticated) {
-    let cart = {
-      email: user.email,
-      product_id: product.product_id,
-      amount: amount,
-    };
-    dispatch(postProductCart(cart));
-    console.log(cart);
-    notify();
-  }
-  else {
-    loginWithRedirect();
-  }
+      let cart = {
+        email: user.email,
+        product_id: product.product_id,
+        amount: amount,
+      };
+      dispatch(postProductCart(cart));
+      console.log(cart);
+      notify();
+    } else {
+      loginWithRedirect();
+    }
   };
 
   // Hasta cuánto se puede incrementar
@@ -103,20 +102,19 @@ const Detail = () => {
 
   // Se realiza el checkout
   const handleCheckout = async () => {
-
     if (isAuthenticated) {
-    try {
-      const { data } = await axios.post(
-        `${link}/payment/create-order`,
-        { product, amount }
-      );
-      console.log("Data en el componente Detail", data);
-      console.log("Init point en el componente Detail", data);
-      location.href = data.result;
-    } catch (error) {
-      console.log(error.message);
-    }}
-    else {
+      try {
+        const { data } = await axios.post(
+          "http://localhost:3001/payment/create-order",
+          { product, amount }
+        );
+        console.log("Data en el componente Detail", data);
+        console.log("Init point en el componente Detail", data);
+        location.href = data.result;
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else {
       loginWithRedirect();
     }
   };
