@@ -14,16 +14,22 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_PRICE,
   RESET_ALL_PRODUCT,
+  SET_CURRENT_PAGE,
   DELETE_PRODUCT_CART,
 } from "../action-types";
 
 import axios from "axios";
 
+/* const link= import.meta.env.VITE_ENDPOINT
+const endpoint = `${link}/product`;
+const categories =`${link}/category`
 
-// const endpoint = "https://greencorner.onrender.com/product";
-//  const categories = "https://greencorner.onrender.com/category"
- const endpoint = "http://localhost:3001/product";
-const categories = "http://localhost:3001/category"
+ */
+
+const endpoint = `https://greencorner.onrender.com/product`;
+const categories =`https://greencorner.onrender.com/category`
+
+
  
 
 
@@ -121,7 +127,7 @@ export const addProduct = (productdata) => {
     }
   }
 }
-
+/* ca */
 export const deleteProductCart = (productId) => {
   return async (dispatch) => {
     try {
@@ -235,10 +241,11 @@ export function postProductCart(userData) {
       try {
           const { data } = await axios.post(`${endpoint}/cart`, userData)
           
-          dispatch({
+          return data
+          /*dispatch({
               type: POST_PRODUCT_CART,
               payload: data
-          })
+          })*/
       } catch (error) {
           console.log(error.message); 
           return error.message;
@@ -261,3 +268,9 @@ export function filterByPrice(payload){
   }
 }
 
+export const setCurrentPage = (page) => {
+  return {
+    type: SET_CURRENT_PAGE,
+    payload: page,
+  };
+};

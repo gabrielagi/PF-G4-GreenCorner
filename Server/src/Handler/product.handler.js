@@ -76,9 +76,9 @@ const postProductCartHandler = async (req, res) => {
     const productCart = await postProductCart(productData);
 
     if (productCart) {
-      res.status(201).json({ success: true, message: "Producto creado con éxito", data: productCart });
+      res.status(201).json(productCart);
     } else {
-      res.status(400).json({ success: false, message: "No se pudo crear el producto" });
+      res.status(400).json("No se pudo crear el producto" );
     }
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });

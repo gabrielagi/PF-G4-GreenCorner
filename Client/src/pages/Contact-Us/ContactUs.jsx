@@ -25,7 +25,7 @@ const ContactUs = () => {
   
   return (
     <div className={styles.container}>
-      <div className={styles.card}>
+      <div className={styles.card_contact}>
         {/* Parte izquierda */}
         <div className={styles.leftContent}>
   <div className={styles.textContainer}>

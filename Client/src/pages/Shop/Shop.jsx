@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import styles from "./Shop.module.css";
 import Cards from "../../components/Cards/Cards";
+import { setCurrentPage } from "../../Redux/actions/product/action";
 import Category from "../../components/Categories/Categorie";
 import ProductsTrending from "../../components/ProductsTrending/ProductsTrending";
 import plantgif from "../../assets/plantgif.gif";
@@ -29,13 +30,13 @@ const Shop = () => {
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [page, setPage] = useState(1);
-  const productsPerPage = 6;
+  const currentPage = useSelector((state) => state.pagination.currentPage); 
+  const productsPerPage = 9;
 
   const dispatch = useDispatch();
 
-  const handleChange = (event, value) => {
-    setPage(value);
+  const handleChangePage = (event, value) => {
+    dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
   };
 
   useEffect(() => {
@@ -51,21 +52,27 @@ const Shop = () => {
       setNameOrder(selectedValue);
       setPriceOrder("");
       dispatch(filterByName(selectedValue));
+      dispatch(setCurrentPage(1))
     } else if (selectedValue === "high" || selectedValue === "low") {
       setNameOrder("");
       setPriceOrder(selectedValue);
       dispatch(filterByPrice(selectedValue));
+      dispatch(setCurrentPage(1))
     } else {
       setNameOrder("");
       setPriceOrder("");
       setSelectedCategory(true);
+      dispatch(setCurrentPage(1))
       dispatch(resetAllProducts());
      
     }
   }
 
   const handleCategorySelect = (name) => {
-    setSelectedCategory(name);    
+    setSelectedCategory(name);   
+    setNameOrder("");
+    setPriceOrder("");
+    dispatch(setCurrentPage(1))
   };
 
   const handleClear = () => {
@@ -90,7 +97,9 @@ const Shop = () => {
   const totalProducts = products.length;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
 
-  const startIndex = (page - 1) * productsPerPage;
+
+
+  const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
 
@@ -230,22 +239,22 @@ const Shop = () => {
       <div className={styles.cardsDiv}></div>
       <Pagination
         count={totalPages}
-        page={page}
-        onChange={handleChange}
+        page={currentPage} 
+        onChange={handleChangePage}
         className={styles.pagination}
         size="large"
-        color="primary"
         sx={{
-          '& .Mui-selected': {
-            backgroundColor: '#50a050',
-            fontSize: '20px',
-            
+          "& .Mui-selected": {
+            backgroundColor: "#50a050",
+            fontSize: "20px",
           },
           "& .MuiPaginationItem-root": {
             fontSize: "15px",
           },
+          "& .paginationButton": {
+            backgroundColor: "#50a100"
+          }
         }}
-        //classes={{ selected: "selected-button" }} // Aplica la clase CSS personalizada al botón seleccionado
       />
 
       

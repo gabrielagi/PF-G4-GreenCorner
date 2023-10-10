@@ -58,18 +58,13 @@ const getFavoritesHandler = async (req, res) => {
 };
 
 const postFavoritesHandler = async (req, res) => {
- 
   try {
     const productData = req.body;
-    console.log(productData+'este es el productData')
-    const productFavorite = await postFavorite(productData);
 
+    const productFavorite = await postFavorite(productData);
+  
     if (productFavorite) {
-      res.status(201).json({
-        success: true,
-        message: "This product has been add in favorite",
-        data: productFavorite,
-      });
+      res.status(201).json(productFavorite);
     } else {
       res
         .status(400)
