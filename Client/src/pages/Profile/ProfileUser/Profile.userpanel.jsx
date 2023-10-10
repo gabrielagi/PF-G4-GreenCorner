@@ -17,7 +17,6 @@ const ProfileUser = () => {
         return <p>Esto muestra el Historial de Compra</p>;
       case "Payment methods":
         return <PaymentMethods />;
-
       case "My Garden":
         // return <PaymentMethods />;
         return <Link to="/about-us"></Link>;
