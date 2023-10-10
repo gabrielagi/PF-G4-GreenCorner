@@ -1,19 +1,15 @@
 import React, { useState } from "react";
-import { BiMenuAltRight, BiEdit } from "react-icons/bi";
+import { BiMenuAltRight, BiEdit, BiUserPlus } from "react-icons/bi";
 import {
   MdOutlineAdminPanelSettings,
   MdOutlineDashboard,
   MdPayment,
 } from "react-icons/md";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { FiShoppingBag } from "react-icons/fi";
+import { AiOutlineUser, AiOutlineLineChart } from "react-icons/ai";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import {IoCreateOutline} from 'react-icons/io5'
-
-
-
+import { LuFileEdit } from "react-icons/lu";
 
 function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const menus = [
@@ -26,11 +22,15 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
     {
       name: "Create Product",
       icon: BiEdit,
+    },
+    {
+      name: "Products",
+      icon: LuFileEdit,
       margin: true,
     },
     {
-      name: "Shopping history",
-      icon: FiShoppingBag,
+      name: "Users",
+      icon: BiUserPlus,
       margin: true,
     },
     {
@@ -38,8 +38,8 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
       icon: MdPayment,
     },
     {
-      name: "My Garden",
-      icon: AiOutlineHeart,
+      name: "Charts",
+      icon: AiOutlineLineChart,
       margin: true,
     },
     {

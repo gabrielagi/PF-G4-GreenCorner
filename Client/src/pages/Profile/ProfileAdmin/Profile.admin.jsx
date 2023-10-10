@@ -5,8 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NavbarAdmin from "../../../components/Navbar/Navbar.admin";
 import Create from "./Create/Create";
 import ShowUsers from "./UserSettings/ShowUsers";
-import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
+import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
@@ -15,15 +15,16 @@ const ProfileAdmin = () => {
     switch (selectedMenu) {
       case "Create Product":
         return <Create />;
+      case "Products":
+        return <p>Esto muestra el panel de productos</p>;
       case "Profile":
-        // return <Profile />;
-        return <ShowUsers />;
-      case "Shopping history":
+        return <ProfileDashboard />;
+      case "Users":
         // return <ShoppingHistory />;
-        return <p>Esto muestra el Historial de Compra</p>;
+        return <ShowUsers />;
       case "Payment methods":
         return <PaymentMethods />;
-      case "My Garden":
+      case "Charts":
         // return <PaymentMethods />;
         return <p>Esto muestra mis favoritos</p>;
       // Resto de componentes en el menu
