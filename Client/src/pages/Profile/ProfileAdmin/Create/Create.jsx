@@ -1,42 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  getAllCategories,
-  addProduct,
-} from "../../../../Redux/actions/product/action";
+import { getAllCategories, addProduct } from "../../../../redux/actions/product/action"
 import styles from "./Create.module.css";
 import Select from "react-select";
 
 function validate(input) {
   const errors = {};
-  if (!input.name || input.name.length < 4 || input.name.length > 256) {
-    errors.name = "The name must be between four and 256 characters";
+  if (!input.name || input.name.length < 2 || input.name.length > 25) {
+    errors.name = "The name must be between 2 and 25 characters";
   }
-  if (
-    isNaN(input.price) ||
-    input.price <= 0 ||
-    input.price.toString().length > 256
-  ) {
+  if (isNaN(input.price) || input.price <= 0 || input.price.toString().length > 256) {
     errors.price = "Price must be a valid number greater than 0";
   }
-  if (
-    isNaN(input.stock) ||
-    input.stock <= 0 ||
-    input.price.toString().length > 256
-  ) {
+  if (isNaN(input.stock) || input.stock <= 0 || input.price.toString().length > 256) {
     errors.stock = "Stock must be a valid number greater than or equal to 0";
   }
   if (input.description.length > 256) {
     errors.description = "Description must not exceed 256 characters";
   }
+  if (input.images.length > 5) {
+    errors.images = "You can select a maximum of 5 images";
+  }
+  if (input.categories.length === 0) {
+    errors.categories = "You must select at least one category";
+  }
+
   return errors;
 }
 
 export default function Create() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
 
   const [input, setInput] = useState({
     name: "",
@@ -61,7 +57,7 @@ export default function Create() {
 
   function handleChange(e) {
     const { name, type, checked, value } = e.target;
-
+  
     if (type === "checkbox") {
       setInput({
         ...input,
@@ -83,14 +79,19 @@ export default function Create() {
   }
 
   async function handlePhotoChange(event) {
-    const fileUpload = event.target.files[0];
-    try {
-      const base64 = await convertBase64(fileUpload);
-      const updatedPhotos = [...input.images, base64];
-      setInput({ ...input, images: updatedPhotos });
-    } catch (error) {
-      console.error("Error loading image:", error);
+    const files = event.target.files;
+    const updatedPhotos = [...input.images];
+
+    for (let i = 0; i < files.length ; i++) {
+      try {
+        const base64 = await convertBase64(files[i]);
+        updatedPhotos.push(base64);
+      } catch (error) {
+        console.error("Error loading image:", error);
+      }
     }
+
+    setInput({ ...input, images: updatedPhotos });
   }
 
   const convertBase64 = (file) => {
@@ -130,7 +131,7 @@ export default function Create() {
           categories: [],
           images: [],
         });
-        navigate("/");
+        navigate("/"); 
       } catch (error) {
         console.error("Error submitting form:", error);
       }
@@ -193,6 +194,9 @@ export default function Create() {
                     }
                     className={styles.select}
                   />
+                  {errors.categories && (
+                    <div className={styles.error}>{errors.categories}</div>
+                  )}
                 </div>
 
                 <div>
@@ -212,18 +216,18 @@ export default function Create() {
               </div>
 
               <div className={styles.der}>
-                <div>
-                  <div>Description:</div>
+              <div>
+                <div>Description:</div>
                   <textarea
                     name="description"
-                    style={{ resize: "none", height: "100px" }}
+                    style={{resize: "none", height: "100px"}}
                     value={input.description}
                     onChange={(e) => handleChange(e)}
                     className={styles.inputs}
-                  />
-                  {errors.description && (
-                    <div className={styles.error}>{errors.description}</div>
-                  )}
+                    />
+                {errors.description && (
+                        <div className={styles.error}>{errors.description}</div>
+                      )}
                 </div>
                 <div>
                   <div>Available:</div>
@@ -246,26 +250,29 @@ export default function Create() {
                 </div>
 
                 <div>
-                  <div>Images:</div>
-                  <input
-                    type="file"
-                    name="photo"
-                    onChange={(e) => handlePhotoChange(e)}
-                    multiple
+                 <div>Images:</div>
+                    <input
+                     type="file"
+                      name="photo"
+                      onChange={(e) => handlePhotoChange(e)}
+                      multiple
                   />
-                </div>
-                <div className={styles.imagePreview}>
-                  {input.images.map((image, index) => (
-                    <div key={index} className={styles.imageContainer}>
-                      <img
-                        src={image}
-                        alt={`Preview ${index}`}
-                        className={`${styles.previewImage} ${styles.imageHoverEffect}`}
-                        onClick={() => handleImageDelete(index)}
-                      />
-                    </div>
-                  ))}
-                </div>
+                  {errors.images && (
+                    <div className={styles.error}>{errors.images}</div>
+                  )}
+                  </div>
+                  <div className={styles.imagePreview}>
+                    {input.images.map((image, index) => (
+                      <div key={index} className={styles.imageContainer}>
+                        <img
+                          src={image}
+                          alt={`Preview ${index}`}
+                          className={`${styles.previewImage} ${styles.imageHoverEffect}`} 
+                          onClick={() => handleImageDelete(index)}
+                        />
+                      </div>
+                    ))}
+                  </div>
 
                 <button
                   id="bt"
