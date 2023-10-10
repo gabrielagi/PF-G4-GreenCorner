@@ -53,7 +53,7 @@ const Card = ({ name, images, price, id }) => {
           product_id: product_id,
           amount: 1,
         };
-
+        
         dispatch(postProductCart(cart)).then((result) => {
           notify(result);
         })

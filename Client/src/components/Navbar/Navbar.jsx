@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { GrCart, GrSearch } from "react-icons/gr";
 import { AiFillShop } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
-import { Badge } from '@mui/material';
+import { Badge } from "@mui/material";
 import LoginButton from "../Auth0/LoginButton";
 import LogoutButton from "../Auth0/LogoutButton";
 import leaf from "../../assets/leaf.png";
@@ -15,6 +15,7 @@ import logout from "../../assets/cerrar-sesion.png";
 import { getProductByName, getProductCart } from "../../Redux/actions/product/action";
 import { toast } from "react-toastify";
 import styles from "./Navbar.module.css";
+import loading from "../../assets/loading.gif";
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const Nav = () => {
   const userDetail = useSelector((state) => state.userDetail);
   let count = products.length;
   const [open, setOpen] = useState(false);
-  const { isAuthenticated, user } = useAuth0();
+  const { isAuthenticated, user, isLoading } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -35,7 +36,7 @@ const Nav = () => {
     if (user && user.email) {
       dispatch(getProductCart(user.email));
     }
-  }, [isSearchVisible,dispatch,user]);
+  }, [isSearchVisible, dispatch, user]);
 
   useEffect(() => {
     const closeMenuOnClickOutside = (e) => {
@@ -44,16 +45,12 @@ const Nav = () => {
       }
     };
 
-
-
     document.addEventListener("click", closeMenuOnClickOutside);
 
     return () => {
       document.removeEventListener("click", closeMenuOnClickOutside);
     };
   }, [open]);
-
-
 
   const handleSearchMouseEnter = () => {
     if (searchValue) {
@@ -96,8 +93,6 @@ const Nav = () => {
       theme: "light",
     });
 
-
-
   return (
     <nav className={styles.nav}>
       <a href="/" className={styles.nav__brand}>
@@ -133,70 +128,91 @@ const Nav = () => {
             Contact Us
           </Link>
         </li>
-       
       </ul>
       <div className={styles.nav__toggler}>
-        <a href="/shop" className={styles.shop}>
-          <AiFillShop style={{ fontSize: "24px" }} /> <p className={styles.p}>Products</p>
-        </a>
-        <a href="#" className={styles.guide}>
-          <BsBook style={{ fontSize: "24px" }} /> <p className={styles.p}>Guide</p>
-        </a>
-        <div className={styles.search} onKeyDown={handleKeyDown}>
-          <input
-            type="text"
-            placeholder="Search here..."
-            ref={inputRef}
-            className={`${styles.searchInput} ${isSearchVisible ? styles.searchInputVisible : ""}`}
-            value={searchValue}
-            onChange={handleInputChange}
-          />
-          <a href="#" className={styles.search}>
-            <GrSearch onClick={handleSearchMouseEnter} style={{ fontSize: "24px" }} /> <p className={styles.p}>Search</p>
-          </a>
-        </div>
-
-        <Badge badgeContent={count} color="success">
-          <Link to="/cart" className={styles.cart}>
-            <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
-          </Link>
-        </Badge>
-        {isAuthenticated
-          ? (
-            <div className={styles.container}>
-              <img
-                onClick={() => setOpen(!open)}
-                src={userDetail.picture || user.picture}
-                alt={user.name}
-                style={{ width: "35px", height:"35px" ,borderRadius: "50px" , objectFit: "fill"}}
+        
+        {!isLoading ? (
+          <>
+            <a href="/shop" className={styles.shop}>
+              <AiFillShop style={{ fontSize: "24px" }} /> <p className={styles.p}>Products</p>
+            </a>
+            <a href="#" className={styles.guide}>
+              <BsBook style={{ fontSize: "24px" }} /> <p className={styles.p}>Guide</p>
+            </a>
+            <div className={styles.search} onKeyDown={handleKeyDown}>
+              <input
+                type="text"
+                placeholder="Search here..."
+                ref={inputRef}
+                className={`${styles.searchInput} ${
+                  isSearchVisible ? styles.searchInputVisible : ""
+                }`}
+                value={searchValue}
+                onChange={handleInputChange}
               />
-              {open && (
-                <div className={styles.userMenu}>
-                  <ul>
-                  <li className={styles.li}>
-                    <Link to="/profile">
-                      <img src={person} alt="Profile" /> Profile
-                    </Link>
-                  </li>
-                  <li className={styles.li}>
-                    <Link to="/favorites">
-                       <img src={fav} alt="My Garden" /> My Garden
-                     </Link>
-                  </li>
-                    <li className={styles.li}>
-                      <a>
-                        <img src={logout} alt="Logout" />
-                        <LogoutButton/>
-                      </a>
-                    </li>
-                    
-                  </ul>
-                  <div className={styles.arrow}></div>
-                </div>
-              )}
+              <a href="#" className={styles.search}>
+                <GrSearch
+                  onClick={handleSearchMouseEnter}
+                  style={{ fontSize: "24px" }}
+                />{" "}
+                <p className={styles.p}>Search</p>
+              </a>
             </div>
-          )
-          : <LoginButton />}
+
+            <Badge badgeContent={count} color="success">
+              <Link to="/cart" className={styles.cart}>
+                <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
+              </Link>
+            </Badge>
+            {isAuthenticated ? (
+              <div className={styles.container}>
+                <img
+                  onClick={() => setOpen(!open)}
+                  src={userDetail.picture || user.picture}
+                  alt={user.name}
+                  style={{
+                    width: "35px",
+                    height: "35px",
+                    borderRadius: "50px",
+                    objectFit: "fill",
+                  }}
+                />
+                {open && (
+                  <div className={styles.userMenu}>
+                    <ul>
+                      <li className={styles.li}>
+                        <Link to="/profile">
+                          <img src={person} alt="Profile" /> Profile
+                        </Link>
+                      </li>
+                      <li className={styles.li}>
+                        <Link to="/favorites">
+                          <img src={fav} alt="My Garden" /> My Garden
+                        </Link>
+                      </li>
+                      <li className={styles.li}>
+                        <a>
+                          <img src={logout} alt="Logout" />
+                          <LogoutButton />
+                        </a>
+                      </li>
+                    </ul>
+                    <div className={styles.arrow}></div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <LoginButton />
+            )}
+          </>
+        ) : (
+          <div className={styles.loading}>
+          <img src={loading} alt="Loading" />
+        </div>
+        )
+
+        
+        }
       </div>
     </nav>
   );

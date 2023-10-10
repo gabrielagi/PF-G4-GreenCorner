@@ -88,7 +88,7 @@ function rootReducer(state = initialState, action) {
         product: action.payload,
       };
       
-       case GET_PRODUCT_CART:
+    case GET_PRODUCT_CART:
 
             return {
                 ...state,
