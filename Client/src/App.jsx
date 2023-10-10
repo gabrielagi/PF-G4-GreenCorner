@@ -23,8 +23,6 @@ import { postUser } from "./Redux/actions/user/user-actions";
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import ProfileUser from "./pages/Profile/Profile.userpanel";
-import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
 import Slider from "./components/Slider/Slider";
 
 const App = () => {
@@ -81,12 +79,10 @@ const App = () => {
 
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/profile-user" element={<ProfileUser/>} />
-        <Route path="/prueba" element={ <Slider/>} />
-            <Route path="/payment-method" element={<PaymentMethods/>} />
-        <Route path="/contact-us" element={<ContactUs/>} />
-      </Routes>
+        <Route path="/prueba" element={<Slider />} />
 
+        <Route path="/contact-us" element={<ContactUs />} />
+      </Routes>
     </div>
   );
 };

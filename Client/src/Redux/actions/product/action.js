@@ -116,21 +116,19 @@ export const addProduct = (productdata) => {
     } catch (error) {
       alert("Hubo un problema al crear el producto");
     }
-  }
-}
+  };
+};
 /* ca */
 export const deleteProductCart = (productId) => {
   return async (dispatch) => {
     try {
       dispatch({
         type: DELETE_PRODUCT_CART,
-        payload: productId
-      })
+        payload: productId,
+      });
     } catch (error) {
-      alert ("Hubo un problema al eliminar el producto")
+      alert("Hubo un problema al eliminar el producto");
     }
-  }
-}
   };
 };
 
