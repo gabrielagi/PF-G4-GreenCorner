@@ -79,15 +79,12 @@ const App = () => {
             />
           }
         />
-       
-        <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/profile-user" element={<ProfileUser/>} />
         <Route path="/prueba" element={ <Slider/>} />
             <Route path="/payment-method" element={<PaymentMethods/>} />
         <Route path="/contact-us" element={<ContactUs/>} />
-        {/* { <Route path="/profile" element={<Profile/>} /> } */}
       </Routes>
 
     </div>
