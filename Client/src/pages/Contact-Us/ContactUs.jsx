@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styles from "./ContactUs.module.css";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 
 
@@ -7,6 +9,7 @@ const ContactUs = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
+  const { user } = useAuth0();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +22,7 @@ const ContactUs = () => {
     setPhoneNumber("");
     setMessage("");
   };
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.card}>
@@ -30,6 +33,7 @@ const ContactUs = () => {
       <h2>get in touch</h2>
     </div>
     <div className={styles.lowerHalf}>
+      {console.log(user)}
       <p className={styles.p}>Phone: +1234567890</p>
       <p className={styles.p}>Email: info@greencorner.com</p>
       <p className={styles.p}>Location: GreenCorner HQ, City, Country</p>

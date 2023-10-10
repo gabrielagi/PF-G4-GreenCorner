@@ -22,7 +22,7 @@ import {
   GET_USER_BY_EMAIL,
   UPDATE_USER,
   GET_FAVORITES,
-  POST_PRODUCT_CART
+  POST_PRODUCT_CART,
   DELETE_PRODUCT_CART,
 } from "./actions/action-types";
 

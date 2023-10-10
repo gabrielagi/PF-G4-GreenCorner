@@ -13,7 +13,7 @@ import {
 
 import axios from "axios";
 
-const endpoint = "http://localhost:3001/user";
+const endpoint = "http://localhost:3000/user";
 //  const endpoint = "https://greencorner.onrender.com/user" 
 
 
