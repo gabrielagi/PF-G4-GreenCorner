@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCategories, addProduct } from "../../../../redux/actions/product/action"
+import { getAllCategories, addProduct } from "../../../../Redux/actions/product/action"
 import styles from "./Create.module.css";
 import Select from "react-select";
 
