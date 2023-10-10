@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BiMenuAltRight } from "react-icons/bi";
+import { BiMenuAltRight, BiEdit } from "react-icons/bi";
 import {
   MdOutlineAdminPanelSettings,
   MdOutlineDashboard,
@@ -14,6 +14,11 @@ import { Link } from "react-router-dom";
 function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const menus = [
     { name: "Home", link: "/", icon: MdOutlineDashboard },
+    {
+      name: "Create Product",
+      icon: BiEdit,
+      margin: true,
+    },
     {
       name: "Profile",
       icon: AiOutlineUser,

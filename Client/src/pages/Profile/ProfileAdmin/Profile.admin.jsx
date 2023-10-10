@@ -2,13 +2,18 @@ import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
-import NavbarAdmin from "../../components/Navbar/Navbar.admin";
+import NavbarAdmin from "../../../components/Navbar/Navbar.admin";
+import Create from "./Create/Create";
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
 
   const renderComponentBasedOnMenu = () => {
     switch (selectedMenu) {
+      case "Create Product":
+        // return <Profile />;
+        // return <p>Esto muestra formulario de creacion de producto</p>;
+        return <Create />;
       case "Profile":
         // return <Profile />;
         return <p>Esto muestra el Profile</p>;
@@ -30,20 +35,17 @@ const ProfileAdmin = () => {
 
   return (
     <div className="flex">
-      <div className="flex-grow">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="col-span-1">
-            {/* Menú lateral */}
-            <NavbarAdmin
-              selectedMenu={selectedMenu}
-              setSelectedMenu={setSelectedMenu}
-            />
-          </div>
-          <div className="col-span-1">
-            {/* Componente renderizado */}
-            {renderComponentBasedOnMenu()}
-          </div>
-        </div>
+      <div className="w-1/5">
+        {/* Menú lateral */}
+        {/* Menú lateral */}
+        <NavbarAdmin
+          selectedMenu={selectedMenu}
+          setSelectedMenu={setSelectedMenu}
+        />
+      </div>
+      <div className="w-4/5" style={{ position: "relative", zIndex: 1 }}>
+        {/* Componente renderizado */}
+        {renderComponentBasedOnMenu()}
       </div>
     </div>
   );

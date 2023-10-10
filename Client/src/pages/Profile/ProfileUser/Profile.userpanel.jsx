@@ -1,7 +1,7 @@
 import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import NavbarUser from "../../components/Navbar/Navbar.user";
+import NavbarUser from "../../../components/Navbar/Navbar.user";
 import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 import { Link } from "react-router-dom";
 const ProfileUser = () => {
@@ -19,7 +19,7 @@ const ProfileUser = () => {
         return <p>Esto muestra los métodos de pago</p>;
       case "My Garden":
         // return <PaymentMethods />;
-        return <Link to='/about-us'></Link>
+        return <Link to="/about-us"></Link>;
       default:
         return null;
     }
