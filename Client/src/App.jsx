@@ -26,6 +26,7 @@ import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
 import ProfileUser from "./pages/Profile/Profile.userpanel";
 import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
+import Slider from "./components/Slider/Slider";
 
 const App = () => {
   //Carga de usuarios
@@ -78,15 +79,12 @@ const App = () => {
             />
           }
         />
-
-        <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/profile-user" element={<ProfileUser/>} />
-        <Route path="/prueba" element={<DetailCarousel/>} />
+        <Route path="/prueba" element={ <Slider/>} />
             <Route path="/payment-method" element={<PaymentMethods/>} />
         <Route path="/contact-us" element={<ContactUs/>} />
-        {/* { <Route path="/profile" element={<Profile/>} /> } */}
       </Routes>
 
     </div>

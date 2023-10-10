@@ -51,7 +51,7 @@
 
 .paginationButton {
   background-color: #30ff94;
-  color: #fff;
+  color: #f51515;
   padding: 5px 10px;
   border: none;
   border-radius: 5px;
@@ -61,11 +61,11 @@
 }
 
 .paginationButton:hover {
-  background-color: #0056b3;
+  background-color: #20ff5f;
 }
 
 .currentPage {
-  background-color: #007bff;
+  background-color: #20ff5f;
   color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
@@ -84,4 +84,6 @@
   margin-left: 35%  !important;
   
 }
+
+
 
