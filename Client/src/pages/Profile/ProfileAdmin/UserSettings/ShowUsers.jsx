@@ -1,7 +1,23 @@
 import React from "react";
 import users from "./users.json";
+import { useDispatch,  useSelector } from "react-redux";
+import { getAllUsers } from "../../../../Redux/actions/user/user-actions"
+import { useEffect } from "react";
+
 
 const ShowUsers = () => {
+
+  const allUsers = useSelector((state) => state.allUsers);
+  const dispatch = useDispatch();
+  
+  
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+  
+  console.log(allUsers);
+  
+
   return (
     <>
       <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
@@ -226,13 +242,13 @@ const ShowUsers = () => {
                       scope="col"
                       className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
                     >
-                      Position
+                      Email
                     </th>
                     <th
                       scope="col"
                       className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
                     >
-                      Country
+                      Role
                     </th>
                     <th
                       scope="col"
@@ -246,7 +262,7 @@ const ShowUsers = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
-                  {users.map((user) => (
+                  {allUsers.map((user) => (
                     <tr key={user.id} className="hover:bg-gray-100">
                       <td className="p-4 w-4">
                         <div className="flex items-center">
@@ -267,7 +283,7 @@ const ShowUsers = () => {
                       <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                         <img
                           className="h-10 w-10 rounded-full"
-                          src={`/images/users/${user.avatar}`}
+                          src={user.picture}
                           alt={`${user.name} avatar`}
                         />
                         <div className="text-sm font-normal text-gray-500">
@@ -275,15 +291,15 @@ const ShowUsers = () => {
                             {user.name}
                           </div>
                           <div className="text-sm font-normal text-gray-500">
-                            {user.email}
+                            {user.nickname}
                           </div>
                         </div>
                       </td>
                       <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                        {user.position}
+                        {user.email}
                       </td>
                       <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
-                        {user.country}
+                        {user.role}
                       </td>
                       <td className="p-4 whitespace-nowrap text-base font-normal text-gray-900">
                         <div className="flex items-center">

@@ -31,14 +31,14 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
-      console.log(user);
+      //console.log(user);
       const userData = {
         nickname: user.nickname,
         picture: user.picture,
         email: user.email,
         email_verified: user.email_verified,
       };
-      console.log(userData);
+     // console.log(userData);
       dispatch(postUser(userData));
     }
   }, [user, isAuthenticated, isLoading, dispatch]);
