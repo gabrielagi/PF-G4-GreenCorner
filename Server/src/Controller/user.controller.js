@@ -13,7 +13,7 @@ const createUser = async (nickname, email, picture, email_verified, status) => {
         email,
         picture,
         email_verified,
-        status
+        /* status */
       },
     });
 
