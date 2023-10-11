@@ -99,6 +99,7 @@ const createOrder = async (req, res) => {
 const success = (req, res) => {
   console.log(req.query);
   // res.send('Pago realizado')
+  
   res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir
 };
 
@@ -114,7 +115,7 @@ const receiveWebhook = async (req, res) => {
 
   try {
     // Pregunto si la venta es correcta y la respuesta es payment
-    if (payment.type === "payment" || payment.type === "payment") {
+    if (payment.type === "payment") {
       const data = await mercadopago.payment.findById(payment.id);
       console.log("Data del Webhook", data);
 
@@ -122,6 +123,7 @@ const receiveWebhook = async (req, res) => {
       // Puedo guadar la información del usuario una vez que compró
       // Actualizar cantidad de productos en el Stock de los productos vendidos
     }
+
 
     res.status(204); // Significa que todo salió bien pero no devuelve nada
   } catch (error) {

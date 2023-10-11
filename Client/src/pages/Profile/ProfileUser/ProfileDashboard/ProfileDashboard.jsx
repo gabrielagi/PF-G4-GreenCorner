@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getUserByEmail,
   updateUser,
-} from "../../../Redux/actions/user/user-actions"; // Importa la acción updateUser
+} from "../../../../Redux/actions/user/user-actions"; // Importa la acción updateUser
 import styles from "./ProfileDashboard.module.css";
 
 const ProfileDashboard = () => {

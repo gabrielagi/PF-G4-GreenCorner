@@ -14,7 +14,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
-import Create from "./pages/Create/Create";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
 import { useEffect } from "react";
@@ -24,8 +23,6 @@ import { postUser } from "./Redux/actions/user/user-actions";
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import ProfileUser from "./pages/Profile/Profile.userpanel";
-import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
 import Slider from "./components/Slider/Slider";
 
 const App = () => {
@@ -79,14 +76,13 @@ const App = () => {
             />
           }
         />
+
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/profile-user" element={<ProfileUser/>} />
-        <Route path="/prueba" element={ <Slider/>} />
-            <Route path="/payment-method" element={<PaymentMethods/>} />
-        <Route path="/contact-us" element={<ContactUs/>} />
-      </Routes>
+        <Route path="/prueba" element={<Slider />} />
 
+        <Route path="/contact-us" element={<ContactUs />} />
+      </Routes>
     </div>
   );
 };
