@@ -13,14 +13,10 @@ import {
 
 import axios from "axios";
 
-
 /* const link= import.meta.env.VITE_ENDPOINT
 const endpoint = `${link}/user`;  */
-const endpoint = `https://greencorner.onrender.com/user`;
-
-
-
-
+// const endpoint = `https://greencorner.onrender.com/user`;
+const endpoint = "http://localhost:3001/user";
 
 export const getFavorites = (email) => {
   console.log(email);
@@ -88,8 +84,8 @@ export function getUserById(id) {
 export function getUserByEmail(email) {
   return async function (dispatch) {
     try {
-      console.log("Llego un email a buscar a la action", email);
-      console.log(`${endpoint}/find/${email}`);
+      //console.log("Llego un email a buscar a la action", email);
+      //console.log(`${endpoint}/find/${email}`);
       // El error esta en la URL
       const { data } = await axios.get(`${endpoint}/find?email=${email}`);
 

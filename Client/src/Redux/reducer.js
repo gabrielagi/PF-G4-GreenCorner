@@ -36,7 +36,7 @@ const initialState = {
   searchProduct: [],
   searchByName: [],
   productDetail: [],
-  AllUsers: [],
+  allUsers: [],
   userDetail: [],
   pagination: { 
     currentPage: 1, 
@@ -79,7 +79,7 @@ function rootReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_PRODUCT:
       availableProducts = action.payload.filter((product) => product.available === true);
-      console.log (availableProducts)
+     // console.log (availableProducts)
       return {
         ...state,
         allProducts: action.payload,
@@ -244,11 +244,11 @@ function rootReducer(state = initialState, action) {
         product: productSorted,
       };
 
-    case GET_ALL_USER:
-      return {
-        ...state,
-        user: state.user,
-      };
+    //case GET_ALL_USER:
+      //return {
+       // ...state,
+       // user: state.user,
+     // };
 
     case GET_USER_BY_NAME:
       return {
@@ -313,6 +313,13 @@ function rootReducer(state = initialState, action) {
             ...state,
             productCart: state.productCart.filter(product => product.id !== action.payload)
           }
+
+      case GET_ALL_USER:
+        
+        return {
+          ...state,
+          allUsers: action.payload
+        }
     default:
       return {
         ...state,

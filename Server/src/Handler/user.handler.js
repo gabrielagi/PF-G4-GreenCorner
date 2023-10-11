@@ -78,7 +78,7 @@ const postFavoritesHandler = async (req, res) => {
 
 //CREA NUEVO USUARIO
 const newUserHandler = async (req, res) => {
-  const { nickname, email, picture, email_verified } = req.body;
+  const { nickname, email, picture, email_verified, status } = req.body;
   if (!nickname || !email || !picture) {
     return res
       .status(400)
@@ -86,7 +86,7 @@ const newUserHandler = async (req, res) => {
   }
 
   try {
-    const newUser = await createUser(nickname, email, picture, email_verified);
+    const newUser = await createUser(nickname, email, picture, email_verified, status);
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error.message);
