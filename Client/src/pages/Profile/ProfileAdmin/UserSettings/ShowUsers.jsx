@@ -45,7 +45,7 @@ const ShowUsers = () => {
 
   
   
-  console.log(allUsers);
+  
   
 
   return (

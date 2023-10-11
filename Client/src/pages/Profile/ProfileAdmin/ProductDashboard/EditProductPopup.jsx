@@ -19,8 +19,8 @@
     if (input.description.length > 256) {
         errors.description = "Description must not exceed 256 characters";
     }
-    if (input.images.length > 5) {
-        errors.images = "You can select a maximum of 5 images";
+    if (input.images.length > 5 || input.images.length === 0) {
+        errors.images = "Images must been between 1 and 5";
     }
     if (input.categories.length === 0) {
         errors.categories = "You must select at least one category";
@@ -122,7 +122,8 @@
     
         const handleSubmit = (e) => {
         e.preventDefault();
-        const validationErrors = validate(editedProduct);
+        const validationErrors = validate(editedProduct)
+        console.log(editedProduct)
     
         if (Object.keys(validationErrors).length === 0) {
             console.log(editedProduct);
@@ -256,14 +257,23 @@
                     </div>
                     ))}
                 </div>
-                <button
-                    className={styles["edit-modal-button"]}
-                    onClick={handleSubmit}
-                    disabled={Object.keys(errors).length > 0}
-                >
-                    Save
-                </button>
+                <div className={styles["edit-modal-button-container"]}>
+                      <button
+                        className={styles["edit-modal-cancel-button"]}
+                        onClick={() => onRequestClose()}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className={styles["edit-modal-button"]}
+                        onClick={handleSubmit}
+                        disabled={Object.keys(errors).length > 0}
+                      >
+                        Save
+                      </button>
+                    </div>
                 </div>
+                
             </div>
             </Modal>
         );
