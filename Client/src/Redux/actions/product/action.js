@@ -9,13 +9,18 @@ import {
   GET_CATEGORIES,
   GET_CATEGORIES_SHOP,
   FILTER_CATEGORY,
+  FILTER_FAV__CATEGORY,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
+  ORDER_FAV_BY_NAME,
   ORDER_BY_PRICE,
+  ORDER_FAV_BY_PRICE,
   RESET_ALL_PRODUCT,
   SET_CURRENT_PAGE,
   DELETE_PRODUCT_CART,
+  RESET_ALL_FAVORITES,
+  FIND_FAV_BY_NAME
 } from "../action-types";
 
 import axios from "axios";
@@ -29,7 +34,8 @@ const categories =`${link}/category`
 const endpoint = `https://greencorner.onrender.com/product`;
 const categories =`https://greencorner.onrender.com/category`
 
-
+// const endpoint = `http://localhost:3001/product/`;
+// const categories = `http://localhost:3001/category`;
  
 
 
@@ -62,6 +68,20 @@ export const resetAllProducts = () => {
     }
   };
 };
+export const resetAllFavorites = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(endpoint);
+      
+      dispatch({
+        type: RESET_ALL_FAVORITES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message );
+    }
+  };
+};
 
 export function getProductByName(name){
   return async function (dispatch) {
@@ -73,6 +93,7 @@ export function getProductByName(name){
     return response.data;
   };
 }
+
 
 export const getProductById = (id) => {
   console.log(id) 
@@ -198,6 +219,20 @@ export const filterCategory = (category) => {
   };
 };
 
+export const filterFavByCategory = (category) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: FILTER_FAV__CATEGORY,
+        payload: category,
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert ("Hubo un problema trayendo las categorías")
+    }
+  };
+};
+
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {
@@ -260,6 +295,21 @@ export function filterByName(payload){
   }
 }
 
+export function findFavByName(payload){
+  return{
+    type: FIND_FAV_BY_NAME,
+    payload
+  }
+}
+export function filterFavByName(payload){
+
+  
+  return{
+      type: ORDER_FAV_BY_NAME,
+      payload
+  }
+}
+
 
 export function filterByPrice(payload){
   return{
@@ -267,7 +317,13 @@ export function filterByPrice(payload){
       payload
   }
 }
-
+export function filterFavByPrice(payload){
+  console.log('llegó al action'+payload)
+  return{
+      type: ORDER_FAV_BY_PRICE,
+      payload
+  }
+}
 export const setCurrentPage = (page) => {
   return {
     type: SET_CURRENT_PAGE,

@@ -3,70 +3,197 @@ import "tailwindcss/tailwind.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavorites } from "../Redux/actions/user/user-actions";
 import Card from "../components/Cards/Card/Card";
+import Category from "../components/Categories/Categorie";
 import { useAuth0 } from "@auth0/auth0-react";
-import { filterByName, filterByPrice } from "../Redux/actions/product/action";
+import {findFavByName,resetAllFavorites, resetAllProducts, getAllCategories, filterFavByName,filterFavByPrice,filterFavByCategory } from "../Redux/actions/product/action";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Pagination from "@mui/material/Pagination";
+import { setCurrentPage } from "../Redux/actions/product/action";
 
 const Favorites = () => {
+ 
+
+
+
 const dispatch=useDispatch()
-  const favorites =useSelector((state) => state.allFavorites);
+  const favorites =useSelector((state) => state.favorites);
+  const allCategories = useSelector((state) => state.categories);
   const { user } = useAuth0();
+  const currentPage = useSelector((state) => state.pagination.currentPage); 
 
   useEffect(() => {
     dispatch(getFavorites(user.email));
-  
+    dispatch(getAllCategories())
   }, [dispatch]);
-console.log(favorites)
- 
-const [nameOrder, setNameOrder] = useState("");
-const [priceOrder, setPriceOrder] = useState("");
 
-
-function handleOrder(e) {
+const [nameOrden, setNameOrden] = useState("");
+const [priceOrden, setPriceOrden] = useState("");
+const [selectedCategory, setSelectedCategory] = useState(null);
+const [inputValue, setInputValue] = useState("")
+function handleOrden(e) {
   const selectedValue = e ? e.target.value : e;
 
   if (selectedValue === "asc" || selectedValue === "desc") {
-    setNameOrder(selectedValue);
-    setPriceOrder("");
-    dispatch(filterByName(selectedValue));
-  } else if (selectedValue === "high" || selectedValue === "low") {
-    setNameOrder("");
-    setPriceOrder(selectedValue);
-    dispatch(filterByPrice(selectedValue));
-   } //else {
-  //   setNameOrder("");
-  //   setPriceOrder("");
-  //   dispatch(resetAllC());
+    setNameOrden(selectedValue);
    
-  // }
+    setPriceOrden("");
+    dispatch(filterFavByName(selectedValue));
+    
+    dispatch(setCurrentPage(1))
+  } else if (selectedValue === "high" || selectedValue === "low") {
+    setNameOrden("");
+    setPriceOrden(selectedValue);
+    console.log(priceOrden)
+    dispatch(filterFavByPrice(selectedValue));
+    dispatch(setCurrentPage(1))
+  } else {
+    setNameOrden("");
+    setPriceOrden("");
+    setSelectedCategory(true);
+    dispatch(setCurrentPage(1))
+    dispatch(resetAllProducts());
+   
+  }
 }
 
+const handleCategorySelect = (name) => {
+  console.log(favorites)
+  setSelectedCategory(name);   
+  setNameOrden("");
+  setPriceOrden("");
+  dispatch(setCurrentPage(1))
+};
+
+const handleClear = () => {
+  setSelectedCategory(true);
+  dispatch(resetAllFavorites());
+}
+const handleChange=(event)=>{
+  setInputValue(event.target.value)
+}
+
+const handleSubmit=(event)=>{
+    
+  event.preventDefault()
+  dispatch (findFavByName(inputValue))
+  setInputValue('')
+
+
+}
+console.log('ants del return');
+console.log(favorites)
   return (
     <div className="font-poppins mx-5">
 <h1 className="text-center  font-poppins font-extrabold py-10 my-10 text-4xl sm:text-5xl bg-yellow-200">Mis productos favoritos</h1>
       <div className="grid md:grid-cols-2 gap-x-20 md:gap-x-10  my-10 ">
-        <div className="py-10  my-10 place-self-center align-top  w-full col-span- bg-green-500 bg-opacity-25 grid md:h-full max-h-max md:w-[400px] md:ml-20  ">
+        <div className="py-10    my-10  align-top justify-center   w-full col-span-1 bg-green-500 bg-opacity-25 grid md:h-[700px] object-top max-h-max md:w-[400px] md:mx-auto md:ml-40 ">
           <div className="bg-green-800 bg-opacity-25  px-10 text-center h-[100px] mb-10 items-center align-middle justify-center object-center">
            
-                <input placeholder="busca lo que quieras " className=" w-full self-center center my-10  h-20 md:h-20 bg-white "></input>
+                <input placeholder="busca lo que quieras " onChange={handleChange} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white "></input>
+                <button type='submit' onClick={handleSubmit}>Buscar</button>
           </div>
-               <div className=" md:-mt-[200px] md:content-start md:items-start md:row-start-2 md:row-span-4">
+               <div className=" md:-mt-[200px] md:content-start  md:row-start-7 md:row-span-1 ">
                 <div className="bg-green-800 bg-opacity-50 p-20 text-center mx-10 grid gap-2 md:gap-10 grid-cols-2 md:grid-cols-1 md:align-top md:justify-start">
                 <h1 className="mx-auto  col-span-2  md:col-span-1 text-3xl font-medium">Ordenar por</h1>
-                <button className=" p-4 ">Precio</button>
-                <button className=" p-4">Alfabetico</button>
+                <label htmlFor="nameOrden" className="text-2xl font-bold m md:-mb-8">Alfabético</label>
+               <div className="my-">
+                      <Select
+            id="nameOrden"
+            name="nameOrden"
+            value={nameOrden}
+            onChange={handleOrden}
+            label="Name"
+          >
+            <MenuItem value="asc" style={{ fontSize: "15px" }}>
+              A - Z
+            </MenuItem>
+            <MenuItem value="desc" style={{ fontSize: "15px" }}>
+              Z - A
+            </MenuItem>
+          </Select>
+               </div>
+          
+        <div>
+        <InputLabel htmlFor="priceOrden">Price</InputLabel>
+          <Select
+            id="priceOrden"
+            name="priceOrden"
+            value={priceOrden}
+            onChange={handleOrden}
+            label="Price"
+          >
+            <MenuItem value="high" style={{ fontSize: "15px" }}>
+              High - Low
+            </MenuItem>
+            <MenuItem value="low" style={{ fontSize: "15px" }}>
+              Low - High
+            </MenuItem>
+          </Select>
+        </div>
+        <div className="mt-4 mb-2">
+                {allCategories ? (
+                  allCategories.map((p, i) => (
+                    <Category
+                      key={i}
+                      name={p.name}
+                      id={p.id}
+                      selected={p.name === selectedCategory}
+                      onSelect={handleCategorySelect}
+                    />
+                  ))
+                ) : (
+                  <div>
+                    <img src={plantgif} alt="loading" />
+                  </div>
+                )}
+                <button className="font-bold hover:scale-110" onClick={handleClear}>
+                  All categories
+                </button>
+              </div>
+
+          
+              
                </div>
                </div>
             
                 
                 
             </div>  
+ 
 
-            <div className="grid justify-start sm:grid-cols-3 gap-10 mr-8   grid-cols-2 my-10 md:gap-20">
-              {favorites.map((p)=><Card  key={p.id}
-                      id={p.Product.product_id}
-                      name={p.Product.name}
-                      images={p.Product.images}
-                      price={p.Product.price} className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] " > {p.value}</Card>)}
+            <div className="grid  sm:grid-cols-3 gap-10 mr-8 md:mr-10  md:-ml-20 grid-cols-2 my-10 md:gap-10">
+              {
+              favorites.length>1 ? 
+              favorites.map((p)=> p.Product ? <Card  key={p.id}
+                      id={p.Product.product_id || p.product_id}
+                      name={p.Product.name || p.name}
+                      images={p.Product.images || p.images}
+                      price={p.Product.price || p.price} className="w-[50px] h-[50px] sm:w-[200px] sm:h-[200px] " > {p.value}</Card>
+
+                     :<Card  key={p.id}
+                      id={p.product_id || p.product_id}
+                      name={p.name || p.name}
+                      images={p.images || p.images}
+                      price={p.price || p.price} className="w-[50px] h-[50px] sm:w-[200px] sm:h-[200px] " > {p.value}</Card>
+                      )
+                      :
+                      favorites.Product ? <Card  key={favorites.id}
+                      id={favorites.Product.product_id || favorites.product_id}
+                      name={favorites.Product.name || favorites.name}
+                      images={favorites.Product.images || favorites.images}
+                      price={favorites.Product.price || favorites.price} className="w-[50px] h-[50px] sm:w-[200px] sm:h-[200px] " > {favorites.value}</Card>
+                      :
+                      <Card  key={favorites.id}
+                      id={favorites.product_id || favorites.product_id}
+                      name={favorites.name ||favorites.name}
+                      images={favorites.images || favorites.images}
+                      price={favorites.price || favorites.price} className="w-[50px] h-[50px] sm:w-[200px] sm:h-[200px] " > {favorites.value}</Card>
+                   
+                 
+              }
          
             </div>  
       </div>

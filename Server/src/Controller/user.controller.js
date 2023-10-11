@@ -71,6 +71,10 @@ const getAllFavorites = async (email) => {
           model: Product,
           required: true,
         },
+        {
+          model: Category,
+          required: true
+        }
       ],
     });
     return favorites;
