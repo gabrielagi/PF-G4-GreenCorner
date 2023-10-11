@@ -250,31 +250,31 @@ function rootReducer(state = initialState, action) {
     case GET_USER_BY_NAME:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_PRODUCT_BY_ID:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_ROL:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_ID:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_EMAIL:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case POST_USER:

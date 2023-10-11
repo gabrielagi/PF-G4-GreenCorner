@@ -15,7 +15,7 @@ import axios from "axios";
 
 /* const link= import.meta.env.VITE_ENDPOINT
 const endpoint = `${link}/user`;  */
-// const endpoint = `https://greencorner.onrender.com/user`;
+//const endpoint = `https://greencorner.onrender.com/user`;
 const endpoint = "http://localhost:3001/user";
 
 export const getFavorites = (email) => {
@@ -147,7 +147,9 @@ export function postFavorites(userData) {
 export function deleteUser(id) {
   return async (dispatch) => {
     try {
+      console.log("llego a la action delete")
       const { data } = await axios.delete(`${endpoint}/${id}`);
+      console.log("respuesta del delete en data" + data)
       dispatch({
         type: DELETE_USER,
         payload: data,
