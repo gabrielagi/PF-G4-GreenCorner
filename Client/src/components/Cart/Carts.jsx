@@ -37,9 +37,10 @@ const Carts = () => {
         {products.length !== 0 ? (
           products.map((p, i) => {
             return (
+             
               <Cart
                 key={i}
-                id={p.id}
+                id={p.Product.product_id}
                 amount={p.amount}
                 name={p.Product.name}
                 price={p.Product.price}
@@ -48,7 +49,7 @@ const Carts = () => {
             );
           })
         ) : (
-          <div></div>
+          <div><h1>Hola</h1></div>
         )}
       </div>
 

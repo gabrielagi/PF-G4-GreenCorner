@@ -11,6 +11,7 @@ const {
   deleteUser,
   updateUser,
   getUserByEmail,
+  deleteFavorite
 } = require("../Controller/user.controller");
 
 
@@ -199,6 +200,18 @@ const deleteHandler = async (req, res) => {
     return res.status(500).send("Oops");
   }
 };
+
+const deleteFavoritesHandler = async (req, res) => {
+  const {product_id, email} = req.params;
+
+  try {
+    const deleter = await deleteFavorite(product_id, email);
+    return res.status(200).json(deleter);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Oops");
+  }
+};
 module.exports = {
   newUserHandler,
   postFavoritesHandler,
@@ -209,5 +222,6 @@ module.exports = {
   byRolHandler,
   deleteHandler,
   updateUserHandler,
+  deleteFavoritesHandler,
   emailHandler,
 };

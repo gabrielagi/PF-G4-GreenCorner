@@ -6,6 +6,7 @@ const {
   postProductHandler,
   postProductCartHandler,
   deleteHandler,
+  deleteProductCartHandler,
   updateProductHandler,
   getRelatedProductsHandler,
   getAllTrendingHandler,
@@ -28,6 +29,8 @@ productRouter.post("/", postProductHandler);
 productRouter.post("/cart", postProductCartHandler);
 
 productRouter.delete("/:id", deleteHandler);
+
+productRouter.delete("/cart/:email/:id", deleteProductCartHandler);
 
 productRouter.put("/:id", updateProductHandler);
 
