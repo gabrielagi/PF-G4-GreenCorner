@@ -13,8 +13,14 @@ import {
 
 import axios from "axios";
 
-/* const endpoint = `https://greencorner.onrender.com/user`; */
-const endpoint = "http://localhost:3001/user";
+
+/* const link= import.meta.env.VITE_ENDPOINT
+const endpoint = `${link}/user`;  */
+const endpoint = `https://greencorner.onrender.com/user`;
+
+
+
+
 
 export const getFavorites = (email) => {
   console.log(email);
