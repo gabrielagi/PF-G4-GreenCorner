@@ -27,6 +27,7 @@ const allCategories = useSelector((state) => state.categories);
   };    
 
   const handleSaveEditedProduct = (editedProduct) => {
+    console.log(editedProduct)
     dispatch(updateProduct(editedProduct.product_id, editedProduct));
     setEditPopupOpen(false);
   };

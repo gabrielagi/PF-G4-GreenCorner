@@ -122,7 +122,8 @@
     
         const handleSubmit = (e) => {
         e.preventDefault();
-        const validationErrors = validate(editedProduct);
+        const validationErrors = validate(editedProduct)
+        console.log(editedProduct)
     
         if (Object.keys(validationErrors).length === 0) {
             console.log(editedProduct);

@@ -196,9 +196,6 @@ function rootReducer(state = initialState, action) {
     case DELETE_PRODUCT_BY_ID:
       return {
         ...state,
-        product: state.product.filter(
-          (product) => product.id !== action.payload.id
-        ),
         allProducts: state.allProducts.filter(
           (product) => product.id !== action.payload.id
         ),
