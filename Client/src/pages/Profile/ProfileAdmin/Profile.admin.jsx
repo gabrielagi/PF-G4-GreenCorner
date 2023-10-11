@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import NavbarAdmin from "../../../components/Navbar/Navbar.admin";
 import Create from "./Create/Create";
+import ShowUsers from "./UserSettings/ShowUsers";
+import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
+import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 import ShowUsers from "./ShowUsers";
 
 const ProfileAdmin = () => {
@@ -12,24 +15,22 @@ const ProfileAdmin = () => {
   const renderComponentBasedOnMenu = () => {
     switch (selectedMenu) {
       case "Create Product":
-        // return <Profile />;
-        // return <p>Esto muestra formulario de creacion de producto</p>;
         return <Create />;
+      case "Products":
+        return <p>Esto muestra el panel de productos</p>;
       case "Profile":
-        // return <Profile />;
-        return <p>Esto muestra el Profile</p>;
-      case "Shopping history":
+        return <ProfileDashboard />;
+      case "Users":
         // return <ShoppingHistory />;
         return <ShowUsers />;
       case "Payment methods":
-        // return <PaymentMethods />;
-        return <p>Esto muestra los métodos de pago</p>;
-      case "My Garden":
+        return <PaymentMethods />;
+      case "Charts":
         // return <PaymentMethods />;
         return <p>Esto muestra mis favoritos</p>;
       // Resto de componentes en el menu
       default:
-        return null;
+        return <ProfileDashboard />;
     }
   };
   const [selectedMenu, setSelectedMenu] = useState(null);

@@ -11,6 +11,7 @@ const {
   deleteUser,
   updateUser,
   getUserByEmail,
+  deleteFavorite
 } = require("../Controller/user.controller");
 
 
@@ -77,7 +78,7 @@ const postFavoritesHandler = async (req, res) => {
 
 //CREA NUEVO USUARIO
 const newUserHandler = async (req, res) => {
-  const { nickname, email, picture, email_verified } = req.body;
+  const { nickname, email, picture, email_verified, status } = req.body;
   if (!nickname || !email || !picture) {
     return res
       .status(400)
@@ -85,7 +86,7 @@ const newUserHandler = async (req, res) => {
   }
 
   try {
-    const newUser = await createUser(nickname, email, picture, email_verified);
+    const newUser = await createUser(nickname, email, picture, email_verified, status);
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error.message);
@@ -199,6 +200,18 @@ const deleteHandler = async (req, res) => {
     return res.status(500).send("Oops");
   }
 };
+
+const deleteFavoritesHandler = async (req, res) => {
+  const {product_id, email} = req.params;
+
+  try {
+    const deleter = await deleteFavorite(product_id, email);
+    return res.status(200).json(deleter);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Oops");
+  }
+};
 module.exports = {
   newUserHandler,
   postFavoritesHandler,
@@ -209,5 +222,6 @@ module.exports = {
   byRolHandler,
   deleteHandler,
   updateUserHandler,
+  deleteFavoritesHandler,
   emailHandler,
 };
