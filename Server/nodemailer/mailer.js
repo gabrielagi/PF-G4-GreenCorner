@@ -123,7 +123,7 @@ const PurchasePending = async (email, name) => {
     console.error('Error al enviar el correo electrónico: ', error);
   }
 }
-const ClientEmail = async (email, name) => {
+const ClientEmail = async (name, message) => {
   try {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -134,17 +134,17 @@ const ClientEmail = async (email, name) => {
   });
   
     // Leer el contenido del template HTML
-    const templatePath = path.join(__dirname, 'templatePurchasePending.html');
-    const templateContent = fs.readFileSync(templatePath, 'utf-8');
+    // const templatePath = path.join(__dirname, 'templatePurchasePending.html');
+    // const templateContent = fs.readFileSync(templatePath, 'utf-8');
 
-    const modifiedTemplate = templateContent.replace("[Nombre del Usuario]", name);
+    // const modifiedTemplate = templateContent.replace("[Nombre del Usuario]", name);
 
 
     const mailOptions = {
-      from: GMAIL_USER,
-      to: email,
-      subject: 'Pago pendiente',
-      html: modifiedTemplate, // Usar el contenido del template HTML aquí
+      from: `${name} want to contact us`,
+      to: GMAIL_USER,
+      subject: 'Contact Us',
+      text: message, // Usar el contenido del template HTML aquí
     };
 
     await transporter.sendMail(mailOptions);
@@ -152,4 +152,4 @@ const ClientEmail = async (email, name) => {
     console.error('Error al enviar el correo electrónico: ', error);
   }
 };
-module.exports = { WelcomeEmail, Purchase, PurchasePending, Purchasefail }
+module.exports = { WelcomeEmail, Purchase, PurchasePending, Purchasefail, ClientEmail }
