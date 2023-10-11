@@ -66,20 +66,46 @@
     color: red;
     font-size: 14px;
   }
+
+  .edit-modal-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
   
   .edit-modal-button {
     background-color: #007bff;
+    color: #fff;
+    border: none;
+    width: 110px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .edit-modal-button:hover {
+    background-color: #0052a7;
+  }
+  
+  .edit-modal-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .edit-modal-cancel-button {
+    background-color: #c00707;
     color: #fff;
     border: none;
     padding: 10px 20px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    margin-right: 10px; 
   }
   
-  .edit-modal-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  .edit-modal-cancel-button:hover {
+    background-color: #6d0101;
   }
   
   .edit-modal-imageContainer {

@@ -257,14 +257,23 @@
                     </div>
                     ))}
                 </div>
-                <button
-                    className={styles["edit-modal-button"]}
-                    onClick={handleSubmit}
-                    disabled={Object.keys(errors).length > 0}
-                >
-                    Save
-                </button>
+                <div className={styles["edit-modal-button-container"]}>
+                      <button
+                        className={styles["edit-modal-cancel-button"]}
+                        onClick={() => onRequestClose()}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className={styles["edit-modal-button"]}
+                        onClick={handleSubmit}
+                        disabled={Object.keys(errors).length > 0}
+                      >
+                        Save
+                      </button>
+                    </div>
                 </div>
+                
             </div>
             </Modal>
         );
