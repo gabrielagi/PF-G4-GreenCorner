@@ -29,7 +29,12 @@ const allCategories = useSelector((state) => state.categories);
 
   const handleSaveEditedProduct = (editedProduct) => {
     console.log(editedProduct)
-    dispatch(updateProduct(editedProduct.product_id, editedProduct));
+    dispatch(updateProduct(editedProduct.product_id, editedProduct)).then(() => {
+        dispatch(getAllProducts());
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el producto: ", error);
+      });
     setEditPopupOpen(false);
   };
 
@@ -50,11 +55,17 @@ const allCategories = useSelector((state) => state.categories);
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteProduct(productId));
-        dispatch(getAllProducts())
+        dispatch(deleteProduct(productId))
+          .then(() => {
+            dispatch(getAllProducts());
+          })
+          .catch((error) => {
+            console.error("Error al eliminar el producto: ", error);
+          });
       }
     });
   };
+  
 
   return (
     <div>
