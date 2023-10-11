@@ -135,7 +135,7 @@ export const deleteProductCart = (product_id, email) => {
 
       dispatch({
         type: DELETE_PRODUCT_CART,
-        payload: productId,
+        payload: product_id,
       });
     } catch (error) {
       alert("Hubo un problema al eliminar el producto");

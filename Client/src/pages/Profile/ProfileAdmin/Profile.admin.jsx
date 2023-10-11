@@ -7,7 +7,7 @@ import Create from "./Create/Create";
 import ShowUsers from "./UserSettings/ShowUsers";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
-import ShowUsers from "./ShowUsers";
+
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
