@@ -292,6 +292,13 @@ function rootReducer(state = initialState, action) {
           userDetail: action.payload,
         };
 
+      case DELETE_USER:
+        return{
+          ...state,
+          allUsers: action.payload,
+        }
+        
+
 
         case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
         return {
