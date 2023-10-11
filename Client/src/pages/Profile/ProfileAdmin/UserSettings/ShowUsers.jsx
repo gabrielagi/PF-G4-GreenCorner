@@ -15,7 +15,7 @@ const ShowUsers = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
   
-  console.log(allUsers);
+  
   
 
   return (

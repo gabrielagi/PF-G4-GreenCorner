@@ -7,6 +7,7 @@ import { MdDeleteForever, MdEdit } from 'react-icons/md';
 import Swal from 'sweetalert2';
 import EditProductPopup from './EditProductPopup';
 
+
 function ProductDashboard() {
   const allProducts = useSelector((state) => state.allProducts);
 const allCategories = useSelector((state) => state.categories);
