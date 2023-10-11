@@ -26,11 +26,11 @@ const categories =`${link}/category`
 
  */
 
-// const endpoint = `https://greencorner.onrender.com/product`;
-// const categories = `https://greencorner.onrender.com/category`;
+const endpoint = `https://greencorner.onrender.com/product`;
+ const categories = `https://greencorner.onrender.com/category`;
 
-const endpoint = `http://localhost:3001/product/`;
-const categories = `http://localhost:3001/category`;
+/* const endpoint = `http://localhost:3001/product/`;
+const categories = `http://localhost:3001/category`; */
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -132,7 +132,6 @@ export const deleteProductCart = (product_id, email) => {
       const { data } = await axios.delete(
         `${endpoint}/cart/${email}/${product_id}`
       );
-
       dispatch({
         type: DELETE_PRODUCT_CART,
         payload: product_id,
@@ -211,6 +210,7 @@ export const deleteProduct = (id) => {
           id: id,
         },
       });
+      console.log('Producto eliminado con éxito');
     } catch (error) {
       console.log(error.message);
       alert("Hubo un problema eliminando el producto");
