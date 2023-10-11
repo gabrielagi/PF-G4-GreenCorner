@@ -20,79 +20,16 @@ const ShowUsers = () => {
 
   return (
     <>
-      <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
+      <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 pt-10">
         <div className="mb-1 w-full">
           <div className="mb-4">
-            <nav className="flex mb-5" aria-label="Breadcrumb">
-              <ol className="inline-flex items-center space-x-1 md:space-x-2">
-                <li className="inline-flex items-center">
-                  <a
-                    href="#"
-                    className="text-gray-700 hover:text-gray-900 inline-flex items-center"
-                  >
-                    <svg
-                      className="w-5 h-5 mr-2.5"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                    </svg>
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <div className="flex items-center">
-                    <svg
-                      className="w-6 h-6 text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                    <a
-                      href="#"
-                      className="text-gray-700 hover:text-gray-900 ml-1 md:ml-2 text-sm font-medium"
-                    >
-                      Users
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <div className="flex items-center">
-                    <svg
-                      className="w-6 h-6 text-gray-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clipRule="evenodd"
-                      ></path>
-                    </svg>
-                    <span
-                      className="text-gray-400 ml-1 md:ml-2 text-sm font-medium"
-                      aria-current="page"
-                    >
-                      List
-                    </span>
-                  </div>
-                </li>
-              </ol>
-            </nav>
-            <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">
+            <h1 className="text-xl sm:text-5xl font-semibold text-gray-900">
               All users
             </h1>
           </div>
           <div className="sm:flex">
             <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
+              {/* Searchbar */}
               <form className="lg:pr-3" action="#" method="GET">
                 <label htmlFor="users-search" className="sr-only">
                   Search
@@ -102,75 +39,11 @@ const ShowUsers = () => {
                     type="text"
                     name="email"
                     id="users-search"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                     placeholder="Search for users"
                   />
                 </div>
               </form>
-              <div className="flex space-x-1 pl-0 sm:pl-2 mt-3 sm:mt-0">
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded-md"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path d="M3.293 9.293a1 1 0 011.414 0L10 14.586l5.293-5.293a1 1 0 111.414 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414z"></path>
-                  </svg>
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded-md"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.293 4.293a1 1 0 011.414 0L18 9.586V5a1 1 0 011-1h-4.586a1 1 0 010-2H19a1 1 0 011 1v16a1 1 0 01-1 1H1a1 1 0 01-1-1V1a1 1 0 011-1h9a1 1 0 011 1v4.586l4.293-4.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    ></path>
-                  </svg>
-                </a>
-              </div>
-            </div>
-            <div className="flex space-x-1">
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded-md"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M13.293 7.293a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 9.414l-8.293 8.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0l8.293 8.293 5-5a1 1 0 010-1.414z"></path>
-                </svg>
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded-md"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.293 7.293a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 9.414l-8.293 8.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0l8.293 8.293 5-5a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </a>
             </div>
           </div>
         </div>
@@ -211,14 +84,15 @@ const ShowUsers = () => {
           </a>
         </div>
       </div>
-      {/* Resto de tu código aquí */}
-      <div className="flex flex-col">
+      {/*Barra gris */}
+      <div className="flex flex-col pt-10">
         <div className="overflow-x-auto">
           <div className="align-middle inline-block min-w-full">
             <div className="shadow overflow-hidden">
               <table className="table-fixed min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-100">
                   <tr>
+                    {/* checkbox de select all */}
                     <th scope="col" className="p-4">
                       <div className="flex items-center">
                         <input
@@ -232,33 +106,36 @@ const ShowUsers = () => {
                         </label>
                       </div>
                     </th>
+                    {/* Name */}
                     <th
                       scope="col"
-                      className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
+                      className="p-4 text-left text-[10px] font-medium text-gray-500 uppercase"
                     >
                       Name
                     </th>
+                    {/* Position */}
                     <th
                       scope="col"
-                      className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
+                      className="p-4 text-left text-[10px] font-medium text-gray-500 uppercase"
                     >
                       Email
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
+                      className="p-4 text-left text-[10px] font-medium text-gray-500 uppercase"
                     >
                       Role
                     </th>
                     <th
                       scope="col"
-                      className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
+                      className="p-4 text-left text-[10px] font-medium text-gray-500 uppercase"
                     >
                       Status
                     </th>
                     <th scope="col" className="p-4"></th>
                   </tr>
                 </thead>
+
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
@@ -280,14 +157,15 @@ const ShowUsers = () => {
                           </label>
                         </div>
                       </td>
+                      {/* Imagen de avatar */}
                       <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                         <img
                           className="h-10 w-10 rounded-full"
                           src={user.picture}
                           alt={`${user.name} avatar`}
                         />
-                        <div className="text-sm font-normal text-gray-500">
-                          <div className="text-base font-semibold text-gray-900">
+                        <div className="font-normal text-gray-500">
+                          <div className="text-[15px] font-semibold text-gray-900">
                             {user.name}
                           </div>
                           <div className="text-sm font-normal text-gray-500">
@@ -301,7 +179,8 @@ const ShowUsers = () => {
                       <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
                         {user.role}
                       </td>
-                      <td className="p-4 whitespace-nowrap text-base font-normal text-gray-900">
+                      {/* Status */}
+                      <td className="p-4 whitespace-nowrap text-[13px] font-normal text-gray-900">
                         <div className="flex items-center">
                           {user.status === "Active" ? (
                             <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div>
@@ -311,11 +190,12 @@ const ShowUsers = () => {
                           {user.status}
                         </div>
                       </td>
+                      {/* Button edit user and delete */}
                       <td className="p-4 whitespace-nowrap space-x-2">
                         <button
                           type="button"
                           data-modal-toggle="user-modal"
-                          className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
+                          className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
                         >
                           <svg
                             className="mr-2 h-5 w-5"
@@ -335,7 +215,7 @@ const ShowUsers = () => {
                         <button
                           type="button"
                           data-modal-toggle="delete-user-modal"
-                          className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
+                          className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
                         >
                           <svg
                             className="mr-2 h-5 w-5"

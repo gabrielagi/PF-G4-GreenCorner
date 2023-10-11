@@ -20,10 +20,17 @@ import {
 
 import axios from "axios";
 
-/* const endpoint = "https://greencorner.onrender.com/product";
-const categories = "https://greencorner.onrender.com/category" */
-const endpoint = "http://localhost:3001/product";
-const categories = "http://localhost:3001/category";
+/* const link= import.meta.env.VITE_ENDPOINT
+const endpoint = `${link}/product`;
+const categories =`${link}/category`
+
+ */
+
+// const endpoint = `https://greencorner.onrender.com/product`;
+// const categories = `https://greencorner.onrender.com/category`;
+
+const endpoint = `http://localhost:3001/product/`;
+const categories = `http://localhost:3001/category`;
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -119,9 +126,13 @@ export const addProduct = (productdata) => {
   };
 };
 /* ca */
-export const deleteProductCart = (productId) => {
+export const deleteProductCart = (product_id, email) => {
   return async (dispatch) => {
     try {
+      const { data } = await axios.delete(
+        `${endpoint}/cart/${email}/${product_id}`
+      );
+
       dispatch({
         type: DELETE_PRODUCT_CART,
         payload: productId,

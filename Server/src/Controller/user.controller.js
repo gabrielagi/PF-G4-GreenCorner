@@ -175,6 +175,28 @@ const deleteUser = async (id) => {
   }
 };
 
+
+const deleteFavorite = async (product_id, email) => {
+  
+
+
+  try {
+    const deleter = Favorite.destroy({
+      where: {
+        product_id: "123e4567-e89b-12d3-a456-426655440000",
+        email: email
+      },
+    });
+    if (deleter) {
+      return product_id;
+    } else {
+      return "This Favorite doesn't exist";
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getByRol,
@@ -186,4 +208,5 @@ module.exports = {
   deleteUser,
   updateUser,
   getUserByEmail,
+  deleteFavorite
 };
