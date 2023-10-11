@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserByEmail } from "../../Redux/actions/user/user-actions";
 
 import LoadingGif from "../../assets/loading.gif";
-import ProfileUser from "./Profile.userpanel";
-import ProfileAdmin from "./Profile.admin";
+import ProfileUser from "./ProfileUser/Profile.userpanel";
+import ProfileAdmin from "./ProfileAdmin/Profile.admin";
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth0();

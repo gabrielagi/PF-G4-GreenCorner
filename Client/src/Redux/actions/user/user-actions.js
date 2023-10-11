@@ -8,7 +8,7 @@ import {
   POST_USER,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
-  GET_FAVORITES
+  GET_FAVORITES,
 } from "../action-types";
 
 import axios from "axios";
@@ -16,21 +16,20 @@ import axios from "axios";
 
 /* const link= import.meta.env.VITE_ENDPOINT
 const endpoint = `${link}/user`;  */
-//const endpoint = `https://greencorner.onrender.com/user`;
-
-const endpoint ="http://localhost:3001/user"
+const endpoint = `https://greencorner.onrender.com/user`;
 
 
 
 
 
 export const getFavorites = (email) => {
-  console.log(email)
+  console.log(email);
   return async (dispatch) => {
     try {
-
-      const { data } = await axios.get(`${endpoint}/getfavorites?email=${email}`);
-      console.log(data)
+      const { data } = await axios.get(
+        `${endpoint}/getfavorites?email=${email}`
+      );
+      console.log(data);
       dispatch({
         type: GET_FAVORITES,
         payload: data,
@@ -139,11 +138,9 @@ export function postUser(userData) {
 export function postFavorites(userData) {
   return async (dispatch) => {
     try {
-  
       const { data } = await axios.post(`${endpoint}/favorites`, userData);
-       
-      return data;
 
+      return data;
     } catch (error) {
       console.log(error.message); // Corregido aquí
       return error.message;

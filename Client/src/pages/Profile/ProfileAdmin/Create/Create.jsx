@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCategories, addProduct } from "../../Redux/actions/product/action";
+import { getAllCategories, addProduct } from "../../../../Redux/actions/product/action"
 import styles from "./Create.module.css";
 import Select from "react-select";
 
@@ -143,7 +143,7 @@ export default function Create() {
   return (
     <div>
       <div className={styles.contGral}>
-        <div className={styles.card}>
+        <div className={styles.card_create}>
           <div className={styles.contTitle}>
             <div className={styles.title}>Create your product</div>
           </div>

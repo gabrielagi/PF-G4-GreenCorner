@@ -1,4 +1,4 @@
-import { 
+import {
   GET_ALL_PRODUCT,
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
@@ -26,11 +26,10 @@ const categories =`${link}/category`
 
  */
 
-//const endpoint = `https://greencorner.onrender.com/product`;
-//const categories =`https://greencorner.onrender.com/category`
+const endpoint = `https://greencorner.onrender.com/product`;
+const categories =`https://greencorner.onrender.com/category`
 
-const endpoint = "http://localhost:3001/product";
-const categories ="http://localhost:3001/category"
+
  
 
 
@@ -38,13 +37,13 @@ export const getAllProducts = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
-      
+
       dispatch({
         type: GET_ALL_PRODUCT,
         payload: data,
       });
     } catch (error) {
-      console.log(error.message );
+      console.log(error.message);
     }
   };
 };
@@ -53,20 +52,20 @@ export const resetAllProducts = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
-      
+
       dispatch({
         type: RESET_ALL_PRODUCT,
         payload: data,
       });
     } catch (error) {
-      console.log(error.message );
+      console.log(error.message);
     }
   };
 };
 
-export function getProductByName(name){
+export function getProductByName(name) {
   return async function (dispatch) {
-    const response = await axios.get(endpoint +"?name=" + name);
+    const response = await axios.get(endpoint + "?name=" + name);
     dispatch({
       type: GET_PRODUCT_BY_NAME,
       payload: response.data,
@@ -76,20 +75,20 @@ export function getProductByName(name){
 }
 
 export const getProductById = (id) => {
-  console.log(id) 
-  console.log ('llegó al action')
+  console.log(id);
+  console.log("llegó al action");
 
   return async (dispatch) => {
-console.log('está por entrar al try')
+    console.log("está por entrar al try");
     try {
-      console.log('entró al try')
+      console.log("entró al try");
       const { data } = await axios.get(`${endpoint}/${id}`);
-      console.log(data)
+      console.log(data);
       dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: data,
       });
-      console.log(id)
+      console.log(id);
     } catch (error) {
       alert("El Producto no se encuentra en la lista");
     }
@@ -100,17 +99,16 @@ console.log('está por entrar al try')
 export const getProductCart = (email) => {
   return async (dispatch) => {
     try {
-
       //const encodedEmail = encodeURIComponent(email);
-      
+
       const { data } = await axios.get(`${endpoint}/cart?email=${email}`);
-      
+
       dispatch({
         type: GET_PRODUCT_CART,
         payload: data,
       });
     } catch (error) {
-      console.log(error.message );
+      console.log(error.message);
     }
   };
 };
@@ -118,16 +116,16 @@ export const getProductCart = (email) => {
 export const addProduct = (productdata) => {
   return async (dispatch) => {
     try {
-      const  data  = await axios.post( endpoint, productdata)
+      const data = await axios.post(endpoint, productdata);
       dispatch({
         type: POST_PRODUCT,
-        payload: data
-      })
+        payload: data,
+      });
     } catch (error) {
-      alert ("Hubo un problema al crear el producto")
+      alert("Hubo un problema al crear el producto");
     }
-  }
-}
+  };
+};
 /* ca */
 export const deleteProductCart = (product_id, email) => {
   return async (dispatch) => {
@@ -138,17 +136,13 @@ export const deleteProductCart = (product_id, email) => {
 
      /* dispatch({
         type: DELETE_PRODUCT_CART,
-        payload: {
-          data: data
-        },
+        payload: productId
       })
-*/
-
     } catch (error) {
-      alert ("Hubo un problema al eliminar el producto")
+      alert("Hubo un problema al eliminar el producto");
     }
-  }
-}
+  };
+};
 
 export const getProductsTrending = () => {
   return async (dispatch) => {
@@ -160,7 +154,7 @@ export const getProductsTrending = () => {
       });
     } catch (error) {
       console.log(error.message);
-      alert ("Hubo un problema trayendo las categorías")
+      alert("Hubo un problema trayendo las categorías");
     }
   };
 };
@@ -202,7 +196,7 @@ export const filterCategory = (category) => {
       });
     } catch (error) {
       console.log(error.message);
-      alert ("Hubo un problema trayendo las categorías")
+      alert("Hubo un problema trayendo las categorías");
     }
   };
 };
@@ -211,70 +205,67 @@ export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`${endpoint}/${id}`);
-      dispatch( {
+      dispatch({
         type: DELETE_PRODUCT_BY_ID,
         payload: {
           data: data,
-          id: id
+          id: id,
         },
-      })
+      });
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema eliminando el producto")
+      alert("Hubo un problema eliminando el producto");
     }
-    }
-} 
+  };
+};
 
 export const updateProduct = (id, updatedProductData) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.put(`${endpoint}/${id}`, updatedProductData);
-      dispatch( {
+      dispatch({
         type: UPDATE_PRODUCT_BY_ID,
         payload: {
           data: data,
           id: id,
-          updatedProductData: updatedProductData
-        }
-      })
+          updatedProductData: updatedProductData,
+        },
+      });
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema actualizando el producto")
+      alert("Hubo un problema actualizando el producto");
     }
-    }
-} 
+  };
+};
 
 export function postProductCart(userData) {
   return async (dispatch) => {
-      
-      try {
-          const { data } = await axios.post(`${endpoint}/cart`, userData)
-          
-          return data
-          /*dispatch({
-              type: POST_PRODUCT_CART,
-              payload: data
-          })*/
-      } catch (error) {
-          console.log(error.message); 
-          return error.message;
-      }
-  }
+    try {
+      const { data } = await axios.post(`${endpoint}/cart`, userData);
+
+      dispatch({
+        type: POST_PRODUCT_CART,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  };
 }
 
-export function filterByName(payload){
-  return{
-      type: ORDER_BY_NAME,
-      payload
-  }
+export function filterByName(payload) {
+  return {
+    type: ORDER_BY_NAME,
+    payload,
+  };
 }
 
-
-export function filterByPrice(payload){
-  return{
-      type: ORDER_BY_PRICE,
-      payload
-  }
+export function filterByPrice(payload) {
+  return {
+    type: ORDER_BY_PRICE,
+    payload,
+  };
 }
 
 export const setCurrentPage = (page) => {
