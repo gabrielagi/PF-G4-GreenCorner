@@ -147,7 +147,9 @@ export function postFavorites(userData) {
 export function deleteUser(id) {
   return async (dispatch) => {
     try {
+      console.log("llego a la action delete")
       const { data } = await axios.delete(`${endpoint}/${id}`);
+      console.log("respuesta del delete en data" + data)
       dispatch({
         type: DELETE_USER,
         payload: data,
