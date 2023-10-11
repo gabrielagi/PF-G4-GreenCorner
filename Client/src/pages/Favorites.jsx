@@ -14,12 +14,12 @@ import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../Redux/actions/product/action";
 
 const Favorites = () => {
- 
+   
 
 
 
-const dispatch=useDispatch()
-  const favorites =useSelector((state) => state.favorites);
+const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
   const allCategories = useSelector((state) => state.categories);
   const { user } = useAuth0();
   const currentPage = useSelector((state) => state.pagination.currentPage); 
@@ -87,7 +87,9 @@ console.log('ants del return');
 console.log(favorites)
   return (
     <div className="font-poppins mx-5">
-<h1 className="text-center  font-poppins font-extrabold py-10 my-10 text-4xl sm:text-5xl bg-yellow-200">Mis productos favoritos</h1>
+      <h1 className="text-center  font-poppins font-extrabold py-10 my-10 text-4xl sm:text-5xl bg-yellow-200">
+        Mis productos favoritos
+      </h1>
       <div className="grid md:grid-cols-2 gap-x-20 md:gap-x-10  my-10 ">
         <div className="py-10    my-10  align-top justify-center   w-full col-span-1 bg-green-500 bg-opacity-25 grid md:h-[700px] object-top max-h-max md:w-[400px] md:mx-auto md:ml-40 ">
           <div className="bg-green-800 bg-opacity-25  px-10 text-center h-[100px] mb-10 items-center align-middle justify-center object-center">
@@ -197,11 +199,8 @@ console.log(favorites)
          
             </div>  
       </div>
-              
+
       {/* //className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:h-[250px] md:w-[250px]  */}
-
-
-     
     </div>
   );
 };

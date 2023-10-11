@@ -79,12 +79,12 @@ a {
   transition: color 0.7s;
 }
 
-.nav__link .home {
+.nav__link:hover {
   color: rgb(0, 133, 0);
 }
 
-.nav__link:hover {
-  color: rgb(0, 133, 0);
+.activeLink {
+  color: rgb(56, 165, 56); 
 }
 
 .nav__toggler {
@@ -205,8 +205,16 @@ a {
   height: 0;
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
-  border-bottom: 10px solid #000000; /* Color del fondo del menú */
+  border-bottom: 10px solid #000000; 
 }
+
+.loading {
+  position: block;
+  margin: 0 auto;
+  width: 60px;
+  height: 60px;
+}
+
 
 @media (max-width: 1505px) {
   .searchInput {
@@ -314,3 +322,5 @@ a {
     width: 270px;
   }
 }
+
+
