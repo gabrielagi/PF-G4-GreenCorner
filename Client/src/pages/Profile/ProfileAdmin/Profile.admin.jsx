@@ -7,6 +7,7 @@ import Create from "./Create/Create";
 import ShowUsers from "./UserSettings/ShowUsers";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
+import ProductDashboard from "./ProductDashboard/ProductDashboard";
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
@@ -16,7 +17,7 @@ const ProfileAdmin = () => {
       case "Create Product":
         return <Create />;
       case "Products":
-        return <p>Esto muestra el panel de productos</p>;
+        return <ProductDashboard />;
       case "Profile":
         return <ProfileDashboard />;
       case "Users":

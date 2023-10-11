@@ -134,7 +134,7 @@ export const deleteProductCart = (product_id, email) => {
 
       const { data } = await axios.delete(`${endpoint}/cart/${email}/${product_id}`);
 
-     /* dispatch({
+      dispatch({
         type: DELETE_PRODUCT_CART,
         payload: productId
       })
@@ -212,6 +212,7 @@ export const deleteProduct = (id) => {
           id: id,
         },
       });
+      console.log('Producto eliminado con éxito');
     } catch (error) {
       console.log(error.message);
       alert("Hubo un problema eliminando el producto");

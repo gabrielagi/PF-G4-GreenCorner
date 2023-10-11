@@ -1,4 +1,4 @@
-import {
+import { 
   GET_ALL_USER,
   GET_USER_BY_NAME,
   GET_USER_BY_ROL,

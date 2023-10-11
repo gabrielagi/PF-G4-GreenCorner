@@ -68,6 +68,12 @@ let products = [];
 let availableProducts = [];
 let availableSearchbar = [];
 
+
+/* Edit */
+let updatedProductId; 
+let updatedProductData;
+let updatedAllProducts; 
+
 function rootReducer(state = initialState, action) {
 
   switch (action.type) {
@@ -113,6 +119,21 @@ function rootReducer(state = initialState, action) {
         ...state,
         productDetail: action.payload,
       };
+
+      case UPDATE_PRODUCT_BY_ID:
+        updatedProductId = action.payload.id;
+       updatedProductData = action.payload.updatedProductData;
+       updatedAllProducts = state.allProducts.map((product) => {
+      if (product.product_id === updatedProductId) {
+        return { ...product, ...updatedProductData };
+      } else {
+       return product;
+     }
+      });
+     return {
+    ...state,
+    allProducts: updatedAllProducts,
+  };
     case GET_PRODUCT_TRENDING:
       return {
         ...state,
@@ -176,6 +197,9 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         product: state.product.filter(
+          (product) => product.id !== action.payload.id
+        ),
+        allProducts: state.allProducts.filter(
           (product) => product.id !== action.payload.id
         ),
       };
