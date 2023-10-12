@@ -280,6 +280,7 @@ export function postProductCart(userData) {
         type: POST_PRODUCT_CART,
         payload: data,
       });
+      return data;
     } catch (error) {
       console.log(error.message);
       return error.message;
