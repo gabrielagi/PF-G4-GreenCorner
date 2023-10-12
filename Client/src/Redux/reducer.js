@@ -199,7 +199,7 @@ function rootReducer(state = initialState, action) {
         categories: Category,
       };
     case FIND_FAV_BY_NAME:
-      console.log(state.allFavorites[0].Product.name)
+    
       favorites=state.allFavorites.find((fav)=> { if(fav.Product){ return fav.Product.name === action.payload} else {return fav.name===action.payload}})
       favorites ? console.log('sii') : console.log('noo')
       return{
