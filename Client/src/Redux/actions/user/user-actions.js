@@ -148,6 +148,24 @@ export function postFavorites(userData) {
   };
 }
 
+export function deleteFavorite(id,email) {
+  return async (dispatch) => {
+    try {
+      console.log("llego a la action delete")
+      
+      const { data } = await axios.delete(`${endpoint}/favorites/${email}/${id}`);
+
+      dispatch({
+        type: DELETE_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.mesage;
+    }
+  };
+}
+
 export function deleteUser(id) {
   return async (dispatch) => {
     try {
