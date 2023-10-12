@@ -313,15 +313,15 @@ const displayedUsers = allUsers.slice(startIndex, endIndex);
                           <div className="text-[15px] font-semibold text-gray-900">
                             {user.name}
                           </div>
-                          <div className="text-sm font-normal text-gray-500">
+                          <div className="text-[13px] font-normal text-gray-500">
                             {user.nickname}
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.email}
                       </td>
-                      <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.role}
                       </td>
                       {/* Status */}

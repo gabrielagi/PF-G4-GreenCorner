@@ -79,7 +79,7 @@ const App = () => {
           }
         />
       
-        {/* <Route path="/create" element={<Create />} /> */}
+        
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/prueba" element={<Slider />} />

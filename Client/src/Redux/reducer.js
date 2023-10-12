@@ -47,30 +47,29 @@ const initialState = {
   productDetail: [],
   allUsers: [],
   userDetail: [],
-  pagination: { 
-    currentPage: 1, 
+  pagination: {
+    currentPage: 1,
   },
-  allFavorites:[]
+  allFavorites: [],
 };
 
-
 function updater(product, id, updatedProductData) {
-    const index = product.findIndex(item => item.id === id);
+  const index = product.findIndex((item) => item.id === id);
 
-    if (index !== -1) {
-        const currentProduct = product[index];
+  if (index !== -1) {
+    const currentProduct = product[index];
 
-        for (const property in updatedProductData) {
-            if (updatedProductData.hasOwnProperty(property)) {
-                if (currentProduct.hasOwnProperty(property)) {
-                    currentProduct[property] = updatedProductData[property];
-                }
-            }
+    for (const property in updatedProductData) {
+      if (updatedProductData.hasOwnProperty(property)) {
+        if (currentProduct.hasOwnProperty(property)) {
+          currentProduct[property] = updatedProductData[property];
         }
-
-        product[index] = currentProduct;
+      }
     }
-} 
+
+    product[index] = currentProduct;
+  }
+}
 
 let usersStatus = [];
 let statusSorted = [];
@@ -87,26 +86,25 @@ let productMatch= []
 let availableProducts = [];
 let availableSearchbar = [];
 
-
 /* Edit */
-let updatedProductId; 
+let updatedProductId;
 let updatedProductData;
-let updatedAllProducts; 
+let updatedAllProducts;
 
 //action.payload === allFavorites 
 // paso 1= filtrar todos los productos por el action.payload( voy a tener de resultado todos ls productos con sus categorias pero que sean de favoritos)
 function rootReducer(state = initialState, action) {
-
   switch (action.type) {
     case GET_ALL_PRODUCT:
-      availableProducts = action.payload.filter((product) => product.available === true);
-     // console.log (availableProducts)
+      availableProducts = action.payload.filter(
+        (product) => product.available === true
+      );
+      // console.log (availableProducts)
       return {
         ...state,
         allProducts: action.payload,
         product: state.product.length ? state.product : availableProducts,
       };
-    
 
     case RESET_ALL_PRODUCT:
       return {
@@ -119,18 +117,20 @@ function rootReducer(state = initialState, action) {
           favorites: state.allFavorites,
         };
     case GET_PRODUCT_BY_NAME:
-      availableSearchbar = action.payload.filter((product) => product.available === true);
+      availableSearchbar = action.payload.filter(
+        (product) => product.available === true
+      );
       return {
         ...state,
         product: availableSearchbar,
+        allProducts: action.payload,
       };
-      
-    case GET_PRODUCT_CART:
 
-            return {
-                ...state,
-                productCart: action.payload
-            }
+    case GET_PRODUCT_CART:
+      return {
+        ...state,
+        productCart: action.payload,
+      };
 
     case POST_PRODUCT_CART:
       return {
@@ -138,27 +138,26 @@ function rootReducer(state = initialState, action) {
         productCart: [...state.productCart, action.payload],
       };
 
-
     case GET_PRODUCT_BY_ID:
       return {
         ...state,
         productDetail: action.payload,
       };
 
-      case UPDATE_PRODUCT_BY_ID:
-        updatedProductId = action.payload.id;
-       updatedProductData = action.payload.updatedProductData;
-       updatedAllProducts = state.allProducts.map((product) => {
-      if (product.product_id === updatedProductId) {
-        return { ...product, ...updatedProductData };
-      } else {
-       return product;
-     }
+    case UPDATE_PRODUCT_BY_ID:
+      updatedProductId = action.payload.id;
+      updatedProductData = action.payload.updatedProductData;
+      updatedAllProducts = state.allProducts.map((product) => {
+        if (product.product_id === updatedProductId) {
+          return { ...product, ...updatedProductData };
+        } else {
+          return product;
+        }
       });
-     return {
-    ...state,
-    allProducts: updatedAllProducts,
-  };
+      return {
+        ...state,
+        allProducts: updatedAllProducts,
+      };
     case GET_PRODUCT_TRENDING:
       return {
         ...state,
@@ -208,7 +207,7 @@ function rootReducer(state = initialState, action) {
         categories: Category,
       };
     case FIND_FAV_BY_NAME:
-      console.log(state.allFavorites[0].Product.name)
+    
       favorites=state.allFavorites.find((fav)=> { if(fav.Product){ return fav.Product.name === action.payload} else {return fav.name===action.payload}})
       favorites ? console.log('sii') : console.log('noo')
       return{
@@ -377,14 +376,15 @@ function rootReducer(state = initialState, action) {
         };
   
     //case GET_ALL_USER:
-      //return {
-       // ...state,
-       // user: state.user,
-     // };
+    //return {
+    // ...state,
+    // user: state.user,
+    // };
 
     case GET_USER_BY_NAME:
       return {
         ...state,
+        userDetail: action.payload,
         userDetail: action.payload,
       };
 
@@ -392,11 +392,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_ROL:
       return {
         ...state,
+        userDetail: action.payload,
         userDetail: action.payload,
       };
 
@@ -404,11 +406,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_EMAIL:
       return {
         ...state,
+        userDetail: action.payload,
         userDetail: action.payload,
       };
 
@@ -417,50 +421,47 @@ function rootReducer(state = initialState, action) {
         ...state,
         userDetail: action.payload,
       };
-    
-      case UPDATE_USER:
-        return {
-          ...state,
-          userDetail: action.payload,
-        };
 
+    case UPDATE_USER:
+      return {
+        ...state,
+        userDetail: action.payload,
+      };
 
-        case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
-        return {
-          ...state,
-          pagination: {
-            ...state.pagination,
-            currentPage: action.payload,
-          },
-        };
-        
-      case GET_FAVORITES:
-        console.log(action.payload)
-        return{
-          ...state,
-          allFavorites:action.payload,
-          favorites:action.payload
-        }
-        case DELETE_PRODUCT_CART:
-          return{
-            ...state,
-            productCart: state.productCart.filter(product => product.id !== action.payload)
-          }
+    case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          currentPage: action.payload,
+        },
+      };
 
-      case GET_ALL_USER:
-        
-        return {
-          ...state,
-          allUsers: action.payload
-        }
+    case GET_FAVORITES:
+      console.log(action.payload);
+      return {
+        ...state,
+        allFavorites: action.payload,
+          favorites:action.payload,
+      };
+    case DELETE_PRODUCT_CART:
+      return {
+        ...state,
+        productCart: state.productCart.filter(
+          (product) => product.id !== action.payload
+        ),
+      };
+
+    case GET_ALL_USER:
+      return {
+        ...state,
+        allUsers: action.payload,
+      };
     default:
       return {
         ...state,
       };
-
-
   }
 }
 
 export default rootReducer;
-

@@ -54,18 +54,20 @@
           }));
         
           function handleCategoryChange(selectedOptions) {
-            const updatedCategories = selectedOptions.map((option) => {
+            const updatedCategories = [];
+            
+            selectedOptions.forEach((option) => {
               const matchingCategory = allCategories.find((category) => category.name === option.label);
-              
-              if (matchingCategory) {
-                return {
+          
+              if (matchingCategory && !updatedCategories.some((cat) => cat.id === matchingCategory.id)) {
+                updatedCategories.push({
                   name: option.label,
                   id: matchingCategory.id,
-                };
-              } else {
-                return {
+                });
+              } else if (!matchingCategory) {
+                updatedCategories.push({
                   name: option.label,
-                };
+                });
               }
             });
           
