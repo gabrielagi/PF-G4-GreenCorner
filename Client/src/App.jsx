@@ -23,7 +23,9 @@ import { postUser } from "./Redux/actions/user/user-actions";
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import Slider from "./components/Slider/Slider";
+import ProfileUser from "./pages/Profile/Profile.userpanel";
+import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
+import Slider from "./components/Slider/Slider2";
 
 const App = () => {
   //Carga de usuarios
@@ -76,7 +78,8 @@ const App = () => {
             />
           }
         />
-
+      
+        <Route path="/create" element={<Create />} />
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/prueba" element={<Slider />} />
