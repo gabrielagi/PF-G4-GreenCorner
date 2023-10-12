@@ -31,16 +31,16 @@ function validate(input) {
   return errors;
 }
 
-export default function EditUser() {
+export default function EditUser({ user, onSave, onClose }) {
   const dispatch = useDispatch();
 
   const [userData, setUserData] = useState({
-    nickname: "",
-    name: "",
-    lastName: "",
-    email: "",
-    role: "",
-    status: "",
+    nickname: user.nickname || "",
+    name: user.name || "",
+    lastName: user.lastName || "",
+    email: user.email || "",
+    role: user.role || "",
+    status: user.status || "",
   });
 
   const [errors, setErrors] = useState({
@@ -54,7 +54,7 @@ export default function EditUser() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setErrors(validate({...userData, [name]: value}))
+    setErrors(validate({ ...userData, [name]: value }));
     setUserData({ ...userData, [name]: value });
   };
 
@@ -67,15 +67,18 @@ export default function EditUser() {
         const updatedUserData = {
           ...userData,
         };
-        console.log(updatedUserData)
-        dispatch(updateUser(userData.id, updatedUserData));
-        // setEditMode(false);
-      } catch (error) {
-        console.error("Error al guardar cambios:", error.message);
+        dispatch(updateUser(user.id, updatedUserData))
+          .then(() => {
+            // Llamamos a la función onSave para guardar los cambios
+            onSave();
+          })
+          .catch((error) => {
+            console.error("Error al guardar cambios:", error.message);
+          });
+      } catch {
+        // Hay errores en la validación
+        setErrors(formErrors);
       }
-    } else {
-      // Hay errores en la validación
-      setErrors(formErrors);
     }
   };
 
