@@ -1,24 +1,21 @@
 .contGral {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  flex-direction: row;
 }
 
 .card_create {
-  background-color: #fff;
-  margin-top: 0px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  width: auto;
-  border: 1px solid #030303;
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  margin-right: 10px;
+  flex-direction: column;
 }
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+@media (max-width: 768px) {
+  .card_create {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 }
 
 .form {
@@ -61,6 +58,7 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+  margin-top: 20px;
 }
 
 .button:disabled {
@@ -71,6 +69,7 @@
 .imageContainer {
   position: relative;
   overflow: visible;
+  margin-top: 10px;
 }
 
 .previewImage {
@@ -79,12 +78,10 @@
   transition: transform 0.3s, filter 0.3s;
 }
 
-
 .imagePreview {
   display: flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
-
 
 .previewImage:hover {
   background-color: red;

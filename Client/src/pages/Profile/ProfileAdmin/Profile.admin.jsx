@@ -8,7 +8,7 @@ import ShowUsers from "./UserSettings/ShowUsers";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 import ProductDashboard from "./ProductDashboard/ProductDashboard";
-/* import ShowUsers from "./ShowUsers"; */
+import EditUser from "./UserSettings/EditUser";
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
@@ -28,7 +28,8 @@ const ProfileAdmin = () => {
         return <PaymentMethods />;
       case "Charts":
         // return <PaymentMethods />;
-        return <p>Esto muestra mis favoritos</p>;
+        // return <p>Esto muestra mis favoritos</p>;
+        return <EditUser />;
       // Resto de componentes en el menu
       default:
         return <ProfileDashboard />;
@@ -38,7 +39,7 @@ const ProfileAdmin = () => {
 
   return (
     <div className="flex">
-      <div className="w-1/5">
+      <div className="w-1/6 z-20">
         {/* Menú lateral */}
         {/* Menú lateral */}
         <NavbarAdmin
@@ -46,7 +47,7 @@ const ProfileAdmin = () => {
           setSelectedMenu={setSelectedMenu}
         />
       </div>
-      <div className="w-4/5" style={{ position: "relative", zIndex: 1 }}>
+      <div className="w-5/6 sm:mr-40 z-10">
         {/* Componente renderizado */}
         {renderComponentBasedOnMenu()}
       </div>

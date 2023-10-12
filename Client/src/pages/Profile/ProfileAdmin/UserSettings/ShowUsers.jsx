@@ -1,22 +1,21 @@
 import React from "react";
 import users from "./users.json";
-import { useDispatch,  useSelector } from "react-redux";
-import { getAllUsers } from "../../../../Redux/actions/user/user-actions"
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllUsers,
+  deleteUser,
+} from "../../../../Redux/actions/user/user-actions";
 import { useEffect } from "react";
 
-
 const ShowUsers = () => {
-
   const allUsers = useSelector((state) => state.allUsers);
   const dispatch = useDispatch();
-  
-  
+
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
-  
+
   console.log(allUsers);
-  
 
   return (
     <>
@@ -168,15 +167,15 @@ const ShowUsers = () => {
                           <div className="text-[15px] font-semibold text-gray-900">
                             {user.name}
                           </div>
-                          <div className="text-sm font-normal text-gray-500">
+                          <div className="text-[13px] font-normal text-gray-500">
                             {user.nickname}
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.email}
                       </td>
-                      <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.role}
                       </td>
                       {/* Status */}
@@ -216,6 +215,7 @@ const ShowUsers = () => {
                           type="button"
                           data-modal-toggle="delete-user-modal"
                           className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
+                          onClick={() => handleDeleteUserClick(user)}
                         >
                           <svg
                             className="mr-2 h-5 w-5"

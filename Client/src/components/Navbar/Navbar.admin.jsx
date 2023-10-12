@@ -60,7 +60,7 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   return (
     <section className="flex gap-6  mt-5 mb-0">
       <div
-        className={`bg-[#315098] h-[83vh] md:h-[91vh] overflow:hidden ${
+        className={`bg-[#315098] min-h-min overflow:hidden ${
           open ? "w-76" : "w-20"
         } duration-500 text-gray-100 px-4 font-poppins mb-0`}
       >

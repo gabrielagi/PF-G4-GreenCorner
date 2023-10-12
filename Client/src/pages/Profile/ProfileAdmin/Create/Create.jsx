@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCategories, addProduct } from "../../../../Redux/actions/product/action"
+import {
+  getAllCategories,
+  addProduct,
+} from "../../../../Redux/actions/product/action";
 import styles from "./Create.module.css";
 import Select from "react-select";
 
@@ -10,10 +13,18 @@ function validate(input) {
   if (!input.name || input.name.length < 2 || input.name.length > 25) {
     errors.name = "The name must be between 2 and 25 characters";
   }
-  if (isNaN(input.price) || input.price <= 0 || input.price.toString().length > 256) {
+  if (
+    isNaN(input.price) ||
+    input.price <= 0 ||
+    input.price.toString().length > 256
+  ) {
     errors.price = "Price must be a valid number greater than 0";
   }
-  if (isNaN(input.stock) || input.stock <= 0 || input.price.toString().length > 256) {
+  if (
+    isNaN(input.stock) ||
+    input.stock <= 0 ||
+    input.price.toString().length > 256
+  ) {
     errors.stock = "Stock must be a valid number greater than or equal to 0";
   }
   if (input.description.length > 256) {
@@ -32,7 +43,7 @@ function validate(input) {
 export default function Create() {
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.categories);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [input, setInput] = useState({
     name: "",
@@ -57,7 +68,7 @@ export default function Create() {
 
   function handleChange(e) {
     const { name, type, checked, value } = e.target;
-  
+
     if (type === "checkbox") {
       setInput({
         ...input,
@@ -82,7 +93,7 @@ export default function Create() {
     const files = event.target.files;
     const updatedPhotos = [...input.images];
 
-    for (let i = 0; i < files.length ; i++) {
+    for (let i = 0; i < files.length; i++) {
       try {
         const base64 = await convertBase64(files[i]);
         updatedPhotos.push(base64);
@@ -131,7 +142,7 @@ export default function Create() {
           categories: [],
           images: [],
         });
-        navigate("/"); 
+        navigate("/");
       } catch (error) {
         console.error("Error submitting form:", error);
       }
@@ -142,7 +153,7 @@ export default function Create() {
 
   return (
     <div>
-      <div className={styles.contGral}>
+      <div>
         <div className={styles.card_create}>
           <div className={styles.contTitle}>
             <div className={styles.title}>Create your product</div>
@@ -159,7 +170,7 @@ export default function Create() {
                     name="name"
                     onChange={(e) => handleChange(e)}
                     placeholder="Name"
-                    className={styles.inputs}
+                    class="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
                   />
                   {errors.name && (
                     <div className={styles.error}>{errors.name}</div>
@@ -174,7 +185,7 @@ export default function Create() {
                     name="price"
                     onChange={(e) => handleChange(e)}
                     placeholder="Price"
-                    className={styles.inputs}
+                    class="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
                   />
                   {errors.price && (
                     <div className={styles.error}>{errors.price}</div>
@@ -207,7 +218,7 @@ export default function Create() {
                     name="stock"
                     onChange={(e) => handleChange(e)}
                     placeholder="Stock"
-                    className={styles.inputs}
+                    class="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
                   />
                   {errors.stock && (
                     <div className={styles.error}>{errors.stock}</div>
@@ -216,18 +227,18 @@ export default function Create() {
               </div>
 
               <div className={styles.der}>
-              <div>
-                <div>Description:</div>
+                <div>
+                  <div>Description:</div>
                   <textarea
                     name="description"
-                    style={{resize: "none", height: "100px"}}
+                    style={{ resize: "none", height: "100px" }}
                     value={input.description}
                     onChange={(e) => handleChange(e)}
-                    className={styles.inputs}
-                    />
-                {errors.description && (
-                        <div className={styles.error}>{errors.description}</div>
-                      )}
+                    class="w-full rounded-lg border border-gray-200 focus:border-blue-300 p-4 text-[12px] "
+                  />
+                  {errors.description && (
+                    <div className={styles.error}>{errors.description}</div>
+                  )}
                 </div>
                 <div>
                   <div>Available:</div>
@@ -250,29 +261,30 @@ export default function Create() {
                 </div>
 
                 <div>
-                 <div>Images:</div>
-                    <input
-                     type="file"
-                      name="photo"
-                      onChange={(e) => handlePhotoChange(e)}
-                      multiple
+                  <div>Images:</div>
+                  <input
+                    type="file"
+                    name="photo"
+                    onChange={(e) => handlePhotoChange(e)}
+                    multiple
+                    className="pt-4"
                   />
                   {errors.images && (
                     <div className={styles.error}>{errors.images}</div>
                   )}
-                  </div>
-                  <div className={styles.imagePreview}>
-                    {input.images.map((image, index) => (
-                      <div key={index} className={styles.imageContainer}>
-                        <img
-                          src={image}
-                          alt={`Preview ${index}`}
-                          className={`${styles.previewImage} ${styles.imageHoverEffect}`} 
-                          onClick={() => handleImageDelete(index)}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                </div>
+                <div className={styles.imagePreview}>
+                  {input.images.map((image, index) => (
+                    <div key={index} className={styles.imageContainer}>
+                      <img
+                        src={image}
+                        alt={`Preview ${index}`}
+                        className={`${styles.previewImage} ${styles.imageHoverEffect}`}
+                        onClick={() => handleImageDelete(index)}
+                      />
+                    </div>
+                  ))}
+                </div>
 
                 <button
                   id="bt"
