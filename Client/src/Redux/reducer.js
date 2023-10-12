@@ -114,6 +114,7 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         product: availableSearchbar,
+        allProducts: action.payload,
       };
       
     case GET_PRODUCT_CART:
