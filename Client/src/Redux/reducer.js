@@ -385,7 +385,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
-        userDetail: action.payload,
       };
 
     case GET_PRODUCT_BY_ID:
@@ -399,13 +398,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
-        userDetail: action.payload,
       };
 
     case GET_USER_BY_ID:
       return {
         ...state,
-        userDetail: action.payload,
         userDetail: action.payload,
       };
 
@@ -413,14 +410,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
-        userDetail: action.payload,
       };
 
-    case POST_USER:
-      return {
-        ...state,
-        userDetail: action.payload,
-      };
+      case POST_USER:
+        return {
+          ...state,
+          userDetail: action.payload,
+        };
 
     case UPDATE_USER:
       return {
