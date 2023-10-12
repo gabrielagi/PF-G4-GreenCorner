@@ -42,7 +42,7 @@ const initialState = {
   searchProduct: [],
   searchByName: [],
   productDetail: [],
-  AllUsers: [],
+  allUsers: [],
   userDetail: [],
   pagination: { 
     currentPage: 1, 
@@ -75,6 +75,14 @@ let products = [];
 let favorites = [];
 //Para filtro en favorites
 let productMatch= []
+let availableProducts = [];
+let availableSearchbar = [];
+
+
+/* Edit */
+let updatedProductId; 
+let updatedProductData;
+let updatedAllProducts; 
 
 //action.payload === allFavorites 
 // paso 1= filtrar todos los productos por el action.payload( voy a tener de resultado todos ls productos con sus categorias pero que sean de favoritos)
@@ -82,16 +90,19 @@ function rootReducer(state = initialState, action) {
 
   switch (action.type) {
     case GET_ALL_PRODUCT:
+      availableProducts = action.payload.filter((product) => product.available === true);
+     // console.log (availableProducts)
       return {
         ...state,
         allProducts: action.payload,
-        product: state.product.length ? state.product : action.payload,
+        product: state.product.length ? state.product : availableProducts,
       };
+    
 
     case RESET_ALL_PRODUCT:
       return {
         ...state,
-        product: state.allProducts,
+        product: availableProducts,
       };
       case RESET_ALL_FAVORITES:
         return {
@@ -99,12 +110,13 @@ function rootReducer(state = initialState, action) {
           favorites: state.allFavorites,
         };
     case GET_PRODUCT_BY_NAME:
+      availableSearchbar = action.payload.filter((product) => product.available === true);
       return {
         ...state,
-        product: action.payload,
+        product: availableSearchbar,
       };
       
-       case GET_PRODUCT_CART:
+    case GET_PRODUCT_CART:
 
             return {
                 ...state,
@@ -123,6 +135,21 @@ function rootReducer(state = initialState, action) {
         ...state,
         productDetail: action.payload,
       };
+
+      case UPDATE_PRODUCT_BY_ID:
+        updatedProductId = action.payload.id;
+       updatedProductData = action.payload.updatedProductData;
+       updatedAllProducts = state.allProducts.map((product) => {
+      if (product.product_id === updatedProductId) {
+        return { ...product, ...updatedProductData };
+      } else {
+       return product;
+     }
+      });
+     return {
+    ...state,
+    allProducts: updatedAllProducts,
+  };
     case GET_PRODUCT_TRENDING:
       return {
         ...state,
@@ -201,13 +228,11 @@ function rootReducer(state = initialState, action) {
           }),
         };
   
-    case DELETE_PRODUCT_BY_ID:
-      return {
-        ...state,
-        product: state.product.filter(
-          (product) => product.id !== action.payload.id
-        ),
-      };
+      case DELETE_PRODUCT_BY_ID:
+        return {
+          ...state,
+          allProducts: state.allProducts.filter((product) => product.id !== action.payload.id),
+        };
 
     /*       case UPDATE_PRODUCT_BY_ID:
 
@@ -294,40 +319,40 @@ function rootReducer(state = initialState, action) {
           favorites: favoritesSorted,
         };
   
-    case GET_ALL_USER:
-      return {
-        ...state,
-        user: state.user,
-      };
+    //case GET_ALL_USER:
+      //return {
+       // ...state,
+       // user: state.user,
+     // };
 
     case GET_USER_BY_NAME:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_PRODUCT_BY_ID:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_ROL:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_ID:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case GET_USER_BY_EMAIL:
       return {
         ...state,
-        userDetail: payload,
+        userDetail: action.payload,
       };
 
     case POST_USER:
@@ -364,6 +389,13 @@ function rootReducer(state = initialState, action) {
             ...state,
             productCart: state.productCart.filter(product => product.id !== action.payload)
           }
+
+      case GET_ALL_USER:
+        
+        return {
+          ...state,
+          allUsers: action.payload
+        }
     default:
       return {
         ...state,

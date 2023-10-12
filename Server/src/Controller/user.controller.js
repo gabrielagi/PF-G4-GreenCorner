@@ -2,7 +2,7 @@ const { User, Favorite, Product } = require("../db");
 const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
-const createUser = async (nickname, email, picture, email_verified) => {
+const createUser = async (nickname, email, picture, email_verified, status) => {
   try {
     const [user, created] = await User.findOrCreate({
       where: {
@@ -12,7 +12,8 @@ const createUser = async (nickname, email, picture, email_verified) => {
         nickname,
         email,
         picture,
-        email_verified
+        email_verified,
+        /* status */
       },
     });
 
@@ -178,6 +179,28 @@ const deleteUser = async (id) => {
   }
 };
 
+
+const deleteFavorite = async (product_id, email) => {
+  
+
+
+  try {
+    const deleter = Favorite.destroy({
+      where: {
+        product_id: "123e4567-e89b-12d3-a456-426655440000",
+        email: email
+      },
+    });
+    if (deleter) {
+      return product_id;
+    } else {
+      return "This Favorite doesn't exist";
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getByRol,
@@ -189,4 +212,5 @@ module.exports = {
   deleteUser,
   updateUser,
   getUserByEmail,
+  deleteFavorite
 };

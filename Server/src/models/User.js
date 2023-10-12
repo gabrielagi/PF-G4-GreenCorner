@@ -42,6 +42,10 @@ sequelize.define('User', {
     type: DataTypes.INTEGER,
     allowNull: true,
     validate: {min: 1, max: 5,},
-  }
+  },
+ /*  status: {
+    type: DataTypes.ENUM('Active', 'Inactive'),
+    defaultValue: 'Active'
+  } */
 }, {timestamps: false});
 };  

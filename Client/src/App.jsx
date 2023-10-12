@@ -14,7 +14,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
-import Create from "./pages/Create/Create";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
 import { useEffect } from "react";
@@ -24,7 +23,8 @@ import { postUser } from "./Redux/actions/user/user-actions";
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import ProfileUser from "./pages/Profile/Profile.userpanel";
+//import ProfileUser from "./pages/Profile/Profile.userpanel";
+import ProfileUser from "./pages/Profile/ProfileUser/Profile.userpanel";
 import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
 import Slider from "./components/Slider/Slider2";
 
@@ -34,14 +34,14 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
-      console.log(user);
+      //console.log(user);
       const userData = {
         nickname: user.nickname,
         picture: user.picture,
         email: user.email,
         email_verified: user.email_verified,
       };
-      console.log(userData);
+     // console.log(userData);
       dispatch(postUser(userData));
     }
   }, [user, isAuthenticated, isLoading, dispatch]);
@@ -80,16 +80,13 @@ const App = () => {
           }
         />
       
-        <Route path="/create" element={<Create />} />
+        {/*<Route path="/create" element={<Create />} />*/}
         <Route path="/guides" element={<Guides />} />
         <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/profile-user" element={<ProfileUser/>} />
-        <Route path="/prueba" element={ <Slider/>} />
-            <Route path="/payment-method" element={<PaymentMethods/>} />
-        <Route path="/contact-us" element={<ContactUs/>} />
-        {/* { <Route path="/profile" element={<Profile/>} /> } */}
-      </Routes>
+        <Route path="/prueba" element={<Slider />} />
 
+        <Route path="/contact-us" element={<ContactUs />} />
+      </Routes>
     </div>
   );
 };

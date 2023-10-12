@@ -15,12 +15,12 @@ import { setCurrentPage } from "../Redux/actions/product/action";
 import {BiSearch} from "react-icons/bi"
 import './Favorite.styles.css'
 const Favorites = () => {
- 
+   
 
 
 
-const dispatch=useDispatch()
-  const favorites =useSelector((state) => state.favorites);
+const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.favorites);
   const allCategories = useSelector((state) => state.categories);
   const { user } = useAuth0();
   const currentPage = useSelector((state) => state.pagination.currentPage); 
@@ -209,11 +209,8 @@ console.log(favorites)
                      
           
       </div>
-              
+
       {/* //className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:h-[250px] md:w-[250px]  */}
-
-
-     
     </div>
   );
 };

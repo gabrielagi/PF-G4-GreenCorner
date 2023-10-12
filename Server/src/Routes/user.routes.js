@@ -9,6 +9,7 @@ const {
   newUserHandler,
   deleteHandler,
   updateUserHandler,
+  deleteFavoritesHandler,
   emailHandler,
 } = require("../Handler/user.handler");
 
@@ -29,6 +30,8 @@ userRouter.post("/favorites", postFavoritesHandler);
 userRouter.post("/", newUserHandler);
 
 userRouter.delete("/:id", deleteHandler);
+
+userRouter.delete("/favorites/:email/:id", deleteFavoritesHandler);
 
 userRouter.put("/:id", updateUserHandler);
 
