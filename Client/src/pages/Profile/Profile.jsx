@@ -14,7 +14,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (user && user.email) {
-      console.log("Un email a buscar", user.email);
+      //console.log("Un email a buscar", user.email);
       dispatch(getUserByEmail(user.email));
     }
   }, [dispatch, user]);

@@ -9,13 +9,18 @@ import {
   GET_CATEGORIES,
   GET_CATEGORIES_SHOP,
   FILTER_CATEGORY,
+  FILTER_FAV__CATEGORY,
   DELETE_PRODUCT_BY_ID,
   UPDATE_PRODUCT_BY_ID,
   ORDER_BY_NAME,
+  ORDER_FAV_BY_NAME,
   ORDER_BY_PRICE,
+  ORDER_FAV_BY_PRICE,
   RESET_ALL_PRODUCT,
   SET_CURRENT_PAGE,
   DELETE_PRODUCT_CART,
+  RESET_ALL_FAVORITES,
+  FIND_FAV_BY_NAME
 } from "../action-types";
 
 import axios from "axios";
@@ -26,12 +31,11 @@ const categories =`${link}/category`
 
  */
 
-const endpoint = `https://greencorner.onrender.com/product`;
-const categories =`https://greencorner.onrender.com/category`
+// const endpoint = `https://greencorner.onrender.com/product`;
+//  const categories = `https://greencorner.onrender.com/category`;
 
-
- 
-
+const endpoint = `http://localhost:3001/product/`;
+const categories = `http://localhost:3001/category`;
 
 export const getAllProducts = () => {
   return async (dispatch) => {
@@ -62,6 +66,20 @@ export const resetAllProducts = () => {
     }
   };
 };
+export const resetAllFavorites = () => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(endpoint);
+      
+      dispatch({
+        type: RESET_ALL_FAVORITES,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error.message );
+    }
+  };
+};
 
 export function getProductByName(name) {
   return async function (dispatch) {
@@ -73,6 +91,7 @@ export function getProductByName(name) {
     return response.data;
   };
 }
+
 
 export const getProductById = (id) => {
   console.log(id);
@@ -129,15 +148,20 @@ export const addProduct = (productdata) => {
 /* ca */
 export const deleteProductCart = (product_id, email) => {
   return async (dispatch) => {
-
     try {
+<<<<<<< HEAD
 
       const { data } = await axios.delete(`${endpoint}/cart/${email}/${product_id}`);
 
+=======
+      const { data } = await axios.delete(
+        `${endpoint}/cart/${email}/${product_id}`
+      );
+>>>>>>> ef9ada22133fc1d4670f99ce4d0fd66a1906b4fe
       dispatch({
         type: DELETE_PRODUCT_CART,
-        payload: productId
-      })
+        payload: product_id,
+      });
     } catch (error) {
       alert("Hubo un problema al eliminar el producto");
     }
@@ -201,6 +225,20 @@ export const filterCategory = (category) => {
   };
 };
 
+export const filterFavByCategory = (category) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: FILTER_FAV__CATEGORY,
+        payload: category,
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert ("Hubo un problema trayendo las categorías")
+    }
+  };
+};
+
 export const deleteProduct = (id) => {
   return async (dispatch) => {
     try {
@@ -212,6 +250,7 @@ export const deleteProduct = (id) => {
           id: id,
         },
       });
+      console.log('Producto eliminado con éxito');
     } catch (error) {
       console.log(error.message);
       alert("Hubo un problema eliminando el producto");
@@ -247,6 +286,7 @@ export function postProductCart(userData) {
         type: POST_PRODUCT_CART,
         payload: data,
       });
+      return data;
     } catch (error) {
       console.log(error.message);
       return error.message;
@@ -261,13 +301,34 @@ export function filterByName(payload) {
   };
 }
 
+export function findFavByName(payload){
+  return{
+    type: FIND_FAV_BY_NAME,
+    payload
+  }
+}
+export function filterFavByName(payload){
+
+  
+  return{
+      type: ORDER_FAV_BY_NAME,
+      payload
+  }
+}
+
 export function filterByPrice(payload) {
   return {
     type: ORDER_BY_PRICE,
     payload,
   };
 }
-
+export function filterFavByPrice(payload){
+  console.log('llegó al action'+payload)
+  return{
+      type: ORDER_FAV_BY_PRICE,
+      payload
+  }
+}
 export const setCurrentPage = (page) => {
   return {
     type: SET_CURRENT_PAGE,

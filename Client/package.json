@@ -21,8 +21,11 @@
     "boostrap": "^2.0.0",
     "cloudinary": "^1.41.0",
     "dotenv": "^16.3.1",
+<<<<<<< HEAD
     "nodemailer": "^6.9.6",
     "flowbite": "^1.8.1",
+=======
+>>>>>>> ef9ada22133fc1d4670f99ce4d0fd66a1906b4fe
     "react": "^18.2.0",
     "react-alice-carousel": "^2.7.1",
     "react-devtools": "^4.28.4",
@@ -31,6 +34,7 @@
     "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
     "react-images-uploading": "^3.1.7",
+    "react-modal": "^3.16.1",
     "react-redux": "^8.1.2",
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.16.0",

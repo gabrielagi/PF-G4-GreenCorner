@@ -162,10 +162,31 @@ const updateProduct = async (id, updatedData) => {
   try {
     const existingProduct = await Product.findByPk(id);
     if (!existingProduct) {
-      return false; 
+      return false;
     }
+    const existingCategories = await existingProduct.getCategories();
+    const updatedCategories = updatedData.categories || [];
+
+    const categoriesToRemove = existingCategories.filter((category) => !updatedCategories.some((updatedCategory) => updatedCategory.name === category.name));
+
+    for (const category of categoriesToRemove) {
+      await existingProduct.removeCategory(category);
+    }
+    for (const category of updatedCategories) {
+      const [categoryInstance] = await Category.findOrCreate({ where: { name: category.name } });
+      await existingProduct.addCategory(categoryInstance);
+    }
+
+    if (updatedData.images && updatedData.images.length > 0) {
+      const newImagesResult = await uploadImages(updatedData.images);
+
+      existingProduct.images = newImagesResult;
+      updatedData.images = newImagesResult;
+    }
+
     await existingProduct.update(updatedData);
-    return true; 
+
+    return true;
   } catch (error) {
     throw error;
   }
