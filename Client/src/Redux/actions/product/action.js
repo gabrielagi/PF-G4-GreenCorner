@@ -134,7 +134,7 @@ export const deleteProductCart = (product_id, email) => {
 
       const { data } = await axios.delete(`${endpoint}/cart/${email}/${product_id}`);
 
-     /* dispatch({
+      dispatch({
         type: DELETE_PRODUCT_CART,
         payload: productId
       })
