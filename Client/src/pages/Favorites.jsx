@@ -13,6 +13,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../Redux/actions/product/action";
 import {BiSearch} from "react-icons/bi"
+import styles from "../pages/Shop/Shop.module.css";
+
 import './Favorite.styles.css'
 const Favorites = () => {
    
@@ -24,6 +26,23 @@ const dispatch = useDispatch();
   const allCategories = useSelector((state) => state.categories);
   const { user } = useAuth0();
   const currentPage = useSelector((state) => state.pagination.currentPage); 
+  const productsPerPage = 9;
+  const handleChangePage = (event, value) => {
+    dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
+  };
+
+
+  const totalFavorites = favorites?.length  ;
+console.log(totalFavorites)
+  const totalPages = Math.ceil(totalFavorites / productsPerPage);
+
+
+
+
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+  const displayedFavorites = favorites && totalPages>1 ?favorites.slice(startIndex, endIndex) : favorites ;
+
 
   useEffect(() => {
     console.log('gua entra')
@@ -92,6 +111,26 @@ console.log('ants del return');
 console.log(favorites)
   return (
     <div className="font-poppins mx-5 bg-gray-200">
+          <Pagination
+        count={totalPages}
+        page={currentPage} 
+        onChange={handleChangePage}
+        className={styles.pagination}
+        size="large"
+        sx={{
+          "& .Mui-selected": {
+            backgroundColor: "#50a050",
+            fontSize: "20px",
+          },
+          "& .MuiPaginationItem-root": {
+            fontSize: "15px",
+          },
+          "& .paginationButton": {
+            backgroundColor: "#50a100"
+          }
+        }}
+      />
+
 <h1 className="  font-poppins font-extrabold py-10 my-10 text-4xl sm:text-5xl bg-[url('https://as1.ftcdn.net/v2/jpg/02/75/54/16/1000_F_275541628_oFzPVt2M2WqJhlkG3MhaPbcwjeXiFAst.jpg')] bg-cover  h-[100px] md:text-6xl text-gray-300 text-start pl-20">YOUR garden </h1>
       <div className="grid md:grid-cols-2 gap-x-20 md:gap-x-10  my-10 ">
         <div className="py-10    my-10  align-top justify-center   w-full col-span-1 bg-green-500 bg-opacity-25 grid md:h-[700px] object-top max-h-max md:w-[400px] md:mx-auto md:ml-40 ">
@@ -172,7 +211,7 @@ console.log(favorites)
             <div className="grid  sm:grid-cols-3 gap-10 mr-8 md:mr-10  md:-ml-20 grid-cols-2 my-10 md:gap-10">
             {favorites ? (
   Array.isArray(favorites) && favorites.length > 0 ? (
-    favorites.map((p) => (
+    displayedFavorites.map((p) => (
       <div className="w-[50px] h-[50px] sm:w-[200px] sm:h-[200px]" key={p.id}><Card
         
         id={p.Product?.product_id || p.product_id}

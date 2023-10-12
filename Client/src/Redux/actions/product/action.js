@@ -34,8 +34,8 @@ const categories =`${link}/category`
 const endpoint = `https://greencorner.onrender.com/product`;
  const categories = `https://greencorner.onrender.com/category`;
 
-const endpoint = `http://localhost:3001/product`;
-const categories = `http://localhost:3001/category`;
+// const endpoint = `http://localhost:3001/product`;
+// const categories = `http://localhost:3001/category`;
 // const endpoint = `http://localhost:3001/product/`;
 // const categories = `http://localhost:3001/category`;
 
