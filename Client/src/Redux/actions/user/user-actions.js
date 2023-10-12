@@ -10,13 +10,16 @@ import {
   GET_USER_BY_EMAIL,
   UPDATE_USER,
   GET_FAVORITES,
+  ORDER_USER_BY_NAME,
+  ORDER_USER_BY_ROLE,
+  ORDER_USER_BY_STATUS
 } from "../action-types";
 
 import axios from "axios";
 
 /* const link= import.meta.env.VITE_ENDPOINT
 const endpoint = `${link}/user`;  */
-//const endpoint = `https://greencorner.onrender.com/user`;
+// const endpoint = `https://greencorner.onrender.com/user`;
 
 const endpoint = `http://localhost:3001/user`;
 
@@ -117,6 +120,26 @@ export function getUserByRol(rol) {
     }
   };
 }
+
+export function orderUserByName(payload){
+  return {
+    type: ORDER_USER_BY_NAME,
+    payload,
+  }
+}
+
+export function orderUserByRole(payload){
+  return {type: ORDER_USER_BY_ROLE,
+  payload,
+}
+}
+
+export function orderUserByStatus(payload){
+  return {type: ORDER_USER_BY_STATUS,
+    payload,
+  }
+}
+
 
 export function postUser(userData) {
   return async (dispatch) => {

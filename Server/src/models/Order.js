@@ -28,7 +28,6 @@ module.exports = (sequelize) => {
       type: DataTypes.DECIMAL(10, 2), 
       allowNull: false,
     },
-    // user ID 
   }, {
     timestamps: false, 
   });

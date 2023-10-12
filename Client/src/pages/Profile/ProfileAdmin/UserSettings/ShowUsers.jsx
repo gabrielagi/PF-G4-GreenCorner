@@ -1,16 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllUsers,
-  deleteUser,
-  updateUser,
-} from "../../../../Redux/actions/user/user-actions";
-import Swal from "sweetalert2";
+import React from "react";
+import users from "./users.json";
+import { useDispatch,  useSelector } from "react-redux";
+import { getAllUsers, deleteUser, orderUserByName, orderUserByRole, orderUserByStatus } from "../../../../Redux/actions/user/user-actions"
+import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Pagination from "@mui/material/Pagination";
+import { setCurrentPage } from "../../../../Redux/actions/product/action";
+import { MdSettingsBackupRestore } from "react-icons/md";
+
+
+
+
+
 
 const ShowUsers = () => {
   const allUsers = useSelector((state) => state.allUsers);
+  const [nameOrder, setNameOrder] = useState('name');
+  const [roleOrder, setRoleOrder] = useState('admin');
+  const [statusOrder, setStatusOrder] = useState('status');
+  const currentPage = useSelector((state) => state.pagination.currentPage); 
+  const usersPerPage = 10;
+  
+
+  
   const dispatch = useDispatch();
-  const [editMode, setEditMode] = useState(false);
+  
+  const handleChangePage = (event, value) => {
+    dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
+  };
+    const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     nickname: "",
     name: "",
@@ -70,13 +91,177 @@ const ShowUsers = () => {
     }
   };
 
+function handleOrder(e) {
+    const selectedValue = e ? e.target.value : e;
+
+  
+    if (selectedValue === "asc" || selectedValue === "desc") {
+      setNameOrder(selectedValue);
+      setRoleOrder("");
+      setStatusOrder("");
+      dispatch(orderUserByName(selectedValue));
+      dispatch(setCurrentPage(1))
+      
+    } else if (selectedValue === "admin" || selectedValue === "user") {
+      setRoleOrder(selectedValue);
+      setNameOrder("");
+      setStatusOrder("")
+      dispatch(orderUserByRole(selectedValue));
+      dispatch(setCurrentPage(1))
+      
+    } else if (selectedValue === "Active" || selectedValue === "Inactive") {
+      setStatusOrder(selectedValue); 
+      setNameOrder("");
+      setRoleOrder("");
+      dispatch(orderUserByStatus(selectedValue));
+      dispatch(setCurrentPage(1))
+      
+    } else {
+      setNameOrder("");
+      setRoleOrder("");
+      setStatusOrder("");
+      dispatch(getAllUsers());
+      dispatch(setCurrentPage(1));
+      
+    }
+
+    
+  }
+
+
+
+  const editUser = (user) => {
+    console.log(user)
+  }                   
+
+  console.log(allUsers);
+
+const totalUsers = allUsers.length;
+const totalPages = Math.ceil(totalUsers / usersPerPage);
+
+const startIndex = (currentPage - 1) * usersPerPage;
+const endIndex = startIndex + usersPerPage;
+const displayedUsers = allUsers.slice(startIndex, endIndex);
+  
+ 
   return (
     <>
       {/* Contenido del componente (encabezados, tabla, etc.) */}
       <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 pt-10">
-        {/* ... Tu contenido ... */}
-      </div>
+        <div className="mb-1 w-full">
+          <div className="mb-4">
+            <h1 className="text-xl sm:text-5xl font-semibold text-gray-900">
+              All users
+            </h1>
+          </div>
+          <div className="sm:flex">
+            <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
+              {/* Searchbar */}
+              <form className="lg:pr-3" action="#" method="GET">
+                <label htmlFor="users-search" className="sr-only">
+                  Search
+                </label>
+                <div className="mt-1 relative lg:w-64 xl:w-96">
+                  <input
+                    type="text"
+                    name="email"
+                    id="users-search"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                    placeholder="Search for users"
+                    
+                  />
+                </div>
+        <InputLabel htmlFor="nameOrder">Name</InputLabel>
+          <Select
+            id="nameOrder"
+            name="nameOrder"
+            value={nameOrder}
+            onChange={handleOrder}
+            label="Name"
+          >
+            <MenuItem value="asc" style={{ fontSize: "15px" }}>
+              A - Z
+            </MenuItem>
+            <MenuItem value="desc" style={{ fontSize: "15px" }}>
+              Z - A
+            </MenuItem>
+          </Select>
 
+
+        <InputLabel >Role</InputLabel>
+          <Select
+            id="roleOrder"
+            name="roleOrder"
+            value={roleOrder}
+            onChange={handleOrder}
+            label="Role"
+          >
+            <MenuItem value="admin" style={{ fontSize: "15px" }}>
+            Admin - User
+            </MenuItem>
+            <MenuItem value="user" style={{ fontSize: "15px" }}>              
+              User - Admin
+            </MenuItem>
+        </Select>
+
+        <InputLabel >Status</InputLabel>
+          <Select
+            id="statusOrder"
+            name="statusOrder"
+            value={statusOrder}
+            onChange={handleOrder}
+            label="Status"
+          >
+            <MenuItem value="Active" style={{ fontSize: "15px" }}>
+              Active - Inactive
+            </MenuItem>
+            <MenuItem value="Inactive" style={{ fontSize: "15px" }}>
+              Inactive - Active
+            </MenuItem>
+          </Select>
+         
+              </form>
+            </div>
+          </div>
+        </div>
+        <div className="flex space-x-1">
+          <a
+            href="#"
+            className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded-md"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </a>
+          <a
+            href="#"
+            className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded-md"
+          >
+            <svg
+              className="w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 11.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </div>      
+      {/*Barra gris */}
       <div className="flex flex-col pt-10">
         {/* Tabla de usuarios */}
         <div className="overflow-x-auto">
@@ -89,7 +274,9 @@ const ShowUsers = () => {
                 </thead>
 
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {allUsers.map((user) => (
+                  {/* Mapear los usuarios aquí */}
+                  {/* Ejemplo de cómo mapear los usuarios */}
+                  {displayedUsers.map((user) => (
                     <tr key={user.id} className="hover:bg-gray-100">
                       <td className="p-4 w-4">
                         {/* Checkbox para seleccionar el usuario */}
@@ -144,6 +331,24 @@ const ShowUsers = () => {
                     </tr>
                   ))}
                 </tbody>
+                <Pagination
+                count={totalPages}
+                page={currentPage} 
+                onChange={handleChangePage}
+                size="large"
+                sx={{
+                  "& .Mui-selected": {
+                  backgroundColor: "#50a050",
+                  fontSize: "20px",
+                },
+                  "& .MuiPaginationItem-root": {
+                  fontSize: "15px",
+                },
+                  "& .paginationButton": {
+                  backgroundColor: "#50a100"
+                }
+        }}
+      />
               </table>
             </div>
           </div>
