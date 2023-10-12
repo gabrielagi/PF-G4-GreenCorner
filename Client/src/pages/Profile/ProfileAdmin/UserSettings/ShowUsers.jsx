@@ -110,7 +110,7 @@ const ShowUsers = () => {
             </svg>
           </a>
         </div>
-      </div>
+      </div>      
       {/*Barra gris */}
       <div className="flex flex-col pt-10">
         <div className="overflow-x-auto">
