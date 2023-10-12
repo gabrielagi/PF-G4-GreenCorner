@@ -149,15 +149,9 @@ export const addProduct = (productdata) => {
 export const deleteProductCart = (product_id, email) => {
   return async (dispatch) => {
     try {
-<<<<<<< HEAD
-
-      const { data } = await axios.delete(`${endpoint}/cart/${email}/${product_id}`);
-
-=======
       const { data } = await axios.delete(
         `${endpoint}/cart/${email}/${product_id}`
       );
->>>>>>> ef9ada22133fc1d4670f99ce4d0fd66a1906b4fe
       dispatch({
         type: DELETE_PRODUCT_CART,
         payload: product_id,
