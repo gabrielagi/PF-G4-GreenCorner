@@ -44,6 +44,8 @@ const createOrder = async (req, res) => {
         })
       );
 
+
+      
   // Creo los items para la preferencia
   // let payer = {
   //   name: user.given_name,
