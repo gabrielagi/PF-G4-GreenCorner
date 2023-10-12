@@ -1,5 +1,7 @@
 import { useState } from "react";
 import styles from "./ContactUs.module.css";
+import axios from 'axios';
+
 
 
 
@@ -8,18 +10,32 @@ const ContactUs = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Nombre:", name);
-    console.log("Número de teléfono:", phoneNumber);
-    console.log("Mensaje:", message);
+    try {
+      // Enviar los datos del formulario al servidor
+      await axios.post('http://localhost:3000/send-email', {
+        name,
+        phoneNumber,
+        message,
+      });
 
-    setName("");
-    setPhoneNumber("");
-    setMessage("");
+      // Limpiar los campos después de enviar el formulario
+      setName("");
+      setPhoneNumber("");
+      setMessage("");
+
+      // Mensaje de éxito o redirección después de enviar el formulario
+      // Puedes implementar esta parte según tus necesidades
+    } catch (error) {
+      console.error('Error al enviar el formulario:', error);
+      // Manejar errores aquí, mostrar un mensaje de error al usuario, etc.
+    }
+
   };
-
+  
   return (
     <div className={styles.container}>
       <div className={styles.card_contact}>
@@ -30,8 +46,9 @@ const ContactUs = () => {
       <h2>get in touch</h2>
     </div>
     <div className={styles.lowerHalf}>
+      {/* {console.log(user)} */}
       <p className={styles.p}>Phone: +1234567890</p>
-      <p className={styles.p}>Email: info@greencorner.com</p>
+      <p className={styles.p}>Email: greencornerg4@gmail.com</p>
       <p className={styles.p}>Location: GreenCorner HQ, City, Country</p>
     </div>
   </div>

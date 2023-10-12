@@ -1,4 +1,5 @@
-import { 
+import {
+  GET_FAVORITE_BY_NAME,
   GET_ALL_USER,
   GET_USER_BY_NAME,
   GET_USER_BY_ROL,
@@ -15,8 +16,12 @@ import axios from "axios";
 
 /* const link= import.meta.env.VITE_ENDPOINT
 const endpoint = `${link}/user`;  */
-/* const endpoint = `https://greencorner.onrender.com/user`; */
-const endpoint = "http://localhost:3001/user";
+//const endpoint = `https://greencorner.onrender.com/user`;
+ const endpoint = `http://localhost:3001/user/`;
+
+
+
+
 
 export const getFavorites = (email) => {
   console.log(email);
@@ -144,10 +149,30 @@ export function postFavorites(userData) {
   };
 }
 
+export function deleteFavorite(id,email) {
+  return async (dispatch) => {
+    try {
+      console.log("llego a la action delete")
+      
+      const { data } = await axios.delete(`${endpoint}/favorites/${email}/${id}`);
+
+      dispatch({
+        type: DELETE_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.mesage;
+    }
+  };
+}
+
 export function deleteUser(id) {
   return async (dispatch) => {
     try {
+      console.log("llego a la action delete")
       const { data } = await axios.delete(`${endpoint}/${id}`);
+      console.log("respuesta del delete en data" + data)
       dispatch({
         type: DELETE_USER,
         payload: data,

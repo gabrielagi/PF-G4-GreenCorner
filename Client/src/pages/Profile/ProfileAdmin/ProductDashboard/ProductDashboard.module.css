@@ -1,97 +1,109 @@
-.actions-column {
-    min-width: 150px; 
-    max-width: 150px; 
-  }
+.productDashboard {
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+}
+
+.productListTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.searchBar {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.searchInput {
+  width: 96%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.productTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.productTable, .productTable th, .productTable td {
+  border: 1px solid #ccc;
+}
+
+.productTable th, .productTable td {
+  padding: 8px;
+  text-align: left;
+}
+
+.imageColumn {
+  max-width: 100px;
+  width: 1%;
+}
 
 
-.product-table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  .product-table, .product-table th, .product-table td {
-    border: 1px solid #ccc;
-  }
-  
-  .product-table th, .product-table td {
-    padding: 8px;
-    text-align: left;
-  }
-  
-  
-  .image-column {
-    max-width: 100px; 
-    width: 1%; 
-  }
-  
-  .product-image {
-    width: 100%; 
-    height: auto; 
-    border-radius: 50%; 
-  }
-  
-  .delete-button {
-    background-color: #ff0000;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-right: 5px;
-    border-radius: 10px; 
-    display: flex; 
-    align-items: center; 
-  }
-  
-  .delete-button:hover {
-    background-color: #cc0000; 
-  }
+.productImage {
+  width: 100%;
+  height: 50px;
+  border-radius: 50%;
+}
+.nameColumn {
+  width: 20%;
+}
 
-  .edit-button {
-    background-color: #0074cc; 
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin-right: 5px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .edit-button:hover {
-    background-color: #0052a7; 
-  }
-  
-  .edit-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .edit-popup h3 {
-    margin-bottom: 10px;
-  }
-  
-  .edit-popup label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .edit-popup input {
-    width: 100%;
-    padding: 5px;
-    margin-top: 5px;
-  }
-  
-  .edit-popup button {
-    margin-top: 10px;
-  }
+.priceColumn {
+  width: 10%;
+}
 
-  .actions{
-    display: flex;
-  }
+.stockColumn {
+  width: 10%;
+}
 
+.actionsColumn {
+  width: 10%;
+}
+
+.availableColumn {
+  width: 10%;
+}
+
+.trendingColumn {
+  width: 10%;
+}
+
+
+.deleteButton {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.deleteButton:hover {
+  background-color: #cc0000;
+}
+
+.editButton {
+  background-color: #0074cc;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.editButton:hover {
+  background-color: #0052a7;
+}
+
+.actions{
+  display: flex;
+  justify-content:center;
+}

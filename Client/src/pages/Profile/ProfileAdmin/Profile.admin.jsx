@@ -9,6 +9,7 @@ import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 import ProductDashboard from "./ProductDashboard/ProductDashboard";
 import EditUser from "./UserSettings/EditUser";
+/* import ShowUsers from "./ShowUsers"; */
 
 const ProfileAdmin = () => {
   const { user } = useAuth0();
