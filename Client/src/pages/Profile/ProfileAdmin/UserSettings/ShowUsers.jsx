@@ -1,15 +1,37 @@
 import React from "react";
 import users from "./users.json";
 import { useDispatch,  useSelector } from "react-redux";
-import { getAllUsers, deleteUser } from "../../../../Redux/actions/user/user-actions"
-import { useEffect } from "react";
+import { getAllUsers, deleteUser, orderUserByName, orderUserByRole, orderUserByStatus } from "../../../../Redux/actions/user/user-actions"
+import { useEffect, useState } from "react";
 import Swal from 'sweetalert2';
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import Pagination from "@mui/material/Pagination";
+import { setCurrentPage } from "../../../../Redux/actions/product/action";
+import { MdSettingsBackupRestore } from "react-icons/md";
+
+
+
+
 
 
 const ShowUsers = () => {
   
   const allUsers = useSelector((state) => state.allUsers);
+  const [nameOrder, setNameOrder] = useState('name');
+  const [roleOrder, setRoleOrder] = useState('admin');
+  const [statusOrder, setStatusOrder] = useState('status');
+  const currentPage = useSelector((state) => state.pagination.currentPage); 
+  const usersPerPage = 10;
+  
+
+  
   const dispatch = useDispatch();
+  
+  const handleChangePage = (event, value) => {
+    dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
+  };
   
   useEffect(() => {
     dispatch(getAllUsers());
@@ -38,13 +60,59 @@ const ShowUsers = () => {
     });
   };
 
-  const editUser = () => {
+function handleOrder(e) {
+    const selectedValue = e ? e.target.value : e;
+
+  
+    if (selectedValue === "asc" || selectedValue === "desc") {
+      setNameOrder(selectedValue);
+      setRoleOrder("");
+      setStatusOrder("");
+      dispatch(orderUserByName(selectedValue));
+      dispatch(setCurrentPage(1))
+      
+    } else if (selectedValue === "admin" || selectedValue === "user") {
+      setRoleOrder(selectedValue);
+      setNameOrder("");
+      setStatusOrder("")
+      dispatch(orderUserByRole(selectedValue));
+      dispatch(setCurrentPage(1))
+      
+    } else if (selectedValue === "Active" || selectedValue === "Inactive") {
+      setStatusOrder(selectedValue); 
+      setNameOrder("");
+      setRoleOrder("");
+      dispatch(orderUserByStatus(selectedValue));
+      dispatch(setCurrentPage(1))
+      
+    } else {
+      setNameOrder("");
+      setRoleOrder("");
+      setStatusOrder("");
+      dispatch(getAllUsers());
+      dispatch(setCurrentPage(1));
+      
+    }
+
     
   }
 
-  console.log(allUsers);
-  
 
+
+  const editUser = (user) => {
+    console.log(user)
+  }                   
+
+  console.log(allUsers);
+
+const totalUsers = allUsers.length;
+const totalPages = Math.ceil(totalUsers / usersPerPage);
+
+const startIndex = (currentPage - 1) * usersPerPage;
+const endIndex = startIndex + usersPerPage;
+const displayedUsers = allUsers.slice(startIndex, endIndex);
+  
+ 
   return (
     <>
       <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 pt-10">
@@ -68,8 +136,58 @@ const ShowUsers = () => {
                     id="users-search"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                     placeholder="Search for users"
+                    
                   />
                 </div>
+        <InputLabel htmlFor="nameOrder">Name</InputLabel>
+          <Select
+            id="nameOrder"
+            name="nameOrder"
+            value={nameOrder}
+            onChange={handleOrder}
+            label="Name"
+          >
+            <MenuItem value="asc" style={{ fontSize: "15px" }}>
+              A - Z
+            </MenuItem>
+            <MenuItem value="desc" style={{ fontSize: "15px" }}>
+              Z - A
+            </MenuItem>
+          </Select>
+
+
+        <InputLabel >Role</InputLabel>
+          <Select
+            id="roleOrder"
+            name="roleOrder"
+            value={roleOrder}
+            onChange={handleOrder}
+            label="Role"
+          >
+            <MenuItem value="admin" style={{ fontSize: "15px" }}>
+            Admin - User
+            </MenuItem>
+            <MenuItem value="user" style={{ fontSize: "15px" }}>              
+              User - Admin
+            </MenuItem>
+        </Select>
+
+        <InputLabel >Status</InputLabel>
+          <Select
+            id="statusOrder"
+            name="statusOrder"
+            value={statusOrder}
+            onChange={handleOrder}
+            label="Status"
+          >
+            <MenuItem value="Active" style={{ fontSize: "15px" }}>
+              Active - Inactive
+            </MenuItem>
+            <MenuItem value="Inactive" style={{ fontSize: "15px" }}>
+              Inactive - Active
+            </MenuItem>
+          </Select>
+         
               </form>
             </div>
           </div>
@@ -166,7 +284,7 @@ const ShowUsers = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
-                  {allUsers.map((user) => (
+                  {displayedUsers.map((user) => (
                     <tr key={user.id} className="hover:bg-gray-100">
                       <td className="p-4 w-4">
                         <div className="flex items-center">
@@ -223,7 +341,7 @@ const ShowUsers = () => {
                           type="button"
                           data-modal-toggle="user-modal"
                           className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
-                          onClick={() => editUser(user.id)}
+                          onClick={() => editUser(user)}
                         >
                           <svg
                             className="mr-2 h-5 w-5"
@@ -265,6 +383,24 @@ const ShowUsers = () => {
                   ))}
                   {/* Fin del mapeo de usuarios */}
                 </tbody>
+                <Pagination
+                count={totalPages}
+                page={currentPage} 
+                onChange={handleChangePage}
+                size="large"
+                sx={{
+                  "& .Mui-selected": {
+                  backgroundColor: "#50a050",
+                  fontSize: "20px",
+                },
+                  "& .MuiPaginationItem-root": {
+                  fontSize: "15px",
+                },
+                  "& .paginationButton": {
+                  backgroundColor: "#50a100"
+                }
+        }}
+      />
               </table>
             </div>
           </div>

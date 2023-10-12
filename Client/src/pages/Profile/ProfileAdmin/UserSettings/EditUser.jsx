@@ -9,27 +9,22 @@ import styles from "../../ProfileUser/ProfileDashboard/ProfileDashboard.module.c
 function validate(input) {
   const errors = {};
 
-  if (input.nickname && !/^[A-Za-z\s]$/.test(input.nickname)) {
-    errors.nickname = "Nickname is required.";
+  if (input.nickname && input.nickname.length > 40) {   
+    errors.nickname = "Nickname must be a valid string with a maximum length of 40 characters.";
   }
 
-  if (input.name && !/^[A-Za-z\s]{1,30}$/.test(input.name)) {
-    errors.name =
-      "Name must be a valid string with a maximum length of 30 characters.";
+  if (input.name && !/^[A-Za-z\s]{1,40}$/.test(input.name)) { 
+    errors.name = "Name must be a valid string with a maximum length of 40 characters.";
   }
 
-  if (input.lastName && !/^[A-Za-z\s]{1,30}$/.test(input.lastName)) {
-    errors.lastName =
-      "Name must be a valid string with a maximum length of 30 characters.";
-  }
-
-  if (input.email && !/^.+@.+\..+$/.test(input.email)) {
-    errors.email =
-      "Email must be in a valid format (e.g., example@example.com).";
+  if (input.lastName && !/^[A-Za-z\s]{1,40}$/.test(input.lastName)) {
+    errors.lastName = "Name must be a valid string with a maximum length of 40 characters.";
   }
 
   return errors;
 }
+
+
 
 export default function EditUser() {
   const dispatch = useDispatch();
@@ -90,23 +85,7 @@ export default function EditUser() {
           <form onSubmit={(e) => handleSubmit(e)}>
             <div className={styles.form}>
               <div className={styles.izq}>
-                <div>
-                  <div>Nickname:</div>
-                  <input
-                    type="text"
-                    value={userData.nickname}
-                    onChange={handleChange}
-                    name="nickname"
-                    placeholder="Nickname"
-                    className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
-                  />
-                  {errors.nickname && (
-                    <div className="text-red-500 text-sm mt-1">
-                      {errors.nickname}
-                    </div>
-                  )}
-                </div>
-
+                
                 <div>
                   <div>Name:</div>
                   <input
@@ -142,20 +121,34 @@ export default function EditUser() {
                 </div>
 
                 <div>
-                  <div>Email:</div>
+                  <div>Nickname:</div>
                   <input
                     type="text"
-                    value={userData.email}
+                    value={userData.nickname}
                     onChange={handleChange}
-                    name="email"
-                    placeholder="Email"
+                    name="nickname"
+                    placeholder="Nickname"
                     className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
                   />
-                  {errors.email && (
+                  {errors.nickname && (
                     <div className="text-red-500 text-sm mt-1">
-                      {errors.email}
+                      {errors.nickname}
                     </div>
                   )}
+                </div>
+
+                <div>
+                  <div>Status:</div>
+                  <select
+                    className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
+                    id="status"
+                    name="status"
+                    value={userData.status}
+                    onChange={handleChange}
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
                 </div>
 
                 <div>
@@ -171,6 +164,7 @@ export default function EditUser() {
                     <option value="admin">Admin</option>
                   </select>
                 </div>
+
               </div>
               <div className={styles.der}>
                 <button
