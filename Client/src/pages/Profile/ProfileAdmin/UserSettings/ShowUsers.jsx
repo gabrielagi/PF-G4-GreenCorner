@@ -1,7 +1,10 @@
 import React from "react";
 import users from "./users.json";
-import { useDispatch,  useSelector } from "react-redux";
-import { getAllUsers, deleteUser } from "../../../../Redux/actions/user/user-actions"
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllUsers,
+  deleteUser,
+} from "../../../../Redux/actions/user/user-actions";
 import { useEffect } from "react";
 import Swal from 'sweetalert2';
 
@@ -10,7 +13,7 @@ const ShowUsers = () => {
   
   const allUsers = useSelector((state) => state.allUsers);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
@@ -43,7 +46,6 @@ const ShowUsers = () => {
   }
 
   console.log(allUsers);
-  
 
   return (
     <>
@@ -195,15 +197,15 @@ const ShowUsers = () => {
                           <div className="text-[15px] font-semibold text-gray-900">
                             {user.name}
                           </div>
-                          <div className="text-sm font-normal text-gray-500">
+                          <div className="text-[13px] font-normal text-gray-500">
                             {user.nickname}
                           </div>
                         </div>
                       </td>
-                      <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.email}
                       </td>
-                      <td className="p-4 whitespace-nowrap text-base font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.role}
                       </td>
                       {/* Status */}

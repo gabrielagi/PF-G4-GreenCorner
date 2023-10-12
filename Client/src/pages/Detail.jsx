@@ -130,10 +130,22 @@ const Detail = () => {
         </Link>
         <div className="mx-10 sm:mx-60">
           <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-          {product.name ?<div className="swiper-container-detail"><img className="mx-auto bg-gray-100 bg-opacity-20" src={product.images[0]}></img>
-                      <Slider id={id} images={product.images} setActiveImg={setActiveImg}></Slider>
-           </div>  : <p> no hay nati</p>}
-      
+            {product.name ? (
+              <div className="swiper-container-detail">
+                <img
+                  className="mx-auto bg-gray-100 bg-opacity-20"
+                  src={product.images[0]}
+                ></img>
+                <Slider
+                  id={id}
+                  images={product.images}
+                  setActiveImg={setActiveImg}
+                ></Slider>
+              </div>
+            ) : (
+              <p> no hay nati</p>
+            )}
+
             <div className=" px-10 bg-[#f6f6f6] justify-between">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
                 {product?.name}
@@ -230,7 +242,7 @@ const Detail = () => {
                 )
                   return (
                     <Card
-                      key={i}
+                      key={p.id}
                       id={p.product_id}
                       name={p.name}
                       images={p.images}

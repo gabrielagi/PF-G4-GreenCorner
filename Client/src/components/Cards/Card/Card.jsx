@@ -7,8 +7,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
-import { postFavorites } from "../../../Redux/actions/user/user-actions";
-import { getAllProducts, postProductCart,getProductCart } from "../../../Redux/actions/product/action";
+import { postFavorites, deleteFavorite } from "../../../Redux/actions/user/user-actions";
+import { getAllProducts, postProductCart,getProductCart} from "../../../Redux/actions/product/action";
 
 
 const Card = ({ name, images, price, id }) => {
@@ -75,10 +75,21 @@ const Card = ({ name, images, price, id }) => {
         product_id: product_id,
       };
      
-   dispatch(postFavorites(favorite)).then((result) => {
-    notifyII(result);
-  })
-      setCorazon(!corazon);
+      if(!corazon){
+
+        dispatch(postFavorites(favorite)).then((result) => {
+          notifyII(result);
+        })
+
+        setCorazon(!corazon);
+      }
+
+      else {
+
+        dispatch(deleteFavorite(product_id,user.email));
+        setCorazon(!corazon);
+      }
+      
 
     } else {
       loginWithRedirect();
