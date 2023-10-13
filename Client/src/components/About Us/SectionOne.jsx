@@ -1,12 +1,12 @@
-import plantsAbout from "../../img/plantsAbout.jpg";
+import plantsAbout from "../../img/SectionThreeImg1About.jpg";
 const SectionOne = () => {
   return (
     
-      <div className="pb-10 my-20 font-poppins mx-auto grid md:grid-cols-2 md:max-h-[450px] sm:bg-green-200 bg-green-200 gap-x-20 md:pb-0 "
-        //h-[400px] sm:p-8 md:p-12 lg:p-16 xl:p-20 
+      <div className="pb-10  font-poppins mx-auto grid md:grid-cols-2 md:max-h-[450px] sm:bg-[url('https://www.teahub.io/photos/full/349-3490966_mac-wallpaper-plants.jpg')] bg-cover bg-center gap-x-20 md:pb-0 "
+     
         
-        //data-aos="fade-left"
-        //data-aos-duration="1000"
+        data-aos="fade-left"
+        data-aos-duration="1000"
       >
         <div className=" "> 
           <img

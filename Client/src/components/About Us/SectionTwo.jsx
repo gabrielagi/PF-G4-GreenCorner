@@ -4,7 +4,7 @@ import img2 from "../../img/SectionTwoImg2About.jpg";
 import img3 from "../../img/SectionTwoImg3About.jpg";
 const SectionTwo = () => {
     return(
-        <div className="font-poppins bg-green-300 p-4 sm:p-8 md:p-12 lg:p-16 xl:p-20 "
+        <div className="font-poppins bg-white p-4 sm:p-8 md:p-12 lg:p-16 xl:p-20 "
         data-aos="fade-right"
         data-aos-duration="1000"
         >

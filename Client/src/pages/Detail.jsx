@@ -24,12 +24,12 @@ const Detail = () => {
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
 
-  const [activeImg, setActiveImg] = useState();
+  const [activeImg, setActiveImg] = useState(product.images && product.images[0]);
   const [amount, setAmount] = useState(1);
 
   useEffect(() => {
     dispatch(getProductById(id));
-    console.log("entré y la cagué" + id);
+   return ;
   }, [dispatch, id]);
 
   const notify = () =>
@@ -131,11 +131,11 @@ const Detail = () => {
         </Link>
         <div className="mx-10 sm:mx-60">
           <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-            {product.name ? (
+            {activeImg ? (
               <div className="swiper-container-detail">
                 <img
                   className="mx-auto bg-gray-100 bg-opacity-20"
-                  src={product.images[0]}
+                  src={activeImg}
                 ></img>
                 <Slider
                   id={id}
