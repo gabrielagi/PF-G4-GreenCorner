@@ -46,8 +46,9 @@ const ShowUsers = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
@@ -422,7 +423,7 @@ const ShowUsers = () => {
                       className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
                       id="role"
                       name="role"
-                      value={formData.status}
+                      value={formData.role}
                       onChange={handleInputChange}
                     >
                       <option value="user">User</option>
@@ -433,13 +434,13 @@ const ShowUsers = () => {
                     <div>Status:</div>
                     <select
                       className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
-                      id="role"
-                      name="role"
-                      value={formData.role}
+                      id="status"
+                      name="status"
+                      value={formData.status}
                       onChange={handleInputChange}
                     >
-                      <option value="user">Active</option>
-                      <option value="admin">Inactive</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
                     </select>
                   </div>
                 </div>
