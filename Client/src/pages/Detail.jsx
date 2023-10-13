@@ -105,6 +105,7 @@ const Detail = () => {
   const handleCheckout = async () => {
     if (isAuthenticated) {
       try {
+      
         const { data } = await axios.post(
           "http://localhost:3001/payment/create-order",
           { product, amount }

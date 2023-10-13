@@ -2,6 +2,7 @@ import "tailwindcss/tailwind.css";
 import "./Carts.css";
 import { useEffect } from "react";
 import Cart from "./Cart";
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductCart } from "../../Redux/actions/product/action";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -22,6 +23,41 @@ const Carts = () => {
       dispatch(getProductCart(user.email));
     }
   }, [user, dispatch]);
+
+  const handleCheckout = async () => {
+      try {
+        
+        for (let i = 0; i < products.length; i++) {
+  
+          let product = []
+          product.push({
+           id : products[i].Product.product_id,
+           amount : products[i].amount,
+           name : products[i].Product.name,
+           price : products[i].Product.price
+          })
+
+          console.log(product);
+
+        
+        
+        const { data } = await axios.post(
+          "http://localhost:3001/payment/create-order",
+          { product, amount: products[i].amount }
+        );
+        console.log("Data en el componente Detail", data);
+        console.log("Init point en el componente Detail", data);
+      
+        location.href = data.result;
+      }
+      } catch (error) {
+        console.log(error.message);
+      }
+
+  };
+
+
+
 
   return (
     <div>
@@ -60,7 +96,7 @@ const Carts = () => {
         <div className="containerCartsTotal"><strong>${total}</strong></div>   
         <div className="containerCartsTtotal"><strong>Total</strong></div>    
         </div>   
-        <button><div className="checkoutContainer"><div className="checkout">Checkout</div></div></button>    
+        <button onClick={handleCheckout}><div className="checkoutContainer"><div className="checkout">Checkout</div></div></button>    
         
     </div>
   );

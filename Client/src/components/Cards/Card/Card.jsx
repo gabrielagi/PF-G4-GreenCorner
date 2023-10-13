@@ -86,7 +86,9 @@ const Card = ({ name, images, price, id }) => {
 
       else {
 
-        dispatch(deleteFavorite(product_id,user.email));
+        dispatch(deleteFavorite(product_id,user.email)).then((result) => {
+          notifyII(result);
+        })
         setCorazon(!corazon);
       }
       
