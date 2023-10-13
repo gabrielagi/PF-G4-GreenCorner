@@ -206,6 +206,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         categories: Category,
       };
+      
     case FIND_FAV_BY_NAME:
       favorites = state.allFavorites.find((fav) => {
         if (fav.Product) {
