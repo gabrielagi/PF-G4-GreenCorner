@@ -19,16 +19,26 @@ import ContactUs from "./pages/Contact-Us/ContactUs";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
+import { useSelector } from "react-redux";
 
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import Slider from "./components/Slider/Slider";
+import ProfileUser from "./pages/Profile/ProfileUser/Profile.userpanel"
+import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
+import Banned from "./pages/Banned/Banned.jsx";
+import Slider from "./components/Slider/Slider2";
 
 const App = () => {
+
+
   //Carga de usuarios
   const { user, isAuthenticated, isLoading } = useAuth0();
   const dispatch = useDispatch();
+  const userStatus = useSelector((state) => state.userDetail.status);
+
+
+
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
       //console.log(user);
@@ -45,44 +55,45 @@ const App = () => {
 
   return (
     <div>
-      <Navbar />
+      {userStatus === "Inactive" ? (
+        <Banned />
+      ) : (
+        <>
+          <Navbar />
+          <ToastContainer />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/fail" element={<NotVerified />} />
+            <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/cart" element={<Carts />} />
 
-      <ToastContainer />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/fail" element={<NotVerified />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/about-us" element={<AboutUs />} />
-        <Route path="/shop" element={<Shop />} />
-
-        <Route path="/cart" element={<Carts />} />
-
-        {/* RUTAS PRIVADAS AL INGRESAR SI NO ESTAS LOGIN TE REDIRIGE A HOME */}
-        <Route
-          path="/favorites"
-          element={
-            <PrivateRoute
-              element={<Favorites />}
-              isAuthenticated={isAuthenticated}
+            {/* Rutas privadas al ingresar, si no estás logueado te redirige a Home */}
+            <Route
+              path="/favorites"
+              element={
+                <PrivateRoute
+                  element={<Favorites />}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute
-              element={<Profile />}
-              isAuthenticated={isAuthenticated}
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute
+                  element={<Profile />}
+                  isAuthenticated={isAuthenticated}
+                />
+              }
             />
-          }
-        />
-
-        <Route path="/guides" element={<Guides />} />
-        <Route path="/contact-us" element={<ContactUs />} />
-        <Route path="/prueba" element={<Slider />} />
-
-        <Route path="/contact-us" element={<ContactUs />} />
-      </Routes>
+            <Route path="/guides" element={<Guides />} />
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/prueba" element={<Slider />} />
+          </Routes>
+        </>
+      )}
     </div>
   );
 };

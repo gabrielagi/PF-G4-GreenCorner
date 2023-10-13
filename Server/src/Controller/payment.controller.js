@@ -15,34 +15,39 @@ const createOrder = async (req, res) => {
   // El product puede ser un objeto individual desde Detail o un array desde Cart
   const product = req.body.product;
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
-
+  console.log("Este es el producto que me llega a payment: ", product);
   // Guardo los items que se van a vender
   let items = [];
 
-  // Si viene de Detail es un objeto
-  let convertProdcutFromDetail = {};
-  if (typeof product === "object") {
-    convertProdcutFromDetail = {
-      id: product.id,
-      quantity: amount,
-      title: product.name,
-      unit_price: parseInt(product.price),
-      currency_id: "ARS",
-    };
-  }
-
-  // Verifico si es un producto individual o un conjunto de Productos
-  convertProdcutFromDetail
-    ? items.push(convertProdcutFromDetail)
-    : product.forEach((product) =>
+  if (Array.isArray(product)) {
+    // Si product es un arreglo, iteramos sobre cada elemento y validamos el precio
+    for (const item of product) {
+      if (typeof item.price === "number") {
         items.push({
-          id: product.id,
-          quantity: product.amount,
-          title: product.name,
-          unit_price: product.price,
+          id: item.id,
+          quantity: item.amount,
+          title: item.name,
+          unit_price: item.price,
           currency_id: "ARS",
-        })
-      );
+        });
+      } else {
+        console.error(`Invalid price for product ${item.id}`);
+      }
+    }
+  } else if (typeof product === "object") {
+    // Si product es un objeto, validamos el precio directamente
+    if (typeof product.price === "number") {
+      items.push({
+        id: product.id,
+        quantity: amount,
+        title: product.name,
+        unit_price: product.price,
+        currency_id: "ARS",
+      });
+    } else {
+      console.error(`Invalid price for product ${product.id}`);
+    }
+  }
 
   // Creo los items para la preferencia
   // let payer = {
@@ -64,15 +69,12 @@ const createOrder = async (req, res) => {
   try {
     const result = await mercadopago.preferences.create({
       payer_email: "test_user_1398180221@testuser.com",
-      //payer: payer,
       items,
-      // URLs de redirección
       back_urls: {
         success: `${HOST}/success`,
         failure: `${HOST}/failure`,
-        pending: `${HOST}/pending`, // Cuando el usuario no ha pagado
+        pending: `${HOST}/pending`,
       },
-      // Es cuando el pago ha terminado
       notification_url: "https://fb4d-190-97-120-13.ngrok.io/payment/webhook",
       auto_return: "approved",
     });
@@ -99,7 +101,7 @@ const createOrder = async (req, res) => {
 const success = (req, res) => {
   console.log(req.query);
   // res.send('Pago realizado')
-  
+
   res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir
 };
 
@@ -123,7 +125,6 @@ const receiveWebhook = async (req, res) => {
       // Puedo guadar la información del usuario una vez que compró
       // Actualizar cantidad de productos en el Stock de los productos vendidos
     }
-
 
     res.status(204); // Significa que todo salió bien pero no devuelve nada
   } catch (error) {

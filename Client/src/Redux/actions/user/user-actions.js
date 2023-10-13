@@ -1,4 +1,5 @@
-import { 
+import {
+  GET_FAVORITE_BY_NAME,
   GET_ALL_USER,
   GET_USER_BY_NAME,
   GET_USER_BY_ROL,
@@ -9,14 +10,18 @@ import {
   GET_USER_BY_EMAIL,
   UPDATE_USER,
   GET_FAVORITES,
+  ORDER_USER_BY_NAME,
+  ORDER_USER_BY_ROLE,
+  ORDER_USER_BY_STATUS,
 } from "../action-types";
 
 import axios from "axios";
 
 /* const link= import.meta.env.VITE_ENDPOINT
 const endpoint = `${link}/user`;  */
-//const endpoint = `https://greencorner.onrender.com/user`;
-const endpoint = "http://localhost:3001/user";
+// const endpoint = `https://greencorner.onrender.com/user`;
+
+const endpoint = `http://localhost:3001/user`;
 
 export const getFavorites = (email) => {
   console.log(email);
@@ -116,6 +121,21 @@ export function getUserByRol(rol) {
   };
 }
 
+export function orderUserByName(payload) {
+  return {
+    type: ORDER_USER_BY_NAME,
+    payload,
+  };
+}
+
+export function orderUserByRole(payload) {
+  return { type: ORDER_USER_BY_ROLE, payload };
+}
+
+export function orderUserByStatus(payload) {
+  return { type: ORDER_USER_BY_STATUS, payload };
+}
+
 export function postUser(userData) {
   return async (dispatch) => {
     try {
@@ -144,12 +164,32 @@ export function postFavorites(userData) {
   };
 }
 
+export function deleteFavorite(id, email) {
+  return async (dispatch) => {
+    try {
+      console.log("llego a la action delete");
+
+      const { data } = await axios.delete(
+        `${endpoint}/favorites/${email}/${id}`
+      );
+
+      dispatch({
+        type: DELETE_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.mesage;
+    }
+  };
+}
+
 export function deleteUser(id) {
   return async (dispatch) => {
     try {
-      console.log("llego a la action delete")
+      console.log("llego a la action delete");
       const { data } = await axios.delete(`${endpoint}/${id}`);
-      console.log("respuesta del delete en data" + data)
+      console.log("respuesta del delete en la action que va al reducer" + data);
       dispatch({
         type: DELETE_USER,
         payload: data,

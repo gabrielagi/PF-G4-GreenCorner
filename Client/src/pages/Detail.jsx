@@ -9,6 +9,7 @@ import { VscArrowCircleLeft } from "react-icons/vsc";
 import loading from "../assets/loading.gif";
 import axios from "axios";
 import Carousel from "../components/DetailCarousel/DetailCarousel";
+import Slider from "../components/Slider/Slider2";
 import { toast } from "react-toastify";
 import { postFavorites } from "../Redux/actions/user/user-actions";
 import { postProductCart } from "../Redux/actions/product/action";
@@ -23,12 +24,12 @@ const Detail = () => {
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
 
-  const [activeImg, setActiveImg] = useState();
+  const [activeImg, setActiveImg] = useState(product.images && product.images[0]);
   const [amount, setAmount] = useState(1);
 
   useEffect(() => {
     dispatch(getProductById(id));
-    console.log("entré y la cagué" + id);
+   return ;
   }, [dispatch, id]);
 
   const notify = () =>
@@ -104,6 +105,7 @@ const Detail = () => {
   const handleCheckout = async () => {
     if (isAuthenticated) {
       try {
+      
         const { data } = await axios.post(
           "http://localhost:3001/payment/create-order",
           { product, amount }
@@ -129,7 +131,21 @@ const Detail = () => {
         </Link>
         <div className="mx-10 sm:mx-60">
           <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-            <Carousel images={product.images} />
+            {activeImg ? (
+              <div className="swiper-container-detail">
+                <img
+                  className="mx-auto bg-gray-100 bg-opacity-20"
+                  src={activeImg}
+                ></img>
+                <Slider
+                  id={id}
+                  images={product.images}
+                  setActiveImg={setActiveImg}
+                ></Slider>
+              </div>
+            ) : (
+              <p> no hay nati</p>
+            )}
 
             <div className=" px-10 bg-[#f6f6f6] justify-between">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">

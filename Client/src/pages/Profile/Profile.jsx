@@ -17,6 +17,7 @@ const Profile = () => {
       //console.log("Un email a buscar", user.email);
       dispatch(getUserByEmail(user.email));
     }
+    console.log("Datos email en Profile", userDetail);
   }, [dispatch, user]);
 
   return (

@@ -15,16 +15,17 @@ const AboutUs = () => {
 
   return (
     <div className="bg-white-100">
-    <SectionOne/>
-    <section className="my-20">
-    <h1 className='text-center my-20 text-4xl font-bold text-[#4b9239] drop-shadow-xl md:text-6xl'>Our happy developers </h1>
-    <div className='bg-white bg-cover bg-no-repeat'>
-         <OurTeam />
+      <h1 className='bg-[url("https://i.pinimg.com/originals/eb/26/4b/eb264b97203cc481d8f1f26fe1539eda.jpg")] bg-cover bg-center  text-center  md:text-start md:pl-[300px] align-middle py-20  my-10 text-4xl font-bold text-[#183012] drop-shadow-xl md:text-7xl'>MEET OUR HAPPY DEVS</h1>
+   <OurTeam />
+   
+
+    <div className='bg-white bg-cover bg-no-repeat my-20'>
+          <SectionOne/>
     </div>
 
-    </section>
+    
    <SectionTwo/> 
-   <hr className="my-10"></hr>
+   
     <SectionThree/>
     </div>
   );
