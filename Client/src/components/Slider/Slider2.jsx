@@ -36,7 +36,7 @@ const swiper = new Swiper('.swiper', {
   return ()=>{
     swiper.destroy()
   }
-}
+},
 )
 {/* <div className="swiper-wrapper h-[200px]">
   
@@ -46,7 +46,10 @@ onClick={() => setActiveImg(index)} >
  </div>)} 
 
 </div> */}
-
+const handleImageClick = (image) => {
+  setActiveImg(image);
+  console.log(image)
+};
   return (
 
 <div>
@@ -56,8 +59,8 @@ onClick={() => setActiveImg(index)} >
   <div className="swiper-wrapper h-[200px]">
   
 {images.images.map((i, index) => <div  key={`thumb-${i.id}`} className="swiper-slide h-[150px] w-[150px]"
-onClick={() => setActiveImg(index)} >
- <img className='h-full w-[150px] object-cover object-center'   src={i}  alt={`Thumbnail ${index}`}/> 
+ >
+ <img onClick={() => handleImageClick(i)} className='h-full w-[150px] object-cover object-center'   src={i}  alt={`Thumbnail ${index}`}/> 
  </div>)} 
 
 </div>

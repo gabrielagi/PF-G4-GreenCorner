@@ -51,6 +51,7 @@ const App = () => {
       <Navbar />
 
       <ToastContainer />
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/fail" element={<NotVerified />} />
@@ -87,6 +88,7 @@ const App = () => {
 
         <Route path="/contact-us" element={<ContactUs />} />
       </Routes>
+      <Footer></Footer>
     </div>
   );
 };
