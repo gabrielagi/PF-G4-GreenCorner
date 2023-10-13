@@ -15,6 +15,9 @@ import {
   ORDER_FAV_BY_NAME,
   ORDER_BY_PRICE,
   ORDER_FAV_BY_PRICE,
+  ORDER_USER_BY_NAME,
+  ORDER_USER_BY_ROLE,
+  ORDER_USER_BY_STATUS,
   RESET_ALL_PRODUCT,
   GET_ALL_USER,
   GET_USER_BY_NAME,
@@ -68,6 +71,12 @@ function updater(product, id, updatedProductData) {
   }
 }
 
+let usersStatus = [];
+let statusSorted = [];
+let usersSorted = [];
+let users = [];
+let roleSorted = [];
+let usersRole = [];
 let productSorted = [];
 let favoritesSorted = [];
 let products = [];
@@ -284,6 +293,54 @@ function rootReducer(state = initialState, action) {
           ...state,
           product: productSorted,
         };
+
+      case ORDER_USER_BY_NAME:
+        users = [...state.allUsers];
+        usersSorted = users.sort(function (a, b) {
+          if (a.name > b.name) {
+            return action.payload === "asc" ? 1 : -1;
+          }
+          if (a.name < b.name) {
+            return action.payload === "asc" ? -1 : 1;
+          }
+          return 0;
+        });
+        return {
+          ...state,
+          allUsers: usersSorted,
+        };
+
+      case ORDER_USER_BY_ROLE:
+        usersRole = [...state.allUsers];
+        roleSorted = usersRole.sort(function (a, b) {
+          console.log(usersRole)
+          if (a.role > b.role) {
+            return action.payload === "admin" ? 1 : -1;
+          }
+          if (a.role < b.role) {
+            return action.payload === "admin" ? -1 : 1;
+          }
+          return 0;
+        });
+        return {
+          ...state,
+          allUsers: roleSorted,
+        };
+      case ORDER_USER_BY_STATUS:
+        usersStatus = [...state.allUsers];
+        statusSorted = usersStatus.sort(function (a, b) {
+          if (a.status > b.status) {
+            return action.payload === "Active" ? 1 : -1;
+          }
+          if (a.status < b.status) {
+            return action.payload === "Active" ? -1 : 1;
+          }
+          return 0;
+        });
+        return {
+          ...state,
+          allUsers: statusSorted,
+        };
   
 
     case ORDER_BY_PRICE:
@@ -328,7 +385,6 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
-        userDetail: action.payload,
       };
 
     case GET_PRODUCT_BY_ID:
@@ -342,13 +398,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
-        userDetail: action.payload,
       };
 
     case GET_USER_BY_ID:
       return {
         ...state,
-        userDetail: action.payload,
         userDetail: action.payload,
       };
 
@@ -356,14 +410,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
-        userDetail: action.payload,
       };
 
-    case POST_USER:
-      return {
-        ...state,
-        userDetail: action.payload,
-      };
+      case POST_USER:
+        return {
+          ...state,
+          userDetail: action.payload,
+        };
 
     case UPDATE_USER:
       return {

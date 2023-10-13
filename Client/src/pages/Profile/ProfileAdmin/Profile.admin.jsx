@@ -8,7 +8,6 @@ import ShowUsers from "./UserSettings/ShowUsers";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 import ProductDashboard from "./ProductDashboard/ProductDashboard";
-import EditUser from "./UserSettings/EditUser";
 /* import ShowUsers from "./ShowUsers"; */
 
 const ProfileAdmin = () => {
@@ -29,8 +28,8 @@ const ProfileAdmin = () => {
         return <PaymentMethods />;
       case "Charts":
         // return <PaymentMethods />;
-        // return <p>Esto muestra mis favoritos</p>;
-        return <EditUser />;
+        return <p>Esto muestra los charts</p>;
+
       // Resto de componentes en el menu
       default:
         return <ProfileDashboard />;
