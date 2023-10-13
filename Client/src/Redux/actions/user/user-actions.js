@@ -12,7 +12,7 @@ import {
   GET_FAVORITES,
   ORDER_USER_BY_NAME,
   ORDER_USER_BY_ROLE,
-  ORDER_USER_BY_STATUS
+  ORDER_USER_BY_STATUS,
 } from "../action-types";
 
 import axios from "axios";
@@ -121,25 +121,20 @@ export function getUserByRol(rol) {
   };
 }
 
-export function orderUserByName(payload){
+export function orderUserByName(payload) {
   return {
     type: ORDER_USER_BY_NAME,
     payload,
-  }
+  };
 }
 
-export function orderUserByRole(payload){
-  return {type: ORDER_USER_BY_ROLE,
-  payload,
-}
+export function orderUserByRole(payload) {
+  return { type: ORDER_USER_BY_ROLE, payload };
 }
 
-export function orderUserByStatus(payload){
-  return {type: ORDER_USER_BY_STATUS,
-    payload,
-  }
+export function orderUserByStatus(payload) {
+  return { type: ORDER_USER_BY_STATUS, payload };
 }
-
 
 export function postUser(userData) {
   return async (dispatch) => {
@@ -194,7 +189,7 @@ export function deleteUser(id) {
     try {
       console.log("llego a la action delete");
       const { data } = await axios.delete(`${endpoint}/${id}`);
-      console.log("respuesta del delete en data" + data);
+      console.log("respuesta del delete en la action que va al reducer" + data);
       dispatch({
         type: DELETE_USER,
         payload: data,
