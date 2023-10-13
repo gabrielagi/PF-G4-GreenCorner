@@ -1,4 +1,4 @@
-const { Order } = require("../db");
+const { Order, OrderDetail, Product } = require("../db");
 
 const getAllOrders = async () => {
     try {
@@ -6,6 +6,21 @@ const getAllOrders = async () => {
         return order;
     } catch (error) {
         throw new Error("Error al obtener ordenes desde la base de datos: " + error.message);
+    }
+};
+
+const getAllOrdersDetails = async () => {
+    try {
+        const orderDetail = await OrderDetail.findAll({
+            include: [{
+                model: Product,
+                required: true
+            }
+          ]
+        });
+        return orderDetail;
+    } catch (error) {
+        throw new Error("Error al obtener ordenes details desde la base de datos: " + error.message);
     }
 };
 
@@ -65,14 +80,15 @@ const getOrderByStatus = async (status) => {
         return (error)
     }
 };
-const postOrder = async (date, status, shippingAddress, addressHouseNumber, total) => {
+const postOrder = async (date, status, shippingAddress, addressHouseNumber, total, email) => {
     try {
         const newOrder = await Order.create({
             date,
             status,
             shippingAddress,
             addressHouseNumber,
-            total
+            total,
+            email
         });
 
         return newOrder;
@@ -83,10 +99,29 @@ const postOrder = async (date, status, shippingAddress, addressHouseNumber, tota
     }
 };
 
+const postOrderDetail = async (quantity, unit_price, order_id, product_id) => {
+    try {
+        const newOrderDetail = await OrderDetail.create({
+            quantity,
+            unit_price,
+            order_id,
+            product_id
+        });
+
+        return newOrderDetail;
+
+        
+    } catch (error) {
+        throw new Error("Error al agregar ordenDetail a la base de datos: " + error.message);
+    }
+};
+
 module.exports = {
     getAllOrders,
     getOrderById,
+    getAllOrdersDetails,
     // getOrderByDate,
     getOrderByStatus,
+    postOrderDetail,
     postOrder
 }
