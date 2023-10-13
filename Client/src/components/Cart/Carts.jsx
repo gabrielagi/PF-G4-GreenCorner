@@ -14,7 +14,7 @@ const Carts = () => {
 
   let total = 0;
 
-  products?.map((product) => {
+  products.map((product) => {
     total += product.Product.price * product.amount;
   });
 
@@ -46,7 +46,6 @@ const Carts = () => {
           );
         }
       }
-
       const { data } = await axios.post(
         "http://localhost:3001/payment/create-order",
         { product }

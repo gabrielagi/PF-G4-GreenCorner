@@ -133,10 +133,18 @@ function rootReducer(state = initialState, action) {
       };
 
     case POST_PRODUCT_CART:
-      return {
-        ...state,
-        productCart: [...state.productCart, action.payload],
-      };
+      console.log("Llegue al reducer con los cart: ", action.payload);
+      if (typeof action.payload === "string") {
+        return {
+          ...state,
+          productCart: [...state.productCart],
+        };
+      } else {
+        return {
+          ...state,
+          productCart: [...state.productCart, action.payload],
+        };
+      }
 
     case GET_PRODUCT_BY_ID:
       return {
@@ -206,7 +214,7 @@ function rootReducer(state = initialState, action) {
         ...state,
         categories: Category,
       };
-      
+
     case FIND_FAV_BY_NAME:
       favorites = state.allFavorites.find((fav) => {
         if (fav.Product) {
@@ -460,6 +468,10 @@ function rootReducer(state = initialState, action) {
         favorites: action.payload,
       };
     case DELETE_PRODUCT_CART:
+      console.log(
+        "Lo que voy a borrar en reducer de delete en cart es: ",
+        action.payload
+      );
       return {
         ...state,
         productCart: state.productCart.filter(

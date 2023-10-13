@@ -31,7 +31,7 @@ const Shop = () => {
   const [priceOrder, setPriceOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const productsPerPage = 9;
+  const productsPerPage = 8;
 
   const dispatch = useDispatch();
 
