@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUsers,
   deleteUser,
-  updateUser,
+  updateUserFromEdit,
   orderUserByName,
   orderUserByRole,
   orderUserByStatus,
@@ -33,13 +33,7 @@ const ShowUsers = () => {
   };
 
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
-    nickname: "",
-    name: "",
-    lastName: "",
-    role: "",
-    status: "",
-  });
+  const [formData, setFormData] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
 
   useEffect(() => {
@@ -55,14 +49,10 @@ const ShowUsers = () => {
   const editUser = (user) => {
     // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
     setEditMode(true);
+    console.log("Contenido user: ", user);
+    setFormData(user);
+    console.log("Contenido Form Data: ", formData);
     setSelectedUserId(user.id);
-    setFormData({
-      nickname: user.nickname || "",
-      name: user.name || "",
-      lastName: user.lastName || "",
-      role: user.role || "",
-      status: user.status || "",
-    });
   };
 
   const saveUserChanges = () => {
@@ -76,7 +66,7 @@ const ShowUsers = () => {
         status: formData.status,
       };
 
-      dispatch(updateUser(selectedUserId, updatedUserData))
+      dispatch(updateUserFromEdit(selectedUserId, updatedUserData))
         .then(() => {
           // Cierra el modal de edición y recarga los usuarios si es necesario
           setEditMode(false);
