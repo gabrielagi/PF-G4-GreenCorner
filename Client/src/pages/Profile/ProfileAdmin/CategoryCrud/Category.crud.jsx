@@ -8,15 +8,13 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../../../../Redux/actions/product/action";
-// import { MdSettingsBackupRestore } from "react-icons/md";
+
 
 const Category = () => {
   const allCategories = useSelector((state) => state.categories);
   const [nameOrder, setNameOrder] = useState("name");
-//   const [roleOrder, setRoleOrder] = useState("admin");
-//   const [statusOrder, setStatusOrder] = useState("status");
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const usersPerPage = 10;
+  const categoriesPerPage = 10;
 
   const dispatch = useDispatch();
 
@@ -26,7 +24,7 @@ const Category = () => {
 
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(null);
-  const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
+  const [selectedCategorieId, setSelectedCategorieId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
 
   useEffect(() => {
     dispatch(getAllCategories());
@@ -38,28 +36,28 @@ const Category = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const editUser = (user) => {
-    // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
+  const editCategories = (categorie) => {
+    // Abre el modal de edición y establece selectedCategorieId y formData en los datos del usuario seleccionado
     setEditMode(true);
-    console.log("Contenido user: ", user);
-    setFormData(user);
+    console.log("Contenido categorie: ", categorie);
+    setFormData(categorie);
     console.log("Contenido Form Data: ", formData);
-    setSelectedUserId(user.id);
+    setSelectedCategorieId(categorie.id);
   };
 
-  const saveUserChanges = () => {
+  const saveCategorieChanges = () => {
     // Verifica si hay un usuario seleccionado
-    if (selectedUserId !== null) {
-      const updatedUserData = {
+    if (selectedCategorieId !== null) {
+      const updatedCategoryData = {
         name: formData.name,
       };
-      console.log("contenido upDateUserData ", updatedUserData)
+      console.log("contenido upDateCategoryData ", updatedCategoryData)
       
-      dispatch(updateCategory(selectedUserId, updatedUserData))
+      dispatch(updateCategory(selectedCategorieId, updatedCategoryData))
         .then(() => {
           // Cierra el modal de edición y recarga los usuarios si es necesario
           setEditMode(false);
-          setSelectedUserId(null); // Restablece selectedUserId
+          setSelectedCategorieId(null); // Restablece selectedCategorieId
           dispatch(getAllCategories());
         })
         .catch((error) => {
@@ -79,8 +77,8 @@ const Category = () => {
     }
   }
 
-  // Delete user
-  const confirmDeleteUser = (id) => {
+  // Delete category
+  const confirmDeleteCategory = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -106,13 +104,13 @@ const Category = () => {
   console.log(allCategories);
 
   // Pagination settings
-  const totalUsers = allCategories.length;
-  const totalPages = Math.ceil(totalUsers / usersPerPage);
+  const totalCategorys = allCategories.length;
+  const totalPages = Math.ceil(totalCategorys / categoriesPerPage);
 
-  const startIndex = (currentPage - 1) * usersPerPage;
-  const endIndex = startIndex + usersPerPage;
-  const displayedUsers = allCategories.slice(startIndex, endIndex);
-console.log(displayedUsers)
+  const startIndex = (currentPage - 1) * categoriesPerPage;
+  const endIndex = startIndex + categoriesPerPage;
+  const displayedCategorys = allCategories.slice(startIndex, endIndex);
+console.log(displayedCategorys)
 
   return (
     <>
@@ -128,14 +126,14 @@ console.log(displayedUsers)
             <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
               {/* Searchbar */}
               <form className="lg:pr-3" action="#" method="GET">
-                <label htmlFor="users-search" className="sr-only">
+                <label htmlFor="Categorys-search" className="sr-only">
                   Search
                 </label>
                 <div className="mt-1 relative lg:w-64 xl:w-96">
                   <input
                     type="text"
                     name="email"
-                    id="users-search"
+                    id="Categorys-search"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                     placeholder="Search for category"
                   />
@@ -212,19 +210,19 @@ console.log(displayedUsers)
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
-                  {displayedUsers.map((user) => (
-                    <tr key={user.id} className="hover:bg-gray-100">
+                  {displayedCategorys.map((categorie) => (
+                    <tr key={categorie.id} className="hover:bg-gray-100">
                       <td className="p-4 w-4">
                         {/* Checkbox para seleccionar el usuario */}
                         <div className="flex items-center">
                           <input
-                            id={`checkbox-${user.id}`}
+                            id={`checkbox-${categorie.id}`}
                             aria-describedby="checkbox-1"
                             type="checkbox"
                             className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
                           />
                           <label
-                            htmlFor={`checkbox-${user.id}`}
+                            htmlFor={`checkbox-${categorie.id}`}
                             className="sr-only"
                           >
                             checkbox
@@ -233,21 +231,21 @@ console.log(displayedUsers)
                       </td>
                       {/* ... Otros campos de la fila ... */}
                       <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
-                        {user.name}
+                        {categorie.name}
                       </td>
                       
                       <td className="p-4 whitespace-nowrap space-x-2">
                         <button
                           type="button"
                           className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
-                          onClick={() => editUser(user)}
+                          onClick={() => editCategories(categorie)}
                         >
                           Edit category
                         </button>
                         <button
                           type="button"
                           className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
-                          onClick={() => confirmDeleteUser(user.id)}
+                          onClick={() => confirmDeleteCategory(categorie.id)}
                         >
                           Delete category
                         </button>
@@ -316,7 +314,7 @@ console.log(displayedUsers)
                   <button
                     type="button"
                     className="px-4 py-2 mr-2 text-white bg-cyan-600 rounded-lg focus:ring-4 focus:ring-cyan-200"
-                    onClick={saveUserChanges}
+                    onClick={saveCategorieChanges}
                   >
                     Save
                   </button>
