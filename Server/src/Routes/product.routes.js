@@ -27,21 +27,18 @@ productRouter.post("/", postProductHandler);
 
 //Anda
 productRouter.post("/cart", postProductCartHandler);
+productRouter.delete("/cart/:email/:id", deleteProductCartHandler);
 
 productRouter.delete("/:id", deleteHandler);
-
-productRouter.delete("/cart/:email/:id", deleteProductCartHandler);
 
 productRouter.put("/:id", updateProductHandler);
 
 ///RELACIONADOS
 
-productRouter.get('/:id/related', getRelatedProductsHandler);
-
+productRouter.get("/:id/related", getRelatedProductsHandler);
 
 ///TRENDING
 
-productRouter.get('/trending', getAllTrendingHandler);
-
+productRouter.get("/trending", getAllTrendingHandler);
 
 module.exports = productRouter;

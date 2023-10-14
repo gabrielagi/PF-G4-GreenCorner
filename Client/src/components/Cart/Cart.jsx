@@ -1,6 +1,7 @@
 import "./Cart.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProductCart } from "../../Redux/actions/product/action";
+import { useEffect } from "react";
+import { deleteProductCart, getProductCart } from "../../Redux/actions/product/action";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 const Cart = ({id,name, price, image, amount}) => {
@@ -10,7 +11,9 @@ const Cart = ({id,name, price, image, amount}) => {
   const dispatch = useDispatch();
 
   const handleDelete = (idProduct, email) => {
-    dispatch(deleteProductCart(idProduct, email));
+    dispatch(deleteProductCart(idProduct, email)).then(() => {
+      dispatch(getProductCart(user.email));
+    })
   };
 
 

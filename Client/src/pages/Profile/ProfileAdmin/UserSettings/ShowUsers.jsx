@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllUsers,
   deleteUser,
-  updateUser,
+  updateUserFromEdit,
   orderUserByName,
   orderUserByRole,
   orderUserByStatus,
@@ -33,35 +33,26 @@ const ShowUsers = () => {
   };
 
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState({
-    nickname: "",
-    name: "",
-    lastName: "",
-    role: "",
-    status: "",
-  });
+  const [formData, setFormData] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
 
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const editUser = (user) => {
     // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
     setEditMode(true);
+    console.log("Contenido user: ", user);
+    setFormData(user);
+    console.log("Contenido Form Data: ", formData);
     setSelectedUserId(user.id);
-    setFormData({
-      nickname: user.nickname || "",
-      name: user.name || "",
-      lastName: user.lastName || "",
-      role: user.role || "",
-      status: user.status || "",
-    });
   };
 
   const saveUserChanges = () => {
@@ -75,7 +66,7 @@ const ShowUsers = () => {
         status: formData.status,
       };
 
-      dispatch(updateUser(selectedUserId, updatedUserData))
+      dispatch(updateUserFromEdit(selectedUserId, updatedUserData))
         .then(() => {
           // Cierra el modal de edición y recarga los usuarios si es necesario
           setEditMode(false);
@@ -422,7 +413,7 @@ const ShowUsers = () => {
                       className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
                       id="role"
                       name="role"
-                      value={formData.status}
+                      value={formData.role}
                       onChange={handleInputChange}
                     >
                       <option value="user">User</option>
@@ -433,13 +424,13 @@ const ShowUsers = () => {
                     <div>Status:</div>
                     <select
                       className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
-                      id="role"
-                      name="role"
-                      value={formData.role}
+                      id="status"
+                      name="status"
+                      value={formData.status}
                       onChange={handleInputChange}
                     >
-                      <option value="user">Active</option>
-                      <option value="admin">Inactive</option>
+                      <option value="Active">Active</option>
+                      <option value="Inactive">Inactive</option>
                     </select>
                   </div>
                 </div>

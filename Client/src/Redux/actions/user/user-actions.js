@@ -9,10 +9,11 @@ import {
   POST_USER,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  UPDATE_USER_FROM_EDIT,
   GET_FAVORITES,
   ORDER_USER_BY_NAME,
   ORDER_USER_BY_ROLE,
-  ORDER_USER_BY_STATUS
+  ORDER_USER_BY_STATUS,
 } from "../action-types";
 
 import axios from "axios";
@@ -30,7 +31,7 @@ export const getFavorites = (email) => {
       const { data } = await axios.get(
         `${endpoint}/getfavorites?email=${email}`
       );
-      console.log(data);
+     
       dispatch({
         type: GET_FAVORITES,
         payload: data,
@@ -121,25 +122,20 @@ export function getUserByRol(rol) {
   };
 }
 
-export function orderUserByName(payload){
+export function orderUserByName(payload) {
   return {
     type: ORDER_USER_BY_NAME,
     payload,
-  }
+  };
 }
 
-export function orderUserByRole(payload){
-  return {type: ORDER_USER_BY_ROLE,
-  payload,
-}
+export function orderUserByRole(payload) {
+  return { type: ORDER_USER_BY_ROLE, payload };
 }
 
-export function orderUserByStatus(payload){
-  return {type: ORDER_USER_BY_STATUS,
-    payload,
-  }
+export function orderUserByStatus(payload) {
+  return { type: ORDER_USER_BY_STATUS, payload };
 }
-
 
 export function postUser(userData) {
   return async (dispatch) => {
@@ -194,7 +190,7 @@ export function deleteUser(id) {
     try {
       console.log("llego a la action delete");
       const { data } = await axios.delete(`${endpoint}/${id}`);
-      console.log("respuesta del delete en data" + data);
+      console.log("respuesta del delete en la action que va al reducer" + data);
       dispatch({
         type: DELETE_USER,
         payload: data,
@@ -213,6 +209,20 @@ export function updateUser(id, userData) {
       dispatch({
         type: UPDATE_USER,
         payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  };
+}
+
+export function updateUserFromEdit(id, userData) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${endpoint}/${id}`, userData);
+      dispatch({
+        type: UPDATE_USER_FROM_EDIT,
       });
     } catch (error) {
       console.log(error);

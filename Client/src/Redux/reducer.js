@@ -28,11 +28,12 @@ import {
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  UPDATE_USER_FROM_EDIT,
   SET_CURRENT_PAGE,
   GET_FAVORITES,
   POST_PRODUCT_CART,
   DELETE_PRODUCT_CART,
-  FIND_FAV_BY_NAME
+  FIND_FAV_BY_NAME,
 } from "./actions/action-types";
 
 const initialState = {
@@ -82,7 +83,7 @@ let favoritesSorted = [];
 let products = [];
 let favorites = [];
 //Para filtro en favorites
-let productMatch= []
+let productMatch = [];
 let availableProducts = [];
 let availableSearchbar = [];
 
@@ -91,7 +92,7 @@ let updatedProductId;
 let updatedProductData;
 let updatedAllProducts;
 
-//action.payload === allFavorites 
+//action.payload === allFavorites
 // paso 1= filtrar todos los productos por el action.payload( voy a tener de resultado todos ls productos con sus categorias pero que sean de favoritos)
 function rootReducer(state = initialState, action) {
   switch (action.type) {
@@ -111,11 +112,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         product: availableProducts,
       };
-      case RESET_ALL_FAVORITES:
-        return {
-          ...state,
-          favorites: state.allFavorites,
-        };
+    case RESET_ALL_FAVORITES:
+      return {
+        ...state,
+        favorites: state.allFavorites,
+      };
     case GET_PRODUCT_BY_NAME:
       availableSearchbar = action.payload.filter(
         (product) => product.available === true
@@ -133,10 +134,18 @@ function rootReducer(state = initialState, action) {
       };
 
     case POST_PRODUCT_CART:
-      return {
-        ...state,
-        productCart: [...state.productCart, action.payload],
-      };
+      console.log("Llegue al reducer con los cart: ", action.payload);
+      if (typeof action.payload === "string") {
+        return {
+          ...state,
+          productCart: [...state.productCart],
+        };
+      } else {
+        return {
+          ...state,
+          productCart: [...state.productCart, action.payload],
+        };
+      }
 
     case GET_PRODUCT_BY_ID:
       return {
@@ -206,14 +215,20 @@ function rootReducer(state = initialState, action) {
         ...state,
         categories: Category,
       };
+
     case FIND_FAV_BY_NAME:
-    
-      favorites=state.allFavorites.find((fav)=> { if(fav.Product){ return fav.Product.name === action.payload} else {return fav.name===action.payload}})
-      favorites ? console.log('sii') : console.log('noo')
-      return{
+      favorites = state.allFavorites.find((fav) => {
+        if (fav.Product) {
+          return fav.Product.name === action.payload;
+        } else {
+          return fav.name === action.payload;
+        }
+      });
+      favorites ? console.log("sii") : console.log("noo");
+      return {
         ...state,
-        favorites:favorites
-      }
+        favorites: favorites,
+      };
 
     case FILTER_CATEGORY:
       return {
@@ -224,23 +239,31 @@ function rootReducer(state = initialState, action) {
           );
         }),
       };
-      case FILTER_FAV__CATEGORY:
-        productMatch=state.allProducts.filter((p)=>state.allFavorites.some(fav=>fav.Product ? fav.Product.product_id===p.product_id : fav.product_id===p.product_id))
-        console.log( productMatch)
-        return {
-          ...state,
-          favorites: productMatch.filter((pm) => {
-            return pm.categories.some(
-              (category) => category.name === action.payload
-            );
-          }),
-        };
-  
-      case DELETE_PRODUCT_BY_ID:
-        return {
-          ...state,
-          allProducts: state.allProducts.filter((product) => product.id !== action.payload.id),
-        };
+    case FILTER_FAV__CATEGORY:
+      productMatch = state.allProducts.filter((p) =>
+        state.allFavorites.some((fav) =>
+          fav.Product
+            ? fav.Product.product_id === p.product_id
+            : fav.product_id === p.product_id
+        )
+      );
+      console.log(productMatch);
+      return {
+        ...state,
+        favorites: productMatch.filter((pm) => {
+          return pm.categories.some(
+            (category) => category.name === action.payload
+          );
+        }),
+      };
+
+    case DELETE_PRODUCT_BY_ID:
+      return {
+        ...state,
+        allProducts: state.allProducts.filter(
+          (product) => product.id !== action.payload.id
+        ),
+      };
 
     /*       case UPDATE_PRODUCT_BY_ID:
 
@@ -256,21 +279,23 @@ function rootReducer(state = initialState, action) {
 
     case ORDER_FAV_BY_NAME:
       favorites = [...state.favorites];
-     
-      favoritesSorted = favorites.sort(function (a, b) { if(a.Product){
-        if (a.Product.name > b.Product.name) {
-          return action.payload === "asc" ? 1 : -1;
+
+      favoritesSorted = favorites.sort(function (a, b) {
+        if (a.Product) {
+          if (a.Product.name > b.Product.name) {
+            return action.payload === "asc" ? 1 : -1;
+          }
+          if (a.Product.name < b.Product.name) {
+            return action.payload === "asc" ? -1 : 1;
+          }
         }
-        if (a.Product.name < b.Product.name) {
-          return action.payload === "asc" ? -1 : 1;
-        }} 
-         if (a.name > b.name) {
+        if (a.name > b.name) {
           return action.payload === "asc" ? 1 : -1;
         }
         if (a.name < b.name) {
           return action.payload === "asc" ? -1 : 1;
         }
-        
+
         return 0;
       });
       return {
@@ -278,74 +303,73 @@ function rootReducer(state = initialState, action) {
         favorites: favoritesSorted,
       };
 
-      case ORDER_BY_NAME:
-        products = [...state.product];
-        productSorted = products.sort(function (a, b) {
-          if (a.name > b.name) {
-            return action.payload === "asc" ? 1 : -1;
-          }
-          if (a.name < b.name) {
-            return action.payload === "asc" ? -1 : 1;
-          }
-          return 0;
-        });
-        return {
-          ...state,
-          product: productSorted,
-        };
+    case ORDER_BY_NAME:
+      products = [...state.product];
+      productSorted = products.sort(function (a, b) {
+        if (a.name > b.name) {
+          return action.payload === "asc" ? 1 : -1;
+        }
+        if (a.name < b.name) {
+          return action.payload === "asc" ? -1 : 1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        product: productSorted,
+      };
 
-      case ORDER_USER_BY_NAME:
-        users = [...state.allUsers];
-        usersSorted = users.sort(function (a, b) {
-          if (a.name > b.name) {
-            return action.payload === "asc" ? 1 : -1;
-          }
-          if (a.name < b.name) {
-            return action.payload === "asc" ? -1 : 1;
-          }
-          return 0;
-        });
-        return {
-          ...state,
-          allUsers: usersSorted,
-        };
+    case ORDER_USER_BY_NAME:
+      users = [...state.allUsers];
+      usersSorted = users.sort(function (a, b) {
+        if (a.name > b.name) {
+          return action.payload === "asc" ? 1 : -1;
+        }
+        if (a.name < b.name) {
+          return action.payload === "asc" ? -1 : 1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        allUsers: usersSorted,
+      };
 
-      case ORDER_USER_BY_ROLE:
-        usersRole = [...state.allUsers];
-        roleSorted = usersRole.sort(function (a, b) {
-          console.log(usersRole)
-          if (a.role > b.role) {
-            return action.payload === "admin" ? 1 : -1;
-          }
-          if (a.role < b.role) {
-            return action.payload === "admin" ? -1 : 1;
-          }
-          return 0;
-        });
-        return {
-          ...state,
-          allUsers: roleSorted,
-        };
-      case ORDER_USER_BY_STATUS:
-        usersStatus = [...state.allUsers];
-        statusSorted = usersStatus.sort(function (a, b) {
-          if (a.status > b.status) {
-            return action.payload === "Active" ? 1 : -1;
-          }
-          if (a.status < b.status) {
-            return action.payload === "Active" ? -1 : 1;
-          }
-          return 0;
-        });
-        return {
-          ...state,
-          allUsers: statusSorted,
-        };
-  
+    case ORDER_USER_BY_ROLE:
+      usersRole = [...state.allUsers];
+      roleSorted = usersRole.sort(function (a, b) {
+        console.log(usersRole);
+        if (a.role > b.role) {
+          return action.payload === "admin" ? 1 : -1;
+        }
+        if (a.role < b.role) {
+          return action.payload === "admin" ? -1 : 1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        allUsers: roleSorted,
+      };
+    case ORDER_USER_BY_STATUS:
+      usersStatus = [...state.allUsers];
+      statusSorted = usersStatus.sort(function (a, b) {
+        if (a.status > b.status) {
+          return action.payload === "Active" ? 1 : -1;
+        }
+        if (a.status < b.status) {
+          return action.payload === "Active" ? -1 : 1;
+        }
+        return 0;
+      });
+      return {
+        ...state,
+        allUsers: statusSorted,
+      };
 
     case ORDER_BY_PRICE:
       products = [...state.product];
-      productSorted = 
+      productSorted =
         action.payload === "low"
           ? products.sort((a, b) => a.price - b.price)
           : products.sort((a, b) => b.price - a.price);
@@ -355,26 +379,23 @@ function rootReducer(state = initialState, action) {
         product: productSorted,
       };
 
-      case ORDER_FAV_BY_PRICE:
-        favorites = [...state.favorites];
-       
-        favoritesSorted = favorites[0].Product ?
-          action.payload === "low"
-            ? favorites.sort((a, b) => a.Product.price - b.Product.price)
-             
-            : favorites.sort((a, b) => b.Product.price - a.Product.price)
-            :
-            action.payload === "low"
-            ? favorites.sort((a, b) => a.price - b.price)
-             
-            : favorites.sort((a, b) => b.price - a.price)
-  
-            console.log(favoritesSorted)
-        return {
-          ...state,
-          favorites: favoritesSorted,
-        };
-  
+    case ORDER_FAV_BY_PRICE:
+      favorites = [...state.favorites];
+
+      favoritesSorted = favorites[0].Product
+        ? action.payload === "low"
+          ? favorites.sort((a, b) => a.Product.price - b.Product.price)
+          : favorites.sort((a, b) => b.Product.price - a.Product.price)
+        : action.payload === "low"
+        ? favorites.sort((a, b) => a.price - b.price)
+        : favorites.sort((a, b) => b.price - a.price);
+
+      console.log(favoritesSorted);
+      return {
+        ...state,
+        favorites: favoritesSorted,
+      };
+
     //case GET_ALL_USER:
     //return {
     // ...state,
@@ -412,16 +433,28 @@ function rootReducer(state = initialState, action) {
         userDetail: action.payload,
       };
 
-      case POST_USER:
-        return {
-          ...state,
-          userDetail: action.payload,
-        };
+    case POST_USER:
+      return {
+        ...state,
+        userDetail: action.payload,
+      };
 
     case UPDATE_USER:
       return {
         ...state,
         userDetail: action.payload,
+      };
+
+    case UPDATE_USER_FROM_EDIT:
+      return {
+        ...state,
+      };
+
+    case DELETE_USER:
+      console.log("Llegue al reducer con data: ", action.payload);
+      return {
+        ...state,
+        allUsers: state.allUsers.filter((user) => user.id !== action.payload),
       };
 
     case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
@@ -438,9 +471,13 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         allFavorites: action.payload,
-          favorites:action.payload,
+        favorites: action.payload,
       };
     case DELETE_PRODUCT_CART:
+      console.log(
+        "Lo que voy a borrar en reducer de delete en cart es: ",
+        action.payload
+      );
       return {
         ...state,
         productCart: state.productCart.filter(

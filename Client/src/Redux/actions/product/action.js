@@ -148,9 +148,11 @@ export const addProduct = (productdata) => {
 export const deleteProductCart = (product_id, email) => {
   return async (dispatch) => {
     try {
+      console.log("El id que quiero borrar en action es: ", product_id);
       const { data } = await axios.delete(
         `${endpoint}/cart/${email}/${product_id}`
       );
+      console.log("La respuesta del delete en la action es: ", data)
       dispatch({
         type: DELETE_PRODUCT_CART,
         payload: product_id,
@@ -273,8 +275,9 @@ export const updateProduct = (id, updatedProductData) => {
 export function postProductCart(userData) {
   return async (dispatch) => {
     try {
+      console.log("Cart enrta a la action");
       const { data } = await axios.post(`${endpoint}/cart`, userData);
-
+      console.log("Cart post devuelve a la action el data: ", data);
       dispatch({
         type: POST_PRODUCT_CART,
         payload: data,

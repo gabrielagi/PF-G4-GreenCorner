@@ -73,10 +73,11 @@ const getAllFavorites = async (email) => {
         },
         {
           model: Category,
-          required: true
-        }
+          required: true,
+        },
       ],
     });
+    console.log(favorites + "aaaa");
     return favorites;
   } catch (error) {
     console.log({ error: "Error en el servidor" });

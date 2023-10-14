@@ -10,7 +10,7 @@ import plantgif from "../../assets/plantgif.gif";
 import {
   getAllProducts,
   resetAllProducts,
-  getAllCategories,
+  getAllCategoriesShop,
   getProductsTrending,
   filterByName,
   filterByPrice,
@@ -30,8 +30,8 @@ const Shop = () => {
   const productTrending = useSelector((state) => state.productTrending);
   const [priceOrder, setPriceOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const currentPage = useSelector((state) => state.pagination.currentPage); 
-  const productsPerPage = 9;
+  const currentPage = useSelector((state) => state.pagination.currentPage);
+  const productsPerPage = 8;
 
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ const Shop = () => {
 
   useEffect(() => {
     dispatch(getAllProducts());
-    dispatch(getAllCategories());
+    dispatch(getAllCategoriesShop());
     dispatch(getProductsTrending());
   }, [dispatch]);
 
@@ -52,34 +52,33 @@ const Shop = () => {
       setNameOrder(selectedValue);
       setPriceOrder("");
       dispatch(filterByName(selectedValue));
-      dispatch(setCurrentPage(1))
+      dispatch(setCurrentPage(1));
     } else if (selectedValue === "high" || selectedValue === "low") {
       setNameOrder("");
       setPriceOrder(selectedValue);
       dispatch(filterByPrice(selectedValue));
-      dispatch(setCurrentPage(1))
+      dispatch(setCurrentPage(1));
     } else {
       setNameOrder("");
       setPriceOrder("");
       setSelectedCategory(true);
-      dispatch(setCurrentPage(1))
+      dispatch(setCurrentPage(1));
       dispatch(resetAllProducts());
-     
     }
   }
 
   const handleCategorySelect = (name) => {
-    setSelectedCategory(name);   
+    setSelectedCategory(name);
     setNameOrder("");
     setPriceOrder("");
-    dispatch(setCurrentPage(1))
+    dispatch(setCurrentPage(1));
   };
 
   const handleClear = () => {
     setSelectedCategory(true);
     dispatch(resetAllProducts());
-  }
- 
+  };
+
   // // Se realiza el checkout
   // const handleCheckout = async () => {
   //   try {
@@ -96,8 +95,6 @@ const Shop = () => {
 
   const totalProducts = products.length;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
-
-
 
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
@@ -196,7 +193,7 @@ const Shop = () => {
       <div className="flex flex-col lg:flex-row">
         <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
-                  <div className="grid items-center text-start ml-4">
+            <div className="grid items-center text-start ml-4">
               <h1 className="text-4xl font-poppins italic mt-4 mb-2">
                 All Categories
               </h1>
@@ -218,7 +215,10 @@ const Shop = () => {
                     <img src={plantgif} alt="loading" />
                   </div>
                 )}
-                <button className="font-bold hover:scale-110" onClick={handleClear}>
+                <button
+                  className="font-bold hover:scale-110"
+                  onClick={handleClear}
+                >
                   All categories
                 </button>
               </div>
@@ -227,9 +227,9 @@ const Shop = () => {
           <div className="grid items-center text-start ml-4">
             <h1 className="text-4xl font-poppins italic mt-4 mb-2">
               Featured Products
-            </h1 >
-           <ProductsTrending productTrending={productTrending} />
-         </div>
+            </h1>
+            <ProductsTrending productTrending={productTrending} />
+          </div>
         </div>
 
         <div className="lg:w-2/3 ml-4">
@@ -239,7 +239,7 @@ const Shop = () => {
       <div className={styles.cardsDiv}></div>
       <Pagination
         count={totalPages}
-        page={currentPage} 
+        page={currentPage}
         onChange={handleChangePage}
         className={styles.pagination}
         size="large"
@@ -252,12 +252,10 @@ const Shop = () => {
             fontSize: "15px",
           },
           "& .paginationButton": {
-            backgroundColor: "#50a100"
-          }
+            backgroundColor: "#50a100",
+          },
         }}
       />
-
-      
 
       {/* <button onClick={handleCheckout}>Checkout</button> */}
     </div>
