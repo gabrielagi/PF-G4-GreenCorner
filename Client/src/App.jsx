@@ -92,6 +92,7 @@ const App = () => {
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/prueba" element={<Slider />} />
           </Routes>
+          <Footer></Footer>
         </>
       )}
     </div>
