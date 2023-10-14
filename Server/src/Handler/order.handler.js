@@ -10,7 +10,8 @@ const {
 
 const getAllOrderHandler = async (req, res) => {
     try {
-        const orders = await getAllOrders();
+        const email = req.query.email 
+        const orders = await getAllOrders(email);
 
         if (orders.length === 0) {
             return res.status(404).json({ message: "No se encontraron ordenes." });
@@ -25,7 +26,8 @@ const getAllOrderHandler = async (req, res) => {
 
 const getAllOrderDetailHandler = async (req, res) => {
     try {
-        const ordersDetails = await getAllOrdersDetails();
+        const id = req.query.id 
+        const ordersDetails = await getAllOrdersDetails(id);
 
         if (ordersDetails.length === 0) {
             return res.status(404).json({ message: "No se encontraron ordenes details." });

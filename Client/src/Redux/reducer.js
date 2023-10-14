@@ -28,6 +28,7 @@ import {
   GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  UPDATE_USER_FROM_EDIT,
   SET_CURRENT_PAGE,
   GET_FAVORITES,
   POST_PRODUCT_CART,
@@ -442,6 +443,11 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         userDetail: action.payload,
+      };
+
+    case UPDATE_USER_FROM_EDIT:
+      return {
+        ...state,
       };
 
     case DELETE_USER:

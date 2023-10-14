@@ -9,6 +9,7 @@ import {
   POST_USER,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
+  UPDATE_USER_FROM_EDIT,
   GET_FAVORITES,
   ORDER_USER_BY_NAME,
   ORDER_USER_BY_ROLE,
@@ -31,7 +32,7 @@ export const getFavorites = (email) => {
       const { data } = await axios.get(
         `${endpoint}/getfavorites?email=${email}`
       );
-      console.log(data);
+     
       dispatch({
         type: GET_FAVORITES,
         payload: data,
@@ -209,6 +210,20 @@ export function updateUser(id, userData) {
       dispatch({
         type: UPDATE_USER,
         payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  };
+}
+
+export function updateUserFromEdit(id, userData) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${endpoint}/${id}`, userData);
+      dispatch({
+        type: UPDATE_USER_FROM_EDIT,
       });
     } catch (error) {
       console.log(error);
