@@ -313,6 +313,20 @@ const ShowUsers = () => {
                         </div>
                       </td>
                       {/* ... Otros campos de la fila ... */}
+                      <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                        <img
+                          className="h-10 w-10 rounded-full"
+                          src={user.picture}
+                          alt={`${user.name} avatar`}
+                        />
+                      </td>
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                        {user.name}
+                      </td>
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                        {user.lastName}
+                      </td>
+
                       <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.email}
                       </td>
