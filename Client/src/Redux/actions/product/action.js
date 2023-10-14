@@ -152,7 +152,7 @@ export const deleteProductCart = (product_id, email) => {
       const { data } = await axios.delete(
         `${endpoint}/cart/${email}/${product_id}`
       );
-      console.log("La respuesta del delete en la action es: ", data)
+      console.log("La respuesta del delete en la action es: ", data);
       dispatch({
         type: DELETE_PRODUCT_CART,
         payload: product_id,

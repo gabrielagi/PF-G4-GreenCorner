@@ -26,6 +26,8 @@ const Carts = () => {
 
   const handleCheckout = async () => {
     try {
+      // Preguntar si el usuario es admin
+
       let product = [];
       for (let i = 0; i < products.length; i++) {
         const price = Number(products[i].Product.price);

@@ -176,6 +176,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case POST_PRODUCT:
+      console.log("Product a crear en el Reducer: ", action.payload);
       return {
         ...state,
         product: [...state.product, action.payload],
