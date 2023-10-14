@@ -20,14 +20,32 @@ import { MdSettingsBackupRestore } from "react-icons/md";
 
 const ShowUsers = () => {
   const allUsers = useSelector((state) => state.allUsers);
+  const [searchTerm, setSearchTerm] = useState("");
   const [nameOrder, setNameOrder] = useState("name");
   const [roleOrder, setRoleOrder] = useState("admin");
   const [statusOrder, setStatusOrder] = useState("status");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const usersPerPage = 10;
-
+  const usersPerPage = 1;
+  
   const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getAllUsers());
+  }, [dispatch]);
+  
+  useEffect(() => {
+    // Realiza la búsqueda automáticamente cuando searchTerm cambie
+    // Filtra la lista completa de usuarios en función de la búsqueda
+    dispatch(setCurrentPage(1));
+    const filtered = allUsers.filter((user) =>
+      user.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredUsers(filtered);
+  }, [searchTerm, allUsers]);
 
+  
   const handleChangePage = (event, value) => {
     dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
   };
@@ -36,9 +54,6 @@ const ShowUsers = () => {
   const [formData, setFormData] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
 
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -136,12 +151,13 @@ const ShowUsers = () => {
   console.log(allUsers);
 
   // Pagination settings
-  const totalUsers = allUsers.length;
+  const totalUsers = filteredUsers.length;
   const totalPages = Math.ceil(totalUsers / usersPerPage);
 
   const startIndex = (currentPage - 1) * usersPerPage;
   const endIndex = startIndex + usersPerPage;
-  const displayedUsers = allUsers.slice(startIndex, endIndex);
+  
+  const displayedUsers = filteredUsers.slice(startIndex, endIndex);
 
   return (
     <>
@@ -157,7 +173,7 @@ const ShowUsers = () => {
             <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
               {/* Searchbar */}
               <form className="lg:pr-3" action="#" method="GET">
-                <label htmlFor="users-search" className="sr-only">
+              <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
                 <div className="mt-1 relative lg:w-64 xl:w-96">
@@ -167,7 +183,12 @@ const ShowUsers = () => {
                     id="users-search"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
                     placeholder="Search for users"
-                  />
+                    value={searchTerm}
+                    onChange={(e) => {
+                      console.log("searchTerm updated:", e.target.value || 'Empty or null value'); // Agrega este console.log // Agrega este console.log
+                      setSearchTerm(e.target.value);
+                    }}
+                    />
                 </div>
                 <InputLabel htmlFor="nameOrder">Name</InputLabel>
                 <Select
@@ -292,6 +313,20 @@ const ShowUsers = () => {
                         </div>
                       </td>
                       {/* ... Otros campos de la fila ... */}
+                      <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                        <img
+                          className="h-10 w-10 rounded-full"
+                          src={user.picture}
+                          alt={`${user.name} avatar`}
+                        />
+                      </td>
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                        {user.name}
+                      </td>
+                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                        {user.lastName}
+                      </td>
+
                       <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.email}
                       </td>

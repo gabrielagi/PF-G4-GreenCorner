@@ -14,6 +14,7 @@ import {
   ORDER_USER_BY_NAME,
   ORDER_USER_BY_ROLE,
   ORDER_USER_BY_STATUS,
+  SEARCH_USERS,
 } from "../action-types";
 
 import axios from "axios";
@@ -31,7 +32,7 @@ export const getFavorites = (email) => {
       const { data } = await axios.get(
         `${endpoint}/getfavorites?email=${email}`
       );
-      console.log(data);
+     
       dispatch({
         type: GET_FAVORITES,
         payload: data,
@@ -230,3 +231,39 @@ export function updateUserFromEdit(id, userData) {
     }
   };
 }
+
+export const searchUsers = (searchTerm) => {
+  return (dispatch, getState) => {
+    // Obtén la lista de todos los usuarios del estado de Redux
+    const allUsers = getState().allUsers;
+
+    // Filtra los usuarios que coinciden con el término de búsqueda
+    const filteredUsers = allUsers.filter((user) => {
+      const name = user.name.toLowerCase();
+      const email = user.email.toLowerCase();
+      searchTerm = searchTerm.toLowerCase();
+
+      // Comprueba si el nombre comienza con el término de búsqueda
+      if (name.startsWith(searchTerm)) {
+        return true;
+      }
+
+      // Si no se encontró ninguna coincidencia por nombre, busca por correo electrónico
+      if (email.includes(searchTerm)) {
+        return true;
+      }
+
+      return false;
+    });
+
+    // Despacha una acción para actualizar la lista de usuarios con los resultados de búsqueda
+    dispatch({
+      type: SEARCH_USERS,
+      payload: filteredUsers,
+    });
+  };
+};
+
+
+
+

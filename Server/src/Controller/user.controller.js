@@ -77,6 +77,7 @@ const getAllFavorites = async (email) => {
         },
       ],
     });
+    console.log(favorites + "aaaa");
     return favorites;
   } catch (error) {
     console.log({ error: "Error en el servidor" });

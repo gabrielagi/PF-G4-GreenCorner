@@ -78,13 +78,15 @@ const Card = ({ name, images, price, id }) => {
 
   const handleHeart = (product_id) => {
     if (isAuthenticated) {
+
       let favorite = {
         email: user.email,
         product_id: product_id,
       };
 
       if (!corazon) {
-        postFavorites(favorite).then((result) => {
+        
+        dispatch( postFavorites(favorite)).then((result) => {
           notifyII(result);
         });
 

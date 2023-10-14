@@ -1,17 +1,24 @@
 const { Order, OrderDetail, Product } = require("../db");
 
-const getAllOrders = async () => {
+const getAllOrders = async (email) => {
     try {
-        const order = await Order.findAll();
+        const order = await Order.findAll({
+            where: {
+                email: email
+              },
+        });
         return order;
     } catch (error) {
         throw new Error("Error al obtener ordenes desde la base de datos: " + error.message);
     }
 };
 
-const getAllOrdersDetails = async () => {
+const getAllOrdersDetails = async (idOrder) => {
     try {
         const orderDetail = await OrderDetail.findAll({
+            where: {
+                order_id: idOrder
+              },
             include: [{
                 model: Product,
                 required: true
