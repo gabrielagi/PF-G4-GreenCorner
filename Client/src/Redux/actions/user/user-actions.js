@@ -31,7 +31,7 @@ export const getFavorites = (email) => {
       const { data } = await axios.get(
         `${endpoint}/getfavorites?email=${email}`
       );
-      console.log(data);
+     
       dispatch({
         type: GET_FAVORITES,
         payload: data,
