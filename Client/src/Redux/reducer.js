@@ -7,9 +7,14 @@ import {
   GET_PRODUCT_CART,
   GET_PRODUCT_TRENDING,
   GET_PRODUCT_BY_NAME,
+  POST_CATEGORY,
+  UPDATE_CATEGORY,
+  UPDATE_CATEGORY_FROM_EDIT,
+  DELETE_CATEGORY,
   GET_CATEGORIES,
   FILTER_CATEGORY,
   FILTER_FAV__CATEGORY,
+  GET_CATEGORIES_SHOP,
   GET_PRODUCT_BY_ID,
   ORDER_BY_NAME,
   ORDER_FAV_BY_NAME,
@@ -18,6 +23,7 @@ import {
   ORDER_USER_BY_NAME,
   ORDER_USER_BY_ROLE,
   ORDER_USER_BY_STATUS,
+  ORDER_CATEGORY,
   RESET_ALL_PRODUCT,
   GET_ALL_USER,
   GET_USER_BY_NAME,
@@ -25,7 +31,6 @@ import {
   GET_USER_BY_ID,
   DELETE_USER,
   POST_USER,
-  GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
   UPDATE_USER_FROM_EDIT,
@@ -43,6 +48,7 @@ const initialState = {
   productCart: [],
   productTrending: [],
   categories: [],
+  updateCategory: {},
   searchProduct: [],
   searchByName: [],
   productDetail: [],
@@ -72,6 +78,8 @@ function updater(product, id, updatedProductData) {
   }
 }
 
+let categoriesSorted = [];
+let allCategories = [];
 let usersStatus = [];
 let statusSorted = [];
 let usersSorted = [];
@@ -176,6 +184,7 @@ function rootReducer(state = initialState, action) {
       };
 
     case POST_PRODUCT:
+      console.log("Product a crear en el Reducer: ", action.payload);
       return {
         ...state,
         product: [...state.product, action.payload],
@@ -214,6 +223,40 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         categories: Category,
+      };
+
+    // Post de Category
+    case POST_CATEGORY:
+      console.log(
+        "La nueva categoria a agregar en reducer es: ",
+        action.payload
+      );
+      return {
+        ...state,
+        categories: [...categories, action.payload],
+      };
+
+    case UPDATE_CATEGORY:
+      return {
+        ...state,
+        updateCategory: action.payload,
+      };
+
+    case UPDATE_CATEGORY_FROM_EDIT:
+      return {
+        ...state,
+      };
+
+    case DELETE_CATEGORY:
+      console.log(
+        "Llegue al reducer de delete category con data: ",
+        action.payload
+      );
+      return {
+        ...state,
+        categories: state.categories.filter(
+          (category) => category.id !== action.payload
+        ),
       };
 
     case FIND_FAV_BY_NAME:
@@ -414,6 +457,23 @@ function rootReducer(state = initialState, action) {
         userDetail: action.payload,
         userDetail: action.payload,
       };
+
+      case ORDER_CATEGORY:
+        allCategories = [...state.categories];
+        categoriesSorted = allCategories.sort(function (a, b) {
+          if (a.name > b.name) {
+            return action.payload === "asc" ? 1 : -1;
+          }
+          if (a.name < b.name) {
+            return action.payload === "asc" ? -1 : 1;
+          }
+          return 0;
+        });
+        console.log(categoriesSorted)
+        return {
+          ...state,
+          categories: categoriesSorted,
+        };
 
     case GET_USER_BY_ROL:
       return {
