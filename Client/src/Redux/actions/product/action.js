@@ -19,6 +19,7 @@ import {
   ORDER_FAV_BY_NAME,
   ORDER_BY_PRICE,
   ORDER_FAV_BY_PRICE,
+  ORDER_CATEGORY,
   RESET_ALL_PRODUCT,
   SET_CURRENT_PAGE,
   DELETE_PRODUCT_CART,
@@ -269,6 +270,13 @@ export function postCategory(categoryData) {
       console.log(error.message);
       return error.message;
     }
+  };
+}
+
+export function orderCategory(payload) {
+  return {
+    type: ORDER_CATEGORY,
+    payload,
   };
 }
 

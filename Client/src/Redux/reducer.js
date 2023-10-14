@@ -18,6 +18,7 @@ import {
   ORDER_USER_BY_NAME,
   ORDER_USER_BY_ROLE,
   ORDER_USER_BY_STATUS,
+  ORDER_CATEGORY,
   RESET_ALL_PRODUCT,
   GET_ALL_USER,
   GET_USER_BY_NAME,
@@ -72,6 +73,8 @@ function updater(product, id, updatedProductData) {
   }
 }
 
+let categoriesSorted = [];
+let allCategories = [];
 let usersStatus = [];
 let statusSorted = [];
 let usersSorted = [];
@@ -415,6 +418,23 @@ function rootReducer(state = initialState, action) {
         userDetail: action.payload,
         userDetail: action.payload,
       };
+
+      case ORDER_CATEGORY:
+        allCategories = [...state.categories];
+        categoriesSorted = allCategories.sort(function (a, b) {
+          if (a.name > b.name) {
+            return action.payload === "asc" ? 1 : -1;
+          }
+          if (a.name < b.name) {
+            return action.payload === "asc" ? -1 : 1;
+          }
+          return 0;
+        });
+        console.log(categoriesSorted)
+        return {
+          ...state,
+          categories: categoriesSorted,
+        };
 
     case GET_USER_BY_ROL:
       return {

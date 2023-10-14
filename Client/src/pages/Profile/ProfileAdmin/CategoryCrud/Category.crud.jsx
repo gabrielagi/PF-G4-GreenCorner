@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories } from "../../../../Redux/actions/product/action"
+import { getAllCategories, updateCategory, deleteCategory, orderCategory } from "../../../../Redux/actions/product/action"
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,8 +13,8 @@ import { setCurrentPage } from "../../../../Redux/actions/product/action";
 const Category = () => {
   const allCategories = useSelector((state) => state.categories);
   const [nameOrder, setNameOrder] = useState("name");
-  const [roleOrder, setRoleOrder] = useState("admin");
-  const [statusOrder, setStatusOrder] = useState("status");
+//   const [roleOrder, setRoleOrder] = useState("admin");
+//   const [statusOrder, setStatusOrder] = useState("status");
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const usersPerPage = 10;
 
@@ -51,14 +51,11 @@ const Category = () => {
     // Verifica si hay un usuario seleccionado
     if (selectedUserId !== null) {
       const updatedUserData = {
-        nickname: formData.nickname,
         name: formData.name,
-        lastName: formData.lastName,
-        role: formData.role,
-        status: formData.status,
       };
-
-      dispatch(updateUserFromEdit(selectedUserId, updatedUserData))
+      console.log("contenido upDateUserData ", updatedUserData)
+      
+      dispatch(updateCategory(selectedUserId, updatedUserData))
         .then(() => {
           // Cierra el modal de edición y recarga los usuarios si es necesario
           setEditMode(false);
@@ -73,31 +70,12 @@ const Category = () => {
 
   function handleOrder(e) {
     const selectedValue = e ? e.target.value : e;
+    console.log(selectedValue)
 
     if (selectedValue === "asc" || selectedValue === "desc") {
-      setNameOrder(selectedValue);
-    //   setRoleOrder("");
-    //   setStatusOrder("");
-      dispatch(orderUserByName(selectedValue));
-      dispatch(setCurrentPage(1));
-    } else if (selectedValue === "admin" || selectedValue === "user") {
-      setRoleOrder(selectedValue);
-      setNameOrder("");
-      setStatusOrder("");
-      dispatch(orderUserByRole(selectedValue));
-      dispatch(setCurrentPage(1));
-    } else if (selectedValue === "Active" || selectedValue === "Inactive") {
-      setStatusOrder(selectedValue);
-      setNameOrder("");
-      setRoleOrder("");
-      dispatch(orderUserByStatus(selectedValue));
-      dispatch(setCurrentPage(1));
-    } else {
-      setNameOrder("");
-      setRoleOrder("");
-      setStatusOrder("");
-      dispatch(getAllUsers());
-      dispatch(setCurrentPage(1));
+        setNameOrder(selectedValue);
+        dispatch(orderCategory(selectedValue));
+        dispatch(setCurrentPage(1));
     }
   }
 
@@ -114,9 +92,9 @@ const Category = () => {
       width: "600px",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteUser(id))
+        dispatch(deleteCategory(id))
           .then(() => {
-            dispatch(getAllUsers());
+            dispatch(getAllCategories());
           })
           .catch((error) => {
             console.error("Error al eliminar el producto: ", error);
@@ -327,8 +305,8 @@ console.log(displayedUsers)
                   {/* Campos de edición */}
                   <input
                     type="text"
-                    name="nickname"
-                    value={formData.nickname}
+                    name="name"
+                    value={formData.name}
                     onChange={handleInputChange}
                     className="block w-full p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
                     placeholder="Name category"
