@@ -1,6 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllCategories, updateCategory, deleteCategory, orderCategory } from "../../../../Redux/actions/product/action"
+import {
+  getAllCategories,
+  updateCategory,
+  deleteCategory,
+  orderCategory,
+  postCategory,
+} from "../../../../Redux/actions/product/action";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import InputLabel from "@mui/material/InputLabel";
@@ -13,8 +19,8 @@ import { setCurrentPage } from "../../../../Redux/actions/product/action";
 const Category = () => {
   const allCategories = useSelector((state) => state.categories);
   const [nameOrder, setNameOrder] = useState("name");
-//   const [roleOrder, setRoleOrder] = useState("admin");
-//   const [statusOrder, setStatusOrder] = useState("status");
+  //   const [roleOrder, setRoleOrder] = useState("admin");
+  //   const [statusOrder, setStatusOrder] = useState("status");
   const currentPage = useSelector((state) => state.pagination.currentPage);
   const usersPerPage = 10;
 
@@ -25,7 +31,11 @@ const Category = () => {
   };
 
   const [editMode, setEditMode] = useState(false);
+  const [editModeNew, setEditModeNew] = useState(false);
+
   const [formData, setFormData] = useState(null);
+  const [createFormData, setCreateFormData] = useState({ name: "" });
+
   const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
 
   useEffect(() => {
@@ -37,6 +47,47 @@ const Category = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  // Funciones para Modal de Crear una categoria
+  const createCategory = (newCategory) => {
+    // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
+    setEditModeNew(true);
+    console.log("Contenido category: ", newCategory);
+    setFormData(newCategory);
+    console.log("Contenido Form Data: ", formData);
+  };
+
+  const handleCreateInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setCreateFormData({ ...createFormData, [name]: value });
+  };
+
+  const saveCategoryCreateChanges = () => {
+    // Verifica si hay un usuario seleccionado
+
+    const newCategoryData = {
+      name: formData.name,
+    };
+
+    dispatch(postCategory(newCategoryData))
+      .then(() => {
+        // Cierra el modal de edición y recarga los usuarios si es necesario
+        setEditModeNew(false);
+        setSelectedUserId(null); // Restablece selectedUserId
+        dispatch(getAllCategories());
+      })
+      .catch((error) => {
+        console.error("Error al guardar cambios:", error.message);
+      });
+  };
+
+  const closeCreateModal = () => {
+    setCreateFormData({ name: "" }); // Restablecer el estado del formulario
+    setEditModeNew(false); // Cerrar el modal de creación
+  };
+
+  // Funciones para Modal de Actualizar una categoria
 
   const editUser = (user) => {
     // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
@@ -53,8 +104,8 @@ const Category = () => {
       const updatedUserData = {
         name: formData.name,
       };
-      console.log("contenido upDateUserData ", updatedUserData)
-      
+      console.log("contenido upDateUserData ", updatedUserData);
+
       dispatch(updateCategory(selectedUserId, updatedUserData))
         .then(() => {
           // Cierra el modal de edición y recarga los usuarios si es necesario
@@ -70,12 +121,12 @@ const Category = () => {
 
   function handleOrder(e) {
     const selectedValue = e ? e.target.value : e;
-    console.log(selectedValue)
+    console.log(selectedValue);
 
     if (selectedValue === "asc" || selectedValue === "desc") {
-        setNameOrder(selectedValue);
-        dispatch(orderCategory(selectedValue));
-        dispatch(setCurrentPage(1));
+      setNameOrder(selectedValue);
+      dispatch(orderCategory(selectedValue));
+      dispatch(setCurrentPage(1));
     }
   }
 
@@ -112,7 +163,7 @@ const Category = () => {
   const startIndex = (currentPage - 1) * usersPerPage;
   const endIndex = startIndex + usersPerPage;
   const displayedUsers = allCategories.slice(startIndex, endIndex);
-console.log(displayedUsers)
+  console.log(displayedUsers);
 
   return (
     <>
@@ -155,9 +206,16 @@ console.log(displayedUsers)
                     Z - A
                   </MenuItem>
                 </Select>
-                
               </form>
             </div>
+            {/* Boton para crear una nueva categoria */}
+            <button
+              type="button"
+              className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
+              onClick={() => createCategory({ name: "" })}
+            >
+              New category
+            </button>
           </div>
         </div>
         <div className="flex space-x-1">
@@ -235,7 +293,7 @@ console.log(displayedUsers)
                       <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
                         {user.name}
                       </td>
-                      
+
                       <td className="p-4 whitespace-nowrap space-x-2">
                         <button
                           type="button"
@@ -310,7 +368,7 @@ console.log(displayedUsers)
                     onChange={handleInputChange}
                     className="block w-full p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
                     placeholder="Name category"
-                  />                  
+                  />
                 </div>
                 <div className="mt-6 flex justify-end">
                   <button
@@ -324,6 +382,60 @@ console.log(displayedUsers)
                     type="button"
                     className="px-4 py-2 text-gray-600 bg-gray-200 rounded-lg focus:ring-4 focus:ring-gray-300"
                     onClick={() => setEditMode(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Modal de creacion de una categoria */}
+      {editModeNew && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div
+              className="fixed inset-0 transition-opacity"
+              aria-hidden="true"
+            >
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span
+              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            {/* Contenido del modal de creacion (campos de edición y botones de guardar/cancelar) */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="p-6">
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  Create a new Category
+                </h1>
+                <div className="mt-5">
+                  {/* Campos de edición */}
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="block w-full p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
+                    placeholder="Name category"
+                  />
+                </div>
+                <div className="mt-6 flex justify-end">
+                  <button
+                    type="button"
+                    className="px-4 py-2 mr-2 text-white bg-cyan-600 rounded-lg focus:ring-4 focus:ring-cyan-200"
+                    onClick={() => saveCategoryCreateChanges()}
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="px-4 py-2 text-gray-600 bg-gray-200 rounded-lg focus:ring-4 focus:ring-gray-300"
+                    onClick={() => closeCreateModal()}
                   >
                     Cancel
                   </button>
