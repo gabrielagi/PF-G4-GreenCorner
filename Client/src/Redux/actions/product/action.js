@@ -7,6 +7,9 @@ import {
   POST_PRODUCT_CART,
   GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
+  POST_CATEGORY,
+  DELETE_CATEGORY,
+  UPDATE_CATEGORY,
   GET_CATEGORIES_SHOP,
   FILTER_CATEGORY,
   FILTER_FAV__CATEGORY,
@@ -205,6 +208,69 @@ export const getAllCategoriesShop = () => {
     }
   };
 };
+
+// DELETE_CATEGORY
+
+export const deleteCategory = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${categories}/${id}`);
+      dispatch({
+        type: DELETE_CATEGORY,
+        payload: {
+          data: data,
+          id: id,
+        },
+      });
+      console.log("Categoria eliminada con éxito");
+    } catch (error) {
+      console.log(error.message);
+      alert("Hubo un problema eliminando el producto");
+    }
+  };
+};
+
+// UPDATE_CATEGORY
+export const updateCategory = (id, updatedCategoryData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(
+        `${categories}/${id}`,
+        updatedCategoryData
+      );
+      dispatch({
+        type: UPDATE_CATEGORY,
+        payload: {
+          data: data,
+          id: id,
+          updatedProductData: updatedCategoryData,
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert("Hubo un problema actualizando la categoria");
+    }
+  };
+};
+
+// POST_CATEGORY
+export function postCategory(categoryData) {
+  return async (dispatch) => {
+    try {
+      console.log("Category nueva entra a la action");
+      const { data } = await axios.post(`${categories}/`, categoryData);
+      console.log("Category post devuelve a la action el data: ", data);
+      dispatch({
+        type: POST_CATEGORY,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  };
+}
 
 export const filterCategory = (category) => {
   return async (dispatch) => {

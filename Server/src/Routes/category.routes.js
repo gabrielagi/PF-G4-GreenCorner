@@ -4,7 +4,8 @@ const {
   getCategoryByIdHandler,
   getCategoryByNameHandler,
   addCategoriesHandler,
-  deleteCategoryByIdHandler
+  updateCategoryHandler,
+  deleteCategoryByIdHandler,
 } = require("../Handler/categories.handler");
 
 const categoryRouter = Router();
@@ -21,6 +22,8 @@ categoryRouter.get("/:id", getCategoryByIdHandler);
 // Buscar una categoría por su nombre
 categoryRouter.get("/find/:name", getCategoryByNameHandler);
 
-categoryRouter.delete("/:id", deleteCategoryByIdHandler );
+categoryRouter.put("/:id", updateCategoryHandler);
+
+categoryRouter.delete("/:id", deleteCategoryByIdHandler);
 
 module.exports = categoryRouter;
