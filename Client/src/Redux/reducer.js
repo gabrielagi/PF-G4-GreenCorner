@@ -7,9 +7,14 @@ import {
   GET_PRODUCT_CART,
   GET_PRODUCT_TRENDING,
   GET_PRODUCT_BY_NAME,
+  POST_CATEGORY,
+  UPDATE_CATEGORY,
+  UPDATE_CATEGORY_FROM_EDIT,
+  DELETE_CATEGORY,
   GET_CATEGORIES,
   FILTER_CATEGORY,
   FILTER_FAV__CATEGORY,
+  GET_CATEGORIES_SHOP,
   GET_PRODUCT_BY_ID,
   ORDER_BY_NAME,
   ORDER_FAV_BY_NAME,
@@ -26,7 +31,6 @@ import {
   GET_USER_BY_ID,
   DELETE_USER,
   POST_USER,
-  GET_CATEGORIES_SHOP,
   GET_USER_BY_EMAIL,
   UPDATE_USER,
   UPDATE_USER_FROM_EDIT,
@@ -44,6 +48,7 @@ const initialState = {
   productCart: [],
   productTrending: [],
   categories: [],
+  updateCategory: {},
   searchProduct: [],
   searchByName: [],
   productDetail: [],
@@ -218,6 +223,40 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         categories: Category,
+      };
+
+    // Post de Category
+    case POST_CATEGORY:
+      console.log(
+        "La nueva categoria a agregar en reducer es: ",
+        action.payload
+      );
+      return {
+        ...state,
+        categories: [...categories, action.payload],
+      };
+
+    case UPDATE_CATEGORY:
+      return {
+        ...state,
+        updateCategory: action.payload,
+      };
+
+    case UPDATE_CATEGORY_FROM_EDIT:
+      return {
+        ...state,
+      };
+
+    case DELETE_CATEGORY:
+      console.log(
+        "Llegue al reducer de delete category con data: ",
+        action.payload
+      );
+      return {
+        ...state,
+        categories: state.categories.filter(
+          (category) => category.id !== action.payload
+        ),
       };
 
     case FIND_FAV_BY_NAME:
