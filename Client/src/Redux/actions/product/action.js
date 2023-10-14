@@ -215,12 +215,10 @@ export const deleteCategory = (id) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(`${categories}/${id}`);
+      console.log("Se elimino la categoria: ", data);
       dispatch({
         type: DELETE_CATEGORY,
-        payload: {
-          data: data,
-          id: id,
-        },
+        payload: id,
       });
       console.log("Categoria eliminada con éxito");
     } catch (error) {
@@ -252,6 +250,22 @@ export const updateCategory = (id, updatedCategoryData) => {
     }
   };
 };
+
+// UPDATE CATEGORY FROM MODAL EDIT
+export function updateUserFromEdit(id, categoryData) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${categories}/${id}`, categoryData);
+      console.log("Se actualizo la categoria con los datos del Modal: ", data);
+      dispatch({
+        type: UPDATE_CATEGORY_FROM_EDIT,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  };
+}
 
 // POST_CATEGORY
 export function postCategory(categoryData) {
