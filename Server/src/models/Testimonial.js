@@ -22,8 +22,8 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       user_id: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
     },
     { timestamps: false }

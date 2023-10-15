@@ -1,5 +1,5 @@
 const mercadopago = require("mercadopago");
-
+const { Purchase, PurchasePending, Purchasefail } = require ("../../nodemailer/mailer")
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
@@ -99,6 +99,10 @@ const createOrder = async (req, res) => {
 };
 
 const success = (req, res) => {
+        const mail = "test_user_1398180221@testuser.com"
+
+  Purchase (mail, "payer")
+
   console.log(req.query);
   // res.send('Pago realizado')
 
@@ -106,6 +110,9 @@ const success = (req, res) => {
 };
 
 const failure = (req, res) => {
+  const mail = "test_user_1398180221@testuser.com"
+
+  Purchasefail(mail, "payer")
   console.log(req.query);
   // res.send('Pago realizado')
   res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir si sale mal

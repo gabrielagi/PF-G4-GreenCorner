@@ -5,8 +5,8 @@ const getAllTestimonials = async () => {
     return testimonials
 }
 
-const createTestimonial = async (message, date, rating) => {
-    const newTestimonial = await Testimonial.create(message, date, rating)
+const createTestimonial = async (message, date, rating, user_id) => {
+    const newTestimonial = await Testimonial.create(message, date, rating, user_id)
     return newTestimonial
 
 }
