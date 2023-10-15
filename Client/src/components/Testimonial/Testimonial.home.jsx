@@ -1,58 +1,47 @@
-import React, { useState, useEffect } from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import OpinionCard from "./Opinion.testimonial";
+import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Asegúrate de importar Link desde react-router-dom
+import Comment from "./Comment";
 import opinions from "./mock.json";
 
 const Testimonial = () => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [visibleOpinions, setVisibleOpinions] = useState(3);
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const calculateCenterSlidePercentage = () => {
-    if (windowWidth <= 500) {
-      return 100;
-    } else if (windowWidth >= 400 && windowWidth <= 1000) {
-      return 70;
-    } else {
-      return 30;
-    }
+  const handleShowMore = () => {
+    setVisibleOpinions(opinions.length);
   };
 
   return (
-    <div className="font-poppins text-[#1d252d]  py-40">
+    <div className="font-poppins py-40">
       <div className="text-center py-10">
         <h5 className="text-[#1d252d]">Testimonials</h5>
         <h1 className="text-4xl mx-auto leading-normal font-bold">
           Read what others have to say
         </h1>
       </div>
-      <div className="wrapper">
-        <Carousel
-          showThumbs={false}
-          showStatus={false}
-          showArrows={false}
-          infiniteLoop={false}
-          centerMode={true}
-          centerSlidePercentage={calculateCenterSlidePercentage()}
-        >
-          {opinions.map((card, index) => (
-            <li key={index} className="carousel-card py-5 mb-10">
-              <OpinionCard card={card} />
-            </li>
-          ))}
-        </Carousel>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {opinions.slice(0, visibleOpinions).map((opinion, index) => (
+          <div key={index} className="py-5 mb-10">
+            <Comment opinion={opinion} />
+          </div>
+        ))}
       </div>
+      {visibleOpinions < opinions.length && (
+        <div className="text-center mt-4">
+          <button
+            onClick={handleShowMore}
+            className="text-blue-500 hover:underline"
+          >
+            Ver más
+          </button>
+        </div>
+      )}
+      {visibleOpinions === opinions.length && (
+        <div className="text-center mt-4">
+          <Link to="/testimoniales" className="text-blue-500 hover:underline">
+            Ver todos los testimonios
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

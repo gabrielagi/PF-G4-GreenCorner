@@ -1,8 +1,8 @@
-const { User, Favorite, Product } = require("../db");
+const { User, Favorite, Product, Category } = require("../db");
 const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
-const createUser = async (nickname, email, picture, email_verified) => {
+const createUser = async (nickname, email, picture, email_verified, status) => {
   try {
     const [user, created] = await User.findOrCreate({
       where: {
@@ -12,7 +12,8 @@ const createUser = async (nickname, email, picture, email_verified) => {
         nickname,
         email,
         picture,
-        email_verified
+        email_verified,
+        status,
       },
     });
 
@@ -47,14 +48,14 @@ const updateUser = async (userId, userData) => {
   try {
     const [updatedCount, updatedUser] = await User.update(userData, {
       where: { id: userId },
-      returning: true, 
+      returning: true,
     });
 
     if (updatedCount === 0) {
       throw new Error("User not found or no changes made.");
     }
 
-    return updatedUser[0]; 
+    return updatedUser[0];
   } catch (error) {
     console.error(error.message);
     throw error;
@@ -63,19 +64,24 @@ const updateUser = async (userId, userData) => {
 
 const getAllFavorites = async (email) => {
   try {
- 
     const favorites = await Favorite.findAll({
-      where:{email:email},
+      where: { email: email },
       include: [
         {
           model: Product,
           required: true,
         },
+        {
+          model: Category,
+          required: true,
+        },
+   
       ],
     });
+    console.log(favorites + "aaaa");
     return favorites;
   } catch (error) {
-  console.log({ error: "Error en el servidor" });
+    console.log({ error: 'Error en el controller' });
   }
 };
 
@@ -86,16 +92,15 @@ const postFavorite = async (product) => {
     const [favorite, created] = await Favorite.findOrCreate({
       where: {
         product_id: product_id,
-        email: email
-      }
+        email: email,
+      },
     });
 
-  if (!created) {
+    if (!created) {
       return "This product already in the favorites";
-  } else {
-     return "This product has been add in the favorites";
-  }
-
+    } else {
+      return "This product has been add in the favorites";
+    }
   } catch (error) {
     console.error("Error en postFavorite:", error.message);
     throw new Error("Error en el servidor");
@@ -151,8 +156,8 @@ const getUserByEmail = async (email) => {
     console.log("El usuario encontrado en el controler", userFromDb);
     return userFromDb;
   } catch (error) {
-    console.error("Error en getProductCart:", error.message);
-    res.status(500).json({ error: "Error en" });
+    console.error("Error en find user por email:", error.message);
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -174,6 +179,24 @@ const deleteUser = async (id) => {
   }
 };
 
+const deleteFavorite = async (product_id, email) => {
+  try {
+    const deleter = Favorite.destroy({
+      where: {
+        product_id: "123e4567-e89b-12d3-a456-426655440000",
+        email: email,
+      },
+    });
+    if (deleter) {
+      return product_id;
+    } else {
+      return "This Favorite doesn't exist";
+    }
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getByRol,
@@ -185,4 +208,5 @@ module.exports = {
   deleteUser,
   updateUser,
   getUserByEmail,
+  deleteFavorite,
 };

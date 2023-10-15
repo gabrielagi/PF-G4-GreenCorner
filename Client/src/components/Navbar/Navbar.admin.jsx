@@ -1,19 +1,15 @@
 import React, { useState } from "react";
-import { BiMenuAltRight } from "react-icons/bi";
+import { BiMenuAltRight, BiEdit, BiUserPlus } from "react-icons/bi";
 import {
   MdOutlineAdminPanelSettings,
   MdOutlineDashboard,
   MdPayment,
 } from "react-icons/md";
-import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
-import { FiShoppingBag } from "react-icons/fi";
+import { AiOutlineUser, AiOutlineLineChart } from "react-icons/ai";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import {IoCreateOutline} from 'react-icons/io5'
-
-
-
+import { LuFileEdit } from "react-icons/lu";
 
 function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const menus = [
@@ -25,12 +21,16 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
     },
     {
       name: "Create Product",
-      icon: IoCreateOutline,
+      icon: BiEdit,
+    },
+    {
+      name: "Products",
+      icon: LuFileEdit,
       margin: true,
     },
     {
-      name: "Shopping history",
-      icon: FiShoppingBag,
+      name: "Users",
+      icon: BiUserPlus,
       margin: true,
     },
     {
@@ -38,8 +38,8 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
       icon: MdPayment,
     },
     {
-      name: "My Garden",
-      icon: AiOutlineHeart,
+      name: "Charts",
+      icon: AiOutlineLineChart,
       margin: true,
     },
     {
@@ -60,7 +60,7 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   return (
     <section className="flex gap-6  mt-5 mb-0">
       <div
-        className={`bg-[#315098] h-[83vh] md:h-[91vh] overflow:hidden ${
+        className={`bg-[#315098] min-h-min overflow:hidden ${
           open ? "w-76" : "w-20"
         } duration-500 text-gray-100 px-4 font-poppins mb-0`}
       >

@@ -6,6 +6,7 @@ const {
   postProductHandler,
   postProductCartHandler,
   deleteHandler,
+  deleteProductCartHandler,
   updateProductHandler,
   getRelatedProductsHandler,
   getAllTrendingHandler,
@@ -26,6 +27,7 @@ productRouter.post("/", postProductHandler);
 
 //Anda
 productRouter.post("/cart", postProductCartHandler);
+productRouter.delete("/cart/:email/:id", deleteProductCartHandler);
 
 productRouter.delete("/:id", deleteHandler);
 
@@ -33,12 +35,10 @@ productRouter.put("/:id", updateProductHandler);
 
 ///RELACIONADOS
 
-productRouter.get('/:id/related', getRelatedProductsHandler);
-
+productRouter.get("/:id/related", getRelatedProductsHandler);
 
 ///TRENDING
 
-productRouter.get('/trending', getAllTrendingHandler);
-
+productRouter.get("/trending", getAllTrendingHandler);
 
 module.exports = productRouter;

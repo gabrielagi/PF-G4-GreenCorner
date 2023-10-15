@@ -11,10 +11,8 @@ const {
   deleteUser,
   updateUser,
   getUserByEmail,
+  deleteFavorite,
 } = require("../Controller/user.controller");
-
-
-
 
 var cloudinary = require("cloudinary").v2;
 
@@ -45,11 +43,10 @@ async function uploadImages(images) {
   }
 }
 
-
-
 const getFavoritesHandler = async (req, res) => {
   try {
-    const {email}=req.query
+    const { email } = req.query;
+    console.log('esto es en el handler' + email)
     const allFavorites = await getAllFavorites(email);
     res.status(200).json(allFavorites);
   } catch (error) {
@@ -62,7 +59,7 @@ const postFavoritesHandler = async (req, res) => {
     const productData = req.body;
 
     const productFavorite = await postFavorite(productData);
-  
+
     if (productFavorite) {
       res.status(201).json(productFavorite);
     } else {
@@ -77,7 +74,7 @@ const postFavoritesHandler = async (req, res) => {
 
 //CREA NUEVO USUARIO
 const newUserHandler = async (req, res) => {
-  const { nickname, email, picture, email_verified } = req.body;
+  const { nickname, email, picture, email_verified, status } = req.body;
   if (!nickname || !email || !picture) {
     return res
       .status(400)
@@ -85,7 +82,13 @@ const newUserHandler = async (req, res) => {
   }
 
   try {
-    const newUser = await createUser(nickname, email, picture, email_verified);
+    const newUser = await createUser(
+      nickname,
+      email,
+      picture,
+      email_verified,
+      status
+    );
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error.message);
@@ -105,7 +108,6 @@ const updateUserHandler = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-  
     if (userData.picture) {
       const uploadedImages = await uploadImages([userData.picture]);
       userData.picture = uploadedImages[0];
@@ -199,6 +201,18 @@ const deleteHandler = async (req, res) => {
     return res.status(500).send("Oops");
   }
 };
+
+const deleteFavoritesHandler = async (req, res) => {
+  const { product_id, email } = req.params;
+
+  try {
+    const deleter = await deleteFavorite(product_id, email);
+    return res.status(200).json(deleter);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Oops");
+  }
+};
 module.exports = {
   newUserHandler,
   postFavoritesHandler,
@@ -209,5 +223,6 @@ module.exports = {
   byRolHandler,
   deleteHandler,
   updateUserHandler,
+  deleteFavoritesHandler,
   emailHandler,
 };

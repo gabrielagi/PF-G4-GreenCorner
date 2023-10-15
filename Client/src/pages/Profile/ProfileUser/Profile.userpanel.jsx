@@ -1,10 +1,11 @@
 import "tailwindcss/tailwind.css";
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import NavbarUser from "../../components/Navbar/Navbar.user";
+import NavbarUser from "../../../components/Navbar/Navbar.user";
 import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 import { Link } from "react-router-dom";
-import PaymentMethods from "../../components/PaymentMethods/PaymentMethods";
+import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
+import Favorites from "../../Favorites";
 const ProfileUser = () => {
   const { user } = useAuth0();
 
@@ -16,11 +17,10 @@ const ProfileUser = () => {
         // return <ShoppingHistory />;
         return <p>Esto muestra el Historial de Compra</p>;
       case "Payment methods":
-      return <PaymentMethods />;
-        
+        return <PaymentMethods />;
       case "My Garden":
-        // return <PaymentMethods />;
-        return <Link to='/about-us'></Link>
+        return <Favorites></Favorites>
+     
       default:
         return <ProfileDashboard />;
     }

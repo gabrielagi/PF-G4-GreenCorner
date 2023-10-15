@@ -9,9 +9,11 @@ const {
   newUserHandler,
   deleteHandler,
   updateUserHandler,
+  deleteFavoritesHandler,
   emailHandler,
 } = require("../Handler/user.handler");
 
+const { getTestimonialHandler, createTestimonialHandler} = require("../Handler/testimonial.handler")
 const userRouter = Router();
 
 userRouter.get("/", allUsers);
@@ -30,6 +32,11 @@ userRouter.post("/", newUserHandler);
 
 userRouter.delete("/:id", deleteHandler);
 
+userRouter.delete("/favorites/:email/:id", deleteFavoritesHandler);
+
 userRouter.put("/:id", updateUserHandler);
+
+userRouter.get("/testimonial", getTestimonialHandler)
+userRouter.post("/testimonial", createTestimonialHandler)
 
 module.exports = userRouter;
