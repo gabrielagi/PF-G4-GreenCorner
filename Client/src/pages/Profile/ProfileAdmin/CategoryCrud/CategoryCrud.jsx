@@ -1,14 +1,12 @@
 import React from "react";
-import users from "./users.json";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllUsers,
-  deleteUser,
-  updateUserFromEdit,
-  orderUserByName,
-  orderUserByRole,
-  orderUserByStatus,
-} from "../../../../Redux/actions/user/user-actions";
+  getAllCategories,
+  updateCategory,
+  deleteCategory,
+  orderCategory,
+  postCategory,
+} from "../../../../Redux/actions/product/action";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,44 +14,32 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../../../../Redux/actions/product/action";
-import { MdSettingsBackupRestore } from "react-icons/md";
 
-const ShowUsers = () => {
-  const allUsers = useSelector((state) => state.allUsers);
-  const [searchTerm, setSearchTerm] = useState("");
+
+const Category = () => {
+  const allCategories = useSelector((state) => state.categories);
   const [nameOrder, setNameOrder] = useState("name");
-  const [roleOrder, setRoleOrder] = useState("admin");
-  const [statusOrder, setStatusOrder] = useState("status");
-  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const usersPerPage = 1;
-  
-  const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
-  
-  useEffect(() => {
-    // Realiza la búsqueda automáticamente cuando searchTerm cambie
-    // Filtra la lista completa de usuarios en función de la búsqueda
-    dispatch(setCurrentPage(1));
-    const filtered = allUsers.filter((user) =>
-      user.email.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredUsers(filtered);
-  }, [searchTerm, allUsers]);
+  const categoriesPerPage = 10;
 
-  
+  const dispatch = useDispatch();
+
   const handleChangePage = (event, value) => {
     dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
   };
 
   const [editMode, setEditMode] = useState(false);
-  const [formData, setFormData] = useState(null);
-  const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
+  const [editModeNew, setEditModeNew] = useState(false);
 
+  const [formData, setFormData] = useState(null);
+  const [createFormData, setCreateFormData] = useState({ name: "" });
+
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, [dispatch]);
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -61,32 +47,70 @@ const ShowUsers = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const editUser = (user) => {
-    // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
-    setEditMode(true);
-    console.log("Contenido user: ", user);
-    setFormData(user);
+  // Funciones para Modal de Crear una categoria
+  const createCategory = (newCategory) => {
+    // Abre el modal de edición y establece selectedCategoryId y formData en los datos del usuario seleccionado
+    setEditModeNew(true);
+    console.log("Contenido category: ", newCategory);
+    setFormData(newCategory);
     console.log("Contenido Form Data: ", formData);
-    setSelectedUserId(user.id);
   };
 
-  const saveUserChanges = () => {
-    // Verifica si hay un usuario seleccionado
-    if (selectedUserId !== null) {
-      const updatedUserData = {
-        nickname: formData.nickname,
-        name: formData.name,
-        lastName: formData.lastName,
-        role: formData.role,
-        status: formData.status,
-      };
+  const handleCreateInputChange = (event) => {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setCreateFormData({ ...createFormData, [name]: value });
+  };
 
-      dispatch(updateUserFromEdit(selectedUserId, updatedUserData))
+  const saveCategoryCreateChanges = () => {
+    // Verifica si hay un usuario seleccionado
+
+    const newCategoryData = {
+      name: formData.name,
+    };
+
+    dispatch(postCategory(newCategoryData))
+      .then(() => {
+        // Cierra el modal de edición y recarga los usuarios si es necesario
+        setEditModeNew(false);
+        setSelectedCategoryId(null); // Restablece selectedCategoryId
+        dispatch(getAllCategories());
+      })
+      .catch((error) => {
+        console.error("Error al guardar cambios:", error.message);
+      });
+  };
+
+  const closeCreateModal = () => {
+    setCreateFormData({ name: "" }); // Restablecer el estado del formulario
+    setEditModeNew(false); // Cerrar el modal de creación
+  };
+
+  // Funciones para Modal de Actualizar una categoria
+
+  const editCategory = (categorie) => {
+    // Abre el modal de edición y establece selectedCategoryId y formData en los datos del usuario seleccionado
+    setEditMode(true);
+    console.log("Contenido categorie: ", categorie);
+    setFormData(categorie);
+    console.log("Contenido Form Data: ", formData);
+    setSelectedCategoryId(categorie.id);
+  };
+
+  const saveCategoryChanges = () => {
+    // Verifica si hay un usuario seleccionado
+    if (selectedCategoryId !== null) {
+      const updatedCategoryData = {
+        name: formData.name,
+      };
+      console.log("contenido upDateCategoryData ", updatedCategoryData);
+
+      dispatch(updateCategory(selectedCategoryId, updatedCategoryData))
         .then(() => {
           // Cierra el modal de edición y recarga los usuarios si es necesario
           setEditMode(false);
-          setSelectedUserId(null); // Restablece selectedUserId
-          dispatch(getAllUsers());
+          setSelectedCategoryId(null); // Restablece selectedCategoryId
+          dispatch(getAllCategories());
         })
         .catch((error) => {
           console.error("Error al guardar cambios:", error.message);
@@ -96,36 +120,17 @@ const ShowUsers = () => {
 
   function handleOrder(e) {
     const selectedValue = e ? e.target.value : e;
+    console.log(selectedValue);
 
     if (selectedValue === "asc" || selectedValue === "desc") {
       setNameOrder(selectedValue);
-      setRoleOrder("");
-      setStatusOrder("");
-      dispatch(orderUserByName(selectedValue));
-      dispatch(setCurrentPage(1));
-    } else if (selectedValue === "admin" || selectedValue === "user") {
-      setRoleOrder(selectedValue);
-      setNameOrder("");
-      setStatusOrder("");
-      dispatch(orderUserByRole(selectedValue));
-      dispatch(setCurrentPage(1));
-    } else if (selectedValue === "Active" || selectedValue === "Inactive") {
-      setStatusOrder(selectedValue);
-      setNameOrder("");
-      setRoleOrder("");
-      dispatch(orderUserByStatus(selectedValue));
-      dispatch(setCurrentPage(1));
-    } else {
-      setNameOrder("");
-      setRoleOrder("");
-      setStatusOrder("");
-      dispatch(getAllUsers());
+      dispatch(orderCategory(selectedValue));
       dispatch(setCurrentPage(1));
     }
   }
 
-  // Delete user
-  const confirmDeleteUser = (id) => {
+  // Delete Category
+  const confirmDeleteCategory = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -137,9 +142,9 @@ const ShowUsers = () => {
       width: "600px",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteUser(id))
+        dispatch(deleteCategory(id))
           .then(() => {
-            dispatch(getAllUsers());
+            dispatch(getAllCategories());
           })
           .catch((error) => {
             console.error("Error al eliminar el producto: ", error);
@@ -148,16 +153,16 @@ const ShowUsers = () => {
     });
   };
 
-  console.log(allUsers);
+  console.log(allCategories);
 
   // Pagination settings
-  const totalUsers = filteredUsers.length;
-  const totalPages = Math.ceil(totalUsers / usersPerPage);
+  const totalCategories = allCategories.length;
+  const totalPages = Math.ceil(totalCategories / categoriesPerPage);
 
-  const startIndex = (currentPage - 1) * usersPerPage;
-  const endIndex = startIndex + usersPerPage;
-  
-  const displayedUsers = filteredUsers.slice(startIndex, endIndex);
+  const startIndex = (currentPage - 1) * categoriesPerPage;
+  const endIndex = startIndex + categoriesPerPage;
+  const displayedCategories = allCategories.slice(startIndex, endIndex);
+  console.log(displayedCategories);
 
   return (
     <>
@@ -166,29 +171,24 @@ const ShowUsers = () => {
         <div className="mb-1 w-full">
           <div className="mb-4">
             <h1 className="text-xl sm:text-5xl font-semibold text-gray-900">
-              All users
+              Categories
             </h1>
           </div>
           <div className="sm:flex">
             <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
               {/* Searchbar */}
               <form className="lg:pr-3" action="#" method="GET">
-              <label htmlFor="users-search" className="sr-only">
+                <label htmlFor="categories-search" className="sr-only">
                   Search
                 </label>
                 <div className="mt-1 relative lg:w-64 xl:w-96">
                   <input
                     type="text"
                     name="email"
-                    id="users-search"
+                    id="categories-search"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[10px] rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                    placeholder="Search for users"
-                    value={searchTerm}
-                    onChange={(e) => {
-                      console.log("searchTerm updated:", e.target.value || 'Empty or null value'); // Agrega este console.log // Agrega este console.log
-                      setSearchTerm(e.target.value);
-                    }}
-                    />
+                    placeholder="Search for category"
+                  />
                 </div>
                 <InputLabel htmlFor="nameOrder">Name</InputLabel>
                 <Select
@@ -205,40 +205,16 @@ const ShowUsers = () => {
                     Z - A
                   </MenuItem>
                 </Select>
-
-                <InputLabel>Role</InputLabel>
-                <Select
-                  id="roleOrder"
-                  name="roleOrder"
-                  value={roleOrder}
-                  onChange={handleOrder}
-                  label="Role"
-                >
-                  <MenuItem value="admin" style={{ fontSize: "15px" }}>
-                    Admin - User
-                  </MenuItem>
-                  <MenuItem value="user" style={{ fontSize: "15px" }}>
-                    User - Admin
-                  </MenuItem>
-                </Select>
-
-                <InputLabel>Status</InputLabel>
-                <Select
-                  id="statusOrder"
-                  name="statusOrder"
-                  value={statusOrder}
-                  onChange={handleOrder}
-                  label="Status"
-                >
-                  <MenuItem value="Active" style={{ fontSize: "15px" }}>
-                    Active - Inactive
-                  </MenuItem>
-                  <MenuItem value="Inactive" style={{ fontSize: "15px" }}>
-                    Inactive - Active
-                  </MenuItem>
-                </Select>
               </form>
             </div>
+            {/* Boton para crear una nueva categoria */}
+            <button
+              type="button"
+              className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
+              onClick={() => createCategory({ name: "" })}
+            >
+              New category
+            </button>
           </div>
         </div>
         <div className="flex space-x-1">
@@ -293,19 +269,19 @@ const ShowUsers = () => {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
-                  {displayedUsers.map((user) => (
-                    <tr key={user.id} className="hover:bg-gray-100">
+                  {displayedCategories.map((categorie) => (
+                    <tr key={categorie.id} className="hover:bg-gray-100">
                       <td className="p-4 w-4">
                         {/* Checkbox para seleccionar el usuario */}
                         <div className="flex items-center">
                           <input
-                            id={`checkbox-${user.id}`}
+                            id={`checkbox-${categorie.id}`}
                             aria-describedby="checkbox-1"
                             type="checkbox"
                             className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
                           />
                           <label
-                            htmlFor={`checkbox-${user.id}`}
+                            htmlFor={`checkbox-${categorie.id}`}
                             className="sr-only"
                           >
                             checkbox
@@ -313,50 +289,24 @@ const ShowUsers = () => {
                         </div>
                       </td>
                       {/* ... Otros campos de la fila ... */}
-                      <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
-                        <img
-                          className="h-10 w-10 rounded-full"
-                          src={user.picture}
-                          alt={`${user.name} avatar`}
-                        />
-                      </td>
                       <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
-                        {user.name}
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
-                        {user.lastName}
+                        {categorie.name}
                       </td>
 
-                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
-                        {user.email}
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
-                        {user.role}
-                      </td>
-                      <td className="p-4 whitespace-nowrap text-[13px] font-normal text-gray-900">
-                        <div className="flex items-center">
-                          {user.status === "Active" ? (
-                            <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div>
-                          ) : (
-                            <div className="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div>
-                          )}
-                          {user.status}
-                        </div>
-                      </td>
                       <td className="p-4 whitespace-nowrap space-x-2">
                         <button
                           type="button"
                           className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
-                          onClick={() => editUser(user)}
+                          onClick={() => editCategory(categorie)}
                         >
-                          Edit user
+                          Edit category
                         </button>
                         <button
                           type="button"
                           className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
-                          onClick={() => confirmDeleteUser(user.id)}
+                          onClick={() => confirmDeleteCategory(categorie.id)}
                         >
-                          Delete user
+                          Delete category
                         </button>
                       </td>
                     </tr>
@@ -406,74 +356,24 @@ const ShowUsers = () => {
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="p-6">
                 <h1 className="text-2xl font-semibold text-gray-900">
-                  Edit User
+                  Edit Category
                 </h1>
                 <div className="mt-5">
                   {/* Campos de edición */}
                   <input
                     type="text"
-                    name="nickname"
-                    value={formData.nickname}
-                    onChange={handleInputChange}
-                    className="block w-full p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
-                    placeholder="Nickname"
-                  />
-                  <input
-                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="block mt-2 p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
-                    placeholder="Name"
+                    className="block w-full p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
+                    placeholder="Name category"
                   />
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    className="block mt-2 p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
-                    placeholder="Last Name"
-                  />
-                  <input
-                    type="text"
-                    name="lastName"
-                    value={formData.role}
-                    onChange={handleInputChange}
-                    className="block mt-2 p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
-                    placeholder="Last Name"
-                  />
-                  <div>
-                    <div>Role:</div>
-                    <select
-                      className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
-                      id="role"
-                      name="role"
-                      value={formData.role}
-                      onChange={handleInputChange}
-                    >
-                      <option value="user">User</option>
-                      <option value="admin">Admin</option>
-                    </select>
-                  </div>
-                  <div>
-                    <div>Status:</div>
-                    <select
-                      className="w-full rounded-lg border border-blue-200 p-4 pe-12 text-[12px] shadow-sm"
-                      id="status"
-                      name="status"
-                      value={formData.status}
-                      onChange={handleInputChange}
-                    >
-                      <option value="Active">Active</option>
-                      <option value="Inactive">Inactive</option>
-                    </select>
-                  </div>
                 </div>
                 <div className="mt-6 flex justify-end">
                   <button
                     type="button"
                     className="px-4 py-2 mr-2 text-white bg-cyan-600 rounded-lg focus:ring-4 focus:ring-cyan-200"
-                    onClick={saveUserChanges}
+                    onClick={saveCategoryChanges}
                   >
                     Save
                   </button>
@@ -490,8 +390,62 @@ const ShowUsers = () => {
           </div>
         </div>
       )}
+      {/* Modal de creacion de una categoria */}
+      {editModeNew && (
+        <div className="fixed z-10 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div
+              className="fixed inset-0 transition-opacity"
+              aria-hidden="true"
+            >
+              <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            <span
+              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+            >
+              &#8203;
+            </span>
+            {/* Contenido del modal de creacion (campos de edición y botones de guardar/cancelar) */}
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="p-6">
+                <h1 className="text-2xl font-semibold text-gray-900">
+                  Create a new Category
+                </h1>
+                <div className="mt-5">
+                  {/* Campos de edición */}
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="block w-full p-2.5 border border-gray-300 rounded-lg focus:ring-cyan-600 focus:border-cyan-600"
+                    placeholder="Name category"
+                  />
+                </div>
+                <div className="mt-6 flex justify-end">
+                  <button
+                    type="button"
+                    className="px-4 py-2 mr-2 text-white bg-cyan-600 rounded-lg focus:ring-4 focus:ring-cyan-200"
+                    onClick={() => saveCategoryCreateChanges()}
+                  >
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="px-4 py-2 text-gray-600 bg-gray-200 rounded-lg focus:ring-4 focus:ring-gray-300"
+                    onClick={() => closeCreateModal()}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
 
-export default ShowUsers;
+export default Category;
