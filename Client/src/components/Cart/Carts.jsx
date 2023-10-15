@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductCart } from "../../Redux/actions/product/action";
 import { useAuth0 } from "@auth0/auth0-react";
+import EmptyCart from "../EmptyCart/EmptyCart";
 
 const Carts = () => {
   const products = useSelector((state) => state.productCart);
@@ -26,6 +27,8 @@ const Carts = () => {
 
   const handleCheckout = async () => {
     try {
+      // Preguntar si el usuario es admin
+
       let product = [];
       for (let i = 0; i < products.length; i++) {
         const price = Number(products[i].Product.price);
@@ -93,7 +96,7 @@ const Carts = () => {
           })
         ) : (
           <div>
-            <h1>Hola</h1>
+            <EmptyCart/>
           </div>
         )}
       </div>

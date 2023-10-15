@@ -1,5 +1,4 @@
-const { Product,User,ShoppingCart,Category } = require("../db");
-
+const { Product, User, ShoppingCart, Category } = require("../db");
 
 var cloudinary = require("cloudinary").v2;
 
@@ -30,33 +29,30 @@ const getAllProduct = async (req, res) => {
   }
 };
 
-
-  const getProductCart = async (email) => {
-    try {
-    
-   let cart = ShoppingCart.findAll({
-    where: {
-      email: email
-    },
-      include: [{
-          model: Product,
-          required: true
+const getProductCart = async (email) => {
+  try {
+    let cart = ShoppingCart.findAll({
+      where: {
+        email: email,
       },
-      {
-        model: User,
-        required: true
-      }
-    ]
-  })
-  
-     return cart 
-     
-    } catch (error) {
-      console.error("Error en getProductCart:", error.message);
-      res.status(500).json({ error: "Error en" });
-    }
-  };
+      include: [
+        {
+          model: Product,
+          required: true,
+        },
+        {
+          model: User,
+          required: true,
+        },
+      ],
+    });
 
+    return cart;
+  } catch (error) {
+    console.error("Error en getProductCart:", error.message);
+    res.status(500).json({ error: "Error en" });
+  }
+};
 
 //Obtiene un producto por id con sus categorías asociadas (product detail)
 const getProductById = async (id) => {
@@ -76,7 +72,6 @@ const getProductById = async (id) => {
   }
 };
 
-
 async function uploadImages(images) {
   try {
     const uploadedImageURLs = [];
@@ -94,25 +89,23 @@ async function uploadImages(images) {
   }
 }
 
-
 const postProductCart = async (cart) => {
   try {
-    const { product_id, email, amount} = cart;
+    const { product_id, email, amount } = cart;
 
     const [shoppingCart, created] = await ShoppingCart.findOrCreate({
       where: {
         product_id: product_id,
         email: email,
-        amount: amount
-      }
+        amount: amount,
+      },
     });
 
-  if (!created) {
+    if (!created) {
       return "This product already in the cart";
-  } else {
-     return "This product has been add in the cart";
-  }
-
+    } else {
+      return "This product has been add in the cart";
+    }
   } catch (error) {
     console.error("Error en postProductCart:", error.message);
     throw new Error("Error en el servidor");
@@ -122,7 +115,16 @@ const postProductCart = async (cart) => {
 //Crea un producto y lo guarda en la base de datos con sus categorías asociadas (admin dashboard) (falta imagen por defecto)
 const postProduct = async (productData) => {
   try {
-    const { name, description, price, images, stock, available, categories , isTrending } = productData;
+    const {
+      name,
+      description,
+      price,
+      images,
+      stock,
+      available,
+      categories,
+      isTrending,
+    } = productData;
 
     if (!categories) {
       throw new Error("Las categorías son obligatorias");
@@ -131,7 +133,6 @@ const postProduct = async (productData) => {
     if (!name || !price || !stock) {
       throw new Error("Faltan completar campos obligatorios");
     }
-    
 
     const imagesResult = await uploadImages(images);
 
@@ -156,7 +157,6 @@ const postProduct = async (productData) => {
   }
 };
 
-
 //Actualiza un producto por id (admin dashboard)
 const updateProduct = async (id, updatedData) => {
   try {
@@ -167,13 +167,20 @@ const updateProduct = async (id, updatedData) => {
     const existingCategories = await existingProduct.getCategories();
     const updatedCategories = updatedData.categories || [];
 
-    const categoriesToRemove = existingCategories.filter((category) => !updatedCategories.some((updatedCategory) => updatedCategory.name === category.name));
+    const categoriesToRemove = existingCategories.filter(
+      (category) =>
+        !updatedCategories.some(
+          (updatedCategory) => updatedCategory.name === category.name
+        )
+    );
 
     for (const category of categoriesToRemove) {
       await existingProduct.removeCategory(category);
     }
     for (const category of updatedCategories) {
-      const [categoryInstance] = await Category.findOrCreate({ where: { name: category.name } });
+      const [categoryInstance] = await Category.findOrCreate({
+        where: { name: category.name },
+      });
       await existingProduct.addCategory(categoryInstance);
     }
 
@@ -192,29 +199,36 @@ const updateProduct = async (id, updatedData) => {
   }
 };
 
-
 //Lista de 5 productos relacionados (product detail)
 const findRelatedProducts = async (productId) => {
   try {
-    const targetProduct = await Product.findByPk(productId, {include: 'categories',});
+    const targetProduct = await Product.findByPk(productId, {
+      include: "categories",
+    });
     if (!targetProduct) {
-      throw new Error('Producto no encontrado');
+      throw new Error("Producto no encontrado");
     }
-    const targetCategories = targetProduct.categories.map((category) => category.id);
+    const targetCategories = targetProduct.categories.map(
+      (category) => category.id
+    );
 
     const filteredRelatedProducts = [];
     const relatedProducts = await Product.findAll({
       where: {
-        id: {[sequelize.Op.ne]: targetProduct.id, },
+        id: { [sequelize.Op.ne]: targetProduct.id },
       },
-      include: [
-        {model: Category,as: 'categories',attributes: ['id'],},
-      ],
+      include: [{ model: Category, as: "categories", attributes: ["id"] }],
     });
 
     for (const product of relatedProducts) {
-      const productCategories = product.categories.map((category) => category.id);
-      if (productCategories.some((categoryId) => targetCategories.includes(categoryId))) {
+      const productCategories = product.categories.map(
+        (category) => category.id
+      );
+      if (
+        productCategories.some((categoryId) =>
+          targetCategories.includes(categoryId)
+        )
+      ) {
         filteredRelatedProducts.push(product);
         if (filteredRelatedProducts.length >= 5) {
           return filteredRelatedProducts;
@@ -222,10 +236,9 @@ const findRelatedProducts = async (productId) => {
       }
     }
   } catch (error) {
-    throw new Error('Error en findRelatedProducts: ' + error.message);
+    throw new Error("Error en findRelatedProducts: " + error.message);
   }
 };
-
 
 //Busca todos los productos con el atributo isTrending con valor true (home)
 const getAllTrending = async () => {
@@ -235,48 +248,44 @@ const getAllTrending = async () => {
     });
     return trendingProducts;
   } catch (error) {
-    throw new Error('Error al buscar todos los productos Trending');
+    throw new Error("Error al buscar todos los productos Trending");
   }
 };
 
 const deleteProduct = async (id) => {
   try {
-      const deleter = await Product.destroy({ 
-        where: {
-          product_id: id
-        }  
-      })
-      if (deleter === 1) {
-        return true
-      } else {
-        return false
-      }
+    const deleter = await Product.destroy({
+      where: {
+        product_id: id,
+      },
+    });
+    if (deleter === 1) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
-      return ("Error al eliminar el product", error)
+    return "Error al eliminar el product", error;
   }
-}
+};
 
 const deleteProductCart = async (id, email) => {
   try {
-      const deleter = await ShoppingCart.destroy({ 
-        where: {
-          product_id: id,
-          email:email
-        } 
-      })
-      if (deleter === 1) {
-        return true
-      } else {
-        return false
-      }
+    const deleter = await ShoppingCart.destroy({
+      where: {
+        product_id: id,
+        email: email,
+      },
+    });
+    if (deleter === 1) {
+      return true;
+    } else {
+      return false;
+    }
   } catch (error) {
-      return ("Error al eliminar el product", error)
+    return "Error al eliminar el product", error;
   }
-}
-
-
-
-
+};
 
 module.exports = {
   getAllProduct,
@@ -288,5 +297,5 @@ module.exports = {
   findRelatedProducts,
   getAllTrending,
   deleteProduct,
-  deleteProductCart
+  deleteProductCart,
 };

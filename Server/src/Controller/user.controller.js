@@ -1,8 +1,8 @@
-const { User, Favorite, Product } = require("../db");
+const { User, Favorite, Product, Category } = require("../db");
 const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
-const createUser = async (nickname, email, picture, email_verified) => {
+const createUser = async (nickname, email, picture, email_verified, status) => {
   try {
     const [user, created] = await User.findOrCreate({
       where: {
@@ -73,13 +73,15 @@ const getAllFavorites = async (email) => {
         },
         {
           model: Category,
-          required: true
-        }
+          required: true,
+        },
+   
       ],
     });
+    console.log(favorites + "aaaa");
     return favorites;
   } catch (error) {
-    console.log({ error: "Error en el servidor" });
+    console.log({ error: 'Error en el controller' });
   }
 };
 
@@ -146,7 +148,7 @@ const getByRol = async (rol) => {
 
 const getUserByEmail = async (email) => {
   try {
-    let userFromDb = await User.findOne({
+    let userFromDb = await User.find({
       where: {
         email: email,
       },

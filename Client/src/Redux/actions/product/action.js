@@ -7,6 +7,9 @@ import {
   POST_PRODUCT_CART,
   GET_PRODUCT_TRENDING,
   GET_CATEGORIES,
+  POST_CATEGORY,
+  DELETE_CATEGORY,
+  UPDATE_CATEGORY,
   GET_CATEGORIES_SHOP,
   FILTER_CATEGORY,
   FILTER_FAV__CATEGORY,
@@ -16,6 +19,7 @@ import {
   ORDER_FAV_BY_NAME,
   ORDER_BY_PRICE,
   ORDER_FAV_BY_PRICE,
+  ORDER_CATEGORY,
   RESET_ALL_PRODUCT,
   SET_CURRENT_PAGE,
   DELETE_PRODUCT_CART,
@@ -152,7 +156,7 @@ export const deleteProductCart = (product_id, email) => {
       const { data } = await axios.delete(
         `${endpoint}/cart/${email}/${product_id}`
       );
-      console.log("La respuesta del delete en la action es: ", data)
+      console.log("La respuesta del delete en la action es: ", data);
       dispatch({
         type: DELETE_PRODUCT_CART,
         payload: product_id,
@@ -205,6 +209,90 @@ export const getAllCategoriesShop = () => {
     }
   };
 };
+
+// DELETE_CATEGORY
+
+export const deleteCategory = (id) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.delete(`${categories}/${id}`);
+      console.log("Se elimino la categoria: ", data);
+      dispatch({
+        type: DELETE_CATEGORY,
+        payload: id,
+      });
+      console.log("Categoria eliminada con éxito");
+    } catch (error) {
+      console.log(error.message);
+      alert("Hubo un problema eliminando el producto");
+    }
+  };
+};
+
+// UPDATE_CATEGORY
+export const updateCategory = (id, updatedCategoryData) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(
+        `${categories}/${id}`,
+        updatedCategoryData
+      );
+      dispatch({
+        type: UPDATE_CATEGORY,
+        payload: {
+          data: data,
+          id: id,
+          updatedProductData: updatedCategoryData,
+        },
+      });
+    } catch (error) {
+      console.log(error.message);
+      alert("Hubo un problema actualizando la categoria");
+    }
+  };
+};
+
+// UPDATE CATEGORY FROM MODAL EDIT
+export function updateUserFromEdit(id, categoryData) {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.put(`${categories}/${id}`, categoryData);
+      console.log("Se actualizo la categoria con los datos del Modal: ", data);
+      dispatch({
+        type: UPDATE_CATEGORY_FROM_EDIT,
+      });
+    } catch (error) {
+      console.log(error);
+      return error.message;
+    }
+  };
+}
+
+// POST_CATEGORY
+export function postCategory(categoryData) {
+  return async (dispatch) => {
+    try {
+      console.log("Category nueva entra a la action");
+      const { data } = await axios.post(`${categories}/`, categoryData);
+      console.log("Category post devuelve a la action el data: ", data);
+      dispatch({
+        type: POST_CATEGORY,
+        payload: data,
+      });
+      return data;
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  };
+}
+
+export function orderCategory(payload) {
+  return {
+    type: ORDER_CATEGORY,
+    payload,
+  };
+}
 
 export const filterCategory = (category) => {
   return async (dispatch) => {

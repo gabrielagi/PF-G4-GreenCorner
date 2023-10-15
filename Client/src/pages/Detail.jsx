@@ -57,6 +57,8 @@ const Detail = () => {
       theme: "light",
     });
   };
+  
+
 
   const handleAddToMyGarden = () => {
     if (isAuthenticated) {
@@ -120,7 +122,10 @@ const Detail = () => {
       loginWithRedirect();
     }
   };
-
+  const number= (max)=> {
+    return Math.floor(Math.random() * max);
+  }
+  console.log(number(5))
   if (product.name) {
     return (
       <div>
@@ -129,23 +134,21 @@ const Detail = () => {
             <VscArrowCircleLeft color="gray" size="5rem" />
           </button>
         </Link>
-        <div className="mx-10 sm:mx-60">
+        <div className="mx-10 sm:mx-[200px]">
           <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-            {activeImg ? (
-              <div className="swiper-container-detail">
+            {activeImg && (
+              <div className="swiper-container-detail bg-red-200">
                 <img
                   className="mx-auto bg-gray-100 bg-opacity-20"
                   src={activeImg}
                 ></img>
-                <Slider
+                <Slider 
                   id={id}
                   images={product.images}
                   setActiveImg={setActiveImg}
                 ></Slider>
               </div>
-            ) : (
-              <p> no hay nati</p>
-            )}
+            ) }
 
             <div className=" px-10 bg-[#f6f6f6] justify-between">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
@@ -153,7 +156,7 @@ const Detail = () => {
               </h2>
               <hr className="my-10"></hr>
               <p className="py-t text-5xl text-[#444444]">${product.price}</p>
-              <p className="py-20">{product.description}</p>
+              <p className="py-20  w-full">{product.description}</p>
               {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
@@ -251,7 +254,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(0, 4)}
+              .slice(number(5), number(5)+4)}
           </div>
         </div>
       </div>

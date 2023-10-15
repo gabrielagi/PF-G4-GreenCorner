@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NavbarAdmin from "../../../components/Navbar/Navbar.admin";
 import Create from "./Create/Create";
 import ShowUsers from "./UserSettings/ShowUsers";
+import Category from "./CategoryCrud/CategoryCrud";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 import ProductDashboard from "./ProductDashboard/ProductDashboard";
@@ -28,7 +29,7 @@ const ProfileAdmin = () => {
         return <PaymentMethods />;
       case "Charts":
         // return <PaymentMethods />;
-        return <p>Esto muestra los charts</p>;
+        return <Category />;
 
       // Resto de componentes en el menu
       default:
