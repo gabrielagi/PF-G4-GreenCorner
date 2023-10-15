@@ -15,6 +15,7 @@ import { setCurrentPage } from "../Redux/actions/product/action";
 import {BiSearch} from "react-icons/bi"
 import styles from "../pages/Shop/Shop.module.css";
 import leafBanner from '../img/plantbanner.jpg'
+import EmptyFavorites from "../components/EmptyFavorites/EmptyFavorites";
 import './Favorite.styles.css'
 const Favorites = () => {
    
@@ -22,9 +23,18 @@ const Favorites = () => {
 
 
 const dispatch = useDispatch();
+useEffect(() => {
+  console.log('gua entra')
+  console.log(dispatch)
+  dispatch(getFavorites(user.email));
+  dispatch(getAllCategories())
+
+  return
+}, [dispatch]);
   const favorites = useSelector((state) => state.favorites);
   const allCategories = useSelector((state) => state.categories);
   const { user } = useAuth0();
+  console.log(user)
   const currentPage = useSelector((state) => state.pagination.currentPage); 
   const productsPerPage = 9;
   const handleChangePage = (event, value) => {
@@ -44,14 +54,7 @@ console.log(totalFavorites)
   const displayedFavorites = favorites && totalPages>1 ?favorites.slice(startIndex, endIndex) : favorites ;
 
 
-  useEffect(() => {
-    console.log('gua entra')
-    console.log(dispatch)
-    dispatch(getFavorites(user.email));
-    dispatch(getAllCategories())
 
-    return
-  }, [dispatch]);
 
 const [nameOrden, setNameOrden] = useState("");
 const [priceOrden, setPriceOrden] = useState("");
@@ -254,10 +257,10 @@ console.log(favorites)
                 </Card> </div>
                 
               ) : (
-                <p>No hay productos en favoritos</p>
+                <EmptyFavorites/>
               )
-            ) : (
-              <p>Favoritos no disponible</p>
+            ) : (<div className="col-span-3 row-span-2 my-auto "><EmptyFavorites  /></div>
+              
             )}
 
          </div>

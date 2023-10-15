@@ -1,4 +1,4 @@
-const { User, Favorite, Product } = require("../db");
+const { User, Favorite, Product, Category } = require("../db");
 const { Op } = require("sequelize");
 
 //CREA NUEVO USUARIO
@@ -75,12 +75,13 @@ const getAllFavorites = async (email) => {
           model: Category,
           required: true,
         },
+   
       ],
     });
     console.log(favorites + "aaaa");
     return favorites;
   } catch (error) {
-    console.log({ error: "Error en el servidor" });
+    console.log({ error: 'Error en el controller' });
   }
 };
 

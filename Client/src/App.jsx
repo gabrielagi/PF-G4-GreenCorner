@@ -28,6 +28,8 @@ import ProfileUser from "./pages/Profile/ProfileUser/Profile.userpanel"
 import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
 import Banned from "./pages/Banned/Banned.jsx";
 import Slider from "./components/Slider/Slider2";
+import EmptyCart from "./components/EmptyCart/EmptyCart";
+import EmptyFavorites from "./components/EmptyFavorites/EmptyFavorites";
 
 const App = () => {
 
@@ -90,7 +92,7 @@ const App = () => {
             />
             <Route path="/guides" element={<Guides />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/prueba" element={<Slider />} />
+            <Route path="/prueba" element={<EmptyFavorites/>} />
           </Routes>
           <Footer></Footer>
         </>

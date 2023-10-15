@@ -156,7 +156,7 @@ const Detail = () => {
               </h2>
               <hr className="my-10"></hr>
               <p className="py-t text-5xl text-[#444444]">${product.price}</p>
-              <p className="py-20">{product.description}</p>
+              <p className="py-20  w-full">{product.description}</p>
               {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
