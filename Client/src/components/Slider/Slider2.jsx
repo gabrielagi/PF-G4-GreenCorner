@@ -4,18 +4,24 @@ import 'swiper/css/bundle'
 //  import './Slider.styles.css'
 
 
-const Slider = (images, setActiveImg) => {
+const Slider = ({images, setActiveImg}) => {
 useEffect(()=>{
 const swiper = new Swiper('.swiper', {
   // Optional parameters
+
+  centerInsufficientSlides:true,
+  // centeredSlides:true,
+  // centeredSlidesBounds:true,
+  
   direction: 'horizontal',
   loop: true,
-  slidesPerView:3 , 
-  spaceBetween:5,
+  slidesPerView:4 , 
+
   autoplay: {
-            delay: 1000,
+            delay: 3000,
             pauseOnMouseEnter: true,
             disableOnInteraction: false,
+            
           },
   // If we need pagination
   pagination: {
@@ -31,6 +37,7 @@ const swiper = new Swiper('.swiper', {
   // And if we need scrollbar
   scrollbar: {
     el: '.swiper-scrollbar',
+    enabled:false,
   },
 });
   return ()=>{
@@ -56,16 +63,16 @@ const handleImageClick = (image) => {
      {/* <!-- Slider main container --> */}
 <div className="swiper">
   {/* <!-- Additional required wrapper --> */}
-  <div className="swiper-wrapper h-[200px]">
+  <div className="swiper-wrapper h-[200px] w-[100px] ">
   
-{images.images.map((i, index) => <div  key={`thumb-${i.id}`} className="swiper-slide h-[150px] w-[150px]"
+{images.map((i, index) => <div  key={`thumb-${i.id}`} className="swiper-slide my-10 h-[200px] w-[200px]"
  >
  <img onClick={() => handleImageClick(i)} className='h-full w-[150px] object-cover object-center'   src={i}  alt={`Thumbnail ${index}`}/> 
  </div>)} 
 
 </div>
-  {/* <!-- If we need pagination --> */}
-  <div className="swiper-pagination"></div>
+  {/* <!-- If we need pagination -->
+  <div className="swiper-pagination"></div> */}
 {/* 
   <!-- If we need navigation buttons --> */}
   <div className="swiper-button-prev"></div>
