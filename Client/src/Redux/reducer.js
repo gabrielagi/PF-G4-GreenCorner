@@ -38,6 +38,7 @@ import {
   GET_FAVORITES,
   POST_PRODUCT_CART,
   DELETE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART,
   FIND_FAV_BY_NAME,
   GET_ORDER_DETAIL, 
   GET_ALL_ORDERS
@@ -157,6 +158,43 @@ function rootReducer(state = initialState, action) {
           ...state,
           productCart: [...state.productCart, action.payload],
         };
+      }
+
+    case POST_PRODUCT_CART:
+      console.log("Llegue al reducer con los cart: ", action.payload);
+      if (typeof action.payload === "string") {
+        return {
+          ...state,
+          productCart: [...state.productCart],
+        };
+      } else {
+        return {
+          ...state,
+          productCart: [...state.productCart, action.payload],
+        };
+      }
+
+    case UPDATE_PRODUCT_CART:
+      const { productId, newAmount } = action.payload;
+
+      const updatedProductIndex = state.productCart.find(
+        (product) => product.product_id === productId
+      );
+      if (updatedProductIndex !== -1) {
+        const updatedProduct = {
+          ...state.productCart[updatedProductIndex],
+          amount: newAmount,
+        };
+
+        const updatedCart = [...state.productCart];
+        updatedCart[updatedProductIndex] = updatedProduct;
+
+        return {
+          ...state,
+          productCart: updatedCart,
+        };
+      } else {
+        return state;
       }
 
     case GET_PRODUCT_BY_ID:
@@ -462,22 +500,22 @@ function rootReducer(state = initialState, action) {
         userDetail: action.payload,
       };
 
-      case ORDER_CATEGORY:
-        allCategories = [...state.categories];
-        categoriesSorted = allCategories.sort(function (a, b) {
-          if (a.name > b.name) {
-            return action.payload === "asc" ? 1 : -1;
-          }
-          if (a.name < b.name) {
-            return action.payload === "asc" ? -1 : 1;
-          }
-          return 0;
-        });
-        console.log(categoriesSorted)
-        return {
-          ...state,
-          categories: categoriesSorted,
-        };
+    case ORDER_CATEGORY:
+      allCategories = [...state.categories];
+      categoriesSorted = allCategories.sort(function (a, b) {
+        if (a.name > b.name) {
+          return action.payload === "asc" ? 1 : -1;
+        }
+        if (a.name < b.name) {
+          return action.payload === "asc" ? -1 : 1;
+        }
+        return 0;
+      });
+      console.log(categoriesSorted);
+      return {
+        ...state,
+        categories: categoriesSorted,
+      };
 
     case GET_USER_BY_ROL:
       return {

@@ -23,6 +23,7 @@ import {
   RESET_ALL_PRODUCT,
   SET_CURRENT_PAGE,
   DELETE_PRODUCT_CART,
+  UPDATE_PRODUCT_CART,
   RESET_ALL_FAVORITES,
   FIND_FAV_BY_NAME,
 } from "../action-types";
@@ -131,6 +132,39 @@ export const getProductCart = (email) => {
       });
     } catch (error) {
       console.log(error.message);
+    }
+  };
+};
+
+// Update amount in productCart
+export const updateProductCart = ({ email, productId, amount }) => {
+  return async (dispatch) => {
+    try {
+      console.log("Llego a update con email: ", email);
+      console.log("Llego a update con productid: ", productId);
+      console.log("Llego a update con quantity: ", amount);
+      // Realiza una solicitud PUT a la ruta de actualización en el servidor
+      const response = await axios.put(
+        `${endpoint}/cart/${email}/${productId}`,
+        {
+          quantity: amount,
+        }
+      );
+      console.log(
+        "Volvi del put en action updateProductCart con data: ",
+        response
+      );
+
+      dispatch({
+        type: UPDATE_PRODUCT_CART,
+        payload: {
+          email,
+          productId,
+          quantity: amount,
+        },
+      });
+    } catch (error) {
+      console.error("Error en la acción updateProductCart:", error);
     }
   };
 };

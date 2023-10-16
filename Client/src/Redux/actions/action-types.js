@@ -41,6 +41,7 @@ export const RESET_ALL_PRODUCT = "RESET_ALL_PRODUCT ";
 export const GET_PRODUCT_CART = "GET_PRODUCT_CART";
 export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
 export const POST_PRODUCT_CART = "POST_PRODUCT_CART";
+export const UPDATE_PRODUCT_CART = "UPDATE_PRODUCT_CART";
 
 // Category action-types
 export const GET_CATEGORIES = "GET_CATEGORIES";
@@ -57,7 +58,4 @@ export const ORDER_CATEGORY = "ORDER_CATEGORY";
 // Order action-types
 export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
 export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL";
-
-
-
 
