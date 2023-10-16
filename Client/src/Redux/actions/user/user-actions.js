@@ -15,6 +15,7 @@ import {
   ORDER_USER_BY_ROLE,
   ORDER_USER_BY_STATUS,
   SEARCH_USERS,
+  DELETE_FAV_BY_ID_BD
 } from "../action-types";
 
 import axios from "axios";
@@ -200,6 +201,30 @@ export function deleteFavorite(id, email) {
 */
       return data;
 
+    } catch (error) {
+      console.log(error);
+      return error.mesage;
+    }
+  };
+}
+
+export function deleteFavoriteBD(id) {
+  console.log('en el action')
+  console.log(id)
+  return async (dispatch) => {
+    try {
+  
+      console.log('llegó al action')
+      const { data } = await axios.delete(
+        `${endpoint}/favorites/${id}`
+      );
+      console.log(data)
+      dispatch({
+        type: DELETE_FAV_BY_ID_BD,
+        payload: data,
+      });
+
+   
     } catch (error) {
       console.log(error);
       return error.mesage;

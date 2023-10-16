@@ -196,9 +196,9 @@ const deleteUser = async (id) => {
   }
 };
 
-const deleteFavorite = async (product_id, email) => {
+const deleteFavorite = async (product_id,email ) => {
   try {
-    const deleter = Favorite.destroy({
+    const deleter = await Favorite.destroy({
       where: {
         product_id: product_id,
         email: email,
@@ -216,7 +216,29 @@ const deleteFavorite = async (product_id, email) => {
     console.log(error.message);
   }
 };
+const deleteFavoriteBD = async (product_id ) => {
+  console.log('llegó al controller')
+  console.log(product_id)
 
+  try {
+    const deleter = await Favorite.destroy({
+      where: {
+        product_id: product_id,
+       
+      },
+    });
+
+
+    if (deleter) {
+      return "This product has been deleted from favorites";
+    } else {
+      return "This Favorite doesn't exist";
+    }
+    
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 module.exports = {
   getAllUsers,
   getByRol,
@@ -230,4 +252,5 @@ module.exports = {
   updateUser,
   getUserByEmail,
   deleteFavorite,
+  deleteFavoriteBD
 };

@@ -144,7 +144,7 @@ const success = (req, res) => {
         const mail = "test_user_1398180221@testuser.com"
 
   Purchase (mail, "payer")
-
+console.log('es el payment controller')
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database
