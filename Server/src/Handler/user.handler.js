@@ -5,6 +5,7 @@ const {
   getUserById,
   postFavorite,
   getAllFavorites,
+  getOneFavorite,
   getByRol,
   getUserbyName,
   createUser,
@@ -49,6 +50,16 @@ const getFavoritesHandler = async (req, res) => {
     console.log('esto es en el handler' + email)
     const allFavorites = await getAllFavorites(email);
     res.status(200).json(allFavorites);
+  } catch (error) {
+    console.error("Error en getFavoritesHandler:", error.message);
+  }
+};
+const getOneFavoriteHandler = async (req, res) => {
+  try {
+    const { email, id } = req.query;
+    console.log('esto es en el handler' + email)
+    const oneFavorite = await getOneFavorite(email,id);
+    res.status(200).json(oneFavorite);
   } catch (error) {
     console.error("Error en getFavoritesHandler:", error.message);
   }
@@ -203,10 +214,10 @@ const deleteHandler = async (req, res) => {
 };
 
 const deleteFavoritesHandler = async (req, res) => {
-  const { product_id, email } = req.params;
-
+  const { id, email } = req.params;
+  
   try {
-    const deleter = await deleteFavorite(product_id, email);
+    const deleter = await deleteFavorite(id, email);
     return res.status(200).json(deleter);
   } catch (error) {
     console.log(error);
@@ -217,6 +228,7 @@ module.exports = {
   newUserHandler,
   postFavoritesHandler,
   getFavoritesHandler,
+  getOneFavoriteHandler,
   byIdHandler,
   byNameHandler,
   allUsers,

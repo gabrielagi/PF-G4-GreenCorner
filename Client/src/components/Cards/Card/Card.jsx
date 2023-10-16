@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   postFavorites,
   deleteFavorite,
+  getOneFavorites
 } from "../../../Redux/actions/user/user-actions";
 import {
   getAllProducts,
@@ -22,25 +23,55 @@ const Card = ({ name, images, price, id }) => {
   const [addToCartClicked, setAddToCartClicked] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   const dispatch = useDispatch();
-  const favorites = useSelector((state) => {
-    state.favorites;
-  });
+  
 
-  const notify = (message) =>
-    toast.success(message + "🛒", {
-      position: "bottom-left",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light ",
-    });
+  let heart = "❤️";
 
-  const notifyII = (message) =>
+  let heartBroke = "💔"; 
+
+  useEffect(() => {
+    if (user && user.email) {
+  
+    dispatch(getOneFavorites(user.email,id)).then((result) => {
+    
+      setCorazon(result)
+    })
+
+    }
+  }, [user, dispatch]);
+ 
+
+  const notify = (message) =>{
+
+    if(message === "This product has been add in the cart"){
+  
+      toast.success(message +" 🛒", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+    }else {
+      toast.error(message +" 🛒", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+    }
+     };
+
+  const notifyII = (message , icons) =>
     toast.error(message, {
-      icon: "❤️",
+      icon: icons,
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -86,16 +117,22 @@ const Card = ({ name, images, price, id }) => {
       };
 
       if (!corazon) {
-        
+        console.log(corazon);
+
         dispatch( postFavorites(favorite)).then((result) => {
-          notifyII(result);
+          notifyII(result, heart);
         });
 
         setCorazon(!corazon);
       } else {
+
+      
+
         dispatch(deleteFavorite(product_id, user.email)).then((result) => {
-          notifyII(result);
+         
+          notifyII(result, heartBroke);
         });
+
         setCorazon(!corazon);
       }
     } else {
@@ -107,10 +144,8 @@ const Card = ({ name, images, price, id }) => {
     <div className="bg-slate-100 bg-opacity-60 rounded-md box-border md:h-85 md:w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">
       <div className="corazon absolute hover:scale-110 top-2 right-2 text-3xl">
         <button onClick={() => handleHeart(id)}>
-          <AiFillHeart
-            color={corazon ? "red" : "grey"}
-            style={{ opacity: "0.7" }}
-          />
+         {corazon ? "❤️" : "🤍"} 
+
         </button>
       </div>
    

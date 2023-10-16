@@ -45,6 +45,22 @@ export const getFavorites = (email) => {
   };
 };
 
+export const getOneFavorites = (email, id) => {
+
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(
+        `${endpoint}/getOnefavorites?email=${email}&id=${id}`
+      );
+     return data;
+
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  };
+};
+
 export const getAllUsers = () => {
   return async (dispatch) => {
     try {
@@ -59,6 +75,7 @@ export const getAllUsers = () => {
     }
   };
 };
+
 export function getUserByName(name) {
   return async function (dispatch) {
     try {
@@ -170,16 +187,19 @@ export function postFavorites(userData) {
 export function deleteFavorite(id, email) {
   return async (dispatch) => {
     try {
-      console.log("llego a la action delete");
+  
 
       const { data } = await axios.delete(
         `${endpoint}/favorites/${email}/${id}`
       );
-
-      dispatch({
+        
+      /*dispatch({
         type: DELETE_USER,
         payload: data,
       });
+*/
+      return data;
+
     } catch (error) {
       console.log(error);
       return error.mesage;
