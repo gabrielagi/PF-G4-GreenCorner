@@ -1,17 +1,17 @@
-const { Testimonial, Users } = require ("../db")
+// const { Testimonial, Users } = require ("../db")
 
-const getAllTestimonials = async () => {
-    const testimonials = await Testimonial.findAll({
-        include: Users,
-    })
-    return testimonials
-}
+// const getAllTestimonials = async () => {
+//     const testimonials = await Testimonial.findAll({
+//         include: Users,
+//     })
+//     return testimonials
+// }
 
-const createTestimonial = async (message, date, rating) => {
-    const newTestimonial = await Testimonial.create(message, date, rating)
-    return newTestimonial
+// const createTestimonial = async (message, date, rating) => {
+//     const newTestimonial = await Testimonial.create(message, date, rating)
+//     return newTestimonial
 
-}
+// }
 
 
-module.exports = { getAllTestimonials, createTestimonial}
+// module.exports = { getAllTestimonials, createTestimonial}
