@@ -5,6 +5,7 @@ const {
   byNameHandler,
   getFavoritesHandler,
   postFavoritesHandler,
+  getOneFavoriteHandler,
   byRolHandler,
   newUserHandler,
   deleteHandler,
@@ -19,6 +20,8 @@ const userRouter = Router();
 userRouter.get("/", allUsers);
 
 userRouter.get("/getfavorites", getFavoritesHandler);
+
+userRouter.get("/getOnefavorites", getOneFavoriteHandler);
 
 userRouter.get("/find/:name", byNameHandler);
 

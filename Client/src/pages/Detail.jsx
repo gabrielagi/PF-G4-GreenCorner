@@ -11,7 +11,7 @@ import axios from "axios";
 import Carousel from "../components/DetailCarousel/DetailCarousel";
 import Slider from "../components/Slider/Slider2";
 import { toast } from "react-toastify";
-import { postFavorites } from "../Redux/actions/user/user-actions";
+import { postFavorites, deleteFavorite  ,getOneFavorites } from "../Redux/actions/user/user-actions";
 import { postProductCart } from "../Redux/actions/product/action";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -20,20 +20,36 @@ const Detail = () => {
   const dispatch = useDispatch();
   /*   const link = import.meta.env.VITE_ENDPOINT; */
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
-
+  const [corazon, setCorazon] = useState(false);
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
-
   const [activeImg, setActiveImg] = useState(product.images && product.images[0]);
   const [amount, setAmount] = useState(1);
 
+ let heart = "❤️";
+
+ let heartBroke = "💔"; 
+
+
   useEffect(() => {
     dispatch(getProductById(id));
+    if (user && user.email) {
+  
+      dispatch(getOneFavorites(user.email,id)).then((result) => {
+      
+        setCorazon(result)
+      })
+  
+      }
+
    return ;
   }, [dispatch, id]);
 
-  const notify = () =>
-    toast.success("Added to your cart 🛒", {
+  const notify = (message) =>{
+
+  if(message === "This product has been add in the cart"){
+
+    toast.success(message +" 🛒", {
       position: "bottom-left",
       autoClose: 5000,
       hideProgressBar: false,
@@ -42,11 +58,24 @@ const Detail = () => {
       draggable: true,
       progress: undefined,
       theme: "light",
-    });
+    })
+  }else {
+    toast.error(message +" 🛒", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    })
+  }
+   };
 
-  const notifyII = () => {
-    toast.error("Added to favorite ", {
-      icon: "❤️",
+  const notifyII = (message, icons) => {
+    toast.error(message, {
+      icon: icons,
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -61,17 +90,31 @@ const Detail = () => {
 
 
   const handleAddToMyGarden = () => {
+
     if (isAuthenticated) {
+
       let favorite = {
         email: user.email,
         product_id: product.product_id,
       };
-      dispatch(postFavorites(favorite));
 
-      notifyII();
+      dispatch(postFavorites(favorite)).then((result) => {
+         
+        notifyII(result, heart);
+      });
+      setCorazon(!corazon);
+
     } else {
       loginWithRedirect();
     }
+  };
+  const handleRemoveToMyGarden = (id) => {
+    dispatch(deleteFavorite(id, user.email)).then((result) => {
+         
+      notifyII(result, heartBroke);
+    });
+
+    setCorazon(!corazon);
   };
 
   const handleAddToCart = () => {
@@ -81,9 +124,14 @@ const Detail = () => {
         product_id: product.product_id,
         amount: amount,
       };
-      dispatch(postProductCart(cart));
-      console.log(cart);
-      notify();
+      dispatch(postProductCart(cart)).then((result) => {
+         
+      
+          notify(result);
+        
+        
+      });
+
     } else {
       loginWithRedirect();
     }
@@ -100,8 +148,6 @@ const Detail = () => {
   // Hasta cuánto se puedo decrecentar
   const amountDecrement = () => (amount > 1 ? setAmount(amount - 1) : null);
 
-  console.log(product);
-  console.log(allProducts);
 
   // Se realiza el checkout
   const handleCheckout = async () => {
@@ -191,12 +237,22 @@ const Detail = () => {
                 </button>
               </div>
               <div className="flex  md: justify-between gap-x-10 ">
-                <button
+
+                {!corazon ? ( <button
                   onClick={handleAddToMyGarden}
                   className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]"
                 >
-                  Add to my Garden
-                </button>
+                 ❤️ Add to my Garden
+                </button>) :
+                 <button
+                 onClick={()=>handleRemoveToMyGarden(id)}
+                 className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]"
+               >
+                 💔 Remove to my Garden
+               </button>
+                
+                }
+
                 <button
                   onClick={handleCheckout}
                   className="p-4 my-10 md:p-8 md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6] "

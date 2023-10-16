@@ -68,22 +68,37 @@ const getAllFavorites = async (email) => {
       where: { email: email },
       include: [
         {
-          model: Product,
-          required: true,
-        },
-        {
-          model: Category,
-          required: true,
-        },
-   
+          model: Product
+        }
+
       ],
     });
-    console.log(favorites + "aaaa");
+
+  
     return favorites;
+
   } catch (error) {
-    console.log({ error: 'Error en el controller' });
+    console.log(error.message);
   }
 };
+
+const getOneFavorite = async (email, id) => {
+  try {
+    const favorite = await Favorite.findOne({
+      where: { email: email ,
+      product_id: id
+      },
+    });
+
+    return favorite !== null; // Devuelve true si se encontró un registro, false si no.
+
+  } catch (error) {
+    console.log(error.message);
+    return false; // Manejo de errores, devuelve false en caso de error.
+  }
+};
+
+
 
 const postFavorite = async (product) => {
   try {
@@ -183,15 +198,18 @@ const deleteFavorite = async (product_id, email) => {
   try {
     const deleter = Favorite.destroy({
       where: {
-        product_id: "123e4567-e89b-12d3-a456-426655440000",
+        product_id: product_id,
         email: email,
       },
     });
+
+
     if (deleter) {
-      return product_id;
+      return "This product has been deleted from favorites";
     } else {
       return "This Favorite doesn't exist";
     }
+    
   } catch (error) {
     console.log(error.message);
   }
@@ -203,6 +221,7 @@ module.exports = {
   getUserById,
   getUserbyName,
   getAllFavorites,
+  getOneFavorite,
   postFavorite,
   createUser,
   deleteUser,
