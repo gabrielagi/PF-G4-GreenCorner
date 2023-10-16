@@ -19,7 +19,7 @@ const getTestimonialHandler = async (req, res) => {
 const createTestimonialHandler = async (req, res) => {
     try {
 
-        const {date, message, rating, user_id} = req.body
+        const {date, message, rating} = req.body
 
         const newTestimonial = await createTestimonial(date, message, rating)
         
