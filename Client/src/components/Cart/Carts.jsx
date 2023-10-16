@@ -1,6 +1,6 @@
 import "tailwindcss/tailwind.css";
 // import "./Carts.css";
-import { useEffect } from "react";
+import { useEffect, useState} from "react";
 import Cart from "./Cart";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ const Carts = () => {
   const { user } = useAuth0();
 
   let total = 0;
+  let [info, setInfo] = useState({}); 
 
   products.map((product) => {
     total += product.Product.price * product.amount;
@@ -32,10 +33,10 @@ const Carts = () => {
       let product = [];
       for (let i = 0; i < products.length; i++) {
         const price = Number(products[i].Product.price);
-        console.log("Price del producto a comprar: ", price);
+       /*  console.log("Price del producto a comprar: ", price); */
         const amount = Number(products[i].Product.amount);
-        console.log("Amount del producto a comprar: ", amount);
-        console.log("Email del producto a comprar: ", products[i].email);
+        /* console.log("Amount del producto a comprar: ", amount);
+        console.log("Email del producto a comprar: ", products[i].email); */
         if (!isNaN(price)) {
           product.push({
             id: products[i].Product.product_id,
@@ -49,14 +50,26 @@ const Carts = () => {
           );
         }
       }
+      const infoObject = {
+        product: product,
+        total: total,
+        user: user
+      };
+  
+      setInfo(infoObject);
+      console.log(info)
+
+
       const { data } = await axios.post(
         "http://localhost:3001/payment/create-order",
-        { product }
+        { info }
       );
-      console.log("Data en el componente Detail", data);
-      console.log("Init point en el componente Detail", data);
 
-      location.href = data.result;
+
+      /* console.log("Data en el componente Detail", data);
+      console.log("Init point en el componente Detail", data); */
+
+      location.href = data.result; 
     } catch (error) {
       console.log(error.message);
     }
