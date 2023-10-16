@@ -140,9 +140,9 @@ const createOrder = async (req, res) => {
   }
 };
 
-const success = (req, res) => {
-        const mail = "test_user_1398180221@testuser.com"
-
+const success =  async(req, res) => {
+  const data = await mercadopago.payment.findById(payment.id);
+  const mail = data.paymer.email;
   Purchase (mail, "payer")
 
   console.log(req.query);
@@ -153,8 +153,9 @@ const success = (req, res) => {
   res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir
 };
 
-const failure = (req, res) => {
-  const mail = "test_user_1398180221@testuser.com"
+const failure =  async(req, res) => {
+  const data = await mercadopago.payment.findById(payment.id);
+  const mail = data.paymer.email;
 
   Purchasefail(mail, "payer")
   console.log(req.query);
