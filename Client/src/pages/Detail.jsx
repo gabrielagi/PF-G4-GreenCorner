@@ -79,7 +79,7 @@ const Detail = () => {
 
   }, [user, dispatch]);
 
-  const notify = (message) =>
+  const notify = (message) =>{
     if(message === "This product has been add in the cart"){
     toast.success(message + " 🛒", {
       position: "bottom-left",
@@ -104,6 +104,7 @@ const Detail = () => {
     })
   }
    };
+  
 
   const notifyII = (message, icons) => {
     toast.error(message, {
