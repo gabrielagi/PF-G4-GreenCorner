@@ -112,16 +112,16 @@ const Card = ({ name, images, price, id }) => {
           />
         </button>
       </div>
-      <Link to={`/detail/${id}`}>
+   
+      <div className="">   <Link to={`/detail/${id}`}>
         <img
-          className=" rounded-xl overflow-hidden max-h-60 w-60 h-75 object-scale-down mb-3"
+          className="h-[150px]  rounded-xl overflow-hidden max-h-60 w-60 h-75 object-scale-down mb-3"
           src={images[0]}
           alt="producto"
         />
-      </Link>
-      <div></div>
+      </Link></div>
       <div className="text-left w-full bg-slate-100">
-        <p className="font-poppins ml-6">{name}</p>
+        <p className=" font-poppins break-words ml-6">{name}</p>
       </div>
 
       <div className="bg-slate-100 flex justify-between items-center mt-3 w-full relative">

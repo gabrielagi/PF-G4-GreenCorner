@@ -122,13 +122,13 @@ console.log(favorites)
             <div className=" ">
 
                 {/*-- ---------------------- SEARCHBAR ------------------------------------------------- */}
-                <div className="box  mt-10 bg-green-300  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[400px] mb-10 justify-center  ">
+                <div className="box  mt-10 bg-green-300  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[350px] mb-10 justify-center  ">
                       <input placeholder="Search.. " onChange={handleChange} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white "/>
                       <button type='submit' onClick={handleSubmit}><BiSearch color='black' size='30px'/></button>
                 </div>
                  
              <div className="  ">
-             <div className="bg-gray-300 bg-opacity-60 pt-10 mx-auto flex justify-center md:w-[500px]">
+             <div className="bg-gray-300 bg-opacity-60 pt-10 mx-auto flex justify-center md:w-[400px]">
                     <Pagination 
                 count={totalPages}
                 page={currentPage} 
@@ -149,7 +149,7 @@ console.log(favorites)
                 }}  />
                   </div>  
                    {/*-- ---------------------- BARRA ------------------------------------------------- */}
-               <div className="bg-gray-300 bg-opacity-60 py-16 md:w-[500px] md:h-[700px] md:mx-auto">
+               <div className="bg-gray-300 bg-opacity-60 py-16 md:w-[400px] md:h-[700px] md:mx-auto">
 
                     <h1 className="mx-auto mb-6 text-center text-gray-600 font-bold col-span-2  md:col-span-1 text-4xl md:font-medium ">ORDER BY</h1>   
                        
@@ -227,7 +227,7 @@ console.log(favorites)
                     
             </div>  
    {/*-- ---------------------- CARDS ------------------------------------------------- */}
-                <div className="grid grid-cols-2 md:grid-cols-3">
+                <div className="grid grid-cols-2 m  md:grid-cols-3">
                           {favorites ? (
                 Array.isArray(favorites) && favorites.length > 0 ? (
                 displayedFavorites.map((p) => (
@@ -251,13 +251,13 @@ console.log(favorites)
                   name={favorites.Product.name || favorites.name}
                   images={favorites.Product.images || favorites.images}
                   price={favorites.Product.price || favorites.price}
-                  className=""
+                  className="h-[250px] w-[250px]"
                 >
                   {favorites.value}
                 </Card> </div>
                 
               ) : (
-                <EmptyFavorites/>
+                <div className="col-span-3 row-span-2 my-auto "><EmptyFavorites  /></div>
               )
             ) : (<div className="col-span-3 row-span-2 my-auto "><EmptyFavorites  /></div>
               

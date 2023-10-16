@@ -19,8 +19,8 @@ const ProfileUser = () => {
       case "Payment methods":
         return <PaymentMethods />;
       case "My Garden":
-        return <Favorites></Favorites>
-     
+        return <Favorites></Favorites>;
+
       default:
         return <ProfileDashboard />;
     }
@@ -29,16 +29,15 @@ const ProfileUser = () => {
 
   return (
     <div className="flex">
-      <div className="w-1/4">
-        {/* Menú lateral */}
+      <div className="w-1/6 z-20">
+   
         <NavbarUser
           selectedMenu={selectedMenu}
           setSelectedMenu={setSelectedMenu}
-          style={{ position: "relative", zIndex: 999 }}
         />
       </div>
-      <div className="w-3/4" style={{ position: "relative", zIndex: 1 }}>
-        {/* Componente renderizado */}
+      <div className="w-5/6 sm:mr-40 z-10">
+        
         {renderComponentBasedOnMenu()}
       </div>
     </div>

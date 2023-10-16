@@ -26,11 +26,27 @@ const Detail = () => {
 
   const [activeImg, setActiveImg] = useState(product.images && product.images[0]);
   const [amount, setAmount] = useState(1);
+  const [loadingImages, setLoadingImages] = useState(true);
+  const handleImageClick = (newActiveImg) => {
+    setLoadingImages(true);
+    setTimeout(() => {
+      setActiveImg(newActiveImg);
+      setLoadingImages(false);
+    }, 500); // Ajusta el tiempo de espera según tus necesidades
+  };
 
   useEffect(() => {
-    dispatch(getProductById(id));
-   return ;
+    const fetchData = async () => {
+      await dispatch(getProductById(id));
+      setLoadingImages(false);
+    };
+
+    fetchData();
   }, [dispatch, id]);
+
+  useEffect(() => {
+    setActiveImg(product.images && product.images[0]);
+  }, [product.images]);
 
   const notify = () =>
     toast.success("Added to your cart 🛒", {
@@ -99,9 +115,10 @@ const Detail = () => {
 
   // Hasta cuánto se puedo decrecentar
   const amountDecrement = () => (amount > 1 ? setAmount(amount - 1) : null);
-
-  console.log(product);
-  console.log(allProducts);
+  const handleImageLoad = () => {
+    setLoadingImages(false);
+  };
+ 
 
   // Se realiza el checkout
   const handleCheckout = async () => {
@@ -126,7 +143,11 @@ const Detail = () => {
     return Math.floor(Math.random() * max);
   }
   console.log(number(5))
-  if (product.name) {
+  console.log(product.categories)
+  if (loadingImages || !activeImg){
+    return <p> ta cargando</p>
+  } else if (product.name) {  
+      
     return (
       <div>
         <Link className="ml-16 mt-20" to="/shop">
@@ -134,14 +155,20 @@ const Detail = () => {
             <VscArrowCircleLeft color="gray" size="5rem" />
           </button>
         </Link>
-        <div className="mx-10 sm:mx-[200px]">
-          <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
+        <div className="mx-10 sm:mx-[100px]">
+          <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
             {activeImg && (
-              <div className="swiper-container-detail bg-red-200">
-                <img
-                  className="mx-auto bg-gray-100 bg-opacity-20"
-                  src={activeImg}
-                ></img>
+              <div className={`swiper-container-detail  ${
+                loadingImages ? 'fade-out' : 'fade-in'
+              }`}>
+               <img
+            className={`mx-auto bg-gray-100 bg-opacity-20 w-auto h-[414px] ${
+              loadingImages ? 'fade-out' : 'fade-in'
+            }`}
+            src={activeImg}
+            alt="Product"
+            onLoad={handleImageLoad}
+          />
                 <Slider 
                   id={id}
                   images={product.images}
@@ -150,20 +177,29 @@ const Detail = () => {
               </div>
             ) }
 
-            <div className=" px-10 bg-[#f6f6f6] justify-between">
+            <div className="  bg-[#f6f6f6] justify-between w-full px-20">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
                 {product?.name}
               </h2>
               <hr className="my-10"></hr>
               <p className="py-t text-5xl text-[#444444]">${product.price}</p>
-              <p className="py-20  w-full">{product.description}</p>
+              <div className="w-full">
+                <p className="py-20  break-words ">{product.description}</p>
+              </div>
+              
               {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
                 <option>uno</option>
                 <option>dos</option>
               </select> */}
-
+<div className="flex">
+    <p className="text-3xl font-semibold align-bottom text-green-500">Categories:</p>
+    {product?.categories.map((c, i)=>
+     ( <div className="px-2 text-[16px]" key={i}>
+        <p>{c.name}</p></div>)
+    )}
+</div>
               <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
                 <div>
                   <button
@@ -207,7 +243,7 @@ const Detail = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:ml-28 text-[#a9a9a9]">
+          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:mx-auto sm:w-[100%] text-[#a9a9a9]">
             <div className=" text-center py-6 text-4xl text-[#444444]">
               Descripción
             </div>
@@ -234,10 +270,10 @@ const Detail = () => {
               sed eros lobortis ornare. Morbi sodales interdum ipsum.
             </div>
           </div>
-          <h3 className="my-20 mt-20 text-center text-5xl ">
+          <h3 className=" font-semibold  text-gray-700 my-20 mt-20 text-center text-5xl ">
             Related products
           </h3>
-          <div className="flex flex-row gap-20 justify-center mx-auto my-10">
+          <div className=" grid sm:grid-cols-2 md:flex md:flex-row gap-20 justify-center mx-auto my-10">
             {allProducts
               .map((p) => {
                 if (
@@ -262,6 +298,8 @@ const Detail = () => {
   } else {
     <img src={loading} alt="Loading product detail" />;
   }
-};
+}
+  
+;
 
 export default Detail;
