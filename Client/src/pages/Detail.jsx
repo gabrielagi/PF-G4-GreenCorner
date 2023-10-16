@@ -75,7 +75,7 @@ const Detail = () => {
   };
 
   const notifyIII = () =>
-    toast.success(
+    toast.error(
       "There is not enough stock available to add that quantity to the cart 🛑",
       {
         position: "bottom-left",
@@ -88,6 +88,18 @@ const Detail = () => {
         theme: "light",
       }
     );
+
+  const notifyVI = () =>
+    toast.error("There is not enough stock available to checkout 🛑", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const handleAddToMyGarden = () => {
     if (isAuthenticated) {
@@ -190,21 +202,26 @@ const Detail = () => {
   // Se realiza el checkout
   const handleCheckout = async () => {
     if (isAuthenticated) {
-      try {
-        const { data } = await axios.post(
-          "http://localhost:3001/payment/create-order",
-          { product, amount }
-        );
-        console.log("Data en el componente Detail", data);
-        console.log("Init point en el componente Detail", data);
-        location.href = data.result;
-      } catch (error) {
-        console.log(error.message);
+      if (product.stock >= amount) {
+        try {
+          const { data } = await axios.post(
+            "http://localhost:3001/payment/create-order",
+            { product, amount }
+          );
+          console.log("Data en el componente Detail", data);
+          console.log("Init point en el componente Detail", data);
+          location.href = data.result;
+        } catch (error) {
+          console.log(error.message);
+        }
+      } else {
+        notifyVI();
       }
     } else {
       loginWithRedirect();
     }
   };
+
   const number = (max) => {
     return Math.floor(Math.random() * max);
   };
