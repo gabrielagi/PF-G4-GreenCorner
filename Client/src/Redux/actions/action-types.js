@@ -27,6 +27,7 @@ export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_USER_FROM_EDIT = "UPDATE_USER_FROM_EDIT";
 export const POST_USER = "POST_USER";
 export const GET_USER_BY_EMAIL = "GET_USER_BY_EMAIL";
+export const SEARCH_USERS = "SEARCH_USERS";
 
 // Product action-types
 export const POST_PRODUCT = "POST_PRODUCT";
@@ -54,4 +55,7 @@ export const FILTER_CATEGORY = "FILTER_CATEGORY";
 export const FILTER_FAV__CATEGORY = "FILTER_FAV__CATEGORY";
 export const ORDER_CATEGORY = "ORDER_CATEGORY";
 
-export const SEARCH_USERS = "SEARCH_USERS";
+// Order action-types
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS";
+export const GET_ORDER_DETAIL = "GET_ORDER_DETAIL";
+
