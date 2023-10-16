@@ -33,10 +33,10 @@ const Carts = () => {
       let product = [];
       for (let i = 0; i < products.length; i++) {
         const price = Number(products[i].Product.price);
-       /*  console.log("Price del producto a comprar: ", price); */
+        console.log("Price del producto a comprar: ", price);
         const amount = Number(products[i].Product.amount);
-        /* console.log("Amount del producto a comprar: ", amount);
-        console.log("Email del producto a comprar: ", products[i].email); */
+        console.log("Amount del producto a comprar: ", amount);
+        console.log("Email del producto a comprar: ", products[i].email);
         if (!isNaN(price)) {
           product.push({
             id: products[i].Product.product_id,
@@ -50,26 +50,14 @@ const Carts = () => {
           );
         }
       }
-      const infoObject = {
-        product: product,
-        total: total,
-        user: user
-      };
-  
-      setInfo(infoObject);
-      console.log(info)
-
-
       const { data } = await axios.post(
         "http://localhost:3001/payment/create-order",
-        { info }
+        { product }
       );
+      console.log("Data en el componente Detail", data);
+      console.log("Init point en el componente Detail", data);
 
-
-      /* console.log("Data en el componente Detail", data);
-      console.log("Init point en el componente Detail", data); */
-
-      location.href = data.result; 
+      location.href = data.result;
     } catch (error) {
       console.log(error.message);
     }
