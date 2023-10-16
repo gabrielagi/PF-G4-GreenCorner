@@ -27,14 +27,14 @@ const ShowUsers = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const usersPerPage = 1;
-  
+  const usersPerPage = 8;
+
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
-  
+
   useEffect(() => {
     // Realiza la búsqueda automáticamente cuando searchTerm cambie
     // Filtra la lista completa de usuarios en función de la búsqueda
@@ -45,7 +45,6 @@ const ShowUsers = () => {
     setFilteredUsers(filtered);
   }, [searchTerm, allUsers]);
 
-  
   const handleChangePage = (event, value) => {
     dispatch(setCurrentPage(value)); // Actualiza la página actual en el estado de Redux
   };
@@ -53,7 +52,6 @@ const ShowUsers = () => {
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState(null);
   const [selectedUserId, setSelectedUserId] = useState(null); // Nuevo estado para rastrear el usuario seleccionado
-
 
   const handleInputChange = (event) => {
     event.preventDefault();
@@ -156,7 +154,7 @@ const ShowUsers = () => {
 
   const startIndex = (currentPage - 1) * usersPerPage;
   const endIndex = startIndex + usersPerPage;
-  
+
   const displayedUsers = filteredUsers.slice(startIndex, endIndex);
 
   return (
@@ -173,7 +171,7 @@ const ShowUsers = () => {
             <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
               {/* Searchbar */}
               <form className="lg:pr-3" action="#" method="GET">
-              <label htmlFor="users-search" className="sr-only">
+                <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
                 <div className="mt-1 relative lg:w-64 xl:w-96">
@@ -185,10 +183,13 @@ const ShowUsers = () => {
                     placeholder="Search for users"
                     value={searchTerm}
                     onChange={(e) => {
-                      console.log("searchTerm updated:", e.target.value || 'Empty or null value'); // Agrega este console.log // Agrega este console.log
+                      console.log(
+                        "searchTerm updated:",
+                        e.target.value || "Empty or null value"
+                      ); // Agrega este console.log // Agrega este console.log
                       setSearchTerm(e.target.value);
                     }}
-                    />
+                  />
                 </div>
                 <InputLabel htmlFor="nameOrder">Name</InputLabel>
                 <Select
