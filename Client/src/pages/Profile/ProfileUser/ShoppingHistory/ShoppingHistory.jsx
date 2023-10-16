@@ -43,30 +43,36 @@ function ShoppingHistory() {
   return (
     <div className={styles.orderHistory}>
       <h1 className={styles.orderHistoryTitle}>Order History</h1>
-      <div className={styles.orderList}>
-        {orders.map((order) => (
-          <div key={order.id} className={styles.orderCard}>
-          <div className={styles.orderHeader}>
-            <div className={styles.orderDate}>
-              {order.date}
+      {orders.length > 0 ? (
+        <div className={styles.orderList}>
+          {orders.map((order) => (
+            <div key={order.id} className={styles.orderCard}>
+              <div className={styles.orderHeader}>
+                <div className={styles.orderDate}>
+                  {order.date}
+                </div>
+                <div className={styles.statusCircle} style={{ backgroundColor: getStatusColor(order.status) }}></div>
+                <div className={styles.statusText} style ={{color: getStatusColor(order.status)}}>
+                  {order.status}
+                </div>
+              </div>
+              <div className={styles.orderFlex}>
+                <div className={styles.orderTitle}>Order #{order.id.slice(0, 12)}...</div>
+                <div className={styles.viewDetailsButton}>
+                  <button onClick={() => handleViewDetails(order)}>View Details</button>
+                </div>
+              </div>
+              <div className={styles.orderTotal}>
+                <strong>Total:</strong> ${order.total}
+              </div>
             </div>
-            <div className={styles.statusCircle} style={{ backgroundColor: getStatusColor(order.status) }}></div>
-            <div className={styles.statusText} style ={{color: getStatusColor(order.status)}}>
-              {order.status}
-            </div>
-          </div>
-          <div className={styles.orderFlex}>
-            <div className={styles.orderTitle}>Order #{order.id.slice(0, 12)}...</div>
-            <div className={styles.viewDetailsButton}>
-              <button onClick={() => handleViewDetails(order)}>View Details</button>
-            </div>
-          </div>
-          <div className={styles.orderTotal}>
-            <strong>Total:</strong> ${order.total}
-          </div>
+          ))}
         </div>
-        ))}
-      </div>
+      ) : (
+        <div className={styles.noOrdersMessage}>
+          No orders to show.
+        </div>
+      )}
 
       {selectedOrder && (
         <OrderPopup

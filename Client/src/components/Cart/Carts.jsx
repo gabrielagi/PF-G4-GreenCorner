@@ -1,6 +1,6 @@
 import "tailwindcss/tailwind.css";
 // import "./Carts.css";
-import { useEffect } from "react";
+import { useEffect, useState} from "react";
 import Cart from "./Cart";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ const Carts = () => {
   const { user } = useAuth0();
 
   let total = 0;
+  let [info, setInfo] = useState({}); 
 
   products.map((product) => {
     total += product.Product.price * product.amount;

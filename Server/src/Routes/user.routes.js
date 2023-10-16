@@ -12,6 +12,7 @@ const {
   updateUserHandler,
   deleteFavoritesHandler,
   emailHandler,
+  deleteFavoriteBDHandler
 } = require("../Handler/user.handler");
 
 const { getTestimonialHandler, createTestimonialHandler} = require("../Handler/testimonial.handler")
@@ -35,11 +36,15 @@ userRouter.post("/", newUserHandler);
 
 userRouter.delete("/:id", deleteHandler);
 
+userRouter.delete("/favorites/:id", deleteFavoriteBDHandler);
+
 userRouter.delete("/favorites/:email/:id", deleteFavoritesHandler);
+
+
 
 userRouter.put("/:id", updateUserHandler);
 
-userRouter.get("/testimonial", getTestimonialHandler)
-userRouter.post ("/testimonial", createTestimonialHandler)
+// userRouter.get("/testimonial", getTestimonialHandler)
+// userRouter.post ("/testimonial", createTestimonialHandler)
 
 module.exports = userRouter;
