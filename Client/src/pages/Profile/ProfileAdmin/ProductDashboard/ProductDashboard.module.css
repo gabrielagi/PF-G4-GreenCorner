@@ -107,3 +107,8 @@
   display: flex;
   justify-content:center;
 }
+
+.tableWrapper {
+  overflow-x: auto;  
+  max-width: 100%;  
+}
