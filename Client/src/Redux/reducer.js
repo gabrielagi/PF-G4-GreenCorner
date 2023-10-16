@@ -39,6 +39,8 @@ import {
   POST_PRODUCT_CART,
   DELETE_PRODUCT_CART,
   FIND_FAV_BY_NAME,
+  GET_ORDER_DETAIL, 
+  GET_ALL_ORDERS
 } from "./actions/action-types";
 
 const initialState = {
@@ -54,6 +56,8 @@ const initialState = {
   productDetail: [],
   allUsers: [],
   userDetail: [],
+  orderDetail: [],
+  allOrders: [],
   pagination: {
     currentPage: 1,
   },
@@ -554,7 +558,19 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
       };
-  }
+
+    
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        allOrders: action.payload,
+      };
+    case GET_ORDER_DETAIL:
+      return {
+        ...state,
+        orderDetail: action.payload,
+      };
+    }
 }
 
 export default rootReducer;
