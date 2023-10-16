@@ -41,7 +41,8 @@ import {
   UPDATE_PRODUCT_CART,
   FIND_FAV_BY_NAME,
   GET_ORDER_DETAIL, 
-  GET_ALL_ORDERS
+  GET_ALL_ORDERS,
+  DELETE_FAV_BY_ID_BD
 } from "./actions/action-types";
 
 const initialState = {
@@ -333,7 +334,10 @@ function rootReducer(state = initialState, action) {
         ...state,
         allProducts: state.allProducts.filter(
           (product) => product.id !== action.payload.id
+          
         ),
+        
+        favorites:state.allFavorites.filter((f)=> f.Product.product_id !== action.payload.id)
       };
 
     /*       case UPDATE_PRODUCT_BY_ID:
@@ -544,6 +548,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         allUsers: state.allUsers.filter((user) => user.id !== action.payload),
       };
+    case DELETE_FAV_BY_ID_BD:
+    return{
+      ...state
+    }
+
 
     case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
       return {

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import EditProductPopup from './EditProductPopup';
 import Pagination from "@mui/material/Pagination";
 import { FiRefreshCcw } from 'react-icons/fi';
+import { deleteFavoriteBD } from '../../../../Redux/actions/user/user-actions';
 
 function ProductDashboard() {
   const allProducts = useSelector((state) => state.allProducts);
@@ -58,16 +59,17 @@ function ProductDashboard() {
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
-      showCancelButton: true,
+      showCancelButton: true, 
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
       iconColor: '#d33',
       cancelButtonText: 'Cancel'
     }).then((result) => {
-      if (result.isConfirmed) {
+      if (result.isConfirmed) { 
+        dispatch(deleteFavoriteBD(productId))
         dispatch(deleteProduct(productId))
-          .then(() => {
+       .then(() => {
             setRefreshTable(true); 
             dispatch(getAllProducts());
           })

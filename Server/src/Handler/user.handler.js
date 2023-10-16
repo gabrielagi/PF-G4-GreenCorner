@@ -13,6 +13,7 @@ const {
   updateUser,
   getUserByEmail,
   deleteFavorite,
+  deleteFavoriteBD
 } = require("../Controller/user.controller");
 
 var cloudinary = require("cloudinary").v2;
@@ -224,6 +225,20 @@ const deleteFavoritesHandler = async (req, res) => {
     return res.status(500).send("Oops");
   }
 };
+const deleteFavoriteBDHandler = async (req, res) => {
+  const { id } = req.params;
+      console.log('llegó al handler') 
+       console.log(id)
+  try {
+    const deleter = await deleteFavoriteBD(id);
+
+  
+    return res.status(200).json(deleter);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send("Oops");
+  }
+};
 module.exports = {
   newUserHandler,
   postFavoritesHandler,
@@ -237,4 +252,5 @@ module.exports = {
   updateUserHandler,
   deleteFavoritesHandler,
   emailHandler,
+  deleteFavoriteBDHandler
 };

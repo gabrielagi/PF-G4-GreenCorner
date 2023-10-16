@@ -3,6 +3,7 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_FAV_BY_NAME = "ORDER_FAV_BY_NAME";
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE";
 
+
 // Paginate action-types
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
@@ -13,6 +14,7 @@ export const GET_FAVORITE_BY_NAME = "GET_FAVORITE_BY_NAME";
 export const POST_FAVORITE = "POST_FAVORITE";
 export const GET_FAVORITES = "GET_FAVORITES";
 export const FIND_FAV_BY_NAME = "FIND_FAV_BY_NAME";
+export const DELETE_FAV_BY_ID_BD="DELETE_FAV_BY_ID_BD"
 
 // User action-types
 export const ORDER_USER_BY_NAME = "ORDER_USER_BY_NAME";
