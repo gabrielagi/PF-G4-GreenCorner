@@ -176,6 +176,7 @@ function OrderAdmin() {
           />
         </div>
       </div>
+      <div className={styles.orderTableWrapper}>
       <table className={styles.orderTable}>
         <thead>
           <tr>
@@ -226,7 +227,7 @@ function OrderAdmin() {
           ))}
         </tbody>
       </table>
-
+      </div>
       {selectedOrder && (
         <OrderPopup
           isOpen={orderDetailsPopupOpen}

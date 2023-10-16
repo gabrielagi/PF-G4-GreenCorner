@@ -147,7 +147,7 @@ function ProductDashboard() {
         <FiRefreshCcw />
       </button>
     </div>
-
+    <div className={styles.tableWrapper}>
       <table className={styles.productTable}>
       <thead>
     <tr>
@@ -215,6 +215,7 @@ function ProductDashboard() {
           ))}
         </tbody>
       </table>
+      </div>
 
       {/* Pop-up de edición */}
       {selectedProduct && (

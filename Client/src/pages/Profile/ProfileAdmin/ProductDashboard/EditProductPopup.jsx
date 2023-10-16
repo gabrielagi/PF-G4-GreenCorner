@@ -145,7 +145,7 @@
             overlayClassName={styles["edit-modal-overlay"]}
             >
             <h2 className={styles["edit-modal-title"]}>Edit Product</h2>
-            <div className={styles["edit-modal-form"]}>
+            <div className={`${styles["edit-modal-form"]} ${styles["scrollable-content"]}`}>
                 <div className={styles["edit-modal-izq"]}>
                 <div>
                     <div>Name:</div>
