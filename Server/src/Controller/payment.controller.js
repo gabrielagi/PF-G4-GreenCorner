@@ -43,7 +43,7 @@ const createOrder = async (req, res) => {
   // Controlo que cada elemento del Array product tiene stock disponible
   if (Array.isArray(product)) {
     for (const item of product) {
-      const availableStock = getAvailableStock(item.product_id, allProducts);
+      const availableStock = getAvailableStock(item.id, allProducts);
       if (availableStock <= item.amount) {
         insufficientStockProducts.push(item);
       }
