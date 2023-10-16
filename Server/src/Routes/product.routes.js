@@ -10,6 +10,7 @@ const {
   updateProductHandler,
   getRelatedProductsHandler,
   getAllTrendingHandler,
+  updateProductCartHandler,
 } = require("../Handler/product.handler");
 
 const productRouter = Router();
@@ -27,6 +28,9 @@ productRouter.post("/", postProductHandler);
 
 //Anda
 productRouter.post("/cart", postProductCartHandler);
+
+productRouter.put("/cart/:email/:id", updateProductCartHandler);
+
 productRouter.delete("/cart/:email/:id", deleteProductCartHandler);
 
 productRouter.delete("/:id", deleteHandler);
