@@ -1,10 +1,12 @@
 const mercadopago = require("mercadopago");
-
+const { Purchase, PurchasePending, Purchasefail } = require ("../../nodemailer/mailer")
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 
 const HOST = `http://${DB_HOST}:${SERVER_PORT}/payment`;
+
+const { getAllProduct } = require("../Controller/product.controller");
 
 // Configuro mercado pago
 mercadopago.configure({
@@ -19,33 +21,73 @@ const createOrder = async (req, res) => {
   // Guardo los items que se van a vender
   let items = [];
 
+  // Controlar que haya suficiente stock para el checkout
+  const allProducts = await getAllProduct();
+  const insufficientStockProducts = [];
+
+  // Obtén la cantidad de stock disponible para un producto
+  function getAvailableStock(productId, allProducts) {
+    const productFound = allProducts.find(
+      (item) => item.product_id === productId
+    );
+    console.log(
+      "El producto encontrado en el nuevo metodo tiene stock: ",
+      productFound.stock
+    );
+    if (productFound) {
+      return productFound.stock;
+    }
+    return 0;
+  }
+
+  // Controlo que cada elemento del Array product tiene stock disponible
   if (Array.isArray(product)) {
-    // Si product es un arreglo, iteramos sobre cada elemento y validamos el precio
     for (const item of product) {
-      if (typeof item.price === "number") {
-        items.push({
-          id: item.id,
-          quantity: item.amount,
-          title: item.name,
-          unit_price: item.price,
-          currency_id: "ARS",
-        });
-      } else {
-        console.error(`Invalid price for product ${item.id}`);
+      const availableStock = getAvailableStock(item.id, allProducts);
+      if (availableStock <= item.amount) {
+        insufficientStockProducts.push(item);
       }
     }
   } else if (typeof product === "object") {
-    // Si product es un objeto, validamos el precio directamente
-    if (typeof product.price === "number") {
-      items.push({
-        id: product.id,
-        quantity: amount,
-        title: product.name,
-        unit_price: product.price,
-        currency_id: "ARS",
-      });
-    } else {
-      console.error(`Invalid price for product ${product.id}`);
+    const availableStock = getAvailableStock(product.product_id, allProducts);
+    if (availableStock <= amount) {
+      insufficientStockProducts.push(product);
+    }
+  }
+
+  // Controlo si alguno de los productos no tiene suficiente stock
+  if (insufficientStockProducts.length > 0) {
+    console.log("Productos con stock insuficiente:", insufficientStockProducts);
+  } else {
+    // Realiza el proceso de checkout ya que hay suficiente stock
+    if (Array.isArray(product)) {
+      for (const item of product) {
+        const price = parseFloat(item.price); // Convertir a número
+        if (!isNaN(price)) {
+          items.push({
+            id: item.id,
+            quantity: item.amount,
+            title: item.name,
+            unit_price: price, // Usar el precio convertido
+            currency_id: "ARS",
+          });
+        } else {
+          console.error(`Invalid price for product ${item.id}`);
+        }
+      }
+    } else if (typeof product === "object") {
+      const price = parseFloat(product.price); // Convertir a número
+      if (!isNaN(price)) {
+        items.push({
+          id: product.id,
+          quantity: amount,
+          title: product.name,
+          unit_price: price, // Usar el precio convertido
+          currency_id: "ARS",
+        });
+      } else {
+        console.error(`Invalid price for product ${product.id}`);
+      }
     }
   }
 
@@ -99,6 +141,10 @@ const createOrder = async (req, res) => {
 };
 
 const success = (req, res) => {
+        const mail = "test_user_1398180221@testuser.com"
+
+  Purchase (mail, "payer")
+
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database
@@ -108,6 +154,9 @@ const success = (req, res) => {
 };
 
 const failure = (req, res) => {
+  const mail = "test_user_1398180221@testuser.com"
+
+  Purchasefail(mail, "payer")
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database

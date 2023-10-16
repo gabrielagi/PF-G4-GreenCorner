@@ -5,6 +5,7 @@ import {
   MdOutlineDashboard,
   MdPayment,
 } from "react-icons/md";
+import {FaRegFileAlt} from "react-icons/fa";
 import { AiOutlineUser, AiOutlineLineChart } from "react-icons/ai";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
@@ -32,6 +33,12 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
       name: "Users",
       icon: BiUserPlus,
       margin: true,
+    },
+    {
+      name: "Orders",
+      icon: FaRegFileAlt,
+      margin: true,
+
     },
     {
       name: "Payment methods",
