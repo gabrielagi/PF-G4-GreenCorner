@@ -121,8 +121,11 @@ const deleteProductHandler = async (req, res) => {
 
 //Actualizar un Producto por id (admin dashboard)
 const updateProductHandler = async (req, res) => {
+  console.log('llegue')
   try {
+
     const { id } = req.params;
+   
     const updatedProductData = req.body;
     console.log(updatedProductData);
     const success = await updateProduct(id, updatedProductData);

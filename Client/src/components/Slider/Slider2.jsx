@@ -15,8 +15,8 @@ const swiper = new Swiper('.swiper', {
   
   direction: 'horizontal',
   loop: true,
-  slidesPerView:4 , 
-
+  slidesPerView:3 , 
+  spaceBetween:14,
   autoplay: {
             delay: 3000,
             pauseOnMouseEnter: true,
@@ -61,13 +61,14 @@ const handleImageClick = (image) => {
 
 <div>
      {/* <!-- Slider main container --> */}
-<div className="swiper">
+<div className="swiper mx-auto w-[75%]">
   {/* <!-- Additional required wrapper --> */}
   <div className="swiper-wrapper h-[200px] w-[100px] ">
   
-{images.map((i, index) => <div  key={`thumb-${i.id}`} className="swiper-slide my-10 h-[200px] w-[200px]"
+{images.map((i, index) => <div  key={`thumb-${i.id}`} className="h-[130px]  swiper-slide mt-10 md:h-[200px] md:w-[200px]"
  >
- <img onClick={() => handleImageClick(i)} className='h-full w-[150px] object-cover object-center'   src={i}  alt={`Thumbnail ${index}`}/> 
+ <img onClick={() => handleImageClick(i)} className='h-full w-full
+ md:h-full md:w-[150px] object-cover object-center'   src={i}  alt={`Thumbnail ${index}`}/> 
  </div>)} 
 
 </div>

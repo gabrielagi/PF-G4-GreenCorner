@@ -69,19 +69,17 @@ const getAllFavorites = async (email) => {
       include: [
         {
           model: Product,
-          required: true,
-        },
-        {
-          model: Category,
-          required: true,
-        },
+     
    
+        },
       ],
     });
-    console.log(favorites + "aaaa");
+
+    console.log(favorites);
+
     return favorites;
   } catch (error) {
-    console.log({ error: 'Error en el controller' });
+    console.log(error.message);
   }
 };
 

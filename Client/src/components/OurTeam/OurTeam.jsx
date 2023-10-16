@@ -4,7 +4,7 @@ import gabi from './gabi.jpg'
 import cisco from './cisco.jpg'
 import mati from './mati.jpg'
 import faq from './faq.jpg'
-
+import sebita from './sebita.jpg'
 
 
 const ourTeam = () => {
@@ -119,7 +119,7 @@ const ourTeam = () => {
         <div className=' my-20 bg-[url(https://i.pinimg.com/236x/92/8f/b8/928fb8a20b4ae412f37da3ce816651f3.jpg)] bg-cover  bg-bottom rounded-3xl border-black border-t-8 space-y-12 group'>
 <div className=' w-60 h-60 -mt-32 mx-auto rounded-[2rem] rotate-45 overflow-hidden'>
            <div className='shadow-lg rounded-lg overflow-hidden group'>
-            <img src="https://media.licdn.com/dms/image/C4E03AQEqx-PhBjOBfQ/profile-displayphoto-shrink_800_800/0/1569209047831?e=2147483647&v=beta&t=YQYhgpDlPONDc4KEDqWAn-gkOnOlUjTxvxUQ3hmfrr4" alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
+            <img src={sebita} alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
             <div className='-rotate-45  '>

@@ -21,6 +21,8 @@ const ProfileUser = () => {
       case "My Garden":
         return <Favorites></Favorites>;
 
+ 
+
       default:
         return <ProfileDashboard />;
     }
