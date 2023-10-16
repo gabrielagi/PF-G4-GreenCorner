@@ -24,7 +24,7 @@ import { useSelector } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import ProfileUser from "./pages/Profile/ProfileUser/Profile.userpanel"
+import ProfileUser from "./pages/Profile/ProfileUser/Profile.userpanel";
 import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
 import Banned from "./pages/Banned/Banned.jsx";
 import Slider from "./components/Slider/Slider2";
@@ -32,14 +32,10 @@ import EmptyCart from "./components/EmptyCart/EmptyCart";
 import EmptyFavorites from "./components/EmptyFavorites/EmptyFavorites";
 
 const App = () => {
-
-
   //Carga de usuarios
   const { user, isAuthenticated, isLoading } = useAuth0();
   const dispatch = useDispatch();
   const userStatus = useSelector((state) => state.userDetail.status);
-
-
 
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
@@ -50,7 +46,7 @@ const App = () => {
         email: user.email,
         email_verified: user.email_verified,
       };
-     // console.log(userData);
+      // console.log(userData);
       dispatch(postUser(userData));
     }
   }, [user, isAuthenticated, isLoading, dispatch]);
@@ -92,9 +88,9 @@ const App = () => {
             />
             <Route path="/guides" element={<Guides />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/prueba" element={<EmptyFavorites/>} />
+            <Route path="/prueba" element={<EmptyFavorites />} />
           </Routes>
-          <Footer></Footer>
+          {/* <Footer></Footer> */}
         </>
       )}
     </div>
