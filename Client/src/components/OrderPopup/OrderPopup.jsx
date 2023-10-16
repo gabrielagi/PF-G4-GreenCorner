@@ -71,7 +71,7 @@ function OrderPopup({ order, isOpen, onRequestClose }) {
             <div className={styles['product-list-container']}>
                     {orderDetails && orderDetails.length > 0 ? (
                         orderDetails.map((detail) => (
-                        <div key={detail.id} className="grid grid-cols-4">
+                        <div key={detail.id} className="grid grid-cols-4 ">
                             <div className='bg-red-300 w-[80px] h-[80px] mx-auto '>
                                 <img className='w-full h-full rounded-[8px]' src={detail.Product.images[0]} alt={detail.Product.name} />
                             </div>
