@@ -63,22 +63,21 @@ function OrderPopup({ order, isOpen, onRequestClose }) {
                 <strong>Products:</strong>
             </div>
             <div className={styles['product-list-container']}>
-                {orderDetails.map((detail) => (
-                    <div key={detail.id} className={styles.cardProduct}>
-                    <div>
-                        <img src={detail.Product.images[0]} alt={detail.Product.name} />
-                        
+                    {orderDetails && orderDetails.length > 0 ? (
+                        orderDetails.map((detail) => (
+                        <div key={detail.id} className={styles.cardProduct}>
+                            <div>
+                            <img src={detail.Product.images[0]} alt={detail.Product.name} />
+                            </div>
+                            <div>{detail.Product.name}</div>
+                            <div>{detail.quantity}</div>
+                            <div>$ {detail.unit_price}</div>
+                        </div>
+                        ))
+                    ) : (
+                        <div>No order details available.</div>
+                    )}
                     </div>
-                    <div>{detail.Product.name}</div>
-                    <div>
-                        {detail.quantity}
-                    </div>
-                        <div>
-                        $ {detail.unit_price}
-                    </div>
-                    </div>
-                ))}
-                </div>
                 <div className={styles['order-modal-section']}>
                     <strong>Total:</strong> $ {order.total}
                 </div>
