@@ -1,22 +1,23 @@
 
+import { Link } from 'react-router-dom'
 import './Footer.styles.css'
 import "tailwindcss/tailwind.css"
 const Footer = () => {
   return (
     <div className=" bg-black font-poppins">
         <div className="bg-black h-">
-          <div className="grid  justify-center mx-auto sm:grid-cols-2  md:grid-cols-4 mr-20 -ml-[100px] md:px-60 md:py-10 hover:text-white">
-            <div className="footer-col mx-auto grid pl-20 my-10 space-y-10 ">
-              <div><h4 className=''>Linksssss</h4>
+          <div className="grid  justify-center  sm:grid-cols-2  md:grid-cols-4 text-gray-500 hover:text-white">
+            <div className="bg-blue-400 ">
+              <div><h4 className=''>Links</h4>
                 </div>
               <ul>
-                <li><a href="#">Linkkkkkkkkkkkkkkkk1</a></li>
-                <li><a href="#">Linkkkkkkkkkkkkkkkk2</a></li>
-                <li><a href="#">Linkkkkkkkkkkkkkkkk3</a></li>
-                <li><a href="#">Linkkkkkkkkkkkkkkkk4</a></li>
+                <li><Link to='/'>Home </Link> </li>
+                <li><Link to="/shop">Shop</Link></li>
+                <li><Link to="/guides">Plant guide</Link></li>
+                <li><Link to="/about-us">About us</Link></li>
               </ul>
             </div>
-            <div className="footer-col mx-auto grid pl-20 my-10 space-y-10 ">
+            <div className="bg-gray-400 ">
               <h4>Linkssssss2</h4>
               <ul>
                 <li><a href="#">Link1</a></li>
@@ -25,7 +26,7 @@ const Footer = () => {
                 <li><a href="#">Link4</a></li>
               </ul>
             </div>
-            <div className="footer-col  mx-auto grid pl-20 my-10 space-y-10 md:pl-2">
+            <div className="bg-yellow-400">
               <h4>Linkssssss3</h4>
               <ul>
                 <li><a href="#">Link1</a></li>
@@ -34,7 +35,7 @@ const Footer = () => {
                 <li><a href="#">Link4</a></li>
               </ul>
             </div>
-            <div className="footer-col  grid mx-auto pl-20 my-10 space-y-10 md:pl-0">
+            <div className="bg-red-400">
               <h4>Linkssssssssss</h4>
               <div className="social-link">
                <a href="#"></a>
@@ -42,9 +43,9 @@ const Footer = () => {
                <a href="#"></a>
                <a href="#"></a>
               </div >
-              <div className='text-6xl font-bold text-center text-white'>
+              {/* <div className='text-6xl font-bold text-center text-white'>
                 GreenCorner
-              </div>
+              </div> */}
             </div>
           </div>
           <h3 className='text-center text-white py-20 text-3xl'>CopyRight 2023 | GreenCorner.com | All rights reserved</h3>
