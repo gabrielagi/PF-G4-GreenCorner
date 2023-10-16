@@ -21,30 +21,36 @@ const createOrder = async (req, res) => {
   // Guardo los items que se van a vender
   let items = [];
 
-  // Obtén la cantidad de stock disponible para un producto
-  function getAvailableStock(productId, allProducts) {
-    const product = allProducts.find((item) => item.product_id === productId);
-    if (product) {
-      return product.stock;
-    }
-    return 0;
-  }
-
   // Controlar que haya suficiente stock para el checkout
   const allProducts = await getAllProduct();
   const insufficientStockProducts = [];
 
+  // Obtén la cantidad de stock disponible para un producto
+  function getAvailableStock(productId, allProducts) {
+    const productFound = allProducts.find(
+      (item) => item.product_id === productId
+    );
+    console.log(
+      "El producto encontrado en el nuevo metodo tiene stock: ",
+      productFound.stock
+    );
+    if (productFound) {
+      return productFound.stock;
+    }
+    return 0;
+  }
+
   // Controlo que cada elemento del Array product tiene stock disponible
   if (Array.isArray(product)) {
     for (const item of product) {
-      const availableStock = getAvailableStock(item.id, allProducts);
-      if (availableStock < item.amount) {
+      const availableStock = getAvailableStock(item.product_id, allProducts);
+      if (availableStock <= item.amount) {
         insufficientStockProducts.push(item);
       }
     }
   } else if (typeof product === "object") {
-    const availableStock = getAvailableStock(product.id, allProducts);
-    if (availableStock < amount) {
+    const availableStock = getAvailableStock(product.product_id, allProducts);
+    if (availableStock <= amount) {
       insufficientStockProducts.push(product);
     }
   }
