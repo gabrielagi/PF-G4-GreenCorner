@@ -269,6 +269,24 @@ const deleteProduct = async (id) => {
   }
 };
 
+const updateProductCart = async (id, email, quantity) => {
+  try {
+    const [updatedRows] = await ShoppingCart.update(
+      { amount: quantity },
+      {
+        where: {
+          product_id: id,
+          email: email,
+        },
+      }
+    );
+
+    return updatedRows > 0;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteProductCart = async (id, email) => {
   try {
     const deleter = await ShoppingCart.destroy({
@@ -298,4 +316,5 @@ module.exports = {
   getAllTrending,
   deleteProduct,
   deleteProductCart,
+  updateProductCart,
 };

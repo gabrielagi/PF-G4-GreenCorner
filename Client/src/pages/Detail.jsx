@@ -12,7 +12,11 @@ import Carousel from "../components/DetailCarousel/DetailCarousel";
 import Slider from "../components/Slider/Slider2";
 import { toast } from "react-toastify";
 import { postFavorites } from "../Redux/actions/user/user-actions";
-import { postProductCart } from "../Redux/actions/product/action";
+import {
+  postProductCart,
+  getProductCart,
+  updateProductCart,
+} from "../Redux/actions/product/action";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Detail = () => {
@@ -23,14 +27,26 @@ const Detail = () => {
 
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
+  const cart = useSelector((state) => state.productCart);
 
-  const [activeImg, setActiveImg] = useState(product.images && product.images[0]);
+  const [activeImg, setActiveImg] = useState(
+    product.images && product.images[0]
+  );
   const [amount, setAmount] = useState(1);
+  const [cartQuantity, setCartQuantity] = useState(0);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
   useEffect(() => {
     dispatch(getProductById(id));
-   return ;
+    return;
   }, [dispatch, id]);
+
+  // Traigo todos los elementos del carrito del usuario (si existen)
+  useEffect(() => {
+    if (user && user.email) {
+      dispatch(getProductCart(user.email));
+    }
+  }, [user, dispatch]);
 
   const notify = () =>
     toast.success("Added to your cart 🛒", {
@@ -57,8 +73,33 @@ const Detail = () => {
       theme: "light",
     });
   };
-  
 
+  const notifyIII = () =>
+    toast.error(
+      "There is not enough stock available to add that quantity to the cart 🛑",
+      {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+
+  const notifyVI = () =>
+    toast.error("There is not enough stock available to checkout 🛑", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const handleAddToMyGarden = () => {
     if (isAuthenticated) {
@@ -75,17 +116,72 @@ const Detail = () => {
   };
 
   const handleAddToCart = () => {
-    if (isAuthenticated) {
-      let cart = {
-        email: user.email,
-        product_id: product.product_id,
-        amount: amount,
-      };
-      dispatch(postProductCart(cart));
-      console.log(cart);
-      notify();
-    } else {
-      loginWithRedirect();
+    try {
+      if (isAuthenticated) {
+        const productInCart = cart.find(
+          (item) => item.product_id === product.product_id
+        );
+        console.log("El producto ya existe en el carrito? ", productInCart);
+        if (productInCart) {
+          // El producto ya está en el carrito
+          const availableStock = product.stock - productInCart.amount;
+          console.log(
+            "El producto ya existe en el carrito y tiene stock disponible para comprar de: ",
+            availableStock
+          );
+          console.log(
+            "El producto en el carrito tiene como stock a comprar viejo: ",
+            productInCart.amount
+          );
+          console.log(
+            "El total nuevo que quiero comprar es: ",
+            cartQuantity + amount
+          );
+          if (availableStock >= amount) {
+            // Hay suficiente stock para agregar más lo que contiene amount
+            setIsAddingToCart(true);
+            setCartQuantity(cartQuantity + amount);
+            dispatch(
+              updateProductCart({
+                email: user.email,
+                productId: product.product_id,
+                amount: productInCart.amount + amount,
+              })
+            ).then(() => {
+              dispatch(getProductCart(user.email));
+              notify();
+            });
+            console.log("El producto se pudo actualizar para comprar!");
+            setIsAddingToCart(false);
+          } else {
+            notifyIII();
+            setIsAddingToCart(false);
+          }
+        } else {
+          setIsAddingToCart(true);
+          let cartItem = {
+            email: user.email,
+            product_id: product.product_id,
+            amount: amount,
+          };
+
+          dispatch(postProductCart(cartItem))
+            .then(() => {
+              dispatch(getProductCart(user.email)).then(() => {
+                setIsAddingToCart(false);
+                notify();
+              });
+            })
+            .catch(() => {
+              setIsAddingToCart(false);
+            });
+
+          setIsAddingToCart(false);
+        }
+      }
+    } catch (error) {
+      setIsAddingToCart(false);
+      console.log({ error: error.message });
     }
   };
 
@@ -106,26 +202,30 @@ const Detail = () => {
   // Se realiza el checkout
   const handleCheckout = async () => {
     if (isAuthenticated) {
-      try {
-      
-        const { data } = await axios.post(
-          "http://localhost:3001/payment/create-order",
-          { product, amount }
-        );
-        console.log("Data en el componente Detail", data);
-        console.log("Init point en el componente Detail", data);
-        location.href = data.result;
-      } catch (error) {
-        console.log(error.message);
+      if (product.stock >= amount) {
+        try {
+          const { data } = await axios.post(
+            "http://localhost:3001/payment/create-order",
+            { product, amount }
+          );
+          console.log("Data en el componente Detail", data);
+          console.log("Init point en el componente Detail", data);
+          location.href = data.result;
+        } catch (error) {
+          console.log(error.message);
+        }
+      } else {
+        notifyVI();
       }
     } else {
       loginWithRedirect();
     }
   };
-  const number= (max)=> {
+
+  const number = (max) => {
     return Math.floor(Math.random() * max);
-  }
-  console.log(number(5))
+  };
+  console.log(number(5));
   if (product.name) {
     return (
       <div>
@@ -142,13 +242,13 @@ const Detail = () => {
                   className="mx-auto bg-gray-100 bg-opacity-20"
                   src={activeImg}
                 ></img>
-                <Slider 
+                <Slider
                   id={id}
                   images={product.images}
                   setActiveImg={setActiveImg}
                 ></Slider>
               </div>
-            ) }
+            )}
 
             <div className=" px-10 bg-[#f6f6f6] justify-between">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
@@ -185,9 +285,17 @@ const Detail = () => {
 
                 <button
                   onClick={handleAddToCart}
-                  className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3"
+                  className="py-2 md:text-gray-500 hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded col-end-3 relative"
                 >
-                  ADD TO CART
+                  {isAddingToCart ? (
+                    <img
+                      src={loading}
+                      alt="Loading"
+                      className="w-6 h-6 animate-spin absolute left-2 top-1/2 transform -translate-y-1/2"
+                    />
+                  ) : (
+                    "ADD TO CART"
+                  )}
                 </button>
               </div>
               <div className="flex  md: justify-between gap-x-10 ">
@@ -254,7 +362,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(number(5), number(5)+4)}
+              .slice(number(5), number(5) + 4)}
           </div>
         </div>
       </div>
