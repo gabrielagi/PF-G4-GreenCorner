@@ -20,6 +20,13 @@ module.exports = (sequelize) => {
       rating: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      UserId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       }
     },
     { timestamps: false }

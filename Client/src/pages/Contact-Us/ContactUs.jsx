@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./ContactUs.module.css";
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 
 
@@ -9,14 +10,16 @@ const ContactUs = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
-
+  // const notify = (message) => {
+  //   toast.success(message)
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // Enviar los datos del formulario al servidor
-      await axios.post('http://localhost:3000/send-email', {
+      await axios.post('http://localhost:3001/send-email', {
         name,
         phoneNumber,
         message,
@@ -26,7 +29,17 @@ const ContactUs = () => {
       setName("");
       setPhoneNumber("");
       setMessage("");
-
+      
+      toast.success("Mensaje enviado",{
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
       // Mensaje de éxito o redirección después de enviar el formulario
       // Puedes implementar esta parte según tus necesidades
     } catch (error) {

@@ -1,7 +1,9 @@
-const { Testimonial } = require ("../db")
+const { Testimonial, Users } = require ("../db")
 
 const getAllTestimonials = async () => {
-    const testimonials = await Testimonial.findAll()
+    const testimonials = await Testimonial.findAll({
+        include: Users,
+    })
     return testimonials
 }
 
