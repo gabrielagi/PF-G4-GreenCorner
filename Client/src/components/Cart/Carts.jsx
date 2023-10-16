@@ -1,5 +1,5 @@
 import "tailwindcss/tailwind.css";
-import "./Carts.css";
+// import "./Carts.css";
 import { useEffect } from "react";
 import Cart from "./Cart";
 import axios from "axios";
@@ -63,35 +63,34 @@ const Carts = () => {
   };
 
   return (
-    <div>
-      <div className="title">Your Cart</div>
-      <div className="decorationCarts"></div>
-      <div className="content">
-        <div className="name">
-          <strong>Product</strong>
-        </div>
-        <div className="price">
-          <strong>Price</strong>
-        </div>
-        <div className="amount">
-          <strong>Amount</strong>
-        </div>
-        <div className="total">
-          <strong>Total</strong>
-        </div>
-      </div>
+    <div className=" bg-gray-200 md:mx-20 font-poppins">
+      <h1 className="text-7xl font-bold text-center my-12 pt-12  text-green-500">Your Cart</h1>
+      {/* <div className="grid grid-cols-4">
+        <div className="flex justify-center items-center ">  <p className=""></p></div>
+        <div className="flex justify-center items-center "><p className="">NAME</p>  </div>
+        <div className="flex justify-center items-center "> <p className="">AMOUNT</p></div>
+        <div className="flex justify-center items-center "> <p className="">TOTAL</p></div>
+        
+          
+         
+
+        </div> */}
       <div className="cart">
         {products.length !== 0 ? (
           products.map((p, i) => {
             return (
-              <Cart
-                key={i}
+              <div className="my-4" key={i}>
+                 <Cart
+               
                 id={p.Product.product_id}
                 amount={p.amount}
                 name={p.Product.name}
                 price={p.Product.price}
                 image={p.Product.images}
               />
+
+                </div>
+             
             );
           })
         ) : (
@@ -100,25 +99,17 @@ const Carts = () => {
           </div>
         )}
       </div>
-
-      <div className="containerCarts">
-        <div className="line"></div>
-        <div className="ordenSummary">
-          <strong>Orden Summary</strong>
-        </div>
-        <div className="line2"></div>
-        <div className="containerCartsTotal">
-          <strong>${total}</strong>
-        </div>
-        <div className="containerCartsTtotal">
-          <strong>Total</strong>
-        </div>
-      </div>
-      <button onClick={handleCheckout}>
-        <div className="checkoutContainer">
-          <div className="checkout">Checkout</div>
-        </div>
+        
+                    <div className="flex flex-col my-3 pb-5 align-baseline pr-20 text-center justify-end items-end ">
+        
+        <div className=" flex flex-grow ">
+          <div className="  bg-white py-2  ml-24 md:mx-auto text-3xl font-semibold flex justify-center w-[130px]  ">Total: <p className="pl-4 text-green-600">{total}</p></div>
+        <button className=" mx-5 bg-white w-[200px]  text-2xl font-medium" onClick={handleCheckout}>
+        Continue to checkout
       </button>
+      </div>
+        </div>
+      
     </div>
   );
 };

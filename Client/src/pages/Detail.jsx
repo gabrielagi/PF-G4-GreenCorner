@@ -11,8 +11,14 @@ import axios from "axios";
 import Carousel from "../components/DetailCarousel/DetailCarousel";
 import Slider from "../components/Slider/Slider2";
 import { toast } from "react-toastify";
+
 import { postFavorites, deleteFavorite  ,getOneFavorites } from "../Redux/actions/user/user-actions";
-import { postProductCart } from "../Redux/actions/product/action";
+import {
+  postProductCart,
+  getProductCart,
+  updateProductCart,
+} from "../Redux/actions/product/action";
+
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Detail = () => {
@@ -23,8 +29,24 @@ const Detail = () => {
   const [corazon, setCorazon] = useState(false);
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
-  const [activeImg, setActiveImg] = useState(product.images && product.images[0]);
+
+  const cart = useSelector((state) => state.productCart);
+
+  const [activeImg, setActiveImg] = useState(
+    product.images && product.images[0]
+  );
+
   const [amount, setAmount] = useState(1);
+  const [loadingImages, setLoadingImages] = useState(true);
+  const handleImageClick = (newActiveImg) => {
+    setLoadingImages(true);
+    setTimeout(() => {
+      setActiveImg(newActiveImg);
+      setLoadingImages(false);
+    }, 500); // Ajusta el tiempo de espera según tus necesidades
+  };
+  const [cartQuantity, setCartQuantity] = useState(0);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
 
  let heart = "❤️";
 
@@ -32,24 +54,34 @@ const Detail = () => {
 
 
   useEffect(() => {
-    dispatch(getProductById(id));
+ 
+    const fetchData = async () => {
+      await dispatch(getProductById(id));
+      setLoadingImages(false);
+    };
+
+    fetchData();
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    setActiveImg(product.images && product.images[0]);
+  }, [product.images]);
+
+  // Traigo todos los elementos del carrito del usuario (si existen)
+  useEffect(() => {
     if (user && user.email) {
-  
+      dispatch(getProductCart(user.email));
       dispatch(getOneFavorites(user.email,id)).then((result) => {
       
         setCorazon(result)
       })
-  
-      }
+    }
 
-   return ;
-  }, [dispatch, id]);
+  }, [user, dispatch]);
 
-  const notify = (message) =>{
-
-  if(message === "This product has been add in the cart"){
-
-    toast.success(message +" 🛒", {
+  const notify = (message) =>
+    if(message === "This product has been add in the cart"){
+    toast.success(message + " 🛒", {
       position: "bottom-left",
       autoClose: 5000,
       hideProgressBar: false,
@@ -86,8 +118,33 @@ const Detail = () => {
       theme: "light",
     });
   };
-  
 
+  const notifyIII = () =>
+    toast.error(
+      "There is not enough stock available to add that quantity to the cart 🛑",
+      {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+
+  const notifyVI = () =>
+    toast.error("There is not enough stock available to checkout 🛑", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   const handleAddToMyGarden = () => {
 
@@ -118,22 +175,73 @@ const Detail = () => {
   };
 
   const handleAddToCart = () => {
-    if (isAuthenticated) {
-      let cart = {
-        email: user.email,
-        product_id: product.product_id,
-        amount: amount,
-      };
-      dispatch(postProductCart(cart)).then((result) => {
-         
-      
-          notify(result);
-        
-        
-      });
+    try {
+      if (isAuthenticated) {
+        const productInCart = cart.find(
+          (item) => item.product_id === product.product_id
+        );
+        console.log("El producto ya existe en el carrito? ", productInCart);
+        if (productInCart) {
+          // El producto ya está en el carrito
+          const availableStock = product.stock - productInCart.amount;
+          console.log(
+            "El producto ya existe en el carrito y tiene stock disponible para comprar de: ",
+            availableStock
+          );
+          console.log(
+            "El producto en el carrito tiene como stock a comprar viejo: ",
+            productInCart.amount
+          );
+          console.log(
+            "El total nuevo que quiero comprar es: ",
+            cartQuantity + amount
+          );
+          if (availableStock >= amount) {
+            // Hay suficiente stock para agregar más lo que contiene amount
+            setIsAddingToCart(true);
+            setCartQuantity(cartQuantity + amount);
+            dispatch(
+              updateProductCart({
+                email: user.email,
+                productId: product.product_id,
+                amount: productInCart.amount + amount,
+              })
+            ).then(() => {
+              dispatch(getProductCart(user.email));
+              notify();
+            });
+            console.log("El producto se pudo actualizar para comprar!");
+            setIsAddingToCart(false);
+          } else {
+            notifyIII();
+            setIsAddingToCart(false);
+          }
+        } else {
+          setIsAddingToCart(true);
+          let cartItem = {
+            email: user.email,
+            product_id: product.product_id,
+            amount: amount,
+          };
 
-    } else {
-      loginWithRedirect();
+          dispatch(postProductCart(cartItem))
+            .then(() => {
+              dispatch(getProductCart(user.email)).then(() => {
+                setIsAddingToCart(false);
+                notify();
+              });
+            })
+            .catch(() => {
+              setIsAddingToCart(false);
+            });
+
+          setIsAddingToCart(false);
+        }
+      }
+    } catch (error) {
+      setIsAddingToCart(false);
+      console.log({ error: error.message });
+
     }
   };
 
@@ -148,31 +256,43 @@ const Detail = () => {
   // Hasta cuánto se puedo decrecentar
   const amountDecrement = () => (amount > 1 ? setAmount(amount - 1) : null);
 
+  const handleImageLoad = () => {
+    setLoadingImages(false);
+  };
+ 
 
   // Se realiza el checkout
   const handleCheckout = async () => {
     if (isAuthenticated) {
-      try {
-      
-        const { data } = await axios.post(
-          "http://localhost:3001/payment/create-order",
-          { product, amount }
-        );
-        console.log("Data en el componente Detail", data);
-        console.log("Init point en el componente Detail", data);
-        location.href = data.result;
-      } catch (error) {
-        console.log(error.message);
+      if (product.stock >= amount) {
+        try {
+          const { data } = await axios.post(
+            "http://localhost:3001/payment/create-order",
+            { product, amount }
+          );
+          console.log("Data en el componente Detail", data);
+          console.log("Init point en el componente Detail", data);
+          location.href = data.result;
+        } catch (error) {
+          console.log(error.message);
+        }
+      } else {
+        notifyVI();
       }
     } else {
       loginWithRedirect();
     }
   };
-  const number= (max)=> {
+
+  const number = (max) => {
     return Math.floor(Math.random() * max);
   }
   console.log(number(5))
-  if (product.name) {
+  console.log(product.categories)
+  if (loadingImages || !activeImg){
+    return <p> ta cargando</p>
+  } else if (product.name) {  
+      
     return (
       <div>
         <Link className="ml-16 mt-20" to="/shop">
@@ -180,36 +300,51 @@ const Detail = () => {
             <VscArrowCircleLeft color="gray" size="5rem" />
           </button>
         </Link>
-        <div className="mx-10 sm:mx-[200px]">
-          <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
+        <div className="mx-10 sm:mx-[100px]">
+          <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
             {activeImg && (
-              <div className="swiper-container-detail bg-red-200">
-                <img
-                  className="mx-auto bg-gray-100 bg-opacity-20"
-                  src={activeImg}
-                ></img>
+              <div className={`swiper-container-detail  ${
+                loadingImages ? 'fade-out' : 'fade-in'
+              }`}>
+               <img
+            className={`mx-auto bg-gray-100 bg-opacity-20 w-auto h-[414px] ${
+              loadingImages ? 'fade-out' : 'fade-in'
+            }`}
+            src={activeImg}
+            alt="Product"
+            onLoad={handleImageLoad}
+          />
                 <Slider 
                   id={id}
                   images={product.images}
                   setActiveImg={setActiveImg}
                 ></Slider>
               </div>
-            ) }
+            )}
 
-            <div className=" px-10 bg-[#f6f6f6] justify-between">
+            <div className="  bg-[#f6f6f6] justify-between w-full px-20">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
                 {product?.name}
               </h2>
               <hr className="my-10"></hr>
               <p className="py-t text-5xl text-[#444444]">${product.price}</p>
-              <p className="py-20  w-full">{product.description}</p>
+              <div className="w-full">
+                <p className="py-20  break-words ">{product.description}</p>
+              </div>
+              
               {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
                 <option>uno</option>
                 <option>dos</option>
               </select> */}
-
+<div className="flex">
+    <p className="text-3xl font-semibold align-bottom text-green-500">Categories:</p>
+    {product?.categories.map((c, i)=>
+     ( <div className="px-2 text-[16px]" key={i}>
+        <p>{c.name}</p></div>)
+    )}
+</div>
               <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
                 <div>
                   <button
@@ -231,9 +366,17 @@ const Detail = () => {
 
                 <button
                   onClick={handleAddToCart}
-                  className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3"
+                  className="py-2 md:text-gray-500 hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded col-end-3 relative"
                 >
-                  ADD TO CART
+                  {isAddingToCart ? (
+                    <img
+                      src={loading}
+                      alt="Loading"
+                      className="w-6 h-6 animate-spin absolute left-2 top-1/2 transform -translate-y-1/2"
+                    />
+                  ) : (
+                    "ADD TO CART"
+                  )}
                 </button>
               </div>
               <div className="flex  md: justify-between gap-x-10 ">
@@ -263,7 +406,7 @@ const Detail = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:ml-28 text-[#a9a9a9]">
+          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:mx-auto sm:w-[100%] text-[#a9a9a9]">
             <div className=" text-center py-6 text-4xl text-[#444444]">
               Descripción
             </div>
@@ -290,10 +433,10 @@ const Detail = () => {
               sed eros lobortis ornare. Morbi sodales interdum ipsum.
             </div>
           </div>
-          <h3 className="my-20 mt-20 text-center text-5xl ">
+          <h3 className=" font-semibold  text-gray-700 my-20 mt-20 text-center text-5xl ">
             Related products
           </h3>
-          <div className="flex flex-row gap-20 justify-center mx-auto my-10">
+          <div className=" grid sm:grid-cols-2 md:flex md:flex-row gap-20 justify-center mx-auto my-10">
             {allProducts
               .map((p) => {
                 if (
@@ -310,7 +453,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(number(5), number(5)+4)}
+              .slice(number(5), number(5) + 4)}
           </div>
         </div>
       </div>
@@ -318,6 +461,8 @@ const Detail = () => {
   } else {
     <img src={loading} alt="Loading product detail" />;
   }
-};
+}
+  
+;
 
 export default Detail;

@@ -103,7 +103,7 @@ const newUserHandler = async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     console.error(error.message);
-    return res.status(500).json({ message: "Something went wrong" });
+    return res.status(500).json({ message: "SSomething went wrong" });
   }
 };
 

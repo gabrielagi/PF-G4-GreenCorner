@@ -2,12 +2,17 @@ const { Order, OrderDetail, Product } = require("../db");
 
 const getAllOrders = async (email) => {
     try {
+        if(email){
         const order = await Order.findAll({
             where: {
                 email: email
               },
         });
         return order;
+        }else{
+             const order = await Order.findAll();
+             return order;
+    }
     } catch (error) {
         throw new Error("Error al obtener ordenes desde la base de datos: " + error.message);
     }

@@ -68,13 +68,14 @@ const getAllFavorites = async (email) => {
       where: { email: email },
       include: [
         {
+
           model: Product
         }
 
       ],
     });
 
-  
+ 
     return favorites;
 
   } catch (error) {
@@ -95,6 +96,7 @@ const getOneFavorite = async (email, id) => {
   } catch (error) {
     console.log(error.message);
     return false; // Manejo de errores, devuelve false en caso de error.
+
   }
 };
 

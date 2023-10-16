@@ -48,11 +48,11 @@ const Nav = () => {
     };
 
     document.addEventListener("click", closeMenuOnClickOutside);
-
+    
     return () => {
       document.removeEventListener("click", closeMenuOnClickOutside);
     };
-  }, [open]);
+  }, [open,count]);
 
   const handleSearchMouseEnter = () => {
     if (searchValue) {

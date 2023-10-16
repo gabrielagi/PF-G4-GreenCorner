@@ -6,6 +6,7 @@ import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 import { Link } from "react-router-dom";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import Favorites from "../../Favorites";
+import ShoppingHistory from "./ShoppingHistory/ShoppingHistory";  
 const ProfileUser = () => {
   const { user } = useAuth0();
 
@@ -14,13 +15,14 @@ const ProfileUser = () => {
       case "Profile":
         return <ProfileDashboard />;
       case "Shopping history":
-        // return <ShoppingHistory />;
-        return <p>Esto muestra el Historial de Compra</p>;
+         return <ShoppingHistory />;
       case "Payment methods":
         return <PaymentMethods />;
       case "My Garden":
-        return <Favorites></Favorites>
-     
+        return <Favorites></Favorites>;
+
+ 
+
       default:
         return <ProfileDashboard />;
     }
@@ -29,15 +31,14 @@ const ProfileUser = () => {
 
   return (
     <div className="flex">
-      <div className="w-1/4">
+      <div className="w-1/6 z-20">
         {/* Menú lateral */}
         <NavbarUser
           selectedMenu={selectedMenu}
           setSelectedMenu={setSelectedMenu}
-          style={{ position: "relative", zIndex: 999 }}
         />
       </div>
-      <div className="w-3/4" style={{ position: "relative", zIndex: 1 }}>
+      <div className="w-5/6 sm:mr-40 z-10">
         {/* Componente renderizado */}
         {renderComponentBasedOnMenu()}
       </div>

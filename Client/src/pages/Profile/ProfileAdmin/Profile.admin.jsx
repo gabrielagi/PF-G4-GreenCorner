@@ -9,6 +9,7 @@ import Category from "./CategoryCrud/CategoryCrud";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import ProfileDashboard from "../ProfileUser/ProfileDashboard/ProfileDashboard";
 import ProductDashboard from "./ProductDashboard/ProductDashboard";
+import OrderAdmin from "./OrderAdmin/OrderAdmin";
 /* import ShowUsers from "./ShowUsers"; */
 
 const ProfileAdmin = () => {
@@ -23,8 +24,9 @@ const ProfileAdmin = () => {
       case "Profile":
         return <ProfileDashboard />;
       case "Users":
-        // return <ShoppingHistory />;
         return <ShowUsers />;
+      case "Orders":
+          return <OrderAdmin />;
       case "Payment methods":
         return <PaymentMethods />;
       case "Charts":

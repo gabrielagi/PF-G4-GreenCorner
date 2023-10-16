@@ -30,6 +30,7 @@ import Banned from "./pages/Banned/Banned.jsx";
 import Slider from "./components/Slider/Slider2";
 import EmptyCart from "./components/EmptyCart/EmptyCart";
 import EmptyFavorites from "./components/EmptyFavorites/EmptyFavorites";
+import Cart from "./components/Cart/Cart";
 
 const App = () => {
 
@@ -92,7 +93,7 @@ const App = () => {
             />
             <Route path="/guides" element={<Guides />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/prueba" element={<EmptyFavorites/>} />
+            <Route path="/prueba" element={ <Cart/> } />
           </Routes>
           <Footer></Footer>
         </>
