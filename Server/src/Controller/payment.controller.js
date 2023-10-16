@@ -1,5 +1,9 @@
 const mercadopago = require("mercadopago");
-const { Purchase, PurchasePending, Purchasefail } = require ("../../nodemailer/mailer")
+const {
+  Purchase,
+  PurchasePending,
+  Purchasefail,
+} = require("../../nodemailer/mailer");
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
@@ -96,7 +100,6 @@ const createOrder = async (req, res) => {
   //   name: user.given_name,
   //   surname: user.family_name,
   // };
-
   // Item de prueba
   // items: [
   //       {
@@ -141,9 +144,9 @@ const createOrder = async (req, res) => {
 };
 
 const success = (req, res) => {
-        const mail = "test_user_1398180221@testuser.com"
+  const mail = "test_user_1398180221@testuser.com";
 
-  Purchase (mail, "payer")
+  Purchase(mail, "payer");
 
   console.log(req.query);
   // res.send('Pago realizado')
@@ -154,9 +157,9 @@ const success = (req, res) => {
 };
 
 const failure = (req, res) => {
-  const mail = "test_user_1398180221@testuser.com"
+  const mail = "test_user_1398180221@testuser.com";
 
-  Purchasefail(mail, "payer")
+  Purchasefail(mail, "payer");
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database
