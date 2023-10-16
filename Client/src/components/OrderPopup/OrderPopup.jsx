@@ -62,16 +62,26 @@ function OrderPopup({ order, isOpen, onRequestClose }) {
             <div className={styles['order-modal-section']}>
                 <strong>Products:</strong>
             </div>
+            <div className='grid grid-cols-4  text-center'>
+                <p className=' bg-red-400 '></p>
+                <p className='bg-yellow-500'>name</p>
+                <p  className=' bg-green-400 '>amount</p>
+                <p  className=' bg-blue-400  '>unit price</p>
+            </div>
             <div className={styles['product-list-container']}>
                     {orderDetails && orderDetails.length > 0 ? (
                         orderDetails.map((detail) => (
-                        <div key={detail.id} className={styles.cardProduct}>
-                            <div>
-                            <img src={detail.Product.images[0]} alt={detail.Product.name} />
+                        <div key={detail.id} className="grid grid-cols-4">
+                            <div className='bg-red-300 w-[80px] h-[80px] mx-auto '>
+                                <img className='w-full h-full rounded-[8px]' src={detail.Product.images[0]} alt={detail.Product.name} />
                             </div>
-                            <div>{detail.Product.name}</div>
-                            <div>{detail.quantity}</div>
-                            <div>$ {detail.unit_price}</div>
+                            <div className='flex bg-blue-300 text-center justify-center items-center break-words mx-auto'>
+                                {detail.Product.name}
+                            </div>
+                            <div className='bg-orange-300 flex text-center justify-center items-center '>{detail.quantity}
+                            </div>
+                            <div className='bg-green-300  flex justify-center text-center place-items-center'>$ {detail.unit_price}
+                            </div>
                         </div>
                         ))
                     ) : (
