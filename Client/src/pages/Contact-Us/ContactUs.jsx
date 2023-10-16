@@ -5,24 +5,23 @@ import { toast } from "react-toastify";
 
 
 
-
 const ContactUs = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
-  // const notify = (message) => {
-  //   toast.success(message)
-  // }
+  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       // Enviar los datos del formulario al servidor
+      // const mail = user.mail
       await axios.post('http://localhost:3001/send-email', {
         name,
         phoneNumber,
-        message,
+        message
       });
 
       // Limpiar los campos después de enviar el formulario
@@ -51,12 +50,13 @@ const ContactUs = () => {
   
   return (
     <div className={styles.container}>
+      {/* {console.log(user.email)}; */}
       <div className={styles.card_contact}>
         {/* Parte izquierda */}
         <div className={styles.leftContent}>
   <div className={styles.textContainer}>
     <div className={styles.upperHalf}>
-      <h2>get in touch</h2>
+      <h2>GET IN TOUCH</h2>
     </div>
     <div className={styles.lowerHalf}>
       {/* {console.log(user)} */}
