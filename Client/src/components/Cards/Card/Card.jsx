@@ -64,6 +64,7 @@ const Card = ({ name, images, price, id }) => {
         };
         console.log("Se manda al cart: ", cart);
         dispatch(postProductCart(cart)).then((result) => {
+          dispatch(getProductCart(user.email));
           notify(result);
         });
 

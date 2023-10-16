@@ -160,20 +160,6 @@ function rootReducer(state = initialState, action) {
         };
       }
 
-    case POST_PRODUCT_CART:
-      console.log("Llegue al reducer con los cart: ", action.payload);
-      if (typeof action.payload === "string") {
-        return {
-          ...state,
-          productCart: [...state.productCart],
-        };
-      } else {
-        return {
-          ...state,
-          productCart: [...state.productCart, action.payload],
-        };
-      }
-
     case UPDATE_PRODUCT_CART:
       const { productId, newAmount } = action.payload;
 
