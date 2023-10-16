@@ -45,7 +45,7 @@ function ProductDashboard() {
     dispatch(updateProduct(editedProduct.product_id, editedProduct))
       .then(() => {
         setRefreshTable(true); 
-        getAllProducts();
+        dispatch(getAllProducts());
       })
       .catch((error) => {
         console.error("Error al editar el producto: ", error);
@@ -69,7 +69,7 @@ function ProductDashboard() {
         dispatch(deleteProduct(productId))
           .then(() => {
             setRefreshTable(true); 
-            getAllProducts();
+            dispatch(getAllProducts());
           })
           .catch((error) => {
             console.error("Error al eliminar el producto: ", error);
