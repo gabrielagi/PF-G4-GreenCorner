@@ -12,10 +12,12 @@ import {
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import InputLabel from "@mui/material/InputLabel";
+
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../../../../Redux/actions/product/action";
+import { FiRefreshCcw } from 'react-icons/fi';
 import { MdSettingsBackupRestore } from "react-icons/md";
 
 const ShowUsers = () => {
@@ -58,6 +60,16 @@ const ShowUsers = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const handleRefresh = () => {
+    setRoleOrder("name"); 
+    setFilteredUsers(allUsers); 
+    setNameOrder(""); 
+    setStatusOrder(""); 
+    setSearchTerm(""); 
+    dispatch(setCurrentPage(1)); 
+  };
+  
 
   const editUser = (user) => {
     // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
@@ -170,10 +182,11 @@ const ShowUsers = () => {
           <div className="sm:flex">
             <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
               {/* Searchbar */}
-              <form className="lg:pr-3" action="#" method="GET">
+              <form className="lg:pr-3 flex space-x-4" action="#" method="GET">
                 <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
+                <FiRefreshCcw  onClick={handleRefresh}/>
                 <div className="mt-1 relative lg:w-64 xl:w-96">
                   <input
                     type="text"
@@ -289,24 +302,27 @@ const ShowUsers = () => {
                 {/* Encabezados de tabla */}
                 <thead className="bg-gray-100">
                         <tr>
-                            
-                               
-                            
                             <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                 Name
                             </th>
+                            
                             <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                Position
+                                LastName
                             </th>
                             <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                Country
+                                Email
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                Rol
                             </th>
                             <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                 Status
                             </th>
                             <th scope="col" className="p-4">
                             </th>
+                               
                         </tr>
+                            
                     </thead>
 
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -314,23 +330,7 @@ const ShowUsers = () => {
                   {/* Ejemplo de cómo mapear los usuarios */}
                   {displayedUsers.map((user) => (
                     <tr key={user.id} className="hover:bg-gray-100">
-                      <td className="p-4 w-4">
-                        {/* Checkbox para seleccionar el usuario */}
-                        <div className="flex items-center">
-                          <input
-                            id={`checkbox-${user.id}`}
-                            aria-describedby="checkbox-1"
-                            type="checkbox"
-                            className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
-                          />
-                          <label
-                            htmlFor={`checkbox-${user.id}`}
-                            className="sr-only"
-                          >
-                            checkbox
-                          </label>
-                        </div>
-                      </td>
+                      
                       {/* ... Otros campos de la fila ... */}
                       <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                         <img
@@ -381,25 +381,27 @@ const ShowUsers = () => {
                     </tr>
                   ))}
                 </tbody>
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handleChangePage}
-                  size="large"
-                  sx={{
-                    "& .Mui-selected": {
-                      backgroundColor: "#50a050",
-                      fontSize: "20px",
-                    },
-                    "& .MuiPaginationItem-root": {
-                      fontSize: "15px",
-                    },
-                    "& .paginationButton": {
-                      backgroundColor: "#50a100",
-                    },
-                  }}
-                />
               </table>
+              <div style={{ marginLeft: "400px" }}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handleChangePage}
+                size="large"
+                sx={{
+                  "& .Mui-selected": {
+                    backgroundColor: "#50a050",
+                    fontSize: "20px            ",
+                  },
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "15px",
+                  },
+                  "& .paginationButton": {
+                    backgroundColor: "#50a100",
+                  },
+                }}
+              />
+            </div>
             </div>
           </div>
         </div>
