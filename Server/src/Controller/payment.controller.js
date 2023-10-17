@@ -193,6 +193,13 @@ const createOrder = async (req, res) => {
 
 const success = (req, res) => {
   console.log(req.query);
+
+//Get la ultima orden
+//Put status
+
+//Get el producto
+//Put el stock
+
   // res.send('Pago realizado')
   // store in database
   // Puedo guadar la información del usuario una vez que compró
