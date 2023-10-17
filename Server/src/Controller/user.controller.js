@@ -174,6 +174,7 @@ const getUserByEmail = async (email) => {
     return userFromDb;
   } catch (error) {
     console.error("Error en find user por email:", error.message);
+    res.status(500).json({ error: error.message });
   }
 };
 
