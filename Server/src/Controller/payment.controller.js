@@ -195,11 +195,16 @@ const createOrder = async (req, res) => {
 const success = (req, res) => {
   console.log(req.query);
   console.log("Necesito en success");
+
+
+
   // res.send('Pago realizado')
   // store in database
   // Puedo guadar la información del usuario una vez que compró
   // Actualizar cantidad de productos en el Stock de los productos vendidos
-  res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
+  //res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
+
+  res.redirect("http://green-corner.vercel.app/");
 };
 
 const failure = (req, res) => {
