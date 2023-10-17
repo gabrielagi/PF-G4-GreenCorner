@@ -18,6 +18,8 @@ mercadopago.configure({
   access_token: ACCESS_TOKEN,
 });
 
+let emaill;
+
 const createOrder = async (req, res) => {
   console.log(req.body);
   // El product puede ser un objeto individual desde Detail o un array desde Cart
@@ -25,6 +27,8 @@ const createOrder = async (req, res) => {
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
   console.log("Este es el producto que me llega a payment: ", product);
   const newEmail = req.body.email;
+
+  emaill = req.body.email
   console.log("El email que me llega es: ", newEmail);
 
   // Guardo los items que se van a vender
@@ -195,6 +199,8 @@ const createOrder = async (req, res) => {
 const success = (req, res) => {
   console.log(req.query);
   console.log("Necesito en success");
+
+  console.log(emaill);
 
   // res.send('Pago realizado')
   // store in database

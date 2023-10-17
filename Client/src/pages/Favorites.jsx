@@ -128,26 +128,7 @@ console.log(favorites)
                 </div>
                  
              <div className="  ">
-             <div className="bg-gray-300 bg-opacity-60 pt-10 mx-auto flex justify-center md:w-[400px]">
-                    <Pagination 
-                count={totalPages}
-                page={currentPage} 
-                onChange={handleChangePage}
-                className="text-white"
-                size="large"
-                sx={{
-                  "& .Mui-selected": {
-                    backgroundColor: "#50a050",
-                    fontSize: "20px",
-                  },
-                  "& .MuiPaginationItem-root": {
-                    fontSize: "15px",
-                  },
-                  "& .paginationButton": {
-                    backgroundColor: "#50a100"
-                  }
-                }}  />
-                  </div>  
+           
                    {/*-- ---------------------- BARRA ------------------------------------------------- */}
                <div className="bg-gray-300 bg-opacity-60 py-16 md:w-[400px] md:h-[700px] md:mx-auto">
 
@@ -231,7 +212,7 @@ console.log(favorites)
                           {favorites ? (
                 Array.isArray(favorites) && favorites.length > 0 ? (
                 displayedFavorites.map((p) => (
-                  <div className="" key={p.id}><Card
+                  <div className="pt-20" key={p.id}><Card
                     
                     id={p.Product?.product_id || p.product_id}
                     name={p.Product?.name || p.name}
@@ -244,8 +225,9 @@ console.log(favorites)
                   
                 ))
               ) : favorites.Product ? (
-                <div className="">
-                  <Card
+              <div>
+                 <div className=" pt-20">
+                  <Card 
                   key={favorites.id}
                   id={favorites.Product.product_id || favorites.product_id}
                   name={favorites.Product.name || favorites.name}
@@ -254,8 +236,13 @@ console.log(favorites)
                   className="h-[250px] w-[250px]"
                 >
                   {favorites.value}
-                </Card> </div>
-                
+                </Card> 
+            
+                </div>
+                    
+                </div>
+
+               
               ) : (
                 <div className="col-span-3 row-span-2 my-auto "><EmptyFavorites  /></div>
               )
@@ -264,6 +251,26 @@ console.log(favorites)
             )}
 
          </div>
+         <div className=" bg-opacity-60 col-start-2 pt-10 mx-auto flex justify-center md:w-[400px]">
+                    <Pagination 
+                count={totalPages}
+                page={currentPage} 
+                onChange={handleChangePage}
+                className="text-white"
+                size="large"
+                sx={{
+                  "& .Mui-selected": {
+                    backgroundColor: "#50a050",
+                    fontSize: "20px",
+                  },
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "15px",
+                  },
+                  "& .paginationButton": {
+                    backgroundColor: "#50a100"
+                  }
+                }}  />
+                  </div> 
           
                         
               
