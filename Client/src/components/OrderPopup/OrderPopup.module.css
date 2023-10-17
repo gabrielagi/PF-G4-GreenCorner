@@ -1,4 +1,5 @@
 .order-modal-content {
+    font-family: Poppins, sans-serif;
     background: #fff;
     border: 1px solid #eaeaea;
     border-radius: 4px;
@@ -38,7 +39,20 @@
     margin-bottom: 10px;
 }
 
+.order-modal-section2{
+    margin-top: 60px;
+}
+
+.order-modal-section3{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .order-modal-close-button {
+    display:flex;
+    justify-content: center;
+    width: 100%;
     background: #9e0000;
     color: #fff;
     border: none;
@@ -76,6 +90,11 @@
     gap: 5px;
 }
 
+.status-date{
+    font-weight:300;
+    color: #777;
+}
+
 .status-circle {
     width: 10px;
     height: 10px;
@@ -98,6 +117,7 @@
 .product-list-container {
     max-height: 300px;
     overflow-y: auto;
+    margin-bottom: 60px;
 }
 
 .cardProduct {

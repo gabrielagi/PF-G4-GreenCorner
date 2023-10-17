@@ -59,34 +59,38 @@ function OrderPopup({ order, isOpen, onRequestClose }) {
                 </div>
                 
             
-            <div className={styles['order-modal-section']}>
+            <div className={styles['order-modal-section2']}>
                 <strong>Products:</strong>
             </div>
-            <div className='grid grid-cols-4  text-center'>
-                    <p></p>
-                    <p>Name</p>
-                    <p>Amount</p>
-                    <p>Price</p>
+            <div className='grid grid-cols-4 text-center'>
+                <p className='py-2'></p>
+                <p className='py-2'>Name</p>
+                <p className='py-2'>Amount</p>
+                <p className='py-2'>Price</p>
                 </div>
                 <div className={styles['product-list-container']}>
-                    {orderDetails && orderDetails.length > 0 ? (
-                        orderDetails.map((detail) => (
-                        <div key={detail.id} className="grid grid-cols-4 ">
-                            <div className='w-[80px] h-[80px] mx-auto '>
-                                <img className='w-full h-full rounded-[10px]' src={detail.Product.images[0]} alt={detail.Product.name} />
-                            </div>
-                            <div className='flex bg-blue-300 text-center justify-center items-center break-words mx-auto'>
-                                <div className='mx-auto'>{detail.Product.name}</div>
-                            </div>
-                            <div className='bg-orange-300 flex text-center justify-center items-center '>{detail.quantity}</div>
-                            <div className='bg-green-300  flex justify-center text-center place-items-center'>$ {detail.unit_price}</div>
+                {orderDetails && orderDetails.length > 0 ? (
+                    orderDetails.map((detail) => (
+                    <div key={detail.id} className="grid grid-cols-4 rounded-lg shadow-md border border-gray-300 my-2">
+                        <div className='w-[80px] h-[80px] '>
+                        <img className='w-full h-full rounded-[5px]' src={detail.Product.images[0]} alt={detail.Product.name} />
                         </div>
-                        ))
-                    ) : (
-                        <div>No order details available.</div>
-                    )}
+                        <div className='break-words text-center py-4'>
+                        <div className='mx-auto'>{detail.Product.name}</div>
+                        </div>
+                        <div className='flex items-center justify-center py-4'>
+                        {detail.quantity}
+                        </div>
+                        <div className='flex items-center justify-center py-4'>
+                        $ {detail.unit_price}
+                        </div>
+                    </div>
+                    ))
+                ) : (
+                    <div>No order details available.</div>
+                )}
                 </div>
-                <div className={styles['order-modal-section']}>
+                <div className={styles['order-modal-section3']}>
                     <strong>Total:</strong> $ {order.total}
                 </div>
                 </div>
