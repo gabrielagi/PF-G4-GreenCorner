@@ -30,13 +30,15 @@ const Card = ({ name, images, price, id }) => {
   let heartBroke = "💔"; 
 
   useEffect(() => {
+
     if (user && user.email) {
-  
     dispatch(getOneFavorites(user.email,id)).then((result) => {
-    
       setCorazon(result)
     })
+    }
 
+    if (!isAuthenticated) {
+      console.log("aaaaaa");
     }
   }, [user, dispatch]);
  

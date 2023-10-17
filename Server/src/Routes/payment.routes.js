@@ -1,4 +1,4 @@
-const { Router } = require("express");
+const { Router, json } = require("express");
 const {
   createOrder,
   receiveWebhook,
@@ -6,6 +6,17 @@ const {
   failure,
 } = require("../Controller/payment.controller");
 const paymentRouter = Router();
+
+const mercadopago = require("mercadopago");
+
+require("dotenv").config();
+
+const { ACCESS_TOKEN } = process.env;
+
+// Configuro mercado pago
+mercadopago.configure({
+  access_token: ACCESS_TOKEN,
+});
 
 // Crear la orden de pago
 paymentRouter.post("/create-order", createOrder);
@@ -21,7 +32,7 @@ paymentRouter.get("/pending", (req, res) => {
   res.send("pending");
 });
 
-// paymentRouter.post por si el usuario cierra mercado pago sin volver a nuestra app
-paymentRouter.post("/webhook", receiveWebhook);
+// paymentRouter.post por si el usuario cierra Mercado Pago sin volver a nuestra app
+paymentRouter.post("/webhook", json(), receiveWebhook);
 
 module.exports = paymentRouter;
