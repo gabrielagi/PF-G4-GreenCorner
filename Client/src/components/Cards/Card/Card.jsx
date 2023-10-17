@@ -141,7 +141,7 @@ const Card = ({ name, images, price, id }) => {
   };
 
   return (
-    <div className="bg-slate-100 bg-opacity-60 rounded-md box-border md:h-85 md:w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">
+    <div className="bg-slate-100 bg-opacity-60 rounded-md box-border md:h-85 md:w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center ">
       <div className="corazon absolute hover:scale-110 top-2 right-2 text-3xl">
         <button onClick={() => handleHeart(id)}>
          {corazon ? "❤️" : "🤍"} 

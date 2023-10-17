@@ -218,7 +218,7 @@ const Detail = () => {
               })
             ).then(() => {
               dispatch(getProductCart(user.email));
-              notify();
+              notify("This product has already in the cart");
             });
             console.log("El producto se pudo actualizar para comprar!");
             setIsAddingToCart(false);
@@ -235,10 +235,11 @@ const Detail = () => {
           };
 
           dispatch(postProductCart(cartItem))
-            .then(() => {
+            .then((result) => {
               dispatch(getProductCart(user.email)).then(() => {
                 setIsAddingToCart(false);
-                notify();
+
+                notify(result);
               });
             })
             .catch(() => {

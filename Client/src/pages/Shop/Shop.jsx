@@ -191,24 +191,25 @@ const Shop = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row">
-        <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
+        <div className="mb-10 md:mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
             <div className="grid items-center text-start ml-4">
-              <h1 className="text-4xl font-poppins italic mt-4 mb-2">
-                All Categories
+              <h1 className="text-4xl font-bold px-10 font-poppins mt-4 text-green-700 ">
+              Categories
               </h1>
               <br />
 
-              <div className="mt-4 mb-2">
+              <div className=" mb-2 px-10">
                 {allCategories ? (
                   allCategories.map((p, i) => (
-                    <Category
-                      key={i}
+                    <div key={i} className="font-semibold hover:scale-110 hover:font-bold hover:text-green-500"> <Category
+                      
                       name={p.name}
                       id={p.id}
                       selected={p.name === selectedCategory}
                       onSelect={handleCategorySelect}
-                    />
+                    /> </div>
+                   
                   ))
                 ) : (
                   <div>
@@ -216,7 +217,7 @@ const Shop = () => {
                   </div>
                 )}
                 <button
-                  className="font-bold hover:scale-110"
+                  className="font-bold hover:scale-110 hover:text-green-500"
                   onClick={handleClear}
                 >
                   All categories
@@ -224,15 +225,15 @@ const Shop = () => {
               </div>
             </div>
           </div>
-          <div className="grid items-center text-start ml-4">
-            <h1 className="text-4xl font-poppins italic mt-4 mb-2">
+          <div className="grid items-center text-start   px-10">
+            <h1 className="text-4xl font-poppins font-bold text-green-700 mt-4 mb-2">
               Featured Products
             </h1>
             <ProductsTrending productTrending={productTrending} />
           </div>
         </div>
 
-        <div className="lg:w-2/3 ml-4">
+        <div className="mx-auto md:px-40 ">
           <Cards allProducts={displayedProducts} />
         </div>
       </div>
