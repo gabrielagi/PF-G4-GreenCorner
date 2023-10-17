@@ -1,4 +1,3 @@
-// ShoppingHistory.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderByEmail } from '../../../../Redux/actions/order/order-actions'; 
@@ -43,7 +42,7 @@ function ShoppingHistory() {
   return (
     <div className={styles.orderHistory}>
       <h1 className={styles.orderHistoryTitle}>Order History</h1>
-      {orders.length > 0 ? (
+      {orders && orders.length > 0 ? (
         <div className={styles.orderList}>
           {orders.map((order) => (
             <div key={order.id} className={styles.orderCard}>
