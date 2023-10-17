@@ -27,7 +27,7 @@ const ShowUsers = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const usersPerPage = 8;
+  const usersPerPage = 5;
 
   const dispatch = useDispatch();
 
@@ -288,8 +288,26 @@ const ShowUsers = () => {
               <table className="table-fixed min-w-full divide-y divide-gray-200">
                 {/* Encabezados de tabla */}
                 <thead className="bg-gray-100">
-                  {/* ... Encabezados de tabla ... */}
-                </thead>
+                        <tr>
+                            
+                               
+                            
+                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                Name
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                Position
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                Country
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                Status
+                            </th>
+                            <th scope="col" className="p-4">
+                            </th>
+                        </tr>
+                    </thead>
 
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
