@@ -12,12 +12,9 @@ import EmptyCart from "../EmptyCart/EmptyCart";
 const Carts = () => {
   const products = useSelector((state) => state.productCart);
   const dispatch = useDispatch();
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
 
-  const [loading, setLoading] = useState(true);
-  useEffect(()=>{
-     if(products.length) {setLoading(false)}
-  },[products])
+
 
 
   let total = 0;
@@ -69,7 +66,7 @@ const Carts = () => {
       console.log(error.message);
     }
   };
-  if (loading) {
+  if (isLoading) {
     return <div >
     <div> Loading...</div>
   </div>;
