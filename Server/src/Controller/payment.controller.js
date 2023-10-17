@@ -20,6 +20,8 @@ mercadopago.configure({
 
 const createOrder = async (req, res) => {
   // El product puede ser un objeto individual desde Detail o un array desde Cart
+  const email = req.body.email;
+  console.log(req.body)
   const product = req.body.product;
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
   console.log("Este es el producto que me llega a payment: ", product);
@@ -59,7 +61,7 @@ const createOrder = async (req, res) => {
       }
     }
   } else if (typeof product === "object") {
-    cartTotalAmount += product.price * product.amount;
+    cartTotalAmount = product.price * amount
     const availableStock = getAvailableStock(product.product_id, allProducts);
     if (availableStock <= amount) {
       insufficientStockProducts.push(product);
@@ -70,10 +72,10 @@ const createOrder = async (req, res) => {
   let newOrderData = {
     date: new Date().toLocaleDateString(), // Formato de fecha "14/10/2022"
     status: "Pending",
-    shippingAddress: "pruebaas 5008 asd oeste",
-    addressHouseNumber: 123123,
+    shippingAddress: "P. Sherman Calle Wallaby 42, Sidney",
+    addressHouseNumber: 42,
     total: parseInt(cartTotalAmount),
-    email: "gabrielairiart.gi@gmail.com",
+    email: email,
   };
   const newOrder = await postOrder(newOrderData);
   console.log("La nueva orden creada tiene ID: ", newOrder.dataValues.id);

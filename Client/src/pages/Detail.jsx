@@ -269,7 +269,7 @@ const Detail = () => {
         try {
           const { data } = await axios.post(
             "http://localhost:3001/payment/create-order",
-            { product, amount }
+            { product, amount, email: user.email }
           );
           console.log("Data en el componente Detail", data);
           console.log("Init point en el componente Detail", data);
