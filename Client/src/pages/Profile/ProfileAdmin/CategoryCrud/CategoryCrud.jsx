@@ -280,7 +280,7 @@ const Category = () => {
                   {/* Ejemplo de cómo mapear los usuarios */}
                   {displayedCategories.map((categorie) => (
                     <tr key={categorie.id} className="hover:bg-gray-100">
-                        <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                        <td className="p-4 whitespace-nowrap text-[15px] font-medium text-gray-900">
                           {categorie.name}
                         </td>
                       <td className="p-4 w-4">
@@ -305,14 +305,14 @@ const Category = () => {
                       <td className="p-4 whitespace-nowrap space-x-2">
                         <button
                           type="button"
-                          className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
+                          className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[15px] inline-flex items-center px-3 py-2 text-center"
                           onClick={() => editCategory(categorie)}
                         >
                           Edit category
                         </button>
                         <button
                           type="button"
-                          className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
+                          className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[15px] inline-flex items-center px-3 py-2 text-center"
                           onClick={() => confirmDeleteCategory(categorie.id)}
                         >
                           Delete category
@@ -321,26 +321,26 @@ const Category = () => {
                     </tr>
                   ))}
                 </tbody>
-                <div className="flex justify-center items-center ml-10">
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handleChangePage}
-                  size="large"
-                  sx={{
-                    "& .Mui-selected": {
-                      backgroundColor: "#50a050",
-                      fontSize: "20px",
-                    },
-                    "& .MuiPaginationItem-root": {
-                      fontSize: "15px",
-                    },
-                    "& .paginationButton": {
-                      backgroundColor: "#50a100",
-                    },
-                  }}
-                />
-                </div>
+                <div style={{ marginLeft: "400px" }}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handleChangePage}
+                size="large"
+                sx={{
+                  "& .Mui-selected": {
+                    backgroundColor: "#50a050",
+                    fontSize: "20px            ",
+                  },
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "15px",
+                  },
+                  "& .paginationButton": {
+                    backgroundColor: "#50a100",
+                  },
+                }}
+              />
+            </div>
               </table>
             </div>
           </div>
