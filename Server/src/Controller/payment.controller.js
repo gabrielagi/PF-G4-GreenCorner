@@ -57,14 +57,14 @@ const createOrder = async (req, res) => {
     for (const item of product) {
       cartTotalAmount += item.price * item.amount; //Acumular el total de precio por todos los productos
       const availableStock = getAvailableStock(item.id, allProducts);
-      if (availableStock <= item.amount) {
+      if (availableStock < item.amount) {
         insufficientStockProducts.push(item);
       }
     }
   } else if (typeof product === "object") {
     cartTotalAmount = product.price * amount;
     const availableStock = getAvailableStock(product.product_id, allProducts);
-    if (availableStock <= amount) {
+    if (availableStock < amount) {
       insufficientStockProducts.push(product);
     }
   }
@@ -169,7 +169,7 @@ const createOrder = async (req, res) => {
         failure: `${HOST}/failure`,
         pending: `${HOST}/pending`,
       },
-      notification_url: "https://fb4d-190-97-120-13.ngrok.io/payment/webhook",
+      notification_url: "https://4040-190-97-127-163.ngrok.io/payment/webhook",
       auto_return: "approved",
     });
 
@@ -196,21 +196,15 @@ const success = (req, res) => {
   console.log(req.query);
   console.log("Necesito en success");
 
-
-
   // res.send('Pago realizado')
   // store in database
   // Puedo guadar la información del usuario una vez que compró
   // Actualizar cantidad de productos en el Stock de los productos vendidos
 
   //res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
-
-  res.redirect("http://green-corner.vercel.app/");
-
   console.log("Antes de redirigir");
 
-  res.redirect("http://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
-
+  res.redirect("http://green-corner.vercel.app/");
 };
 
 const failure = (req, res) => {
