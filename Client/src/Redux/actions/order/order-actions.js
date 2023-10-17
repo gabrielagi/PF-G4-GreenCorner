@@ -6,7 +6,7 @@ import {
   import axios from "axios";
   
 
-  const endpoint = `http://localhost:3001/order`;
+  const endpoint = `https://greencorner.onrender.com/order`;
   
 
   export const getAllOrders = () => {
