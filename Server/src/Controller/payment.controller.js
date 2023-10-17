@@ -199,7 +199,9 @@ const success = (req, res) => {
   // store in database
   // Puedo guadar la información del usuario una vez que compró
   // Actualizar cantidad de productos en el Stock de los productos vendidos
-  res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
+  console.log("Antes de redirigir");
+
+  res.redirect("http://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
 };
 
 const failure = (req, res) => {
@@ -208,7 +210,7 @@ const failure = (req, res) => {
   // store in database
   // Puedo guadar la información del usuario una vez que compró
   // Actualizar cantidad de productos en el Stock de los productos vendidos
-  res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir si sale mal
+  res.redirect("http://green-corner.vercel.app/"); // Agregar componente notificación para redirigir si sale mal
 };
 
 const receiveWebhook = async (req, res) => {
