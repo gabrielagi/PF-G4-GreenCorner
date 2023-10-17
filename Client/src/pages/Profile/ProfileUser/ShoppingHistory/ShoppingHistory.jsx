@@ -4,6 +4,7 @@ import { getOrderByEmail } from '../../../../Redux/actions/order/order-actions';
 import styles from './ShoppingHistory.module.css';
 import OrderPopup from '../../../../components/OrderPopup/OrderPopup'; 
 import { useAuth0 } from "@auth0/auth0-react"; 
+import { Pagination } from '@mui/material'; 
 
 function getStatusColor(status) {
   switch (status) {
@@ -39,12 +40,25 @@ function ShoppingHistory() {
     setOrderDetailsPopupOpen(true);
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 3; 
+
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
   return (
     <div className={styles.orderHistory}>
       <h1 className={styles.orderHistoryTitle}>Order History</h1>
-      {orders && orders.length > 0 ? (
+      <div className={styles.orderListContainer}>
+      {currentOrders && currentOrders.length > 0 ? (
         <div className={styles.orderList}>
-          {orders.map((order) => (
+          {currentOrders.map((order) => (
             <div key={order.id} className={styles.orderCard}>
               <div className={styles.orderHeader}>
                 <div className={styles.orderDate}>
@@ -72,7 +86,7 @@ function ShoppingHistory() {
           No orders to show.
         </div>
       )}
-
+</div>
       {selectedOrder && (
         <OrderPopup
           isOpen={orderDetailsPopupOpen}
@@ -83,6 +97,14 @@ function ShoppingHistory() {
           order={selectedOrder}
         />
       )}
+
+      <Pagination
+        count={Math.ceil(orders.length / ordersPerPage)}
+        page={currentPage}
+        onChange={handlePageChange}
+        color="success" 
+        style={{ marginTop: '20px', display: 'flex', justifyContent: 'center' }}
+      />
     </div>
   );
 }
