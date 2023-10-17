@@ -191,7 +191,7 @@ const Shop = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row">
-        <div className=" mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
+        <div className="mb-10 md:mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
             <div className="grid items-center text-start ml-4">
               <h1 className="text-4xl font-poppins italic mt-4 mb-2">
@@ -224,7 +224,7 @@ const Shop = () => {
               </div>
             </div>
           </div>
-          <div className="grid items-center text-start ml-4">
+          <div className="grid items-center text-start   px-10">
             <h1 className="text-4xl font-poppins italic mt-4 mb-2">
               Featured Products
             </h1>
@@ -232,7 +232,7 @@ const Shop = () => {
           </div>
         </div>
 
-        <div className="lg:w-2/3 ml-4">
+        <div className="mx-auto md:px-40 ">
           <Cards allProducts={displayedProducts} />
         </div>
       </div>
