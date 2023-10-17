@@ -26,7 +26,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 
 
-const { User, Order, Product, Category, OrderDetail, ShoppingCart, Favorite, Testimonial } = sequelize.models;
+const { User, Order, Product, Category, OrderDetail, ShoppingCart, Favorite} = sequelize.models;
 
 // RELACIONES
 //User.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
