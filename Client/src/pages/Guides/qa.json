@@ -1,0 +1,47 @@
+[
+  {
+    "id": "question1",
+    "question": "What's the best way to water indoor plants?",
+    "answer": "For most indoor plants, water when the top layer of the soil is dry to the touch, but don't let it completely dry out."
+  },
+  {
+    "id": "question2",
+    "question": "How can I naturally combat pests on my plants?",
+    "answer": "Try natural solutions like neem oil or insecticidal soap to eliminate pests like mites and aphids."
+  },
+  {
+    "id": "question3",
+    "question": "What are the best indoor plants for beginners?",
+    "answer": "Plants like Pothos, Snake Plant, and Succulents are ideal for beginners due to their ease of care."
+  },
+  {
+    "id": "question4",
+    "question": "How can I encourage flowering in my indoor plants?",
+    "answer": "Provide the right amount of light, water, and nutrients according to each plant's specific needs."
+  },
+  {
+    "id": "question5",
+    "question": "When should I repot my indoor plants?",
+    "answer": "Generally, repot when the roots have filled the current pot or every 1-2 years, in the spring."
+  },
+  {
+    "id": "question6",
+    "question": "What plants are safe for pets?",
+    "answer": "Plants like the Bamboo Palm, African Violet, and Christmas Cactus are safe for pets."
+  },
+  {
+    "id": "question7",
+    "question": "How can I improve humidity for my indoor plants?",
+    "answer": "Place a humidifier near your plants or use a tray with water and pebbles under the pots."
+  },
+  {
+    "id": "question8",
+    "question": "Should I fertilize my plants during the winter?",
+    "answer": "Most plants need less fertilizer in winter. Reduce the frequency and concentration of fertilizer."
+  },
+  {
+    "id": "question9",
+    "question": "What's the secret to keeping indoor plants healthy and happy?",
+    "answer": "Observe and listen to your plants. Learn to understand their individual needs and adjust accordingly."
+  }
+]
