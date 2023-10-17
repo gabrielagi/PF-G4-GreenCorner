@@ -1,0 +1,107 @@
+.contGral {
+  display: flex;
+  flex-direction: row;
+}
+
+.card_create {
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  margin-right: 10px;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .card_create {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+}
+
+.izq,
+.der {
+  padding: 10px;
+  flex: 1;
+  display: flex;
+  margin-right: 10px;
+  flex-direction: column;
+}
+
+.inputs {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.select {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+.button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: visible;
+  margin-top: 10px;
+}
+
+.previewImage {
+  width: 100px;
+  height: 100px;
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.imagePreview {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.previewImage:hover {
+  background-color: red;
+  transform: scale(1.1);
+  border: solid 5px red;
+}
+
+@media (max-width: 768px) {
+  .card {
+    margin-top: 70px;
+    width: 100%;
+  }
+
+  .form {
+    flex-direction: column;
+  }
+
+  .izq,
+  .der {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

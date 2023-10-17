@@ -1,44 +1,71 @@
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
-import TextBlock from "./textBlock";
-import "./guides.css";
+import React from "react";
+import "tailwindcss/tailwind.css";
+import { CiLocationArrow1 } from "react-icons/ci";
+import { Link } from "react-router-dom";
+import GuideBackground from "../../assets/guidebackground.jpg";
 
-function Guides() {
+const containerStyle = {
+  position: "relative",
+  backgroundImage: `url(${GuideBackground})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  height: "70vh",
+  display: "flex",
+  justifyContent: "flex-start",
+  color: "#fff",
+};
+
+const leftColumnStyle = {
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  margin: "120px 10% 0",
+  width: "50%",
+};
+
+const textShadow = {
+  textShadow: "2px 2px 4px rgba(183, 189, 160, 0.5)",
+};
+
+const Guides = () => {
   return (
-    <div>
-      <Parallax pages={2} style={{ top: "0", left: "0" }} className="animation">
-        <ParallaxLayer offset={0} speed={0.25}>
-          <div className="animation_layer parallax" id="artback"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.3}>
-          <div className="animation_layer parallax" id="mountain"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={-0.1}>
-          <div className="animation_layer parallax" id="logoland"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.3}>
-          <div className="animation_layer parallax" id="jungle1"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.35}>
-          <div className="animation_layer parallax" id="jungle2"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.5}>
-          <div className="animation_layer parallax" id="jungle3"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.45}>
-          <div className="animation_layer parallax" id="jungle4"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.4}>
-          <div className="animation_layer parallax" id="manonmountain"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={0} speed={0.35}>
-          <div className="animation_layer parallax" id="jungle5"></div>
-        </ParallaxLayer>
-        <ParallaxLayer offset={1} speed={0.25}>
-          <TextBlock />
-        </ParallaxLayer>
-      </Parallax>
+    <div style={containerStyle} className="w-full">
+      <div style={leftColumnStyle}>
+        <p
+          className="sm:text-2xl text-2xl text-[#1d252d] font-medium block"
+          style={textShadow}
+        >
+          #Be more connected with nature
+        </p>
+        <h1 className="sm:text-8xl text-4xl font-semibold" style={textShadow}>
+          Welcome to Our Plant Care Guides
+        </h1>
+        <p
+          className="mt-4 text-[16px] text-[#fafafa]  block"
+          style={textShadow}
+        >
+          Here, you'll find answers to all your plant care questions and
+          discover how to nurture your garden with confidence. Our mission is to
+          connect you with the beauty of nature and provide you with expert
+          guidance. Explore our catalog and embark on your green journey.
+        </p>
+        <Link to="/shop">
+          <button className="mt-16 bg-green-500 text-white font-semibold py-4 px-8 rounded hover:bg-green-600 font-poppins flex mx-auto">
+            {`Visit our Shop `}
+            <CiLocationArrow1 className="ml-4 text-4xl sm:text-4xl" />
+          </button>
+        </Link>
+      </div>
+      <div>
+        <img src="" alt="" />
+        <img src="" alt="" />
+        <img src="" alt="" />
+        <img src="" alt="" />
+        <img src="" alt="" />
+        <img src="" alt="" />
+      </div>
     </div>
   );
-}
+};
 
 export default Guides;

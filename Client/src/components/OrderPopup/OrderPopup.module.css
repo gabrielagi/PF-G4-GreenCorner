@@ -1,0 +1,138 @@
+.order-modal-content {
+    font-family: Poppins, sans-serif;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+.order-modal-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.order-modal-title {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.order-modal-content-container {
+    margin-top: 20px;
+}
+
+.order-modal-section {
+    margin-bottom: 10px;
+}
+
+.order-modal-section2{
+    margin-top: 60px;
+}
+
+.order-modal-section3{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.order-modal-close-button {
+    display:flex;
+    justify-content: center;
+    width: 100%;
+    background: #9e0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.order-modal-close-button:hover {
+    background: #680000;
+}
+
+.order-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+}
+
+.status-content {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.status-date{
+    font-weight:300;
+    color: #777;
+}
+
+.status-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.status-circle[style*="background: green"] {
+    background: green;
+}
+
+.status-circle[style*="background: orange"] {
+    background: orange;
+}
+
+.status-circle[style*="background: red"] {
+    background: red;
+}
+
+.product-list-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 60px;
+}
+
+.cardProduct {
+    border: 3px solid #e4e4e4; 
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .cardProduct img {
+    width: 80px; 
+    height: 80px;
+    margin-right: 10px;
+    border-radius: 15px;
+  }

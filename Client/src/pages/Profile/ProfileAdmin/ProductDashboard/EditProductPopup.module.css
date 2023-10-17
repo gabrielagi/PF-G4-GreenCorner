@@ -1,0 +1,158 @@
+.edit-modal-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+  
+  .edit-modal-content {
+    background-color: #fff;
+    margin-top: 0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: auto;
+    border: 1px solid #030303;
+  }
+  
+  .edit-modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .edit-modal-form {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .edit-modal-izq,
+  .edit-modal-der {
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    margin-right: 10px;
+    flex-direction: column;
+  }
+  
+  .edit-modal-inputs {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .edit-modal-area {
+    width: 350px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .edit-modal-select {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .edit-modal-error {
+    color: red;
+    font-size: 14px;
+  }
+
+  .edit-modal-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  .edit-modal-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    width: 110px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .edit-modal-button:hover {
+    background-color: #0052a7;
+  }
+  
+  .edit-modal-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .edit-modal-cancel-button {
+    background-color: #c00707;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 10px; 
+  }
+  
+  .edit-modal-cancel-button:hover {
+    background-color: #6d0101;
+  }
+  
+  .edit-modal-imageContainer {
+    position: relative;
+    overflow: visible;
+  }
+  
+  .edit-modal-previewImage {
+    width: 100px;
+    height: 100px;
+    transition: transform 0.3s, filter 0.3s;
+  }
+  
+  .edit-modal-imagePreview {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .edit-modal-previewImage:hover {
+    background-color: red;
+    transform: scale(1.1);
+    border: solid 5px red;
+  }
+
+  .scrollable-content {
+    max-height: 60vh; 
+    overflow-y: auto; 
+  }
+  
+  @media (max-width: 768px) {
+    .edit-modal-content {
+      margin-top: 70px;
+      width: 100%;
+    }
+
+    .edit-modal-area {
+        width: 100%;
+    }
+  
+    .edit-modal-form {
+      flex-direction: column;
+    }
+  
+    .edit-modal-izq,
+    .edit-modal-der {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+  

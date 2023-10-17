@@ -1,0 +1,114 @@
+.productDashboard {
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+}
+
+.productListTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.searchBar {
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+.searchInput {
+  width: 96%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.productTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.productTable, .productTable th, .productTable td {
+  border: 1px solid #ccc;
+}
+
+.productTable th, .productTable td {
+  padding: 8px;
+  text-align: left;
+}
+
+.imageColumn {
+  max-width: 100px;
+  width: 1%;
+}
+
+
+.productImage {
+  width: 100%;
+  height: 50px;
+  border-radius: 50%;
+}
+.nameColumn {
+  width: 20%;
+}
+
+.priceColumn {
+  width: 10%;
+}
+
+.stockColumn {
+  width: 10%;
+}
+
+.actionsColumn {
+  width: 10%;
+}
+
+.availableColumn {
+  width: 10%;
+}
+
+.trendingColumn {
+  width: 10%;
+}
+
+
+.deleteButton {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.deleteButton:hover {
+  background-color: #cc0000;
+}
+
+.editButton {
+  background-color: #0074cc;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.editButton:hover {
+  background-color: #0052a7;
+}
+
+.actions{
+  display: flex;
+  justify-content:center;
+}
+
+.tableWrapper {
+  overflow-x: auto;  
+  max-width: 100%;  
+}

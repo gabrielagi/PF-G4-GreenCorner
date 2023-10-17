@@ -1,0 +1,111 @@
+.orderHistory {
+    padding: 20px;
+  }
+  
+  .orderHistoryTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .orderList {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    
+  }
+  
+  .orderCard {
+    background-color: #ffffff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    border-radius: 4px;
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  .orderHeader {
+    display: flex;
+    margin-bottom: 10px;
+    flex-wrap: wrap; 
+  }
+  
+  .orderDate {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: gray;
+    flex: 1; 
+  }
+  
+  .statusText {
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: gray;
+    flex: 12;
+  }
+  
+  .orderTitle {
+    font-size: 25px;
+    font-weight: bold;
+    margin-right: 10px;
+    color: rgb(87, 87, 87);
+    flex: 1;
+    margin-top: 10px; 
+  }
+  
+  .orderFlex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; 
+  }
+  
+  .orderTotal {
+    margin-top: 15px;
+    font-size: 15px;
+    margin-right: 10px;
+    color: rgb(111, 112, 111);
+    flex: 1; 
+  }
+  
+  .viewDetailsButton {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px; 
+  }
+  
+  .viewDetailsButton button {
+    background: #008316;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 0.3s;
+    flex: 1; 
+  }
+  
+  .viewDetailsButton button:hover {
+    background: #00630d;
+  }
+  
+  .statusCircle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 2px;
+    margin-left: 20px;
+    align-self: center;
+  }
+  
+
+  @media (max-width: 768px) {
+    .orderListContainer {
+      overflow-y: scroll;
+      max-height: 500px; 
+    }
+  }

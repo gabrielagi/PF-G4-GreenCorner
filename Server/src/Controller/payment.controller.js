@@ -6,6 +6,13 @@ const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 
 const HOST = `http://${DB_HOST}:${SERVER_PORT}/payment`;
 
+const { getAllProduct } = require("../Controller/product.controller");
+
+const {
+  postOrder,
+  postOrderDetail,
+} = require("../Controller/order.controller");
+
 // Configuro mercado pago
 mercadopago.configure({
   access_token: ACCESS_TOKEN,
@@ -13,36 +20,127 @@ mercadopago.configure({
 
 const createOrder = async (req, res) => {
   // El product puede ser un objeto individual desde Detail o un array desde Cart
+  const email = req.body.email;
+  console.log(req.body)
   const product = req.body.product;
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
+  console.log("Este es el producto que me llega a payment: ", product);
 
   // Guardo los items que se van a vender
   let items = [];
 
-  // Si viene de Detail es un objeto
-  let convertProdcutFromDetail = {};
-  if (typeof product === "object") {
-    convertProdcutFromDetail = {
-      id: product.id,
-      quantity: amount,
-      title: product.name,
-      unit_price: parseInt(product.price),
-      currency_id: "ARS",
-    };
+  //Vamos a guardar el total de precio a pagar
+  let cartTotalAmount = 0;
+
+  // Controlar que haya suficiente stock para el checkout
+  const allProducts = await getAllProduct();
+  const insufficientStockProducts = [];
+
+  // Obtén la cantidad de stock disponible para un producto
+  function getAvailableStock(productId, allProducts) {
+    const productFound = allProducts.find(
+      (item) => item.product_id === productId
+    );
+    console.log(
+      "El producto encontrado en el nuevo metodo tiene stock: ",
+      productFound.stock
+    );
+    if (productFound) {
+      return productFound.stock;
+    }
+    return 0;
   }
 
-  // Verifico si es un producto individual o un conjunto de Productos
-  convertProdcutFromDetail
-    ? items.push(convertProdcutFromDetail)
-    : product.forEach((product) =>
+  // Controlo que cada elemento del Array product tiene stock disponible
+  if (Array.isArray(product)) {
+    for (const item of product) {
+      cartTotalAmount += item.price * item.amount; //Acumular el total de precio por todos los productos
+      const availableStock = getAvailableStock(item.id, allProducts);
+      if (availableStock <= item.amount) {
+        insufficientStockProducts.push(item);
+      }
+    }
+  } else if (typeof product === "object") {
+    cartTotalAmount = product.price * amount
+    const availableStock = getAvailableStock(product.product_id, allProducts);
+    if (availableStock <= amount) {
+      insufficientStockProducts.push(product);
+    }
+  }
+
+  // Creo una nueva orden de compra
+  let newOrderData = {
+    date: new Date().toLocaleDateString(), // Formato de fecha "14/10/2022"
+    status: "Pending",
+    shippingAddress: "P. Sherman Calle Wallaby 42, Sidney",
+    addressHouseNumber: 42,
+    total: parseInt(cartTotalAmount),
+    email: email,
+  };
+  const newOrder = await postOrder(newOrderData);
+  console.log("La nueva orden creada tiene ID: ", newOrder.dataValues.id);
+  const newOrderId = newOrder.dataValues.id;
+
+  // Tengo que controlar si es un array de productos o un producto en particular
+  if (Array.isArray(product)) {
+    for (const item of product) {
+      const productDetail = {
+        quantity: item.amount,
+        unit_price: parseInt(item.price),
+        order_id: newOrderId,
+        product_id: item.id,
+      };
+      let newOrderDetail = await postOrderDetail(productDetail);
+      console.log("La nueva ordenDetail creada tiene ID: ", newOrderDetail);
+    }
+  } else if (typeof product === "object") {
+    const productDetailObject = {
+      quantity: product.amount,
+      unit_price: parseInt(product.price),
+      order_id: newOrderId,
+      product_id: product.product_id,
+    };
+    let newOrderDetailObject = await postOrderDetail(productDetailObject);
+    console.log("La nueva ordenDetail creada tiene ID: ", newOrderDetailObject);
+  }
+
+  // Controlo si alguno de los productos no tiene suficiente stock
+  if (insufficientStockProducts.length > 0) {
+    console.log("Productos con stock insuficiente:", insufficientStockProducts);
+  } else {
+    // Realiza el proceso de checkout ya que hay suficiente stock
+    if (Array.isArray(product)) {
+      for (const item of product) {
+        const price = parseFloat(item.price); // Convertir a número
+        if (!isNaN(price)) {
+          items.push({
+            id: item.id,
+            quantity: item.amount,
+            title: item.name,
+            unit_price: price, // Usar el precio convertido
+            currency_id: "ARS",
+          });
+        } else {
+          console.error(`Invalid price for product ${item.id}`);
+        }
+      }
+    } else if (typeof product === "object") {
+      const price = parseFloat(product.price); // Convertir a número
+      if (!isNaN(price)) {
         items.push({
           id: product.id,
-          quantity: product.amount,
+          quantity: amount,
           title: product.name,
-          unit_price: product.price,
+          unit_price: price, // Usar el precio convertido
           currency_id: "ARS",
-        })
-      );
+        });
+      } else {
+        console.error(`Invalid price for product ${product.id}`);
+      }
+    }
+  }
+
+  //Creo las orden y los order detail de la compra
 
   // Creo los items para la preferencia
   // let payer = {
@@ -64,15 +162,12 @@ const createOrder = async (req, res) => {
   try {
     const result = await mercadopago.preferences.create({
       payer_email: "test_user_1398180221@testuser.com",
-      //payer: payer,
       items,
-      // URLs de redirección
       back_urls: {
         success: `${HOST}/success`,
         failure: `${HOST}/failure`,
-        pending: `${HOST}/pending`, // Cuando el usuario no ha pagado
+        pending: `${HOST}/pending`,
       },
-      // Es cuando el pago ha terminado
       notification_url: "https://fb4d-190-97-120-13.ngrok.io/payment/webhook",
       auto_return: "approved",
     });
@@ -98,13 +193,26 @@ const createOrder = async (req, res) => {
 
 const success = (req, res) => {
   console.log(req.query);
+
+//Get la ultima orden
+//Put status
+
+//Get el producto
+//Put el stock
+
   // res.send('Pago realizado')
+  // store in database
+  // Puedo guadar la información del usuario una vez que compró
+  // Actualizar cantidad de productos en el Stock de los productos vendidos
   res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir
 };
 
 const failure = (req, res) => {
   console.log(req.query);
   // res.send('Pago realizado')
+  // store in database
+  // Puedo guadar la información del usuario una vez que compró
+  // Actualizar cantidad de productos en el Stock de los productos vendidos
   res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir si sale mal
 };
 
@@ -114,13 +222,9 @@ const receiveWebhook = async (req, res) => {
 
   try {
     // Pregunto si la venta es correcta y la respuesta es payment
-    if (payment.type === "payment" || payment.type === "payment") {
+    if (payment.type === "payment") {
       const data = await mercadopago.payment.findById(payment.id);
       console.log("Data del Webhook", data);
-
-      // store in database
-      // Puedo guadar la información del usuario una vez que compró
-      // Actualizar cantidad de productos en el Stock de los productos vendidos
     }
 
     res.status(204); // Significa que todo salió bien pero no devuelve nada

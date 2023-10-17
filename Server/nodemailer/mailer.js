@@ -64,7 +64,7 @@ const Purchase = async (email, name) => {
 };
 
 
-const Purchasefail = async (email, name) => {
+const purchasefail = async (email, name) => {
   try {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -94,7 +94,7 @@ const Purchasefail = async (email, name) => {
   }
 };
 
-const PurchasePending = async (email, name) => {
+const purchasePending = async (email, name) => {
   try {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -122,5 +122,6 @@ const PurchasePending = async (email, name) => {
   } catch (error) {
     console.error('Error al enviar el correo electrónico: ', error);
   }
-};
-module.exports = { WelcomeEmail, Purchase, PurchasePending, Purchasefail }
+}
+
+module.exports = { WelcomeEmail, Purchase, purchasePending, purchasefail }

@@ -9,44 +9,112 @@ import { VscArrowCircleLeft } from "react-icons/vsc";
 import loading from "../assets/loading.gif";
 import axios from "axios";
 import Carousel from "../components/DetailCarousel/DetailCarousel";
-import { toast } from "react-toastify"
-import { postFavorites} from "../Redux/actions/user/user-actions";
-import { postProductCart } from "../Redux/actions/product/action";
+import Slider from "../components/Slider/Slider2";
+import { toast } from "react-toastify";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import {BsCartPlus} from "react-icons/bs"
+import { AiFillHeart } from "react-icons/ai";
+import {BsFillHeartbreakFill} from "react-icons/bs"
+import mercadopago from "../assets/mercadopago.png"
+
+import { postFavorites, deleteFavorite  ,getOneFavorites } from "../Redux/actions/user/user-actions";
+import {
+  postProductCart,
+  getProductCart,
+  updateProductCart,
+} from "../Redux/actions/product/action";
+
 import { useAuth0 } from "@auth0/auth0-react";
 
 const Detail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-/*   const link = import.meta.env.VITE_ENDPOINT */
-  const { user } = useAuth0();
-
+  /*   const link = import.meta.env.VITE_ENDPOINT; */
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const [corazon, setCorazon] = useState(false);
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
 
-  const [activeImg, setActiveImg] = useState();
+  const cart = useSelector((state) => state.productCart);
+
+  const [activeImg, setActiveImg] = useState(
+    product.images && product.images[0]
+  );
+
   const [amount, setAmount] = useState(1);
+  const [loadingImages, setLoadingImages] = useState(true);
+  const handleImageClick = (newActiveImg) => {
+    setLoadingImages(true);
+    setTimeout(() => {
+      setActiveImg(newActiveImg);
+      setLoadingImages(false);
+    }, 500); // Ajusta el tiempo de espera según tus necesidades
+  };
+  const [cartQuantity, setCartQuantity] = useState(0);
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+
+ let heart = "❤️";
+
+ let heartBroke = "💔"; 
+
 
   useEffect(() => {
-    dispatch(getProductById(id));
-    console.log('entré y la cagué' + id)
-  }, [dispatch,id]);
+ 
+    const fetchData = async () => {
+      await dispatch(getProductById(id));
+      setLoadingImages(false);
+    };
 
+    fetchData();
+  }, [dispatch, id]);
 
-  const notify = () =>
-  toast.success("Added to your cart 🛒", {
-    position: "bottom-left",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-  });
+  useEffect(() => {
+    setActiveImg(product.images && product.images[0]);
+  }, [product.images]);
 
-  const notifyII = () => {
-    toast.error("Added to favorite ", {
-      icon: "❤️",
+  // Traigo todos los elementos del carrito del usuario (si existen)
+  useEffect(() => {
+    if (user && user.email) {
+      dispatch(getProductCart(user.email));
+      dispatch(getOneFavorites(user.email,id)).then((result) => {
+      
+        setCorazon(result)
+      })
+    }
+
+  }, [user, dispatch]);
+
+  const notify = (message) =>{
+    if(message === "This product has been add in the cart"){
+    toast.success(message + " 🛒", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    })
+  }else {
+    toast.error(message +" 🛒", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    })
+  }
+   };
+  
+
+  const notifyII = (message, icons) => {
+    toast.error(message, {
+      icon: icons,
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -58,27 +126,135 @@ const Detail = () => {
     });
   };
 
-  const handleAddToMyGarden = () => {
-    let favorite = {
-      email: user.email,
-      product_id: product.product_id,
+  const notifyIII = () =>
+    toast.error(
+      "There is not enough stock available to add that quantity to the cart 🛑",
+      {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    );
+
+  const notifyVI = () =>
+    toast.error("There is not enough stock available to checkout 🛑", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+    const handleAddToMyGarden = () => {
+      if (isAuthenticated) {
+        let favorite = {
+          email: user.email,
+          product_id: product.product_id,
+        };
+  
+        if (!corazon) {
+          dispatch(postFavorites(favorite)).then((result) => {
+            notifyII(result, heart);
+          });
+        } else {
+          dispatch(deleteFavorite(id, user.email)).then((result) => {
+            notifyII(result, heartBroke);
+          });
+        }
+  
+        setCorazon(!corazon);
+      } else {
+        loginWithRedirect();
+      }
     };
-    dispatch(postFavorites(favorite));
-    
-    notifyII();
+  const handleRemoveToMyGarden = (id) => {
+    dispatch(deleteFavorite(id, user.email)).then((result) => {
+         
+      notifyII(result, heartBroke);
+    });
+
+    setCorazon(!corazon);
   };
 
   const handleAddToCart = () => {
-    let cart = {
-      email: user.email,
-      product_id: product.product_id,
-      amount: amount,
-    };
-    dispatch(postProductCart(cart));
-    console.log(cart);
-    notify();
-  };
+    try {
+      if (isAuthenticated) {
+        const productInCart = cart.find(
+          (item) => item.product_id === product.product_id
+        );
+        console.log("El producto ya existe en el carrito? ", productInCart);
+        if (productInCart) {
+          // El producto ya está en el carrito
+          const availableStock = product.stock - productInCart.amount;
+          console.log(
+            "El producto ya existe en el carrito y tiene stock disponible para comprar de: ",
+            availableStock
+          );
+          console.log(
+            "El producto en el carrito tiene como stock a comprar viejo: ",
+            productInCart.amount
+          );
+          console.log(
+            "El total nuevo que quiero comprar es: ",
+            cartQuantity + amount
+          );
+          if (availableStock >= amount) {
+            // Hay suficiente stock para agregar más lo que contiene amount
+            setIsAddingToCart(true);
+            setCartQuantity(cartQuantity + amount);
+            dispatch(
+              updateProductCart({
+                email: user.email,
+                productId: product.product_id,
+                amount: productInCart.amount + amount,
+              })
+            ).then(() => {
+              dispatch(getProductCart(user.email));
+              notify("This product has already in the cart");
+            });
+            console.log("El producto se pudo actualizar para comprar!");
+            setIsAddingToCart(false);
+          } else {
+            notifyIII();
+            setIsAddingToCart(false);
+          }
+        } else {
+          setIsAddingToCart(true);
+          let cartItem = {
+            email: user.email,
+            product_id: product.product_id,
+            amount: amount,
+          };
 
+          dispatch(postProductCart(cartItem))
+            .then((result) => {
+              dispatch(getProductCart(user.email)).then(() => {
+                setIsAddingToCart(false);
+
+                notify(result);
+              });
+            })
+            .catch(() => {
+              setIsAddingToCart(false);
+            });
+
+          setIsAddingToCart(false);
+        }
+      }
+    } catch (error) {
+      setIsAddingToCart(false);
+      console.log({ error: error.message });
+
+    }
+  };
 
   // Hasta cuánto se puede incrementar
   const amountIncrement = () =>
@@ -91,25 +267,46 @@ const Detail = () => {
   // Hasta cuánto se puedo decrecentar
   const amountDecrement = () => (amount > 1 ? setAmount(amount - 1) : null);
 
-  console.log(product);
-  console.log(allProducts);
+  const handleImageLoad = () => {
+    setLoadingImages(false);
+  };
+ 
 
   // Se realiza el checkout
   const handleCheckout = async () => {
-    try {
-      const { data } = await axios.post(
-        `https://greencorner.onrender.com/payment/create-order`,
-        { product, amount }
-      );
-      console.log("Data en el componente Detail", data);
-      console.log("Init point en el componente Detail", data);
-      location.href = data.result;
-    } catch (error) {
-      console.log(error.message);
+    if (isAuthenticated) {
+      if (product.stock >= amount) {
+        try {
+          const { data } = await axios.post(
+            "https://greencorner.onrender.com/payment/create-order",
+            { product, amount, email: user.email }
+          );
+          console.log("Data en el componente Detail", data);
+          console.log("Init point en el componente Detail", data);
+          location.href = data.result;
+        } catch (error) {
+          console.log(error.message);
+        }
+      } else {
+        notifyVI();
+      }
+    } else {
+      loginWithRedirect();
     }
   };
 
-  if (product.name) {
+  const number = (max) => {
+    return Math.floor(Math.random() * max);
+  }
+  console.log(number(5))
+  console.log(product.categories)
+  if (loadingImages || !activeImg){
+    return <p> ta cargando</p>
+  } else if (product.name) {  
+      
+
+
+    
     return (
       <div>
         <Link className="ml-16 mt-20" to="/shop">
@@ -117,62 +314,125 @@ const Detail = () => {
             <VscArrowCircleLeft color="gray" size="5rem" />
           </button>
         </Link>
-        <div className="mx-10 sm:mx-60">
-          <div className="grid grid-cols-1 justify-center  sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-            <Carousel images={product.images}/>
+        <div className="mx-10 sm:mx-[100px]">
+          <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
+            {activeImg && (
+              <div className={`swiper-container-detail  ${
+                loadingImages ? 'fade-out' : 'fade-in'
+              }`}>
+               <img
+            className={`mx-auto bg-gray-100 bg-opacity-20 w-auto h-[414px] ${
+              loadingImages ? 'fade-out' : 'fade-in'
+            }`}
+            src={activeImg}
+            alt="Product"
+            onLoad={handleImageLoad}
+          />
+                <Slider 
+                  id={id}
+                  images={product.images}
+                  setActiveImg={setActiveImg}
+                ></Slider>
+              </div>
+            )}
 
-            <div className=" px-10 bg-[#f6f6f6] justify-between">
+            <div className="  bg-[#f6f6f6] justify-between w-full px-20">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
                 {product?.name}
               </h2>
               <hr className="my-10"></hr>
               <p className="py-t text-5xl text-[#444444]">${product.price}</p>
-              <p className="py-20">{product.description}</p>
+              <div className="w-full">
+                <p className="py-20  break-words ">{product.description}</p>
+              </div>
+              
               {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
                 <option>uno</option>
                 <option>dos</option>
               </select> */}
-
-              <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
-                  <div>
-                   <button
-                      onClick={amountDecrement}
-                      className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
-                    >
-                      -
-                    </button>
-                    <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">{amount}</span>
-                    <button
-                      onClick={amountIncrement}
-                      className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
-                    >
-                      +
-                    </button> 
-                  </div>
-                    
-                <button 
-                onClick={handleAddToCart}
-                className="py-2 md: text-gray-500  hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded   col-end-3">
-                  ADD TO CART
-                </button>
+              <div className="flex">
+                  <p className="text-3xl font-semibold align-bottom text-green-500">Categories:</p>
+                  {product?.categories.map((c, i)=>
+                  ( <div className="px-2 text-[16px]" key={i}>
+                      <p>{c.name}</p></div>)
+                  )}
               </div>
-              <div className="flex  md: justify-between gap-x-10 ">
-                <button onClick={handleAddToMyGarden} className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]">
-                  Add to my Garden
-                </button>
-                <button
-                  onClick={handleCheckout}
-                  className="p-4 my-10 md:p-8 md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6] "
+              <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
+                <div>
+                  <button
+                    onClick={amountDecrement}
+                    className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
+                  >
+                    -
+                  </button>
+                  <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
+                    {amount}
+                  </span>
+                  <button
+                    onClick={amountIncrement}
+                    className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={handleAddToCart}
+                  disabled={isAddingToCart}
+                  startIcon={isAddingToCart ? <CircularProgress size={20} color="inherit" /> : null}
+                  style={{ fontSize: "16px", fontFamily: "Poppins" }}
                 >
-                  Checkout
-                </button>
+                  ADD TO CART <BsCartPlus style={{ marginLeft: "20px" }} />
+                </Button>
+              </div>
+              <div className="flex  md: justify-between gap-x-10                      ">
+                              <div className="my-10">
+                      <Button
+                        variant="contained"
+                        onClick={handleAddToMyGarden}
+                        style={{
+                          fontFamily: "Poppins",
+                          fontSize: "16px",
+                          backgroundColor: corazon ? "#fff" : "#4a9661",
+                          color: corazon ? "#4a9661" : "#fff",
+                          border: `1px solid ${corazon ? "#4a9661" : "#fff"}`,
+                        }}
+                      >
+                       
+                        {corazon ? "Remove from My Garden" : "Add to My Garden"}
+
+                        {corazon ? (
+                          <BsFillHeartbreakFill color="#ff0000" style={{marginLeft:"10px"}}/>
+                        ) : (
+                          <AiFillHeart color="#ff0000" style={{marginLeft:"10px"}}/>
+                        )}
+                      </Button>
+                    </div>
+
+                    <Button
+                      variant="contained"
+                      onClick={handleCheckout}
+                      style={{
+                        fontFamily: "Poppins",
+                        fontSize: "17px",
+                        backgroundColor: "#fff", 
+                        color: "#4a9661",
+                        border: "1px solid #4a9661",
+                        width: "310px",
+                        height: "50px",
+                      }}
+                    ><img src={mercadopago} style={{width:"40px", marginRight:"10px"}}></img>
+                      Checkout
+                    </Button>
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:ml-28 text-[#a9a9a9]">
+          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:mx-auto sm:w-[100%] text-[#a9a9a9]">
             <div className=" text-center py-6 text-4xl text-[#444444]">
               Descripción
             </div>
@@ -199,13 +459,16 @@ const Detail = () => {
               sed eros lobortis ornare. Morbi sodales interdum ipsum.
             </div>
           </div>
-          <h3 className="my-20 mt-20 text-center text-5xl ">
+          <h3 className=" font-semibold  text-gray-700 my-20 mt-20 text-center text-5xl ">
             Related products
           </h3>
-          <div className="flex flex-row gap-20 justify-center mx-auto my-10">
+          <div className=" grid sm:grid-cols-2 md:flex md:flex-row gap-20 justify-center mx-auto my-10">
             {allProducts
               .map((p) => {
-                if (p.categories.name === product.categories.name && p.name !== product.name)
+                if (
+                  p.categories.name === product.categories.name &&
+                  p.name !== product.name
+                )
                   return (
                     <Card
                       key={p.id}
@@ -216,7 +479,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(0,4)}
+              .slice(number(5), number(5) + 4)}
           </div>
         </div>
       </div>
@@ -224,6 +487,8 @@ const Detail = () => {
   } else {
     <img src={loading} alt="Loading product detail" />;
   }
-};
+}
+  
+;
 
 export default Detail;

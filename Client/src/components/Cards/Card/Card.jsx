@@ -6,33 +6,72 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useDispatch } from "react-redux";
-import { postFavorites } from "../../../Redux/actions/user/user-actions";
-import { getAllProducts, postProductCart,getProductCart } from "../../../Redux/actions/product/action";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  postFavorites,
+  deleteFavorite,
+  getOneFavorites
+} from "../../../Redux/actions/user/user-actions";
+import {
+  getAllProducts,
+  postProductCart,
+  getProductCart,
+} from "../../../Redux/actions/product/action";
 
 const Card = ({ name, images, price, id }) => {
   const [corazon, setCorazon] = useState(false);
   const [addToCartClicked, setAddToCartClicked] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   const dispatch = useDispatch();
+  
 
+  let heart = "❤️";
 
-  const notify = (message) =>
-    toast.success(message + "🛒", {
-      position: "bottom-left",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light ",
-    });
+  let heartBroke = "💔"; 
 
-  const notifyII = (message) =>
+  useEffect(() => {
+    if (user && user.email) {
+  
+    dispatch(getOneFavorites(user.email,id)).then((result) => {
+    
+      setCorazon(result)
+    })
+
+    }
+  }, [user, dispatch]);
+ 
+
+  const notify = (message) =>{
+
+    if(message === "This product has been add in the cart"){
+  
+      toast.success(message +" 🛒", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+    }else {
+      toast.error(message +" 🛒", {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      })
+    }
+     };
+
+  const notifyII = (message , icons) =>
     toast.error(message, {
-      icon: "❤️",
+      icon: icons,
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -45,6 +84,7 @@ const Card = ({ name, images, price, id }) => {
 
   const handleAdd = (product_id) => {
     if (isAuthenticated) {
+      console.log("Se agrego al card el producto: ", product_id);
       if (!addToCartClicked) {
         setAddToCartClicked(true);
 
@@ -53,11 +93,12 @@ const Card = ({ name, images, price, id }) => {
           product_id: product_id,
           amount: 1,
         };
-
+        console.log("Se manda al cart: ", cart);
         dispatch(postProductCart(cart)).then((result) => {
+          dispatch(getProductCart(user.email));
           notify(result);
-        })
-        
+        });
+
         setTimeout(() => {
           setAddToCartClicked(false);
         }, 3000);
@@ -69,45 +110,57 @@ const Card = ({ name, images, price, id }) => {
 
   const handleHeart = (product_id) => {
     if (isAuthenticated) {
-      
+
       let favorite = {
         email: user.email,
         product_id: product_id,
       };
-     
-   dispatch(postFavorites(favorite)).then((result) => {
-    notifyII(result);
-  })
-      setCorazon(!corazon);
 
+      if (!corazon) {
+        console.log(corazon);
+
+        dispatch( postFavorites(favorite)).then((result) => {
+          notifyII(result, heart);
+        });
+
+        setCorazon(!corazon);
+      } else {
+
+      
+
+        dispatch(deleteFavorite(product_id, user.email)).then((result) => {
+         
+          notifyII(result, heartBroke);
+        });
+
+        setCorazon(!corazon);
+      }
     } else {
       loginWithRedirect();
     }
   };
 
-
   return (
-    <div className="bg-slate-100 rounded-md box-border h-85 w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center m-4">
+    <div className="bg-slate-100 bg-opacity-60 rounded-md box-border md:h-85 md:w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center ">
       <div className="corazon absolute hover:scale-110 top-2 right-2 text-3xl">
         <button onClick={() => handleHeart(id)}>
-          <AiFillHeart
-            color={corazon ? "red" : "grey"}
-            style={{ opacity: "0.7" }}
-          />
+         {corazon ? "❤️" : "🤍"} 
+
         </button>
       </div>
-      <Link to={`/detail/${id}`}>
+   
+      <div className="">   <Link to={`/detail/${id}`}>
         <img
-          className="rounded-xl overflow-hidden max-h-60 w-60 h-75 object-scale-down mb-3"
+          className="h-[150px]  rounded-xl overflow-hidden max-h-60 w-60 h-75 object-scale-down mb-3"
           src={images[0]}
           alt="producto"
         />
-      </Link>
-      <div className="text-left w-full">
-        <p className="font-poppins ml-6">{name}</p>
+      </Link></div>
+      <div className="text-left w-full bg-slate-100">
+        <p className=" font-poppins break-words ml-6">{name}</p>
       </div>
 
-      <div className="flex justify-between items-center mt-3 w-full relative">
+      <div className="bg-slate-100 flex justify-between items-center mt-3 w-full relative">
         <p className="text-lg font-bold mx-6">${price}</p>
         <button
           className={`bg-transparent border-2 ${
@@ -118,11 +171,7 @@ const Card = ({ name, images, price, id }) => {
           onClick={() => handleAdd(id)}
           disabled={addToCartClicked}
         >
-          {addToCartClicked ? (
-            <span className="text-green-500">✓</span>
-          ) : (
-            "+"
-          )}
+          {addToCartClicked ? <span className="text-green-500">✓</span> : "+"}
         </button>
       </div>
     </div>
