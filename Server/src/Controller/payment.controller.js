@@ -19,6 +19,8 @@ mercadopago.configure({
 });
 
 const createOrder = async (req, res) => {
+  const email = req.body.email;
+  console.log(req.body);
   // El product puede ser un objeto individual desde Detail o un array desde Cart
   const product = req.body.product;
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
@@ -73,7 +75,7 @@ const createOrder = async (req, res) => {
     shippingAddress: "pruebaas 5008 asd oeste",
     addressHouseNumber: 123123,
     total: parseInt(cartTotalAmount),
-    email: "gabrielairiart.gi@gmail.com",
+    email: email,
   };
   const newOrder = await postOrder(newOrderData);
   console.log("La nueva orden creada tiene ID: ", newOrder.dataValues.id);
@@ -191,6 +193,7 @@ const createOrder = async (req, res) => {
 
 const success = (req, res) => {
   console.log(req.query);
+  console.log("Necesito en success");
   // res.send('Pago realizado')
   // store in database
   // Puedo guadar la información del usuario una vez que compró
@@ -208,25 +211,31 @@ const failure = (req, res) => {
 };
 
 const receiveWebhook = async (req, res) => {
-  // Recupero lo datos del pago que se realizó para poder ver el el id de la compra llamado data.id y el tipo llamado payment
-  const payment = req.query;
-
   try {
-    // Pregunto si la venta es correcta y la respuesta es payment
-    if (payment.type === "payment") {
-      const data = await mercadopago.payment.findById(payment.id);
-      console.log("Data del Webhook", data);
+    const { body } = req; // Obtén el cuerpo JSON de la solicitud
+
+    // Verifica que el tipo de notificación sea "payment"
+    if (body.type === "payment") {
+      const paymentId = body.data.id;
+
+      // Realiza acciones basadas en el ID del pago, como actualizar tu base de datos
+      // También puedes verificar el estado del pago, como "approved", "pending", "in_process", etc.
+
+      // Ejemplo de actualización en la base de datos (debes implementar esto):
+      // await actualizarEstadoDePago(paymentId, body.data.status);
+
+      console.log(
+        "Notificación de pago recibida:",
+        paymentId,
+        body.data.status
+      );
     }
 
-    res.status(204); // Significa que todo salió bien pero no devuelve nada
+    res.status(204).end(); // Responde con un estado 204 (sin contenido) para confirmar la recepción
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error.message });
+    console.error("Error al procesar la notificación de Mercado Pago:", error);
+    res.status(500).json({ error: "Error interno" });
   }
-
-  console.log(req.query);
-  //res.redirect('url del front')
-  res.send("procesando pago");
 };
 
 module.exports = { createOrder, receiveWebhook, success, failure };
