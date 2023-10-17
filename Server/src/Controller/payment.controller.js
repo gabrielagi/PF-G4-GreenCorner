@@ -1,5 +1,7 @@
 const mercadopago = require("mercadopago");
-const { Purchase, PurchasePending, Purchasefail } = require ("../../nodemailer/mailer")
+// const { useAuth0 } = require ("@auth0/auth0-react"); 
+// const { user } = useAuth0()
+const { Purchase, Purchasefail } = require ("../../nodemailer/mailer")
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
@@ -141,8 +143,7 @@ const createOrder = async (req, res) => {
 };
 
 const success =  async(req, res) => {
-  const data = await mercadopago.payment.findById(payment.id);
-  const mail = data.paymer.email;
+  const mail = "greencornerg4@gmail.com";
   Purchase (mail, "payer")
 
   console.log(req.query);
@@ -154,8 +155,7 @@ const success =  async(req, res) => {
 };
 
 const failure =  async(req, res) => {
-  const data = await mercadopago.payment.findById(payment.id);
-  const mail = data.paymer.email;
+  const mail = "greencornerg4@gmail.com";
 
   Purchasefail(mail, "payer")
   console.log(req.query);

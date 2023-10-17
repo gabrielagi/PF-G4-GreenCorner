@@ -15,19 +15,20 @@ module.exports = (sequelize) => {
       },
       date: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       rating: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      UserId: {
         type: DataTypes.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
-      }
+        allowNull: true,
+      },
+    //   userId: {
+    //   type: DataTypes.UUID, // El tipo de dato debe coincidir con el tipo de dato de 'id' en la tabla 'User'
+    //   allowNull: false,
+    //   references: {
+    //   model: 'User',
+    //   key: 'id',
+    //   },
+    // }
     },
     { timestamps: false }
   );

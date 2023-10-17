@@ -38,7 +38,8 @@ const { User, Order, Product, Category, OrderDetail, ShoppingCart, Favorite, Tes
 Product.belongsToMany(Category, { through: "ProductCategory", foreignKey: 'productId', as: 'categories' });
 Category.belongsToMany(Product, { through: "ProductCategory", foreignKey: 'categoryId', as: 'products' });
 
-User.hasOne(Testimonial )
+User.hasOne(Testimonial)
+
 ShoppingCart.belongsTo(Product, {
   foreignKey: 'product_id' // Clave foránea en el modelo Product
 });
