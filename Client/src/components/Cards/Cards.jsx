@@ -3,12 +3,16 @@ import plantgif from "../../assets/plantgif.gif";
 
 const Cards = ({ allProducts }) => {
   return (
-    <div className="relative flex-wrap ml-4 flex gap-[100px]">
+    <div className=" grid grid-cols-2 gap-x-6 md:relative md:ml-20   md:flex md:gap-[70px]">
      {allProducts.length !== 0 ? (
         allProducts.map((p, i) => {
           
          return (
-              <Card key={i} name={p.name} images={p.images} price={p.price} id={p.product_id} />
+          <div className="md:h-max md:w-max">
+            <Card key={i} name={p.name} images={p.images} price={p.price} id={p.product_id} />
+            </div>
+
+              
           );
         })
       ) : (

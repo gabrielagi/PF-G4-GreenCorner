@@ -11,6 +11,12 @@ import axios from "axios";
 import Carousel from "../components/DetailCarousel/DetailCarousel";
 import Slider from "../components/Slider/Slider2";
 import { toast } from "react-toastify";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+import {BsCartPlus} from "react-icons/bs"
+import { AiFillHeart } from "react-icons/ai";
+import {BsFillHeartbreakFill} from "react-icons/bs"
+import mercadopago from "../assets/mercadopago.png"
 
 import { postFavorites, deleteFavorite  ,getOneFavorites } from "../Redux/actions/user/user-actions";
 import {
@@ -147,25 +153,28 @@ const Detail = () => {
       theme: "light",
     });
 
-  const handleAddToMyGarden = () => {
-
-    if (isAuthenticated) {
-
-      let favorite = {
-        email: user.email,
-        product_id: product.product_id,
-      };
-
-      dispatch(postFavorites(favorite)).then((result) => {
-         
-        notifyII(result, heart);
-      });
-      setCorazon(!corazon);
-
-    } else {
-      loginWithRedirect();
-    }
-  };
+    const handleAddToMyGarden = () => {
+      if (isAuthenticated) {
+        let favorite = {
+          email: user.email,
+          product_id: product.product_id,
+        };
+  
+        if (!corazon) {
+          dispatch(postFavorites(favorite)).then((result) => {
+            notifyII(result, heart);
+          });
+        } else {
+          dispatch(deleteFavorite(id, user.email)).then((result) => {
+            notifyII(result, heartBroke);
+          });
+        }
+  
+        setCorazon(!corazon);
+      } else {
+        loginWithRedirect();
+      }
+    };
   const handleRemoveToMyGarden = (id) => {
     dispatch(deleteFavorite(id, user.email)).then((result) => {
          
@@ -209,7 +218,7 @@ const Detail = () => {
               })
             ).then(() => {
               dispatch(getProductCart(user.email));
-              notify();
+              notify("This product has already in the cart");
             });
             console.log("El producto se pudo actualizar para comprar!");
             setIsAddingToCart(false);
@@ -226,10 +235,11 @@ const Detail = () => {
           };
 
           dispatch(postProductCart(cartItem))
-            .then(() => {
+            .then((result) => {
               dispatch(getProductCart(user.email)).then(() => {
                 setIsAddingToCart(false);
-                notify();
+
+                notify(result);
               });
             })
             .catch(() => {
@@ -268,8 +278,8 @@ const Detail = () => {
       if (product.stock >= amount) {
         try {
           const { data } = await axios.post(
-            "http://localhost:3001/payment/create-order",
-            { product, amount }
+            "https://greencorner.onrender.com/payment/create-order",
+            { product, amount, email: user.email }
           );
           console.log("Data en el componente Detail", data);
           console.log("Init point en el componente Detail", data);
@@ -294,6 +304,9 @@ const Detail = () => {
     return <p> ta cargando</p>
   } else if (product.name) {  
       
+
+
+    
     return (
       <div>
         <Link className="ml-16 mt-20" to="/shop">
@@ -339,13 +352,13 @@ const Detail = () => {
                 <option>uno</option>
                 <option>dos</option>
               </select> */}
-<div className="flex">
-    <p className="text-3xl font-semibold align-bottom text-green-500">Categories:</p>
-    {product?.categories.map((c, i)=>
-     ( <div className="px-2 text-[16px]" key={i}>
-        <p>{c.name}</p></div>)
-    )}
-</div>
+              <div className="flex">
+                  <p className="text-3xl font-semibold align-bottom text-green-500">Categories:</p>
+                  {product?.categories.map((c, i)=>
+                  ( <div className="px-2 text-[16px]" key={i}>
+                      <p>{c.name}</p></div>)
+                  )}
+              </div>
               <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
                 <div>
                   <button
@@ -365,44 +378,56 @@ const Detail = () => {
                   </button>
                 </div>
 
-                <button
+                <Button
+                  variant="contained"
+                  color="success"
                   onClick={handleAddToCart}
-                  className="py-2 md:text-gray-500 hover:bg-[#66c54e] font-medium bg-[#78df5e] col-span-1 rounded col-end-3 relative"
+                  disabled={isAddingToCart}
+                  startIcon={isAddingToCart ? <CircularProgress size={20} color="inherit" /> : null}
+                  style={{ fontSize: "16px", fontFamily: "Poppins" }}
                 >
-                  {isAddingToCart ? (
-                    <img
-                      src={loading}
-                      alt="Loading"
-                      className="w-6 h-6 animate-spin absolute left-2 top-1/2 transform -translate-y-1/2"
-                    />
-                  ) : (
-                    "ADD TO CART"
-                  )}
-                </button>
+                  ADD TO CART <BsCartPlus style={{ marginLeft: "20px" }} />
+                </Button>
               </div>
-              <div className="flex  md: justify-between gap-x-10 ">
+              <div className="flex  md: justify-between gap-x-10                      ">
+                              <div className="my-10">
+                      <Button
+                        variant="contained"
+                        onClick={handleAddToMyGarden}
+                        style={{
+                          fontFamily: "Poppins",
+                          fontSize: "16px",
+                          backgroundColor: corazon ? "#fff" : "#4a9661",
+                          color: corazon ? "#4a9661" : "#fff",
+                          border: `1px solid ${corazon ? "#4a9661" : "#fff"}`,
+                        }}
+                      >
+                       
+                        {corazon ? "Remove from My Garden" : "Add to My Garden"}
 
-                {!corazon ? ( <button
-                  onClick={handleAddToMyGarden}
-                  className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]"
-                >
-                 ❤️ Add to my Garden
-                </button>) :
-                 <button
-                 onClick={()=>handleRemoveToMyGarden(id)}
-                 className="p-2 my-10 pl-24 md:py-8   md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6]"
-               >
-                 💔 Remove to my Garden
-               </button>
-                
-                }
+                        {corazon ? (
+                          <BsFillHeartbreakFill color="#ff0000" style={{marginLeft:"10px"}}/>
+                        ) : (
+                          <AiFillHeart color="#ff0000" style={{marginLeft:"10px"}}/>
+                        )}
+                      </Button>
+                    </div>
 
-                <button
-                  onClick={handleCheckout}
-                  className="p-4 my-10 md:p-8 md:w-2/5 rounded-2xl border border-gray-400bg-[#cec6c6] "
-                >
-                  Checkout
-                </button>
+                    <Button
+                      variant="contained"
+                      onClick={handleCheckout}
+                      style={{
+                        fontFamily: "Poppins",
+                        fontSize: "17px",
+                        backgroundColor: "#fff", 
+                        color: "#4a9661",
+                        border: "1px solid #4a9661",
+                        width: "310px",
+                        height: "50px",
+                      }}
+                    ><img src={mercadopago} style={{width:"40px", marginRight:"10px"}}></img>
+                      Checkout
+                    </Button>
               </div>
             </div>
           </div>

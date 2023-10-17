@@ -61,7 +61,7 @@ const createOrder = async (req, res) => {
       }
     }
   } else if (typeof product === "object") {
-    cartTotalAmount += product.price * product.amount;
+    cartTotalAmount = product.price * amount
     const availableStock = getAvailableStock(product.product_id, allProducts);
     if (availableStock <= amount) {
       insufficientStockProducts.push(product);
@@ -72,8 +72,8 @@ const createOrder = async (req, res) => {
   let newOrderData = {
     date: new Date().toLocaleDateString(), // Formato de fecha "14/10/2022"
     status: "Pending",
-    shippingAddress: "pruebaas 5008 asd oeste",
-    addressHouseNumber: 123123,
+    shippingAddress: "P. Sherman Calle Wallaby 42, Sidney",
+    addressHouseNumber: 42,
     total: parseInt(cartTotalAmount),
     email: email,
   };
