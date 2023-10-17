@@ -155,7 +155,7 @@ const ourTeam = () => {
         
            </div>
              <div className=' text-center'>
-            <h5 className="text-4xl text-gray-100 drop-shadow-lg bg-opacity-60 bg-[filter(blur-md)] px-12 font-semibold">Fran Cisco</h5>
+            <h5 className="text-4xl text-gray-100 drop-shadow-lg bg-opacity-60 bg-[filter(blur-md)] px-12 font-semibold">Francisco Sosa</h5>
             <span className="text-gray-400">Developer</span>
           </div>
         </div>

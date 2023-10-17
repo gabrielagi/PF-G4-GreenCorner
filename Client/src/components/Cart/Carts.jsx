@@ -8,10 +8,17 @@ import { getProductCart } from "../../Redux/actions/product/action";
 import { useAuth0 } from "@auth0/auth0-react";
 import EmptyCart from "../EmptyCart/EmptyCart";
 
+
 const Carts = () => {
   const products = useSelector((state) => state.productCart);
   const dispatch = useDispatch();
   const { user } = useAuth0();
+
+  const [loading, setLoading] = useState(true);
+  useEffect(()=>{
+     if(products.length) {setLoading(false)}
+  },[products])
+
 
   let total = 0;
   let [info, setInfo] = useState({}); 
@@ -62,7 +69,11 @@ const Carts = () => {
       console.log(error.message);
     }
   };
-
+  if (loading) {
+    return <div >
+    <div> Loading...</div>
+  </div>;
+  }
   return (
     <div className=" bg-gray-200 md:mx-20 font-poppins">
       <h1 className="text-7xl font-bold text-center my-12 pt-12  text-green-500">Your Cart</h1>
@@ -76,7 +87,9 @@ const Carts = () => {
          
 
         </div> */}
+
       <div className="cart">
+        
         {products.length !== 0 ? (
           products.map((p, i) => {
             return (
