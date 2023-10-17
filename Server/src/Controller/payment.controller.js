@@ -19,12 +19,13 @@ mercadopago.configure({
 });
 
 const createOrder = async (req, res) => {
-  const email = req.body.email;
   console.log(req.body);
   // El product puede ser un objeto individual desde Detail o un array desde Cart
   const product = req.body.product;
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
   console.log("Este es el producto que me llega a payment: ", product);
+  const newEmail = req.body.email;
+  console.log("El email que me llega es: ", newEmail);
 
   // Guardo los items que se van a vender
   let items = [];
@@ -61,7 +62,7 @@ const createOrder = async (req, res) => {
       }
     }
   } else if (typeof product === "object") {
-    cartTotalAmount = product.price * amount
+    cartTotalAmount = product.price * amount;
     const availableStock = getAvailableStock(product.product_id, allProducts);
     if (availableStock <= amount) {
       insufficientStockProducts.push(product);
@@ -75,7 +76,7 @@ const createOrder = async (req, res) => {
     shippingAddress: "P. Sherman Calle Wallaby 42, Sidney",
     addressHouseNumber: 42,
     total: parseInt(cartTotalAmount),
-    email: email,
+    email: newEmail,
   };
   const newOrder = await postOrder(newOrderData);
   console.log("La nueva orden creada tiene ID: ", newOrder.dataValues.id);
@@ -198,7 +199,7 @@ const success = (req, res) => {
   // store in database
   // Puedo guadar la información del usuario una vez que compró
   // Actualizar cantidad de productos en el Stock de los productos vendidos
-  res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir
+  res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
 };
 
 const failure = (req, res) => {
@@ -207,7 +208,7 @@ const failure = (req, res) => {
   // store in database
   // Puedo guadar la información del usuario una vez que compró
   // Actualizar cantidad de productos en el Stock de los productos vendidos
-  res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir si sale mal
+  res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir si sale mal
 };
 
 const receiveWebhook = async (req, res) => {

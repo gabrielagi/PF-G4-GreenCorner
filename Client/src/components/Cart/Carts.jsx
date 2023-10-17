@@ -1,6 +1,6 @@
 import "tailwindcss/tailwind.css";
 // import "./Carts.css";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Cart from "./Cart";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,7 @@ const Carts = () => {
   const { user } = useAuth0();
 
   let total = 0;
-  let [info, setInfo] = useState({}); 
+  let [info, setInfo] = useState({});
 
   products.map((product) => {
     total += product.Product.price * product.amount;
@@ -51,7 +51,7 @@ const Carts = () => {
         }
       }
       const { data } = await axios.post(
-        "https://greencorner.onrender.com/payment/create-order",
+        "http://localhost:3001/payment/create-order",
         { product, email: user.email }
       );
       console.log("Data en el componente Detail", data);
@@ -65,7 +65,9 @@ const Carts = () => {
 
   return (
     <div className=" bg-gray-200 md:mx-20 font-poppins">
-      <h1 className="text-7xl font-bold text-center my-12 pt-12  text-green-500">Your Cart</h1>
+      <h1 className="text-7xl font-bold text-center my-12 pt-12  text-green-500">
+        Your Cart
+      </h1>
       {/* <div className="grid grid-cols-4">
         <div className="flex justify-center items-center ">  <p className=""></p></div>
         <div className="flex justify-center items-center "><p className="">NAME</p>  </div>
@@ -81,36 +83,36 @@ const Carts = () => {
           products.map((p, i) => {
             return (
               <div className="my-4" key={i}>
-                 <Cart
-               
-                id={p.Product.product_id}
-                amount={p.amount}
-                name={p.Product.name}
-                price={p.Product.price}
-                image={p.Product.images}
-              />
-
-                </div>
-             
+                <Cart
+                  id={p.Product.product_id}
+                  amount={p.amount}
+                  name={p.Product.name}
+                  price={p.Product.price}
+                  image={p.Product.images}
+                />
+              </div>
             );
           })
         ) : (
           <div>
-            <EmptyCart/>
+            <EmptyCart />
           </div>
         )}
       </div>
-        
-                    <div className="flex flex-col my-3 pb-5 align-baseline pr-20 text-center justify-end items-end ">
-        
+
+      <div className="flex flex-col my-3 pb-5 align-baseline pr-20 text-center justify-end items-end ">
         <div className=" flex flex-grow ">
-          <div className="  bg-white py-2  ml-24 md:mx-auto text-3xl font-semibold flex justify-center w-[130px]  ">Total: <p className="pl-4 text-green-600">{total}</p></div>
-        <button className=" mx-5 bg-white w-[200px]  text-2xl font-medium" onClick={handleCheckout}>
-        Continue to checkout
-      </button>
-      </div>
+          <div className="  bg-white py-2  ml-24 md:mx-auto text-3xl font-semibold flex justify-center w-[130px]  ">
+            Total: <p className="pl-4 text-green-600">{total}</p>
+          </div>
+          <button
+            className=" mx-5 bg-white w-[200px]  text-2xl font-medium"
+            onClick={handleCheckout}
+          >
+            Continue to checkout
+          </button>
         </div>
-      
+      </div>
     </div>
   );
 };
