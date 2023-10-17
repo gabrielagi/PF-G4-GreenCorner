@@ -1,9 +1,5 @@
 const mercadopago = require("mercadopago");
-const {
-  Purchase,
-  PurchasePending,
-  Purchasefail,
-} = require("../../nodemailer/mailer");
+
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
@@ -11,6 +7,11 @@ const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 const HOST = `http://${DB_HOST}:${SERVER_PORT}/payment`;
 
 const { getAllProduct } = require("../Controller/product.controller");
+
+const {
+  postOrder,
+  postOrderDetail,
+} = require("../Controller/order.controller");
 
 // Configuro mercado pago
 mercadopago.configure({
@@ -22,8 +23,12 @@ const createOrder = async (req, res) => {
   const product = req.body.product;
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
   console.log("Este es el producto que me llega a payment: ", product);
+
   // Guardo los items que se van a vender
   let items = [];
+
+  //Vamos a guardar el total de precio a pagar
+  let cartTotalAmount = 0;
 
   // Controlar que haya suficiente stock para el checkout
   const allProducts = await getAllProduct();
@@ -47,16 +52,54 @@ const createOrder = async (req, res) => {
   // Controlo que cada elemento del Array product tiene stock disponible
   if (Array.isArray(product)) {
     for (const item of product) {
+      cartTotalAmount += item.price * item.amount; //Acumular el total de precio por todos los productos
       const availableStock = getAvailableStock(item.id, allProducts);
       if (availableStock <= item.amount) {
         insufficientStockProducts.push(item);
       }
     }
   } else if (typeof product === "object") {
+    cartTotalAmount += product.price * product.amount;
     const availableStock = getAvailableStock(product.product_id, allProducts);
     if (availableStock <= amount) {
       insufficientStockProducts.push(product);
     }
+  }
+
+  // Creo una nueva orden de compra
+  let newOrderData = {
+    date: new Date().toLocaleDateString(), // Formato de fecha "14/10/2022"
+    status: "Pending",
+    shippingAddress: "pruebaas 5008 asd oeste",
+    addressHouseNumber: 123123,
+    total: parseInt(cartTotalAmount),
+    email: "gabrielairiart.gi@gmail.com",
+  };
+  const newOrder = await postOrder(newOrderData);
+  console.log("La nueva orden creada tiene ID: ", newOrder.dataValues.id);
+  const newOrderId = newOrder.dataValues.id;
+
+  // Tengo que controlar si es un array de productos o un producto en particular
+  if (Array.isArray(product)) {
+    for (const item of product) {
+      const productDetail = {
+        quantity: item.amount,
+        unit_price: parseInt(item.price),
+        order_id: newOrderId,
+        product_id: item.id,
+      };
+      let newOrderDetail = await postOrderDetail(productDetail);
+      console.log("La nueva ordenDetail creada tiene ID: ", newOrderDetail);
+    }
+  } else if (typeof product === "object") {
+    const productDetailObject = {
+      quantity: product.amount,
+      unit_price: parseInt(product.price),
+      order_id: newOrderId,
+      product_id: product.product_id,
+    };
+    let newOrderDetailObject = await postOrderDetail(productDetailObject);
+    console.log("La nueva ordenDetail creada tiene ID: ", newOrderDetailObject);
   }
 
   // Controlo si alguno de los productos no tiene suficiente stock
@@ -95,11 +138,14 @@ const createOrder = async (req, res) => {
     }
   }
 
+  //Creo las orden y los order detail de la compra
+
   // Creo los items para la preferencia
   // let payer = {
   //   name: user.given_name,
   //   surname: user.family_name,
   // };
+
   // Item de prueba
   // items: [
   //       {
@@ -144,10 +190,6 @@ const createOrder = async (req, res) => {
 };
 
 const success = (req, res) => {
-  const mail = "test_user_1398180221@testuser.com";
-
-  Purchase(mail, "payer");
-
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database
@@ -157,9 +199,6 @@ const success = (req, res) => {
 };
 
 const failure = (req, res) => {
-  const mail = "test_user_1398180221@testuser.com";
-
-  Purchasefail(mail, "payer");
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database
