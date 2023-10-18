@@ -12,6 +12,7 @@ import {
   deleteFavorite,
   getOneFavorites
 } from "../../../Redux/actions/user/user-actions";
+import Swal from 'sweetalert2';
 import {
   getAllProducts,
   postProductCart,
@@ -27,7 +28,22 @@ const Card = ({ name, images, price, id }) => {
 
   let heart = "❤️";
   let heartBroke = "💔";
-
+ const loginAlert = () => {
+  Swal.fire({
+    title: 'Error',
+    text: 'You need to login first!',
+    icon: 'error',
+    showCancelButton: true,
+    confirmButtonText: 'Go to login',
+    confirmButtonColor: 'green',
+    cancelButtonText: 'Cancel',
+    cancelButtonColor: 'red', 
+  }).then((result) => {
+    if (result.isConfirmed) {
+      loginWithRedirect();
+    }
+  });
+};
   useEffect(() => {
     if (user && user.email) {
       dispatch(getOneFavorites(user.email, id)).then((result) => {
@@ -41,7 +57,8 @@ const Card = ({ name, images, price, id }) => {
   }, [user, dispatch]);
 
   const notify = (message) => {
-    if (message === "This product has been added to the cart") {
+
+    if (message === "This product has been add in the cart") {
       toast.success(message + " 🛒", {
         position: "bottom-left",
         autoClose: 2000,
@@ -100,7 +117,8 @@ const Card = ({ name, images, price, id }) => {
         }, 3000);
       }
     } else {
-      loginWithRedirect();
+
+      loginAlert();
     }
   };
 
@@ -135,7 +153,7 @@ const Card = ({ name, images, price, id }) => {
         setAddFavoriteClicked(false);
       }, 3000);
     } else {
-      loginWithRedirect();
+      loginAlert();
     }
   };
 

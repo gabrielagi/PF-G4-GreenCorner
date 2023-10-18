@@ -40,16 +40,29 @@ const Detail = () => {
   const [gardenClicked, setGardenClicked] = useState(false);
   const [cartClicked, setCartClicked] = useState(false);
   const [checkoutClicked, setCheckoutClicked] = useState(false);
-
-
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
-
   const cart = useSelector((state) => state.productCart);
-
   const [activeImg, setActiveImg] = useState(
     product.images && product.images[0]
   );
+
+  const loginAlert = () => {
+    Swal.fire({
+      title: 'Error',
+      text: 'You need to login first!',
+      icon: 'error',
+      showCancelButton: true,
+      confirmButtonText: 'Go to login',
+      confirmButtonColor: 'green',
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: 'red', 
+    }).then((result) => {
+      if (result.isConfirmed) {
+        loginWithRedirect();
+      }
+    });
+  };
 
   const [amount, setAmount] = useState(1);
   const [loadingImages, setLoadingImages] = useState(true);
@@ -98,7 +111,7 @@ const Detail = () => {
     if (message === "This product has been add in the cart") {
       toast.success(message + " 🛒", {
         position: "bottom-left",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -107,9 +120,9 @@ const Detail = () => {
         theme: "light",
       });
     } else {
-      toast.error(message + " 🛒", {
+      toast.warn("The product is already in the cart, but it was added 🛒", {
         position: "bottom-left",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -124,7 +137,7 @@ const Detail = () => {
     toast.error(message, {
       icon: icons,
       position: "bottom-right",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -139,7 +152,7 @@ const Detail = () => {
       "There is not enough stock available to add that quantity to the cart 🛑",
       {
         position: "bottom-left",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -152,7 +165,7 @@ const Detail = () => {
   const notifyVI = () =>
     toast.error("There is not enough stock available to checkout 🛑", {
       position: "bottom-left",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -182,7 +195,7 @@ const Detail = () => {
 
       setCorazon(!corazon);
     } else {
-      loginWithRedirect();
+      loginAlert();
     }
     setTimeout(()=>
     {setGardenClicked(false)},3000
@@ -234,7 +247,7 @@ const Detail = () => {
               })
             ).then(() => {
               dispatch(getProductCart(user.email));
-              notify("This product has already in the cart");
+              notify("This product has already in the cart, it should be accumulated");
             });
             console.log("El producto se pudo actualizar para comprar!");
             setIsAddingToCart(false);
@@ -263,10 +276,13 @@ const Detail = () => {
             });
 
           setIsAddingToCart(false);
-        }
-      } setTimeout(()=>
-      {setCartClicked(false)},3000
-      )
+        }setTimeout(()=>
+        {setCartClicked(false)},1500,
+        )
+      }else{
+        loginAlert();
+
+      } 
    
     } catch (error) {
       setIsAddingToCart(false);
@@ -315,13 +331,13 @@ const Detail = () => {
         notifyVI();
       }
     } else {
-      loginWithRedirect();
+      loginAlert();
     }
     setTimeout(()=>
     {setGardenClicked(false)},3000
     )
     }
-    
+   
   };
 
   const number = (max) => {
