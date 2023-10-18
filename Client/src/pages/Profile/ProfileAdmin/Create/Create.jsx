@@ -137,7 +137,7 @@ export default function Create() {
           icon: 'success',
           title: 'Product created successfully!' ,
           showConfirmButton: false,
-          timer: 2000
+          timer: 2000,        
         }).then(() => {
           setInput({
             name: '',
