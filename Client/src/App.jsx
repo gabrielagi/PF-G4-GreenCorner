@@ -59,7 +59,13 @@ const App = () => {
       ) : (
         <>
           <Navbar />
-          <ToastContainer />
+          <ToastContainer 
+              limit={1}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover={false}/>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/fail" element={<NotVerified />} />

@@ -29,7 +29,7 @@ const ProfileAdmin = () => {
           return <OrderAdmin />;
       case "Payment methods":
         return <PaymentMethods />;
-      case "Charts":
+      case "Categories":
         // return <PaymentMethods />;
         return <Category />;
 
