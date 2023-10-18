@@ -31,7 +31,7 @@ function validate(input) {
   if (input.description.length > 256) {
     errors.description = "Description must not exceed 256 characters";
   }
-  if (input.images.length > 5 || input.images.length < 1)  {
+  if (input.images.length > 5 || input.images.length < 1) {
     errors.images = "You can select a maximum of 5 images and a minimum of 1";
   }
   if (input.categories.length === 0) {
@@ -133,17 +133,17 @@ export default function Create() {
       try {
         dispatch(addProduct(input));
         Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Product created successfully!' ,
+          position: "top-end",
+          icon: "success",
+          title: "Product created successfully!",
           showConfirmButton: false,
-          timer: 2000,        
+          timer: 2000,
         }).then(() => {
           setInput({
-            name: '',
-            price: '',
-            stock: '',
-            description: '',
+            name: "",
+            price: "",
+            stock: "",
+            description: "",
             available: true,
             isTrending: false,
             categories: [],
@@ -151,24 +151,25 @@ export default function Create() {
           });
         });
       } catch (error) {
-        console.error('Error submitting form:', error);
+        console.error("Error submitting form:", error);
       }
     } else {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Please insert correct values',
+        icon: "error",
+        title: "Error",
+        text: "Please insert correct values",
       });
     }
   };
-  
 
   return (
     <div>
-      <div>
+      <div className="mt-5 sm:mt-28">
         <div className={styles.card_create}>
-          <div className={styles.contTitle}>
-            <div className={styles.title}>Create your product</div>
+          <div className="mb-4">
+            <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900">
+              Create a new Product
+            </h1>
           </div>
 
           <form onSubmit={(e) => handleSubmit(e)}>
@@ -252,7 +253,41 @@ export default function Create() {
                     <div className={styles.error}>{errors.description}</div>
                   )}
                 </div>
-                <div>
+
+                <div className="flex items-center mb-4">
+                  <div className="flex items-center mb-4 mr-10">
+                    {" "}
+                    {/* Utilizamos flex y items-center para alinear los elementos horizontalmente */}
+                    <div className="mr-2">
+                      {" "}
+                      {/* Agregamos un margen derecho entre los checkboxes */}
+                      <input
+                        type="checkbox"
+                        name="available"
+                        checked={input.available}
+                        onChange={(e) => handleChange(e)}
+                        className="mr-1"
+                      />
+                    </div>
+                    <div>Available</div>
+                  </div>
+                  <div className="flex items-center mb-4">
+                    {" "}
+                    {/* Repetimos el mismo patrón para el segundo checkbox */}
+                    <div className="mr-2">
+                      <input
+                        type="checkbox"
+                        name="isTrending"
+                        checked={input.isTrending}
+                        onChange={(e) => handleChange(e)}
+                        className="mr-1"
+                      />
+                    </div>
+                    <div>Is Trending</div>
+                  </div>
+                </div>
+
+                {/* <div>
                   <div>Available:</div>
                   <input
                     type="checkbox"
@@ -270,7 +305,7 @@ export default function Create() {
                     checked={input.isTrending}
                     onChange={(e) => handleChange(e)}
                   />
-                </div>
+                </div> */}
 
                 <div>
                   <div>Images:</div>
