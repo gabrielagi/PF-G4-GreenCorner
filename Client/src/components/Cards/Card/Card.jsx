@@ -158,7 +158,7 @@ const Card = ({ name, images, price, id }) => {
       <div className="">
         <Link to={`/detail/${id}`}>
           <img
-            className="h-[150px] rounded-xl overflow-hidden max-h-60 w-60 h-75 object-scale-down mb-3"
+            className="h-full w-full rounded-xl overflow-hidden  max-h-[180px] object-scale-down mb-3"
             src={images[0]}
             alt="producto"
           />

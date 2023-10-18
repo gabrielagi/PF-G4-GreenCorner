@@ -122,7 +122,7 @@ console.log(favorites)
             <div className=" ">
 
                 {/*-- ---------------------- SEARCHBAR ------------------------------------------------- */}
-                <div className="box  mt-10 bg-green-300  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[350px] mb-10 justify-center  ">
+                <div className="box  mt-10 bg-green-200  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[350px] mb-10 justify-center  ">
                       <input placeholder="Search.. " onChange={handleChange} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white "/>
                       <button type='submit' onClick={handleSubmit}><BiSearch color='black' size='30px'/></button>
                 </div>
@@ -130,11 +130,12 @@ console.log(favorites)
              <div className="  ">
            
                    {/*-- ---------------------- BARRA ------------------------------------------------- */}
-               <div className="bg-gray-300 bg-opacity-60 py-16 md:w-[400px] md:h-[700px] md:mx-auto">
-
-                    <h1 className="mx-auto mb-6 text-center text-gray-600 font-bold col-span-2  md:col-span-1 text-4xl md:font-medium ">ORDER BY</h1>   
-                       
-                    <div className=" grid grid-cols-2 gap-x-5 text-center md:grid-cols-1 ">
+               <div className="  rounded-3xl bg-opacity-40 py-16 md:w-[300px] md:h-[700px] md:mx-auto">
+                    
+                    <div className="px-4 ">
+                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-lime-100 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                       <h1 className="mx-auto mb-6 text-center text-gray-600 font-bold col-span-2 md:col-span-1 text-4xl md:font-medium pt-5">ORDER BY</h1>
+                       <div className=" grid grid-cols-2 gap-x-5 text-center md:grid-cols-1 ">
                         <div> 
                           <p  className="text-gray-500 text-2xl font-bold" htmlFor="priceOrden">ALPHABETIC</p>
                           <Select className="w-[120px] items-center font-extrabold "style={{ fontSize: "15px" }}
@@ -153,7 +154,7 @@ console.log(favorites)
                           </Select>
                         </div>
                         
-                        <div>
+                        <div className="my-5">
                             <p className="text-gray-500 font-bold text-2xl" htmlFor="priceOrden">PRICE</p>
                             <Select className="w-[120px]" style={{ fontSize: "15px" }}
                               id="priceOrden"
@@ -170,10 +171,20 @@ console.log(favorites)
                                 </MenuItem>
                             </Select>
                         </div> 
+                    </div>  
                     </div>
-                <div className="px-[40px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-gray-100 mx-auto"  > 
+                    </div>
+                    
+                    
+                       
+                    
+                    <div className="px-4">
+                       <div className="px-[40px] md:mt-[60px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-lime-100 py-4 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"  > 
+                <p className="text-center hover: font-medium text-3xl text-gray-700 hover:scale-110 hover:text-green-700 transition-transform duration-300" onClick={handleClear}>
+                        All categories
+                      </p>
                       {allCategories ? (allCategories.map((p, i) => (
-                        <button key={i} className="hover:scale-110">
+                        <button key={i} className="hover:scale-110 hover:text-green-700 transition-transform duration-300 ">
                           <Category 
                            
                             name={p.name}
@@ -192,10 +203,10 @@ console.log(favorites)
                       
                      
                   </div>
+                    </div>
+               
 
-                      <p className="text-center hover: font-medium text-3xl text-gray-700 hover:scale-110" onClick={handleClear}>
-                        All categories
-                      </p>
+                     
               
                   
                </div>
