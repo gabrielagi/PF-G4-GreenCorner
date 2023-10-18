@@ -17,7 +17,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../../../../Redux/actions/product/action";
-import { FiRefreshCcw } from 'react-icons/fi';
+import { FiRefreshCcw } from "react-icons/fi";
 import { MdSettingsBackupRestore } from "react-icons/md";
 
 const ShowUsers = () => {
@@ -29,7 +29,7 @@ const ShowUsers = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const usersPerPage = 5;
+  const usersPerPage = 6;
 
   const dispatch = useDispatch();
 
@@ -62,14 +62,13 @@ const ShowUsers = () => {
   };
 
   const handleRefresh = () => {
-    setRoleOrder("name"); 
-    setFilteredUsers(allUsers); 
-    setNameOrder(""); 
-    setStatusOrder(""); 
-    setSearchTerm(""); 
-    dispatch(setCurrentPage(1)); 
+    setRoleOrder("name");
+    setFilteredUsers(allUsers);
+    setNameOrder("");
+    setStatusOrder("");
+    setSearchTerm("");
+    dispatch(setCurrentPage(1));
   };
-  
 
   const editUser = (user) => {
     // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
@@ -170,12 +169,12 @@ const ShowUsers = () => {
   const displayedUsers = filteredUsers.slice(startIndex, endIndex);
 
   return (
-    <>
+    <div className="mt-5 sm:mt-28">
       {/* Contenido del componente (encabezados, tabla, etc.) */}
       <div className="p-4 bg-white block sm:flex items-center justify-between lg:mt-1.5 pt-10">
         <div className="mb-1 w-full">
           <div className="mb-4">
-            <h1 className="text-xl sm:text-5xl font-semibold text-gray-900">
+            <h1 className="text-5xl sm:text-5xl ml-6 sm:ml-0 font-semibold text-gray-900">
               All users
             </h1>
           </div>
@@ -186,7 +185,7 @@ const ShowUsers = () => {
                 <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
-                <FiRefreshCcw  onClick={handleRefresh}/>
+                <FiRefreshCcw onClick={handleRefresh} />
                 <div className="mt-1 relative lg:w-64 xl:w-96">
                   <input
                     type="text"
@@ -298,46 +297,58 @@ const ShowUsers = () => {
         <div className="overflow-x-auto">
           <div className="align-middle inline-block min-w-full">
             <div className="shadow overflow-hidden">
-              <table className="table-fixed min-w-full divide-y divide-gray-200">
+              <table className="table-fixed min-w-full divide-y divide-gray-200 ml-10 sm:ml-0">
                 {/* Encabezados de tabla */}
                 <thead className="bg-gray-100">
-                        <tr>
-                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                                
-                            </th>
-                            
-                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
-                                Name
-                            </th>
-                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
-                               LastName
-                            </th>
-                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
-                               Email
-                            </th>
-                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
-                                Role
-                            </th>
-                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
-                            Status
-                            </th>
-                            <th scope="col" className="p-4">
-                            </th>
-                               
-                        </tr>
-                            
-                    </thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
+                    ></th>
+
+                    <th
+                      scope="col"
+                      className="p-4 text-left text-xl font-medium text-gray-500 uppercase"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-4 text-left text-xl font-medium text-gray-500 uppercase"
+                    >
+                      LastName
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-4 text-left text-xl font-medium text-gray-500 uppercase"
+                    >
+                      Email
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-4 text-left text-xl font-medium text-gray-500 uppercase"
+                    >
+                      Role
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-4 text-left text-xl font-medium text-gray-500 uppercase"
+                    >
+                      Status
+                    </th>
+                    <th scope="col" className="p-4"></th>
+                  </tr>
+                </thead>
 
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
                   {displayedUsers.map((user) => (
                     <tr key={user.id} className="hover:bg-gray-100">
-                      
                       {/* ... Otros campos de la fila ... */}
-                      <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
+                      <td className="p-10 sm:p-6 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                         <img
-                          className="h-10 w-10 rounded-full"
+                          className="h-12 w-12 rounded-full"
                           src={user.picture}
                           alt={`${user.name} avatar`}
                         />
@@ -385,29 +396,29 @@ const ShowUsers = () => {
                   ))}
                 </tbody>
               </table>
+              <div style={{ marginLeft: "400px", marginBottom: "20px" }}>
+                <Pagination
+                  count={totalPages}
+                  page={currentPage}
+                  onChange={handleChangePage}
+                  color="primary"
+                  size="large"
+                  sx={{
+                    "& .Mui-selected": {
+                      fontSize: "20px            ",
+                    },
+                    "& .MuiPaginationItem-root": {
+                      fontSize: "15px",
+                    },
+                    "& .paginationButton": {
+                      backgroundColor: "#50a100",
+                    },
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1}}>
-              <Pagination
-                count={totalPages}
-                page={currentPage}
-                onChange={handleChangePage}
-                size="large"
-                sx={{
-                  "& .Mui-selected": {
-                    backgroundColor: "#50a050",
-                    fontSize: "20px            ",
-                  },
-                  "& .MuiPaginationItem-root": {
-                    fontSize: "15px",
-                  },
-                  "& .paginationButton": {
-                    backgroundColor: "#50a100",
-                  },
-                }}
-              />
-            </div>
       </div>
 
       {/* Modal de edición de usuario */}
@@ -514,7 +525,7 @@ const ShowUsers = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
