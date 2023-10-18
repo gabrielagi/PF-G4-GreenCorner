@@ -15,7 +15,7 @@ export const POST_FAVORITE = "POST_FAVORITE";
 export const GET_FAVORITES = "GET_FAVORITES";
 export const FIND_FAV_BY_NAME = "FIND_FAV_BY_NAME";
 export const DELETE_FAV_BY_ID_BD="DELETE_FAV_BY_ID_BD"
-
+export const REFRESH_FAVORITES = "REFRESH_FAVORITES"
 // User action-types
 export const ORDER_USER_BY_NAME = "ORDER_USER_BY_NAME";
 export const ORDER_USER_BY_ROLE = "ORDER_USER_BY_ROLE";
