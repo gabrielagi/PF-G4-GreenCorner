@@ -7,6 +7,7 @@ import {
 } from "../../../../Redux/actions/product/action";
 import styles from "./Create.module.css";
 import Select from "react-select";
+import Swal from "sweetalert2";
 
 function validate(input) {
   const errors = {};
@@ -30,8 +31,8 @@ function validate(input) {
   if (input.description.length > 256) {
     errors.description = "Description must not exceed 256 characters";
   }
-  if (input.images.length > 5) {
-    errors.images = "You can select a maximum of 5 images";
+  if (input.images.length > 5 || input.images.length < 1)  {
+    errors.images = "You can select a maximum of 5 images and a minimum of 1";
   }
   if (input.categories.length === 0) {
     errors.categories = "You must select at least one category";
@@ -131,25 +132,36 @@ export default function Create() {
     if (Object.keys(errors).length === 0) {
       try {
         dispatch(addProduct(input));
-        alert("Success");
-        setInput({
-          name: "",
-          price: "",
-          stock: "",
-          description: "",
-          available: true,
-          isTrending: false,
-          categories: [],
-          images: [],
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Product created successfully!' ,
+          showConfirmButton: false,
+          timer: 2000,        
+        }).then(() => {
+          setInput({
+            name: '',
+            price: '',
+            stock: '',
+            description: '',
+            available: true,
+            isTrending: false,
+            categories: [],
+            images: [],
+          });
         });
-        navigate("/");
       } catch (error) {
-        console.error("Error submitting form:", error);
+        console.error('Error submitting form:', error);
       }
     } else {
-      alert("Error: Please insert correct values");
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please insert correct values',
+      });
     }
   };
+  
 
   return (
     <div>

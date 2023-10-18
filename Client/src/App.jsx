@@ -81,6 +81,7 @@ const App = () => {
                 <PrivateRoute
                   element={<Favorites />}
                   isAuthenticated={isAuthenticated}
+                  isLoading={isLoading}
                 />
               }
             />
@@ -90,6 +91,7 @@ const App = () => {
                 <PrivateRoute
                   element={<Profile />}
                   isAuthenticated={isAuthenticated}
+                  isLoading={isLoading}
                 />
               }
             />
