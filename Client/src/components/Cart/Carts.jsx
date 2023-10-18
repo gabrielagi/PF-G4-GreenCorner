@@ -110,7 +110,7 @@ const Carts = () => {
         )}
       </div>
 
-      <div className="flex flex-col my-3 pb-5 align-baseline pr-20 text-center justify-end items-end ">
+      <div className=" grid grid-cols-1 md:flex md:flex-col my-3 pb-5 align-baseline pr-20 text-center justify-end items-end ">
         <div className=" flex flex-grow ">
           <div className="  bg-white py-2  ml-24 md:mx-auto text-3xl font-semibold flex justify-center w-[130px]  ">
             Total: <p className="pl-4 text-green-600">{total}</p>
