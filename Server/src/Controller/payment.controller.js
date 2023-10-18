@@ -1,5 +1,4 @@
 const mercadopago = require("mercadopago");
-
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;

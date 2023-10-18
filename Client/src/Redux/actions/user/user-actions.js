@@ -15,7 +15,8 @@ import {
   ORDER_USER_BY_ROLE,
   ORDER_USER_BY_STATUS,
   SEARCH_USERS,
-  DELETE_FAV_BY_ID_BD
+  DELETE_FAV_BY_ID_BD,
+  REFRESH_FAVORITES
 } from "../action-types";
 
 import axios from "axios";
@@ -46,6 +47,23 @@ export const getFavorites = (email) => {
   };
 };
 
+export const refreshFavorites = (change) => {
+  console.log('llegó al refresh');
+
+  return async (dispatch) => {
+    try {
+    console.log(change);
+     
+      dispatch({
+        type: REFRESH_FAVORITES,
+        payload: change,
+      });
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
+  };
+};
 export const getOneFavorites = (email, id) => {
 
   return async (dispatch) => {

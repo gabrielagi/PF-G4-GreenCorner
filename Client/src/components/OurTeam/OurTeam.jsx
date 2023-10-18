@@ -1,5 +1,5 @@
 import React from 'react'
-import {AiFillGithub, AiFillFacebook, AiFillLinkedin} from 'react-icons/ai'
+import {AiFillGithub, AiFillFacebook, AiFillLinkedin,AiFillInstagram,AiFillBehanceCircle} from 'react-icons/ai'
 import gabi from './gabi.jpg'
 import cisco from './cisco.jpg'
 import mati from './mati.jpg'
@@ -33,9 +33,12 @@ const ourTeam = () => {
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
             <div className='-rotate-45  '>
-              <AiFillLinkedin size='30px' color='white'></AiFillLinkedin>
-            <AiFillGithub size='30px' color='white'/>
-            <AiFillFacebook size='30px' color='white'/>
+             <a href='https://www.linkedin.com/in/matias-avesani/">'>
+              <AiFillLinkedin size='30px' color='white'/>
+              </a> 
+              <a href="https://github.com/AveMat81"> <AiFillGithub size='30px' color='white'/></a>
+            
+          
             </div>
             
           </div>
@@ -54,10 +57,13 @@ const ourTeam = () => {
             <img src={faq} alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
-            <div className='-rotate-45  '>
-              <AiFillLinkedin size='30px' color='white'></AiFillLinkedin>
-            <AiFillGithub size='30px' color='white'/>
-            <AiFillFacebook size='30px' color='white'/>
+             <div className='-rotate-45  '>
+             <a href='https://www.linkedin.com/in/facundo-storino-8894a7279/'>
+              <AiFillLinkedin size='30px' color='white'/>
+              </a> 
+              <a href="https://github.com/Fakuese2"> <AiFillGithub size='30px' color='white'/></a>
+              <a href='https://www.instagram.com/facundo_storino/'>  <AiFillInstagram size='30px' color='white'/></a>
+          
             </div>
             
           </div>
@@ -76,10 +82,13 @@ const ourTeam = () => {
             <img src="https://media.licdn.com/dms/image/C4E03AQEqx-PhBjOBfQ/profile-displayphoto-shrink_800_800/0/1569209047831?e=2147483647&v=beta&t=YQYhgpDlPONDc4KEDqWAn-gkOnOlUjTxvxUQ3hmfrr4" alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
-            <div className='-rotate-45  '>
-              <AiFillLinkedin size='30px' color='white'></AiFillLinkedin>
-            <AiFillGithub size='30px' color='white'/>
-            <AiFillFacebook size='30px' color='white'/>
+             <div className='-rotate-45  '>
+             <a href=''>
+              <AiFillLinkedin size='30px' color='white'/>
+              </a> 
+              <a href=""> <AiFillGithub size='30px' color='white'/></a>
+              {/* <a href=''>  <AiFillFacebook size='30px' color='white'/></a> */}
+          
             </div>
             
           </div>
@@ -97,10 +106,13 @@ const ourTeam = () => {
             <img src={gabi} alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover inset-0 transform -translate-x[-30px] -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
-            <div className='-rotate-45  '>
-              <AiFillLinkedin size='30px' color='white'></AiFillLinkedin>
-            <AiFillGithub size='30px' color='white'/>
-            <AiFillFacebook size='30px' color='white'/>
+             <div className='-rotate-45  '>
+             <a href='https://www.linkedin.com/in/gabriela-iriart/'>
+              <AiFillLinkedin size='30px' color='white'/>
+              </a> 
+              <a href="https://github.com/gabrielagi"> <AiFillGithub size='30px' color='white'/></a>
+              <a href='https://www.behance.net/gabrielairiart'>  <AiFillBehanceCircle size='30px' color='white'/></a>
+          
             </div>
             
           </div>
@@ -122,10 +134,13 @@ const ourTeam = () => {
             <img src={sebita} alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
-            <div className='-rotate-45  '>
-              <AiFillLinkedin size='30px' color='white'></AiFillLinkedin>
-            <AiFillGithub size='30px' color='white'/>
-            <AiFillFacebook size='30px' color='white'/>
+             <div className='-rotate-45  '>
+             <a href=''>
+              <AiFillLinkedin size='30px' color='white'/>
+              </a> 
+              <a href="https://www.linkedin.com/in/sebastian-diaz-68b992250/"> <AiFillGithub size='30px' color='white'/></a>
+              {/* <a href='https://github.com/Sekilleran'>  <AiFillFacebook size='30px' color='white'/></a> */}
+          
             </div>
             
           </div>
@@ -134,7 +149,7 @@ const ourTeam = () => {
            </div>
            
     <div className=' text-center'>
-            <h5 className="text-4xl text-gray-100 drop-shadow-lg bg-opacity-60 bg-[filter(blur-md)] px-12 font-semibold">Sebastian sebáceo</h5>
+            <h5 className="text-4xl text-gray-100 drop-shadow-lg bg-opacity-60 bg-[filter(blur-md)] px-12 font-semibold">Sebastian Diaz</h5>
             <span className="text-gray-400">Developer</span>
           </div>
         </div>
@@ -144,10 +159,13 @@ const ourTeam = () => {
             <img src={cisco} alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
-            <div className='-rotate-45  '>
-              <AiFillLinkedin size='30px' color='white'></AiFillLinkedin>
-            <AiFillGithub size='30px' color='white'/>
-            <AiFillFacebook size='30px' color='white'/>
+             <div className='-rotate-45  '>
+             <a href='https://www.linkedin.com/in/f-sosa/'>
+              <AiFillLinkedin size='30px' color='white'/>
+              </a> 
+              <a href="https://github.com/f-sosa"> <AiFillGithub size='30px' color='white'/></a>
+              <a href='https://www.instagram.com/fran_sosaa/  '>  <AiFillInstagram size='30px' color='white'/></a>
+          
             </div>
             
           </div>
@@ -155,7 +173,7 @@ const ourTeam = () => {
         
            </div>
              <div className=' text-center'>
-            <h5 className="text-4xl text-gray-100 drop-shadow-lg bg-opacity-60 bg-[filter(blur-md)] px-12 font-semibold">Francisco Sosa</h5>
+            <h5 className="text-4xl text-gray-100 drop-shadow-lg bg-opacity-60 bg-[filter(blur-md)] px-12 font-semibold">Franco Sosa</h5>
             <span className="text-gray-400">Developer</span>
           </div>
         </div>
@@ -165,10 +183,13 @@ const ourTeam = () => {
             <img src={juli} alt="" loading='lazy' width='805' height='1000'  className=" absolute w-full h-full object-cover -rotate-45 scale-125 mx-auto transition duration-300 group-hover:scale-[1.4] drop-shadow-xl" />
 
           <div className=' absolute bg-black bg-opacity-75 -translate-x-full rounded-lg  top-0 left-0 w-full h-full   flex items-center justify-center group-hover:translate-x-0  '>
-            <div className='-rotate-45  '>
-              <AiFillLinkedin size='30px' color='white'></AiFillLinkedin>
-            <AiFillGithub size='30px' color='white'/>
-            <AiFillFacebook size='30px' color='white'/>
+             <div className='-rotate-45  '>
+             <a href='https://www.linkedin.com/in/julian-tejada-079325198?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app'>
+              <AiFillLinkedin size='30px' color='white'/>
+              </a> 
+              <a href="https://github.com/TomateComunista"> <AiFillGithub size='30px' color='white'/></a>
+              <a href='https://instagram.com/zack.env?igshid=OGQ5ZDc2ODk2ZA%3D%3D&utm_source=qr'>  <AiFillInstagram size='30px' color='white'/></a>
+          
             </div>
             
           </div>

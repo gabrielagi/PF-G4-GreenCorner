@@ -323,30 +323,30 @@ const Category = () => {
                     </tr>
                   ))}
                 </tbody>
-                <div style={{ marginLeft: "400px" }}>
-                  <Pagination
-                    count={totalPages}
-                    page={currentPage}
-                    onChange={handleChangePage}
-                    size="large"
-                    sx={{
-                      "& .Mui-selected": {
-                        backgroundColor: "#50a050",
-                        fontSize: "20px            ",
-                      },
-                      "& .MuiPaginationItem-root": {
-                        fontSize: "15px",
-                      },
-                      "& .paginationButton": {
-                        backgroundColor: "#50a100",
-                      },
-                    }}
-                  />
-                </div>
               </table>
             </div>
           </div>
         </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1}}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handleChangePage}
+                size="large"
+                sx={{
+                  "& .Mui-selected": {
+                    backgroundColor: "#50a050",
+                    fontSize: "20px            ",
+                  },
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "15px",
+                  },
+                  "& .paginationButton": {
+                    backgroundColor: "#50a100",
+                  },
+                }}
+              />
+            </div>
       </div>
 
       {/* Modal de edición de usuario */}
