@@ -3,7 +3,7 @@ import "tailwindcss/tailwind.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getFavorites } from "../Redux/actions/user/user-actions";
 import Card from "../components/Cards/Card/Card";
-import Category from "../components/Categories/Categorie";
+import Category from "../components/Categories/FavCategorie";
 import { useAuth0 } from "@auth0/auth0-react";
 import {findFavByName,resetAllFavorites, resetAllProducts, getAllCategories, filterFavByName,filterFavByPrice,filterFavByCategory } from "../Redux/actions/product/action";
 import FormControl from "@mui/material/FormControl";
@@ -28,6 +28,7 @@ const dispatch = useDispatch();
 
   const favorites = useSelector((state) => state.favorites);
   const allCategories = useSelector((state) => state.categories);
+  const refresh=useSelector((state)=>state.refresh)
   const { user, isLoading } = useAuth0();
   console.log(user)
   const currentPage = useSelector((state) => state.pagination.currentPage); 
@@ -40,18 +41,17 @@ const dispatch = useDispatch();
   const totalFavorites = favorites?.length  ;
 console.log(totalFavorites)
   const totalPages = Math.ceil(totalFavorites / productsPerPage);
-
+console.log(refresh)
 
   useEffect(() => {
-    console.log('gua entra')
-    console.log(dispatch)
+
     if(user){
     dispatch(getFavorites(user.email));
     dispatch(getAllCategories())
+    dispatch(getFavorites(user.email))
     }
     return
-  }, [dispatch,user]);
-
+  }, [dispatch,user, ]);
 
 
   const startIndex = (currentPage - 1) * productsPerPage;
@@ -97,6 +97,7 @@ const handleCategorySelect = (name) => {
   setNameOrden("");
   setPriceOrden("");
   dispatch(setCurrentPage(1))
+  dispatch(filterFavByCategory(name))
 };
 
 const handleClear = () => {
@@ -115,6 +116,11 @@ const handleSubmit=(event)=>{
 
 
 }
+const handleKeyDown = (event) => {
+  if (event.key === "Enter") {
+    handleSubmit(event);
+  }
+};
 console.log('ants del return');
 console.log(favorites)
   return (
@@ -129,8 +135,8 @@ console.log(favorites)
             <div className=" ">
 
                 {/*-- ---------------------- SEARCHBAR ------------------------------------------------- */}
-                <div className="box  mt-10 bg-green-700  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[80px] mb-10 justify-center  "> {/* ACA PONER  md:w-[300px]*/}
-                      <input placeholder="Search.. " onChange={handleChange} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white  placeholder:text-white"/>
+                <div className="box  mt-10 bg-[#42c94b]  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[80px] mb-10 justify-center  "> {/* ACA PONER  md:w-[300px]*/}
+                      <input placeholder="Search.. " onChange={handleChange}  onKeyDown={handleKeyDown} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white  placeholder:text-white"/>
                       <button type='submit' onClick={handleSubmit}><BiSearch color='black' size='30px'/></button>
                 </div>
                  
@@ -140,7 +146,7 @@ console.log(favorites)
                <div className="  rounded-3xl bg-opacity-40 py-16 md:w-[300px] md:h-[700px] md:mx-auto">
                     
                     <div className="px-4 ">
-                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-emerald-500 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-gray-200 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                        <h1 className="mx-auto mb-6 text-center text-gray-600 font-bold col-span-2 md:col-span-1 text-4xl md:font-medium pt-5">ORDER BY</h1>
                        <div className=" grid grid-cols-2 gap-x-5 text-center md:grid-cols-1 ">
                         <div> 
@@ -184,9 +190,8 @@ console.log(favorites)
                     
                     
                        
-                    
-                    <div className="px-4">
-                       <div className="px-[40px] md:mt-[60px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-neutral-600  py-4 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"  > 
+                      {/* <div className="px-4">
+                       <div className="px-[40px] md:mt-[60px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-gray-200  py-4 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"  > 
                 <p className="text-center hover: font-medium text-3xl text-gray-400 hover:scale-110 hover:text-green-700 transition-transform duration-300" onClick={handleClear}>
                         All categories
                       </p>
@@ -211,6 +216,7 @@ console.log(favorites)
                      
                   </div>
                     </div>
+                   */}
                
 
                      
@@ -237,6 +243,7 @@ console.log(favorites)
                     images={p.Product?.images || p.images}
                     price={p.Product?.price || p.price}
                     className=""
+                    
                   >
                     {p.value}
                   </Card> </div>

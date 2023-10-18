@@ -31,7 +31,7 @@ const Shop = () => {
   const [priceOrder, setPriceOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const productsPerPage = 8;
+  const productsPerPage = 6;
 
   const dispatch = useDispatch();
 
@@ -43,6 +43,8 @@ const Shop = () => {
     dispatch(getAllProducts());
     dispatch(getAllCategoriesShop());
     dispatch(getProductsTrending());
+
+    return()=>{ dispatch(getAllCategoriesShop())  }
   }, [dispatch]);
 
   function handleOrder(e) {
@@ -99,7 +101,7 @@ const Shop = () => {
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
-
+console.log(allCategories)
   return (
     <div>
       <div className={styles.filtros}>

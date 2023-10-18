@@ -10,7 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   postFavorites,
   deleteFavorite,
-  getOneFavorites
+  getOneFavorites,
+  refreshFavorites
 } from "../../../Redux/actions/user/user-actions";
 import Swal from 'sweetalert2';
 import {
@@ -24,6 +25,7 @@ const Card = ({ name, images, price, id }) => {
   const [addToCartClicked, setAddToCartClicked] = useState(false);
   const [addFavoriteClicked, setAddFavoriteClicked] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const [change, setChange] = useState(false)
   const dispatch = useDispatch();
 
   let heart = "❤️";
@@ -141,7 +143,11 @@ const Card = ({ name, images, price, id }) => {
         });
 
         setCorazon(!corazon);
+       
+    
       } else {
+        setChange(!change)
+        dispatch(refreshFavorites(change))
         dispatch(deleteFavorite(product_id, user.email)).then((result) => {
           notifyII(result, heartBroke);
         });
