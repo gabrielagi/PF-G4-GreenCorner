@@ -30,8 +30,8 @@ function validate(input) {
   if (input.description.length > 256) {
     errors.description = "Description must not exceed 256 characters";
   }
-  if (input.images.length > 5) {
-    errors.images = "You can select a maximum of 5 images";
+  if (input.images.length > 5 || input.images.length < 1)  {
+    errors.images = "You can select a maximum of 5 images and a minimum of 1";
   }
   if (input.categories.length === 0) {
     errors.categories = "You must select at least one category";

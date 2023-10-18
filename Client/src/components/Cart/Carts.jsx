@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductCart } from "../../Redux/actions/product/action";
 import { useAuth0 } from "@auth0/auth0-react";
 import EmptyCart from "../EmptyCart/EmptyCart";
+import Loading from "../Loading/Loading";
 
 
 const Carts = () => {
@@ -67,9 +68,7 @@ const Carts = () => {
     }
   };
   if (isLoading) {
-    return <div >
-    <div> Loading...</div>
-  </div>;
+    return <Loading />;
   }
   return (
     <div className=" bg-gray-200 md:mx-20 font-poppins">

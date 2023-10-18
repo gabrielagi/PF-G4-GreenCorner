@@ -5,6 +5,9 @@ import { deleteProductCart, getProductCart } from "../../Redux/actions/product/a
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import {FaTrashAlt} from "react-icons/fa"
+
+
+
 const Cart = ({id,name, price, image, amount}) => {
   const total = (price * amount)
   const pricee = price.replace(/\.00$/, '');
@@ -16,20 +19,10 @@ const Cart = ({id,name, price, image, amount}) => {
     if(!deleteClicked){
       setDeleteClicked(true) 
       dispatch(deleteProductCart(idProduct, email)).then(() => {
-      dispatch(getProductCart(user.email));
-
-
-    }
-    
-    )
-
+      dispatch(getProductCart(user.email))}  )
     setTimeout(()=>
-    {setDeleteClicked(false)},3000
-    )
-    }
-   
-  };
-
+    {setDeleteClicked(false)},3000)}
+     };
 
 return(
     <div className=" grid grid-cols-2  sm:grid-cols-3 md:grid-cols-4 bg-gray-100 mx-10 rounded-2xl ">
