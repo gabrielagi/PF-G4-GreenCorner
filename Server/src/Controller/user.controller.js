@@ -75,7 +75,7 @@ const getAllFavorites = async (email) => {
       ],
     });
 
- 
+
     return favorites;
 
   } catch (error) {
@@ -86,8 +86,9 @@ const getAllFavorites = async (email) => {
 const getOneFavorite = async (email, id) => {
   try {
     const favorite = await Favorite.findOne({
-      where: { email: email ,
-      product_id: id
+      where: {
+        email: email,
+        product_id: id
       },
     });
 
@@ -196,7 +197,7 @@ const deleteUser = async (id) => {
   }
 };
 
-const deleteFavorite = async (product_id,email ) => {
+const deleteFavorite = async (product_id, email) => {
   try {
     const deleter = await Favorite.destroy({
       where: {
@@ -211,12 +212,12 @@ const deleteFavorite = async (product_id,email ) => {
     } else {
       return "This Favorite doesn't exist";
     }
-    
+
   } catch (error) {
     console.log(error.message);
   }
 };
-const deleteFavoriteBD = async (product_id ) => {
+const deleteFavoriteBD = async (product_id) => {
   console.log('llegó al controller')
   console.log(product_id)
 
@@ -224,7 +225,7 @@ const deleteFavoriteBD = async (product_id ) => {
     const deleter = await Favorite.destroy({
       where: {
         product_id: product_id,
-       
+
       },
     });
 
@@ -234,7 +235,7 @@ const deleteFavoriteBD = async (product_id ) => {
     } else {
       return "This Favorite doesn't exist";
     }
-    
+
   } catch (error) {
     console.log(error.message);
   }

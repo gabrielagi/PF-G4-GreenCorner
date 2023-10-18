@@ -17,23 +17,18 @@ import styles from "../pages/Shop/Shop.module.css";
 import leafBanner from '../img/plantbanner.jpg'
 import EmptyFavorites from "../components/EmptyFavorites/EmptyFavorites";
 import './Favorite.styles.css'
+import Loading from "../components/Loading/Loading";
+
 const Favorites = () => {
    
 
 
 
 const dispatch = useDispatch();
-useEffect(() => {
-  console.log('gua entra')
-  console.log(dispatch)
-  dispatch(getFavorites(user.email));
-  dispatch(getAllCategories())
 
-  return
-}, [dispatch]);
   const favorites = useSelector((state) => state.favorites);
   const allCategories = useSelector((state) => state.categories);
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
   console.log(user)
   const currentPage = useSelector((state) => state.pagination.currentPage); 
   const productsPerPage = 9;
@@ -46,6 +41,16 @@ useEffect(() => {
 console.log(totalFavorites)
   const totalPages = Math.ceil(totalFavorites / productsPerPage);
 
+
+  useEffect(() => {
+    console.log('gua entra')
+    console.log(dispatch)
+    if(user){
+    dispatch(getFavorites(user.email));
+    dispatch(getAllCategories())
+    }
+    return
+  }, [dispatch,user]);
 
 
 
@@ -115,6 +120,8 @@ console.log(favorites)
   return (
     <div className="bg-[url('https://wallpapers.com/images/hd/different-green-leaves-plant-4k-desktop-wcfnrf99bahxrcl3.jpg')]">
       <h1 className="  font-poppins font-extrabold   text-6xl text-center bg-cover bg-top h-[150px] md:text-9xl text-gray-200 md:text-start pt-[80px] md:pl-[170px] md:pb-[100px]  bg-opacity-0 ">YOUR garden </h1>
+       
+      {isLoading ? (<Loading />) : (
        <div className="font-poppins    bg-gray-100 bg-opacity-100">
           
        <div className="grid md:grid-cols-2 gap-x-20 md:gap-x-1  my-10 pt-10"> 
@@ -122,8 +129,8 @@ console.log(favorites)
             <div className=" ">
 
                 {/*-- ---------------------- SEARCHBAR ------------------------------------------------- */}
-                <div className="box  mt-10 bg-green-200  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[350px] mb-10 justify-center  ">
-                      <input placeholder="Search.. " onChange={handleChange} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white "/>
+                <div className="box  mt-10 bg-green-700  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[80px] mb-10 justify-center  "> {/* ACA PONER  md:w-[300px]*/}
+                      <input placeholder="Search.. " onChange={handleChange} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white  placeholder:text-white"/>
                       <button type='submit' onClick={handleSubmit}><BiSearch color='black' size='30px'/></button>
                 </div>
                  
@@ -133,7 +140,7 @@ console.log(favorites)
                <div className="  rounded-3xl bg-opacity-40 py-16 md:w-[300px] md:h-[700px] md:mx-auto">
                     
                     <div className="px-4 ">
-                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-lime-100 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-emerald-500 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                        <h1 className="mx-auto mb-6 text-center text-gray-600 font-bold col-span-2 md:col-span-1 text-4xl md:font-medium pt-5">ORDER BY</h1>
                        <div className=" grid grid-cols-2 gap-x-5 text-center md:grid-cols-1 ">
                         <div> 
@@ -179,8 +186,8 @@ console.log(favorites)
                        
                     
                     <div className="px-4">
-                       <div className="px-[40px] md:mt-[60px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-lime-100 py-4 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"  > 
-                <p className="text-center hover: font-medium text-3xl text-gray-700 hover:scale-110 hover:text-green-700 transition-transform duration-300" onClick={handleClear}>
+                       <div className="px-[40px] md:mt-[60px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-neutral-600  py-4 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"  > 
+                <p className="text-center hover: font-medium text-3xl text-gray-400 hover:scale-110 hover:text-green-700 transition-transform duration-300" onClick={handleClear}>
                         All categories
                       </p>
                       {allCategories ? (allCategories.map((p, i) => (
@@ -289,6 +296,7 @@ console.log(favorites)
 
           {/* //className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:h-[250px] md:w-[250px]  */}
     </div>
+      )}
     </div>
    
   );
