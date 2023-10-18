@@ -5,8 +5,8 @@ import {
   MdOutlineDashboard,
   MdPayment,
 } from "react-icons/md";
-import {FaRegFileAlt} from "react-icons/fa";
-import { AiOutlineUser, AiOutlineLineChart } from "react-icons/ai";
+import { FaRegFileAlt } from "react-icons/fa";
+import { AiOutlineUser, AiOutlineUsergroupAdd } from "react-icons/ai";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { Link } from "react-router-dom";
@@ -18,27 +18,27 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
     {
       name: "Profile",
       icon: AiOutlineUser,
-      // margin: true,
+      margin: true,
     },
     {
       name: "Users",
-      icon: BiUserPlus,
-      // margin: true,
+      icon: AiOutlineUsergroupAdd,
+      margin: true,
     },
     {
       name: "Orders",
       icon: FaRegFileAlt,
-      // margin: true,
-
+      margin: true,
     },
     {
       name: "Products",
       icon: LuFileEdit,
-      // margin: true,
+      margin: true,
     },
     {
       name: "Create Product",
       icon: BiEdit,
+      margin: true,
     },
     // {
     //   name: "Payment methods",
@@ -47,7 +47,7 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
     {
       name: "Categories",
       icon: MdOutlineDashboard,
-      // margin: true,
+      margin: true,
     },
     // {
     //   name: "Shipping Address",
@@ -67,8 +67,8 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   return (
     <section className="flex gap-6  mt-5 mb-0">
       <div
-        className={`bg-[#315098] min-h-min overflow:hidden ${
-          open ? "w-76" : "w-20"
+        className={`bg-[#315098] h-[97vh] md:h-[85vh] ${
+          open ? "w-80" : "w-20"
         } duration-500 text-gray-100 px-4 font-poppins mb-0`}
       >
         <div className="py-3 flex justify-end">
@@ -84,7 +84,7 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
               key={i}
               to={menu.link}
               className={`${
-                menu?.margin && "mt-20"
+                menu?.margin && "mt-5"
               } group flex items-center text-md  gap-3.5 font-medium p-2 rounded-md ${
                 selectedMenu === menu.name
                   ? "bg-[#85E1FC]"
@@ -110,7 +110,7 @@ function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
               <h2
                 className={`${
                   open && "hidden"
-                } absolute left-48 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-20 group-hover:duration-300 group-hover:w-fit`}
+                } absolute left-56 bg-white font-semibold whitespace-pre text-gray-900 rounded-md drop-shadow-lg px-0 py-0 w-0 overflow-hidden group-hover:px-2 group-hover:py-1 group-hover:left-20 group-hover:duration-300 group-hover:w-fit`}
               >
                 {menu?.name}
               </h2>

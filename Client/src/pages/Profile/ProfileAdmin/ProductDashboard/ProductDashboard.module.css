@@ -1,5 +1,5 @@
 .productDashboard {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   padding: 20px;
 }
 
@@ -16,7 +16,7 @@
 
 .searchInput {
   width: 96%;
-  padding: 10px;
+  padding: 7px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -26,11 +26,14 @@
   width: 100%;
 }
 
-.productTable, .productTable th, .productTable td {
+.productTable,
+.productTable th,
+.productTable td {
   border: 1px solid #ccc;
 }
 
-.productTable th, .productTable td {
+.productTable th,
+.productTable td {
   padding: 8px;
   text-align: left;
 }
@@ -40,9 +43,8 @@
   width: 1%;
 }
 
-
 .productImage {
-  width: 100%;
+  width: 90%;
   height: 50px;
   border-radius: 50%;
 }
@@ -69,7 +71,6 @@
 .trendingColumn {
   width: 10%;
 }
-
 
 .deleteButton {
   background-color: #ff0000;
@@ -103,12 +104,12 @@
   background-color: #0052a7;
 }
 
-.actions{
+.actions {
   display: flex;
-  justify-content:center;
+  justify-content: center;
 }
 
 .tableWrapper {
-  overflow-x: auto;  
-  max-width: 100%;  
+  overflow-x: auto;
+  max-width: 100%;
 }
