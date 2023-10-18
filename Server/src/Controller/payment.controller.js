@@ -263,7 +263,7 @@ const success = async (req, res) => {
 
   res.redirect("https://green-corner.vercel.app/");
 };
-
+}
 const failure = (req, res) => {
   console.log(req.query);
   // res.send('Pago realizado')
