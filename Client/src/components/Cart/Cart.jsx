@@ -1,6 +1,6 @@
 // import "./Cart.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { deleteProductCart, getProductCart } from "../../Redux/actions/product/action";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -8,13 +8,26 @@ import {FaTrashAlt} from "react-icons/fa"
 const Cart = ({id,name, price, image, amount}) => {
   const total = (price * amount)
   const pricee = price.replace(/\.00$/, '');
+  const [deleteClicked, setDeleteClicked] = useState(false);
   const { user,} = useAuth0();
   const dispatch = useDispatch();
 
   const handleDelete = (idProduct, email) => {
-    dispatch(deleteProductCart(idProduct, email)).then(() => {
+    if(!deleteClicked){
+      setDeleteClicked(true) 
+      dispatch(deleteProductCart(idProduct, email)).then(() => {
       dispatch(getProductCart(user.email));
-    })
+
+
+    }
+    
+    )
+
+    setTimeout(()=>
+    {setDeleteClicked(false)},3000
+    )
+    }
+   
   };
 
 
@@ -47,7 +60,8 @@ return(
           
             
                
-                  <button className="exit  mx-10 sm:mr-20"onClick={()=>handleDelete(id,user.email)}><FaTrashAlt size='18'/></button>
+                  <button className="exit  mx-10 sm:mr-20"onClick={()=>handleDelete(id,user.email)}
+                  disabled={deleteClicked}><FaTrashAlt size='18'/></button>
                 </div>
               
        
