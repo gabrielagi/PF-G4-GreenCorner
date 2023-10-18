@@ -1,11 +1,4 @@
 const mercadopago = require("mercadopago");
-<<<<<<< HEAD
-// const { useAuth0 } = require ("@auth0/auth0-react"); 
-// const { user } = useAuth0()
-const { Purchase, Purchasefail } = require ("../../nodemailer/mailer")
-=======
-
->>>>>>> 191b844937b1a7b9ae408885ef375d7317efefba
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
@@ -202,14 +195,7 @@ const createOrder = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-const success =  async(req, res) => {
-  const mail = "greencornerg4@gmail.com";
-  Purchase (mail, "payer")
-
-=======
 const success = (req, res) => {
->>>>>>> 191b844937b1a7b9ae408885ef375d7317efefba
   console.log(req.query);
   console.log("Necesito en success");
 
@@ -226,14 +212,7 @@ const success = (req, res) => {
   res.redirect("http://green-corner.vercel.app/");
 };
 
-<<<<<<< HEAD
-const failure =  async(req, res) => {
-  const mail = "greencornerg4@gmail.com";
-
-  Purchasefail(mail, "payer")
-=======
 const failure = (req, res) => {
->>>>>>> 191b844937b1a7b9ae408885ef375d7317efefba
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database
