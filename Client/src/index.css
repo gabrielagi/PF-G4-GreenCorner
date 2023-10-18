@@ -1,17 +1,32 @@
-/* Importación de Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap");
+  /* Importación de Google Fonts */
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap");
 
-/* Importaciones de Tailwind CSS */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+  /* Importaciones de Tailwind CSS */
+  @import "tailwindcss/base";
+  @import "tailwindcss/components";
+  @import "tailwindcss/utilities";
 
-/* Configuración de fuentes personalizadas */
-@font-face {
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 100;
-  src: local("Poppins Thin"), local("Poppins-Thin"),
-    url("/path-to-your-font/Poppins-Thin.woff2") format("woff2");
-  /* Agrega otras variantes de peso y rutas de fuentes según sea necesario */
-}
+  /* Configuración de fuentes personalizadas */
+  @font-face {
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 100;
+    src: local("Poppins Thin"), local("Poppins-Thin"),
+      url("/path-to-your-font/Poppins-Thin.woff2") format("woff2");
+    /* Agrega otras variantes de peso y rutas de fuentes según sea necesario */
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 10px; 
+  }
+  
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #00b600; 
+    border-radius: 6px; 
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #bdbdbd; 
+  }
