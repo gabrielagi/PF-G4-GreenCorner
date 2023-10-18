@@ -210,7 +210,7 @@ const success = (req, res) => {
   //res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
   console.log("Antes de redirigir");
 
-  res.redirect("http://green-corner.vercel.app/");
+  res.redirect("https://green-corner.vercel.app/");
 };
 
 const failure = (req, res) => {
