@@ -17,7 +17,7 @@ import { BsCartPlus } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillHeartbreakFill } from "react-icons/bs";
 import mercadopago from "../assets/mercadopago.png";
-
+import Swal from 'sweetalert2';
 import {
   postFavorites,
   deleteFavorite,
@@ -37,6 +37,11 @@ const Detail = () => {
   /*   const link = import.meta.env.VITE_ENDPOINT; */
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [corazon, setCorazon] = useState(false);
+  const [gardenClicked, setGardenClicked] = useState(false);
+  const [cartClicked, setCartClicked] = useState(false);
+  const [checkoutClicked, setCheckoutClicked] = useState(false);
+
+
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
 
@@ -157,6 +162,8 @@ const Detail = () => {
     });
 
   const handleAddToMyGarden = () => {
+    if(!deleteClicked){
+      setDeleteClicked(true) 
     if (isAuthenticated) {
       let favorite = {
         email: user.email,
@@ -176,7 +183,7 @@ const Detail = () => {
       setCorazon(!corazon);
     } else {
       loginWithRedirect();
-    }
+    }}
   };
   const handleRemoveToMyGarden = (id) => {
     dispatch(deleteFavorite(id, user.email)).then((result) => {
@@ -261,9 +268,12 @@ const Detail = () => {
   const amountIncrement = () =>
     product.stock > amount
       ? setAmount(amount + 1)
-      : alert(
-          `You have reached the maximum amount of ${product.name} available`
-        );
+      : Swal.fire({
+        icon: 'error',
+        title: 'Sorry',
+        text: 'There are not enough products on stock',
+
+      })
 
   // Hasta cuánto se puedo decrecentar
   const amountDecrement = () => (amount > 1 ? setAmount(amount - 1) : null);
