@@ -14,52 +14,52 @@ import { LuFileEdit } from "react-icons/lu";
 
 function NavbarAdmin({ selectedMenu, setSelectedMenu }) {
   const menus = [
-    { name: "Home", link: "/", icon: MdOutlineDashboard },
+    // { name: "Home", link: "/", icon: MdOutlineDashboard },
     {
       name: "Profile",
       icon: AiOutlineUser,
-      margin: true,
+      // margin: true,
+    },
+    {
+      name: "Users",
+      icon: BiUserPlus,
+      // margin: true,
+    },
+    {
+      name: "Orders",
+      icon: FaRegFileAlt,
+      // margin: true,
+
+    },
+    {
+      name: "Products",
+      icon: LuFileEdit,
+      // margin: true,
     },
     {
       name: "Create Product",
       icon: BiEdit,
     },
+    // {
+    //   name: "Payment methods",
+    //   icon: MdPayment,
+    // },
     {
-      name: "Products",
-      icon: LuFileEdit,
-      margin: true,
+      name: "Categories",
+      icon: MdOutlineDashboard,
+      // margin: true,
     },
-    {
-      name: "Users",
-      icon: BiUserPlus,
-      margin: true,
-    },
-    {
-      name: "Orders",
-      icon: FaRegFileAlt,
-      margin: true,
+    // {
+    //   name: "Shipping Address",
+    //   icon: TbGps,
+    //   margin: true,
+    // },
 
-    },
-    {
-      name: "Payment methods",
-      icon: MdPayment,
-    },
-    {
-      name: "Charts",
-      icon: AiOutlineLineChart,
-      margin: true,
-    },
-    {
-      name: "Shipping Address",
-      icon: TbGps,
-      margin: true,
-    },
-
-    {
-      name: "Customer Support",
-      link: "/contact-us",
-      icon: RiCustomerService2Fill,
-    },
+    // {
+    //   name: "Customer Support",
+    //   link: "/contact-us",
+    //   icon: RiCustomerService2Fill,
+    // },
   ];
 
   const [open, setOpen] = useState(true);

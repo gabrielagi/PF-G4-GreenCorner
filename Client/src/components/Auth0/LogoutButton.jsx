@@ -5,7 +5,7 @@ import styles from "./LogoutButton.module.css"
 export const LogoutButton = ()=>{
     const {logout}= useAuth0();
     return (
-    <button onClick={()=>{logout()}} className={styles.logoutButton}>  Cerrar sesion</button>
+    <button onClick={()=>{logout()}} className={styles.logoutButton}>Logout</button>
     )
 }
 

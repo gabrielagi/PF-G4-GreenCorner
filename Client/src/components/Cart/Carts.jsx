@@ -12,12 +12,9 @@ import EmptyCart from "../EmptyCart/EmptyCart";
 const Carts = () => {
   const products = useSelector((state) => state.productCart);
   const dispatch = useDispatch();
-  const { user } = useAuth0();
+  const { user, isLoading } = useAuth0();
 
-  const [loading, setLoading] = useState(true);
-  useEffect(()=>{
-     if(products.length) {setLoading(false)}
-  },[products])
+
 
 
   let total = 0;
@@ -58,7 +55,7 @@ const Carts = () => {
         }
       }
       const { data } = await axios.post(
-        "http://localhost:3001/payment/create-order",
+        "https://greencorner.onrender.com/payment/create-order",
         { product, email: user.email }
       );
       console.log("Data en el componente Detail", data);
@@ -69,7 +66,7 @@ const Carts = () => {
       console.log(error.message);
     }
   };
-  if (loading) {
+  if (isLoading) {
     return <div >
     <div> Loading...</div>
   </div>;

@@ -144,7 +144,7 @@ console.log(favorites)
                               onChange={handleOrden}
                               label="Name">
                         
-                              <MenuItem value="asc" style={{ fontSize: "15px" }}>
+                              <MenuItem value="asc" style={{ fontSize: "15px" , borderColor:"red" }}>
                                 A - Z
                               </MenuItem>
                               <MenuItem value="desc" style={{ fontSize: "15px" }}>
@@ -171,7 +171,7 @@ console.log(favorites)
                             </Select>
                         </div> 
                     </div>
-                <div className="px-[40px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500"  > 
+                <div className="px-[40px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-gray-100 mx-auto"  > 
                       {allCategories ? (allCategories.map((p, i) => (
                         <button key={i} className="hover:scale-110">
                           <Category 

@@ -17,7 +17,7 @@ import { BsCartPlus } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillHeartbreakFill } from "react-icons/bs";
 import mercadopago from "../assets/mercadopago.png";
-
+import Swal from 'sweetalert2';
 import {
   postFavorites,
   deleteFavorite,
@@ -37,6 +37,11 @@ const Detail = () => {
   /*   const link = import.meta.env.VITE_ENDPOINT; */
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [corazon, setCorazon] = useState(false);
+  const [gardenClicked, setGardenClicked] = useState(false);
+  const [cartClicked, setCartClicked] = useState(false);
+  const [checkoutClicked, setCheckoutClicked] = useState(false);
+
+
   const allProducts = useSelector((state) => state.allProducts);
   const product = useSelector((state) => state.productDetail);
 
@@ -54,6 +59,10 @@ const Detail = () => {
       setActiveImg(newActiveImg);
       setLoadingImages(false);
     }, 500); // Ajusta el tiempo de espera según tus necesidades
+  };
+
+  const handleImageLoad = () => {
+    setLoadingImages(false);
   };
   const [cartQuantity, setCartQuantity] = useState(0);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
@@ -153,6 +162,8 @@ const Detail = () => {
     });
 
   const handleAddToMyGarden = () => {
+    if(!deleteClicked){
+      setDeleteClicked(true) 
     if (isAuthenticated) {
       let favorite = {
         email: user.email,
@@ -172,7 +183,7 @@ const Detail = () => {
       setCorazon(!corazon);
     } else {
       loginWithRedirect();
-    }
+    }}
   };
   const handleRemoveToMyGarden = (id) => {
     dispatch(deleteFavorite(id, user.email)).then((result) => {
@@ -257,16 +268,17 @@ const Detail = () => {
   const amountIncrement = () =>
     product.stock > amount
       ? setAmount(amount + 1)
-      : alert(
-          `You have reached the maximum amount of ${product.name} available`
-        );
+      : Swal.fire({
+        icon: 'error',
+        title: 'Sorry',
+        text: 'There are not enough products on stock',
+
+      })
 
   // Hasta cuánto se puedo decrecentar
   const amountDecrement = () => (amount > 1 ? setAmount(amount - 1) : null);
 
-  const handleImageLoad = () => {
-    setLoadingImages(false);
-  };
+
 
   // Se realiza el checkout
   const handleCheckout = async () => {
@@ -274,7 +286,7 @@ const Detail = () => {
       if (product.stock >= amount) {
         try {
           const { data } = await axios.post(
-            "http://localhost:3001/payment/create-order",
+            "https://greencorner.onrender.com/payment/create-order",
             { product, amount, email: user.email }
           );
           console.log("Data en el componente Detail", data);
@@ -294,8 +306,36 @@ const Detail = () => {
   const number = (max) => {
     return Math.floor(Math.random() * max);
   };
+  console.log(product)
+  let categories = [];
+if (product && product.categories) {
+  categories = product.categories.map((c) => c.name);
+}
+
+// Convert the categories array to a string, separated by commas
+const categoriesString = categories.join(', ');
+
+
+
+
+
+let shortDescription = "";
+let longDescription = "";
+
+// Verifica si la descripción existe antes de dividirla
+if (product?.description) {
+  const sentences = product.description.split('.'); // Puedes cambiar el delimitador según tus necesidades
+
+  // Considera solo la primera oración como descripción corta
+  shortDescription = sentences.length > 0 ? sentences[0] : "";
+
+  // Considera el resto de las oraciones como descripción larga
+  longDescription = sentences.slice(1).join('. ');
+}
+
   console.log(number(5));
   console.log(product.categories);
+
   if (loadingImages || !activeImg) {
     return <p> ta cargando</p>;
   } else if (product.name) {
@@ -306,38 +346,38 @@ const Detail = () => {
             <VscArrowCircleLeft color="gray" size="5rem" />
           </button>
         </Link>
-        <div className="mx-10 sm:mx-[100px]">
+        <div className="mx-10 sm:mx-[100px] ">
           <div className="grid grid-cols-1   sm:grid-cols-1 md:grid-cols-2  gap-12 text-[#a9a9a9]">
-            {activeImg && (
-              <div
-                className={`swiper-container-detail  ${
-                  loadingImages ? "fade-out" : "fade-in"
-                }`}
-              >
-                <img
-                  className={`mx-auto bg-gray-100 bg-opacity-20 w-auto h-[414px] ${
-                    loadingImages ? "fade-out" : "fade-in"
-                  }`}
-                  src={activeImg}
-                  alt="Product"
-                  onLoad={handleImageLoad}
-                />
-                <Slider
-                  id={id}
-                  images={product.images}
-                  setActiveImg={setActiveImg}
-                ></Slider>
-              </div>
-            )}
+          {activeImg && (
+        <div
+          className={`swiper-container-detail  ${
+            loadingImages ? "fade-out" : "fade-in"
+          }`}
+        >
+            <img
+            className={`mx-auto bg-gray-100 bg-opacity-20 w-auto h-[414px] rounded-[40px] transition-opacity duration-500 ${
+              loadingImages ? "opacity-0" : "opacity-100"
+            }`}
+            src={activeImg}
+            alt="Product"
+          />
+          <Slider
+            className="rounded-[100px]"
+            id={id}
+            images={product.images}
+            setActiveImg={setActiveImg}
+          ></Slider>
+        </div>
+      )}
 
-            <div className="  bg-[#f6f6f6] justify-between w-full px-20">
+            <div className="  bg-[#f6f6f6] rounded-[70px] justify-between w-full px-20">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
                 {product?.name}
               </h2>
               <hr className="my-10"></hr>
-              <p className="py-t text-5xl text-[#444444]">${product.price}</p>
+              <p className="py-t  text-5xl text-[#41b441]">${product.price}</p>
               <div className="w-full">
-                <p className="py-20  break-words ">{product.description}</p>
+                <p className="py-20  break-words ">{shortDescription}</p>
               </div>
 
               {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
@@ -347,29 +387,25 @@ const Detail = () => {
                 <option>dos</option>
               </select> */}
               <div className="flex">
-                <p className="text-3xl font-semibold align-bottom text-green-500">
+                <p className="text-[17px] pr-5 font-semibold align-bottom text-green-500">
                   Categories:
                 </p>
-                {product?.categories.map((c, i) => (
-                  <div className="px-2 text-[16px]" key={i}>
-                    <p>{c.name}</p>
-                  </div>
-                ))}
+             <p>{categoriesString}</p>
               </div>
-              <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10    ">
-                <div>
+              <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10  mx-auto  ">
+                <div className="mx-auto md:mx-0 border-2">
                   <button
                     onClick={amountDecrement}
-                    className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-lg text-green-800 text-4xl hover:bg-gray-300"
+                    className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-xl text-green-800 text-4xl hover:bg-gray-300"
                   >
                     -
                   </button>
-                  <span className=" text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
+                  <span className=" border-gray-200 border text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
                     {amount}
                   </span>
                   <button
                     onClick={amountIncrement}
-                    className="bg-gray-200 py-4 px-8 rounded-lg text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
+                    className="bg-gray-200 py-4 px-8 rounded-xl text-green-800 text-4xl hover:bg-gray-300 md:py-6 md:px-10"
                   >
                     +
                   </button>
@@ -390,8 +426,8 @@ const Detail = () => {
                   ADD TO CART <BsCartPlus style={{ marginLeft: "20px" }} />
                 </Button>
               </div>
-              <div className="flex  md: justify-between gap-x-10                      ">
-                <div className="my-10">
+              <div className="flex pt-20 md: justify-between gap-x-10 f                     ">
+                <div className="">
                   <Button
                     variant="contained"
                     onClick={handleAddToMyGarden}
@@ -442,32 +478,18 @@ const Detail = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:mx-auto sm:w-[100%] text-[#a9a9a9]">
-            <div className=" text-center py-6 text-4xl text-[#444444]">
+          <div className="grid grid-cols-1 mt-32 bg-[#f6f6f6] gap-y-6 mb-28 sm:mx-auto sm:w-[100%] text-[#a9a9a9] rounded-3xl py-10 md:text-3xl">
+            <div className=" text-center py-6 text-4xl font-semibold text-[#444444]">
               Descripción
             </div>
             <hr></hr>
-            <div className=" ">
-              Fusce maximus tellus id molestie vulputate. In sit amet varius
-              sem. Nam convallis, massa in lacinia molestie, quam odio porttitor
-              nulla, sed gravida diam lectus id lorem. Donec pellentesque risus
-              in metus ornare imperdiet. Sed ligula mauris, imperdiet a ipsum
-              vel, egestas semper turpis. Aliquam dapibus urna tristique leo
-              vulputate elementum. Donec arcu tellus, sollicitudin sed neque
-              pretium, iaculis venenatis lorem.
-            </div>
+            <div className=" text-center font-medium"><p>
+                 {product.description}
+        
+            </p>
+         </div>
 
-            <div className="">
-              Nullam ultricies lacus in feugiat viverra. Nunc gravida sagittis
-              elit, sed sodales lacus posuere in. Aliquam mi turpis, imperdiet
-              ac sollicitudin at, ultrices ac est. Praesent consectetur, neque
-              sed dictum pharetra, purus ante fringilla metus, in egestas dui
-              lacus quis justo. Maecenas lacus augue, vulputate quis ullamcorper
-              et, porta et velit. Sed aliquet neque elit. Nunc non sagittis
-              nisl. Sed tempus mollis diam eget laoreet. In ut pulvinar tellus,
-              nec tincidunt nulla. Morbi a hendrerit sapien. Nulla nec turpis
-              sed eros lobortis ornare. Morbi sodales interdum ipsum.
-            </div>
+      
           </div>
           <h3 className=" font-semibold  text-gray-700 my-20 mt-20 text-center text-5xl ">
             Related products
@@ -489,7 +511,7 @@ const Detail = () => {
                     />
                   );
               })
-              .slice(number(5), number(5) + 4)}
+              .slice(number(4), number(4) + 4)}
           </div>
         </div>
       </div>

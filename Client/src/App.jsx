@@ -24,7 +24,7 @@ import { useSelector } from "react-redux";
 import PrivateRoute from "./PrivateRoute";
 import NotVerified from "./components/NotVerified/NotVerified";
 import DetailCarousel from "./components/DetailCarousel/DetailCarousel";
-import ProfileUser from "./pages/Profile/ProfileUser/Profile.userpanel"
+import ProfileUser from "./pages/Profile/ProfileUser/Profile.userpanel";
 import PaymentMethods from "./components/PaymentMethods/PaymentMethods";
 import Banned from "./pages/Banned/Banned.jsx";
 import Slider from "./components/Slider/Slider2";
@@ -33,14 +33,10 @@ import EmptyFavorites from "./components/EmptyFavorites/EmptyFavorites";
 import Cart from "./components/Cart/Cart";
 
 const App = () => {
-
-
   //Carga de usuarios
   const { user, isAuthenticated, isLoading } = useAuth0();
   const dispatch = useDispatch();
   const userStatus = useSelector((state) => state.userDetail.status);
-
-
 
   useEffect(() => {
     if (isAuthenticated && !isLoading) {
@@ -51,7 +47,7 @@ const App = () => {
         email: user.email,
         email_verified: user.email_verified,
       };
-     // console.log(userData);
+      // console.log(userData);
       dispatch(postUser(userData));
     }
   }, [user, isAuthenticated, isLoading, dispatch]);
@@ -63,7 +59,13 @@ const App = () => {
       ) : (
         <>
           <Navbar />
-          <ToastContainer />
+          <ToastContainer 
+              limit={1}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover={false}/>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/fail" element={<NotVerified />} />
@@ -93,7 +95,7 @@ const App = () => {
             />
             <Route path="/guides" element={<Guides />} />
             <Route path="/contact-us" element={<ContactUs />} />
-            <Route path="/prueba" element={ <Cart/> } />
+            <Route path="/prueba" element={<Cart />} />
           </Routes>
           <Footer></Footer>
         </>
