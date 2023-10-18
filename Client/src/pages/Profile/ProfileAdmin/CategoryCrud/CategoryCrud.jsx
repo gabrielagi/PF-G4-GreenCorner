@@ -321,7 +321,11 @@ const Category = () => {
                     </tr>
                   ))}
                 </tbody>
-                <div style={{ marginLeft: "400px" }}>
+              </table>
+            </div>
+          </div>
+        </div>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1}}>
               <Pagination
                 count={totalPages}
                 page={currentPage}
@@ -334,6 +338,8 @@ const Category = () => {
                   },
                   "& .MuiPaginationItem-root": {
                     fontSize: "15px",
+                    display: "inline",
+                    margin: "0 4px",
                   },
                   "& .paginationButton": {
                     backgroundColor: "#50a100",
@@ -341,10 +347,6 @@ const Category = () => {
                 }}
               />
             </div>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Modal de edición de usuario */}

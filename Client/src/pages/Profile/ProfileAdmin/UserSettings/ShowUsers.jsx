@@ -385,7 +385,10 @@ const ShowUsers = () => {
                   ))}
                 </tbody>
               </table>
-              <div style={{ marginLeft: "400px" }}>
+            </div>
+          </div>
+        </div>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1}}>
               <Pagination
                 count={totalPages}
                 page={currentPage}
@@ -405,9 +408,6 @@ const ShowUsers = () => {
                 }}
               />
             </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Modal de edición de usuario */}
