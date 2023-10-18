@@ -140,7 +140,7 @@ console.log(favorites)
                <div className="  rounded-3xl bg-opacity-40 py-16 md:w-[300px] md:h-[700px] md:mx-auto">
                     
                     <div className="px-4 ">
-                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-lime-100 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-emerald-500 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                        <h1 className="mx-auto mb-6 text-center text-gray-600 font-bold col-span-2 md:col-span-1 text-4xl md:font-medium pt-5">ORDER BY</h1>
                        <div className=" grid grid-cols-2 gap-x-5 text-center md:grid-cols-1 ">
                         <div> 
@@ -186,8 +186,8 @@ console.log(favorites)
                        
                     
                     <div className="px-4">
-                       <div className="px-[40px] md:mt-[60px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-lime-100 py-4 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"  > 
-                <p className="text-center hover: font-medium text-3xl text-gray-700 hover:scale-110 hover:text-green-700 transition-transform duration-300" onClick={handleClear}>
+                       <div className="px-[40px] md:mt-[60px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-neutral-600  py-4 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1"  > 
+                <p className="text-center hover: font-medium text-3xl text-gray-400 hover:scale-110 hover:text-green-700 transition-transform duration-300" onClick={handleClear}>
                         All categories
                       </p>
                       {allCategories ? (allCategories.map((p, i) => (
