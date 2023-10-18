@@ -171,11 +171,32 @@ const updateOrders = async (id, updatedOrderData) => {
   }
 };
 
+const deleteOrder = async (id) => {
+  try {
+    const deleter = await Order.destroy({
+      where: {
+        id: id
+      },
+    });
+
+
+    if (deleter) {
+      return "This product has been deleted from Orders";
+    } else {
+      return "This Favorite doesn't exist";
+    }
+    
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   getAllOrders,
   getLastOrder,
   getOrderById,
   getAllOrdersDetails,
+  deleteOrder,
   // getOrderByDate,
   getOrderByStatus,
   postOrderDetail,
