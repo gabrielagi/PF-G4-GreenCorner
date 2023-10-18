@@ -5,8 +5,8 @@ const getAllTestimonials = async () => {
     return testimonials
 }
 
-const createTestimonial = async (message, date, rating) => {
-    const newTestimonial = await Testimonial.create({ message, date, rating })
+const createTestimonial = async (message, date, rating, userId) => {
+    const newTestimonial = await Testimonial.create({ message, date, rating, userId })
     return newTestimonial
 
 }
@@ -14,7 +14,7 @@ const createTestimonial = async (message, date, rating) => {
 const getTestimonialbyId = async (id) => {
     const testimonial = await Testimonial.findAll({
         where: {
-            userId: id
+            id: id
         }
     })
     return testimonial
@@ -38,16 +38,16 @@ const deleteTestimonial = async (id) => {
         return error
     }
 }
-// const updateTestimonial = async (id, data) => {
-//     const [updatedCount, updatedTestimonial] = await Testimonial.update(data, {
-//         where: { id: id },
-//         returning: true,
-//     })
-//     if (updatedCount === 0) {
-//         throw new Error("User not found or no changes made.");
-//     }
+const updateTestimonial = async (id, data) => {
+    const [updatedCount, updatedTestimonial] = await Testimonial.update(data, {
+        where: { id: id },
+        returning: true,
+    })
+    if (updatedCount === 0) {
+        throw new Error("User not found or no changes made.");
+    }
 
-//     return updatedTestimonial[0];
+    return updatedTestimonial[0];
 
-// }
-module.exports = { getAllTestimonials, createTestimonial, getTestimonialbyId/*, updateTestimonial */, deleteTestimonial}
+}
+module.exports = { getAllTestimonials, createTestimonial, getTestimonialbyId, updateTestimonial, deleteTestimonial}

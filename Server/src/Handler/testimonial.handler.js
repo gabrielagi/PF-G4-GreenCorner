@@ -1,4 +1,4 @@
-const { getAllTestimonials, createTestimonial, getTestimonialbyId /*, updateTestimonial*/, deleteTestimonial} = require ("../Controller/testimonial.controller")
+const { getAllTestimonials, createTestimonial, getTestimonialbyId, updateTestimonial, deleteTestimonial} = require ("../Controller/testimonial.controller")
 
 const getTestimonialHandler = async (req, res) => {
     try {
@@ -16,7 +16,7 @@ const getTestimonialHandler = async (req, res) => {
 }
 
 const byIdHandler = async (req, res) => {
-    const { id } = req.params
+    const id  = req.params.id
     try {
         const testimonial = await getTestimonialbyId(id)
         return res.status(200).json(testimonial)
@@ -28,7 +28,7 @@ const byIdHandler = async (req, res) => {
 const createTestimonialHandler = async (req, res) => {
     try {
 
-        const {date, message, rating} = req.body
+        const {message, date, rating, userId} = req.body
         console.log(req.body);
         if (!date) {
             res.status(500).send("date")
@@ -37,7 +37,7 @@ const createTestimonialHandler = async (req, res) => {
         }else if(!rating) {
             res.status(500).send("rating")
         }else{
-        const newTestimonial = await createTestimonial(date, message, rating)
+        const newTestimonial = await createTestimonial(message, date, rating, userId)
         return res.status(201).json(newTestimonial)
     }
 
@@ -48,22 +48,15 @@ const createTestimonialHandler = async (req, res) => {
 }
 
 const updateHandler = async (req, res) => {
-    const id = req.params.id;
+    const id  = req.params.id;
+    console.log(id);
     const data  = req.body;
     
     try {
-        const testimonial = await byIdHandler(id)
-
-        if(!testimonial){
-            return res.status(404).send("Testimonial not found")
-        }
-
         const updater = await updateTestimonial(id, data)
-
         return res.status(200).json(updater)
-
     } catch (error) {
-        console.log(error);
+        console.log(error.message);
         return res.status(500).send(error.message)
     }
 }
@@ -82,7 +75,7 @@ const deleteHandler = async (req, res) => {
 module.exports = {
     getTestimonialHandler,
     createTestimonialHandler,
-    byIdHandler/*,
-    updateHandler*/,
+    byIdHandler,
+    updateHandler,
     deleteHandler
 }
