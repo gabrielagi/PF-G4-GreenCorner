@@ -20,6 +20,25 @@ const getAllOrders = async (email) => {
   }
 };
 
+const getLastOrder = async (email) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        email: email,
+      },
+      order: [['id', 'ASC']], // Ordena por la columna createdAt en orden descendente
+      limit: 1, // Limita el resultado a un solo registro
+    });
+    console.log(order);
+    return order;
+  } catch (error) {
+    throw new Error(
+      "Error al obtener la última orden desde la base de datos: " + error.message
+    );
+  }
+};
+
+
 const getAllOrdersDetails = async (idOrder) => {
   try {
     const orderDetail = await OrderDetail.findAll({
@@ -138,12 +157,49 @@ const postOrderDetail = async (newOrderDetail) => {
   }
 };
 
+const updateOrders = async (id, updatedOrderData) => {
+  try {
+    const existingOrder = await Order.findByPk(id);
+    if (!existingOrder) {
+      return false;
+    }
+    await existingOrder.update(updatedOrderData);
+
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const deleteOrder = async (id) => {
+  try {
+    const deleter = await Order.destroy({
+      where: {
+        id: id
+      },
+    });
+
+
+    if (deleter) {
+      return "This product has been deleted from Orders";
+    } else {
+      return "This Favorite doesn't exist";
+    }
+    
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 module.exports = {
   getAllOrders,
+  getLastOrder,
   getOrderById,
   getAllOrdersDetails,
+  deleteOrder,
   // getOrderByDate,
   getOrderByStatus,
   postOrderDetail,
   postOrder,
+  updateOrders
 };

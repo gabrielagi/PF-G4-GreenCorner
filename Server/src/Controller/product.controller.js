@@ -305,6 +305,23 @@ const deleteProductCart = async (id, email) => {
   }
 };
 
+const deleteAllProductCart = async (email) => {
+  try {
+    const deleter = await ShoppingCart.destroy({
+      where: {
+        email: email,
+      },
+    });
+    if (deleter === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return "Error al eliminar el product", error;
+  }
+};
+
 module.exports = {
   getAllProduct,
   getProductById,
@@ -316,5 +333,6 @@ module.exports = {
   getAllTrending,
   deleteProduct,
   deleteProductCart,
+  deleteAllProductCart,
   updateProductCart,
 };
