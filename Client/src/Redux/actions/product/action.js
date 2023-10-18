@@ -27,7 +27,7 @@ import {
   RESET_ALL_FAVORITES,
   FIND_FAV_BY_NAME,
 } from "../action-types";
-
+import Swal from "sweetalert2";
 import axios from "axios";
 
 /* const link= import.meta.env.VITE_ENDPOINT
@@ -36,17 +36,16 @@ const categories =`${link}/category`
 
  */
 
-// const endpoint = `https://greencorner.onrender.com/product`;
-//  const categories = `https://greencorner.onrender.com/category`;
+const endpoint = `https://greencorner.onrender.com/product`;
+ const categories = `https://greencorner.onrender.com/category`;
 
-const endpoint = `http://localhost:3001/product`;
-const categories = `http://localhost:3001/category`;
+// const endpoint = `http://localhost:3001/product`;
+// const categories = `http://localhost:3001/category`;
 
 export const getAllProducts = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
-
       dispatch({
         type: GET_ALL_PRODUCT,
         payload: data,
@@ -61,7 +60,6 @@ export const resetAllProducts = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
-
       dispatch({
         type: RESET_ALL_PRODUCT,
         payload: data,
@@ -75,7 +73,6 @@ export const resetAllFavorites = () => {
   return async (dispatch) => {
     try {
       const { data } = await axios.get(endpoint);
-
       dispatch({
         type: RESET_ALL_FAVORITES,
         payload: data,
@@ -98,22 +95,19 @@ export function getProductByName(name) {
 }
 
 export const getProductById = (id) => {
-  console.log(id);
-  console.log("llegó al action");
-
-  return async (dispatch) => {
-    console.log("está por entrar al try");
+   return async (dispatch) => {
     try {
-      console.log("entró al try");
       const { data } = await axios.get(`${endpoint}/${id}`);
-      console.log(data);
       dispatch({
         type: GET_PRODUCT_BY_ID,
         payload: data,
       });
-      console.log(id);
     } catch (error) {
-      alert("El Producto no se encuentra en la lista");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Product not found!",
+      });
     }
   };
 };
@@ -123,9 +117,7 @@ export const getProductCart = (email) => {
   return async (dispatch) => {
     try {
       //const encodedEmail = encodeURIComponent(email);
-
       const { data } = await axios.get(`${endpoint}/cart?email=${email}`);
-
       dispatch({
         type: GET_PRODUCT_CART,
         payload: data,
@@ -154,7 +146,6 @@ export const updateProductCart = ({ email, productId, amount }) => {
         "Volvi del put en action updateProductCart con data: ",
         response
       );
-
       dispatch({
         type: UPDATE_PRODUCT_CART,
         payload: {
@@ -169,6 +160,8 @@ export const updateProductCart = ({ email, productId, amount }) => {
   };
 };
 
+
+
 export const addProduct = (productdata) => {
   return async (dispatch) => {
     try {
@@ -178,11 +171,16 @@ export const addProduct = (productdata) => {
         payload: data,
       });
     } catch (error) {
-      alert("Hubo un problema al crear el producto");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem creating product!",
+      });
     }
   };
 };
-/* ca */
+
+
 export const deleteProductCart = (product_id, email) => {
   return async (dispatch) => {
     try {
@@ -196,7 +194,11 @@ export const deleteProductCart = (product_id, email) => {
         payload: product_id,
       });
     } catch (error) {
-      alert("Hubo un problema al eliminar el producto");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem deleting product!",
+      });
     }
   };
 };
@@ -211,7 +213,11 @@ export const getProductsTrending = () => {
       });
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema trayendo las categorías");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem getting trending products!",
+      });
     }
   };
 };
@@ -258,7 +264,11 @@ export const deleteCategory = (id) => {
       console.log("Categoria eliminada con éxito");
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema eliminando el producto");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem deleting category!",
+      });
     }
   };
 };
@@ -281,7 +291,11 @@ export const updateCategory = (id, updatedCategoryData) => {
       });
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema actualizando la categoria");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem updating category!",
+      });
     }
   };
 };
@@ -337,7 +351,11 @@ export const filterCategory = (category) => {
       });
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema trayendo las categorías");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem filtering category!",
+      });
     }
   };
 };
@@ -351,7 +369,11 @@ export const filterFavByCategory = (category) => {
       });
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema trayendo las categorías");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem filtering Favorites by category!",
+      });
     }
   };
 };
@@ -370,7 +392,11 @@ export const deleteProduct = (id) => {
       console.log("Producto eliminado con éxito");
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema eliminando el producto");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem deleting product!",
+      });
     }
   };
 };
@@ -389,7 +415,11 @@ export const updateProduct = (id, updatedProductData) => {
       });
     } catch (error) {
       console.log(error.message);
-      alert("Hubo un problema actualizando el producto");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Problem updating product!",
+      });
     }
   };
 };

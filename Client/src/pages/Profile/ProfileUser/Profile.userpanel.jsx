@@ -6,7 +6,8 @@ import ProfileDashboard from "./ProfileDashboard/ProfileDashboard";
 import { Link } from "react-router-dom";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import Favorites from "../../Favorites";
-import ShoppingHistory from "./ShoppingHistory/ShoppingHistory";  
+import ShoppingHistory from "./ShoppingHistory/ShoppingHistory";
+
 const ProfileUser = () => {
   const { user } = useAuth0();
 

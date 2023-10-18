@@ -12,10 +12,12 @@ import {
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import InputLabel from "@mui/material/InputLabel";
+
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../../../../Redux/actions/product/action";
+import { FiRefreshCcw } from 'react-icons/fi';
 import { MdSettingsBackupRestore } from "react-icons/md";
 
 const ShowUsers = () => {
@@ -27,7 +29,7 @@ const ShowUsers = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const usersPerPage = 8;
+  const usersPerPage = 5;
 
   const dispatch = useDispatch();
 
@@ -58,6 +60,16 @@ const ShowUsers = () => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const handleRefresh = () => {
+    setRoleOrder("name"); 
+    setFilteredUsers(allUsers); 
+    setNameOrder(""); 
+    setStatusOrder(""); 
+    setSearchTerm(""); 
+    dispatch(setCurrentPage(1)); 
+  };
+  
 
   const editUser = (user) => {
     // Abre el modal de edición y establece selectedUserId y formData en los datos del usuario seleccionado
@@ -160,7 +172,7 @@ const ShowUsers = () => {
   return (
     <>
       {/* Contenido del componente (encabezados, tabla, etc.) */}
-      <div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 pt-10">
+      <div className="p-4 bg-white block sm:flex items-center justify-between lg:mt-1.5 pt-10">
         <div className="mb-1 w-full">
           <div className="mb-4">
             <h1 className="text-xl sm:text-5xl font-semibold text-gray-900">
@@ -170,10 +182,11 @@ const ShowUsers = () => {
           <div className="sm:flex">
             <div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
               {/* Searchbar */}
-              <form className="lg:pr-3" action="#" method="GET">
+              <form className="lg:pr-3 flex space-x-4" action="#" method="GET">
                 <label htmlFor="users-search" className="sr-only">
                   Search
                 </label>
+                <FiRefreshCcw  onClick={handleRefresh}/>
                 <div className="mt-1 relative lg:w-64 xl:w-96">
                   <input
                     type="text"
@@ -242,7 +255,7 @@ const ShowUsers = () => {
             </div>
           </div>
         </div>
-        <div className="flex space-x-1">
+        {/* <div className="flex space-x-1">
           <a
             href="#"
             className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded-md"
@@ -277,7 +290,7 @@ const ShowUsers = () => {
               ></path>
             </svg>
           </a>
-        </div>
+        </div> */}
       </div>
       {/*Barra gris */}
       <div className="flex flex-col pt-10">
@@ -288,31 +301,39 @@ const ShowUsers = () => {
               <table className="table-fixed min-w-full divide-y divide-gray-200">
                 {/* Encabezados de tabla */}
                 <thead className="bg-gray-100">
-                  {/* ... Encabezados de tabla ... */}
-                </thead>
+                        <tr>
+                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                                
+                            </th>
+                            
+                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
+                                Name
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
+                               LastName
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
+                               Email
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
+                                Role
+                            </th>
+                            <th scope="col" className="p-4 text-left text-xl font-medium text-gray-500 uppercase">
+                            Status
+                            </th>
+                            <th scope="col" className="p-4">
+                            </th>
+                               
+                        </tr>
+                            
+                    </thead>
 
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
                   {displayedUsers.map((user) => (
                     <tr key={user.id} className="hover:bg-gray-100">
-                      <td className="p-4 w-4">
-                        {/* Checkbox para seleccionar el usuario */}
-                        <div className="flex items-center">
-                          <input
-                            id={`checkbox-${user.id}`}
-                            aria-describedby="checkbox-1"
-                            type="checkbox"
-                            className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
-                          />
-                          <label
-                            htmlFor={`checkbox-${user.id}`}
-                            className="sr-only"
-                          >
-                            checkbox
-                          </label>
-                        </div>
-                      </td>
+                      
                       {/* ... Otros campos de la fila ... */}
                       <td className="p-4 flex items-center whitespace-nowrap space-x-6 mr-12 lg:mr-0">
                         <img
@@ -321,20 +342,20 @@ const ShowUsers = () => {
                           alt={`${user.name} avatar`}
                         />
                       </td>
-                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[15px] font-medium text-gray-900">
                         {user.name}
                       </td>
-                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[15px] font-medium text-gray-900">
                         {user.lastName}
                       </td>
 
-                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[15px] font-medium text-gray-900">
                         {user.email}
                       </td>
-                      <td className="p-4 whitespace-nowrap text-[13px] font-medium text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[15px] font-medium text-gray-900">
                         {user.role}
                       </td>
-                      <td className="p-4 whitespace-nowrap text-[13px] font-normal text-gray-900">
+                      <td className="p-4 whitespace-nowrap text-[15px] font-normal text-gray-900">
                         <div className="flex items-center">
                           {user.status === "Active" ? (
                             <div className="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div>
@@ -347,14 +368,14 @@ const ShowUsers = () => {
                       <td className="p-4 whitespace-nowrap space-x-2">
                         <button
                           type="button"
-                          className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
+                          className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[15px] inline-flex items-center px-3 py-2 text-center"
                           onClick={() => editUser(user)}
                         >
                           Edit user
                         </button>
                         <button
                           type="button"
-                          className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[13px] inline-flex items-center px-3 py-2 text-center"
+                          className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-[15px] inline-flex items-center px-3 py-2 text-center"
                           onClick={() => confirmDeleteUser(user.id)}
                         >
                           Delete user
@@ -363,25 +384,27 @@ const ShowUsers = () => {
                     </tr>
                   ))}
                 </tbody>
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handleChangePage}
-                  size="large"
-                  sx={{
-                    "& .Mui-selected": {
-                      backgroundColor: "#50a050",
-                      fontSize: "20px",
-                    },
-                    "& .MuiPaginationItem-root": {
-                      fontSize: "15px",
-                    },
-                    "& .paginationButton": {
-                      backgroundColor: "#50a100",
-                    },
-                  }}
-                />
               </table>
+              <div style={{ marginLeft: "400px" }}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handleChangePage}
+                size="large"
+                sx={{
+                  "& .Mui-selected": {
+                    backgroundColor: "#50a050",
+                    fontSize: "20px            ",
+                  },
+                  "& .MuiPaginationItem-root": {
+                    fontSize: "15px",
+                  },
+                  "& .paginationButton": {
+                    backgroundColor: "#50a100",
+                  },
+                }}
+              />
+            </div>
             </div>
           </div>
         </div>

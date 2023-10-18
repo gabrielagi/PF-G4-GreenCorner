@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 
-const HOST = `http://${DB_HOST}:${SERVER_PORT}/payment`;
+const HOST = `https://greencorner.onrender.com/payment/`;
 
 const { getAllProduct, getProductById, updateProduct, deleteAllProductCart } = require("../Controller/product.controller");
 
@@ -34,7 +34,7 @@ const createOrder = async (req, res) => {
   ejemplo = product;
   const newEmail = req.body.email;
 
-  emaill = req.body.email
+  emaill = req.body.email;
   console.log("El email que me llega es: ", newEmail);
 
   // Guardo los items que se van a vender
@@ -261,8 +261,7 @@ const success = async (req, res) => {
     // res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
     console.log("Antes de redirigir");
 
-    res.redirect("http://green-corner.vercel.app/");
-  }
+  res.redirect("https://green-corner.vercel.app/");
 };
 
 const failure = (req, res) => {
