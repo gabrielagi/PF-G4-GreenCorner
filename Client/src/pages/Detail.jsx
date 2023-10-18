@@ -162,9 +162,9 @@ const Detail = () => {
     });
 
   const handleAddToMyGarden = () => {
-    if(!deleteClicked){
-      setDeleteClicked(true) 
-    if (isAuthenticated) {
+    if(!gardenClicked){
+      setGardenClicked(true)
+       if (isAuthenticated) {
       let favorite = {
         email: user.email,
         product_id: product.product_id,
@@ -183,7 +183,12 @@ const Detail = () => {
       setCorazon(!corazon);
     } else {
       loginWithRedirect();
-    }}
+    }
+    setTimeout(()=>
+    {setGardenClicked(false)},3000
+    )
+    }
+   
   };
   const handleRemoveToMyGarden = (id) => {
     dispatch(deleteFavorite(id, user.email)).then((result) => {
@@ -194,7 +199,9 @@ const Detail = () => {
   };
 
   const handleAddToCart = () => {
-    try {
+    if(!cartClicked){
+      setCartClicked(true)  
+      try {
       if (isAuthenticated) {
         const productInCart = cart.find(
           (item) => item.product_id === product.product_id
@@ -257,11 +264,18 @@ const Detail = () => {
 
           setIsAddingToCart(false);
         }
-      }
+      } setTimeout(()=>
+      {setCartClicked(false)},3000
+      )
+   
     } catch (error) {
       setIsAddingToCart(false);
       console.log({ error: error.message });
+    } 
+   
     }
+
+  
   };
 
   // Hasta cuánto se puede incrementar
@@ -282,7 +296,9 @@ const Detail = () => {
 
   // Se realiza el checkout
   const handleCheckout = async () => {
-    if (isAuthenticated) {
+    if(!checkoutClicked){
+      setCheckoutClicked(true)
+      if (isAuthenticated) {
       if (product.stock >= amount) {
         try {
           const { data } = await axios.post(
@@ -301,6 +317,11 @@ const Detail = () => {
     } else {
       loginWithRedirect();
     }
+    setTimeout(()=>
+    {setGardenClicked(false)},3000
+    )
+    }
+    
   };
 
   const number = (max) => {
@@ -414,8 +435,9 @@ if (product?.description) {
                 <Button
                   variant="contained"
                   color="success"
+                  
                   onClick={handleAddToCart}
-                  disabled={isAddingToCart}
+                  disabled={isAddingToCart || cartClicked}
                   startIcon={
                     isAddingToCart ? (
                       <CircularProgress size={20} color="inherit" />
@@ -430,6 +452,7 @@ if (product?.description) {
                 <div className="">
                   <Button
                     variant="contained"
+                    disabled={gardenClicked}
                     onClick={handleAddToMyGarden}
                     style={{
                       fontFamily: "Poppins",
@@ -458,6 +481,7 @@ if (product?.description) {
                 <Button
                   variant="contained"
                   onClick={handleCheckout}
+                  disabled={checkoutClicked}
                   style={{
                     fontFamily: "Poppins",
                     fontSize: "17px",
