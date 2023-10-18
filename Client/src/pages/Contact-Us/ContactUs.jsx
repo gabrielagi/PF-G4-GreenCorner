@@ -18,7 +18,7 @@ const ContactUs = () => {
     try {
       // Enviar los datos del formulario al servidor
       // const mail = user.mail
-      await axios.post('http://localhost:3001/send-email', {
+      await axios.post('http://greencorner.onrender.com/send-email', {
         name,
         phoneNumber,
         message
