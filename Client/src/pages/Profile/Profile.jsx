@@ -6,6 +6,8 @@ import { getUserByEmail } from "../../Redux/actions/user/user-actions";
 import LoadingGif from "../../assets/loading.gif";
 import ProfileUser from "./ProfileUser/Profile.userpanel";
 import ProfileAdmin from "./ProfileAdmin/Profile.admin";
+import Loading from "../../components/Loading/Loading";
+
 
 const Profile = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -29,8 +31,7 @@ const Profile = () => {
           <ProfileUser />
         )
       ) : (
-        // window.redirect("/login")
-        <img src={LoadingGif} alt="Loading information profile" />
+        <Loading />
       )}
     </div>
   );

@@ -4,13 +4,15 @@ require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 
-const HOST = `http://${DB_HOST}:${SERVER_PORT}/payment`;
+const HOST = `https://greencorner.onrender.com/payment/`;
 
-const { getAllProduct } = require("../Controller/product.controller");
+const { getAllProduct, getProductById, updateProduct, deleteAllProductCart } = require("../Controller/product.controller");
 
 const {
   postOrder,
   postOrderDetail,
+  getOrderById,
+  updateOrders
 } = require("../Controller/order.controller");
 
 // Configuro mercado pago
@@ -18,13 +20,22 @@ mercadopago.configure({
   access_token: ACCESS_TOKEN,
 });
 
+let emaill;
+let ejemplo;
+let orderId;
+
 const createOrder = async (req, res) => {
+  console.log(req.body);
   // El product puede ser un objeto individual desde Detail o un array desde Cart
-  const email = req.body.email;
-  console.log(req.body)
   const product = req.body.product;
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
   console.log("Este es el producto que me llega a payment: ", product);
+
+  ejemplo = product;
+  const newEmail = req.body.email;
+
+  emaill = req.body.email;
+  console.log("El email que me llega es: ", newEmail);
 
   // Guardo los items que se van a vender
   let items = [];
@@ -56,14 +67,14 @@ const createOrder = async (req, res) => {
     for (const item of product) {
       cartTotalAmount += item.price * item.amount; //Acumular el total de precio por todos los productos
       const availableStock = getAvailableStock(item.id, allProducts);
-      if (availableStock <= item.amount) {
+      if (availableStock < item.amount) {
         insufficientStockProducts.push(item);
       }
     }
   } else if (typeof product === "object") {
-    cartTotalAmount = product.price * amount
+    cartTotalAmount = product.price * amount;
     const availableStock = getAvailableStock(product.product_id, allProducts);
-    if (availableStock <= amount) {
+    if (availableStock < amount) {
       insufficientStockProducts.push(product);
     }
   }
@@ -75,11 +86,12 @@ const createOrder = async (req, res) => {
     shippingAddress: "P. Sherman Calle Wallaby 42, Sidney",
     addressHouseNumber: 42,
     total: parseInt(cartTotalAmount),
-    email: email,
+    email: newEmail,
   };
   const newOrder = await postOrder(newOrderData);
   console.log("La nueva orden creada tiene ID: ", newOrder.dataValues.id);
   const newOrderId = newOrder.dataValues.id;
+  orderId = newOrder.dataValues.id
 
   // Tengo que controlar si es un array de productos o un producto en particular
   if (Array.isArray(product)) {
@@ -168,7 +180,7 @@ const createOrder = async (req, res) => {
         failure: `${HOST}/failure`,
         pending: `${HOST}/pending`,
       },
-      notification_url: "https://fb4d-190-97-120-13.ngrok.io/payment/webhook",
+      notification_url: "https://4040-190-97-127-163.ngrok.io/payment/webhook",
       auto_return: "approved",
     });
 
@@ -191,51 +203,102 @@ const createOrder = async (req, res) => {
   }
 };
 
-const success = (req, res) => {
+const success = async (req, res) => {
   console.log(req.query);
+  console.log("Necesito en success");
 
-//Get la ultima orden
-//Put status
+  // Asegúrate de que ejemplo sea un array con al menos un elemento
+  if (ejemplo && ejemplo.length > 0) {
+    const { id, amount } = ejemplo[0];
 
-//Get el producto
-//Put el stock
+    const Products = await getProductById(id);
+    const updateProducts = Products.dataValues;
 
-  // res.send('Pago realizado')
-  // store in database
-  // Puedo guadar la información del usuario una vez que compró
-  // Actualizar cantidad de productos en el Stock de los productos vendidos
-  res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir
+    if ("stock" in updateProducts) {
+      updateProducts.stock -= amount;
+    }
+
+    await deleteAllProductCart(emaill);
+
+    let orders = await getOrderById(orderId);
+    let updateOrderss = orders.dataValues;
+
+    console.log(orders);
+    
+    if ("status" in updateOrderss) {
+      updateOrderss.status = "Finish";
+    }
+
+    await updateOrders(orderId, updateOrderss)
+    .then((success) => {
+      if (success) {
+        console.log("Producto actualizado exitosamente");
+      } else {
+        console.log(`No se encontró un Producto con el ID ${idOrden}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error en updateProduct:", error.message);
+    });
+
+    await updateProduct(id, updateProducts)
+      .then((success) => {
+        if (success) {
+          console.log("Producto actualizado exitosamente");
+        } else {
+          console.log(`No se encontró un Producto con el ID ${id}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Error en updateProduct:", error.message);
+      });
+
+    // res.send('Pago realizado')
+    // store in database
+    // Puedo guadar la información del usuario una vez que compró
+    // Actualizar cantidad de productos en el Stock de los productos vendidos
+
+    // res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir
+    console.log("Antes de redirigir");
+
+  res.redirect("https://green-corner.vercel.app/");
 };
-
+}
 const failure = (req, res) => {
   console.log(req.query);
   // res.send('Pago realizado')
   // store in database
   // Puedo guadar la información del usuario una vez que compró
   // Actualizar cantidad de productos en el Stock de los productos vendidos
-  res.redirect("http://localhost:5173/"); // Agregar componente notificación para redirigir si sale mal
+  res.redirect("https://green-corner.vercel.app/"); // Agregar componente notificación para redirigir si sale mal
 };
 
 const receiveWebhook = async (req, res) => {
-  // Recupero lo datos del pago que se realizó para poder ver el el id de la compra llamado data.id y el tipo llamado payment
-  const payment = req.query;
-
   try {
-    // Pregunto si la venta es correcta y la respuesta es payment
-    if (payment.type === "payment") {
-      const data = await mercadopago.payment.findById(payment.id);
-      console.log("Data del Webhook", data);
+    const { body } = req; // Obtén el cuerpo JSON de la solicitud
+
+    // Verifica que el tipo de notificación sea "payment"
+    if (body.type === "payment") {
+      const paymentId = body.data.id;
+
+      // Realiza acciones basadas en el ID del pago, como actualizar tu base de datos
+      // También puedes verificar el estado del pago, como "approved", "pending", "in_process", etc.
+
+      // Ejemplo de actualización en la base de datos (debes implementar esto):
+      // await actualizarEstadoDePago(paymentId, body.data.status);
+
+      console.log(
+        "Notificación de pago recibida:",
+        paymentId,
+        body.data.status
+      );
     }
 
-    res.status(204); // Significa que todo salió bien pero no devuelve nada
+    res.status(204).end(); // Responde con un estado 204 (sin contenido) para confirmar la recepción
   } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error.message });
+    console.error("Error al procesar la notificación de Mercado Pago:", error);
+    res.status(500).json({ error: "Error interno" });
   }
-
-  console.log(req.query);
-  //res.redirect('url del front')
-  res.send("procesando pago");
 };
 
 module.exports = { createOrder, receiveWebhook, success, failure };

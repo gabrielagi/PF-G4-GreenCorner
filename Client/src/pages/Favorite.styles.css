@@ -6,7 +6,12 @@
     background: #fff;
     border-radius: 30px;
     align-items: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3)
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    transition : 0.8s ease-in-out;  /* BORRAR ESTO  */
+}
+
+.box:hover{
+    width: 300px   /* BORRAR ESTO  */
 }
 
 .box:hover input{
@@ -17,7 +22,7 @@
     outline: none;
     border: none;
     font-weight: 500;
-    transition: 0.8s;
+    transition: 1.3s;   /* ESTO EN 0.8 */
     background: transparent;
 }
 .box a .fas{
