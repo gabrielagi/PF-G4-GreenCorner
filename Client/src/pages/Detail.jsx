@@ -413,6 +413,8 @@ if (product?.description) {
                 <p className="py-20  break-words ">{shortDescription}</p>
               </div>
 
+              
+
               {/* <h2 className="text-5xl text-[#343434]">Variante</h2>
 
               <select className="w-40">
@@ -460,57 +462,66 @@ if (product?.description) {
                   ADD TO CART <BsCartPlus style={{ marginLeft: "20px" }} />
                 </Button>
               </div>
-              <div className="flex pt-20 md: justify-between gap-x-10 f                     ">
-                <div className="">
-                  <Button
-                    variant="contained"
-                    disabled={gardenClicked}
-                    onClick={handleAddToMyGarden}
-                    style={{
-                      fontFamily: "Poppins",
-                      fontSize: "16px",
-                      backgroundColor: corazon ? "#fff" : "#4a9661",
-                      color: corazon ? "#4a9661" : "#fff",
-                      border: `1px solid ${corazon ? "#4a9661" : "#fff"}`,
-                    }}
-                  >
-                    {corazon ? "Remove from My Garden" : "Add to My Garden"}
+              <div className="pt-20 flex flex-col items-center gap-y-4 lg:flex-row md:items-center md:justify-between md:gap-x-10">
 
-                    {corazon ? (
-                      <BsFillHeartbreakFill
-                        color="#ff0000"
-                        style={{ marginLeft: "10px" }}
-                      />
-                    ) : (
-                      <AiFillHeart
-                        color="#ff0000"
-                        style={{ marginLeft: "10px" }}
-                      />
-                    )}
-                  </Button>
-                </div>
+
+              <div className="md:hidden h-4" />
+
+                {/* Botón Add to My Garden */}
+                <Button
+                  variant="contained"
+                  onClick={handleAddToMyGarden}
+                  style={{
+                    fontFamily: "Poppins",
+                    fontSize: "16px",
+                    width: "fit-content",
+                    backgroundColor:"#fff",
+                    width: "fit-content",
+                    height: "50px",
+                    color: "#FF08B98C"  ,
+                    border: `1px solid  "#FF08B98C"`,
+                    opacity: gardenClicked ? "0.5" : "1",
+                    cursor: gardenClicked ? "not-allowed" : "pointer",
+                  }}
+                >
+                  {corazon ? (
+                    <>
+                      Remove from My Garden 
+                      <BsFillHeartbreakFill color="#FF08B98C" style={{ fontSize: "20px", marginLeft:"5px"}} />
+                    </>
+                  ) : (
+                    <>
+                      Add to My Garden
+                      <AiFillHeart color="#FF08B98C" style={{ fontSize: "20px", marginLeft:"5px" }} />
+                    </>
+                  )}
+                </Button>
 
                 <Button
                   variant="contained"
                   onClick={handleCheckout}
-                  disabled={checkoutClicked}
                   style={{
                     fontFamily: "Poppins",
                     fontSize: "17px",
                     backgroundColor: "#fff",
-                    color: "#4a9661",
-                    border: "1px solid #4a9661",
-                    width: "310px",
+                    color: "#027bb3",
+                    border: "1px solid #027bb3",
+                    width: "300px",
                     height: "50px",
+                    opacity: checkoutClicked ? "0.5" : "1",
+                    cursor: checkoutClicked ? "not-allowed" : "pointer",
                   }}
                 >
                   <img
                     src={mercadopago}
-                    style={{ width: "40px", marginRight: "10px" }}
-                  ></img>
+                    style={{ width: "40px", marginRight: "10px", color: "#027bb3" }}
+                  />
                   Checkout
                 </Button>
-              </div>
+                </div>
+
+
+
             </div>
           </div>
 
