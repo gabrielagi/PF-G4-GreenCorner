@@ -114,12 +114,15 @@ const Carts = () => {
           <div className="  bg-white py-2  ml-24 md:mx-auto text-3xl font-semibold flex justify-center w-[130px]  ">
             Total: <p className="pl-4 text-green-600">{total}</p>
           </div>
-          <button
-            className=" mx-5 bg-white w-[200px]  text-2xl font-medium"
-            onClick={handleCheckout}
-          >
-            Continue to checkout
-          </button>
+        <button
+            className={`mx-5 w-[200px] text-2xl font-medium ${
+            products.length === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-white text-black'
+          }`}
+          onClick={handleCheckout}
+          disabled={products.length === 0}
+        >
+          Continue to checkout
+        </button>
         </div>
       </div>
     </div>
