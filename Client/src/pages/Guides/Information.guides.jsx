@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import plantgif from "../../assets/naturegif.gif";
 import initialDetails from "./qa.json";
+import{Link} from "react-router-dom"
 
 const plantGif = {
   position: "absolute",
@@ -45,12 +46,12 @@ const InformationGuides = () => {
           </div>
           <div className="mt-14 text-center">
             <p className="mt-4 px-4 leading-relaxed text-gray-700"></p>
-            <a
-              href="https://green-corner.vercel.app/contact-us"
+            <Link
+              to="/contact-us"
               className="inline-block rounded bg-green-600 px-12 py-3 mb-30 text-[14px] font-medium text-white transition hover-bg-green-500 focus-outline-none focus-ring focus-ring-yellow-400"
             >
               Have questions or need guidance? Contact Us 🌱
-            </a>
+            </Link>
           </div>
           <img src={plantgif} alt="Butterfly" style={plantGif} />
         </div>
