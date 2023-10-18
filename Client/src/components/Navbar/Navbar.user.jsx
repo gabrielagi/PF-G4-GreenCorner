@@ -13,37 +13,37 @@ import { Link } from "react-router-dom";
 
 function NavbarUser({ selectedMenu, setSelectedMenu }) {
   const menus = [
-    { name: "Home", link: "/", icon: MdOutlineDashboard },
+    // { name: "Home", link: "/", icon: MdOutlineDashboard },
     {
       name: "Profile",
       icon: AiOutlineUser,
-      margin: true,
+      // margin: true,
     },
     {
       name: "Shopping history",
       icon: FiShoppingBag,
       margin: true,
     },
-    {
-      name: "Payment methods",
-      icon: MdPayment,
-    },
+    // {
+    //   name: "Payment methods",
+    //   icon: MdPayment,
+    // },
     {
       name: "My Garden",
       icon: AiOutlineHeart,
-      margin: true,
+      // margin: true,
       link:'/about-us',
     },
-    {
-      name: "Shipping Address",
-      icon: TbGps,
-      margin: true,
-    },
-    {
-      name: "Customer Support",
-      link: "/contact-us",
-      icon: RiCustomerService2Fill,
-    },
+    // {
+    //   name: "Shipping Address",
+    //   icon: TbGps,
+    //   margin: true,
+    // },
+    // {
+    //   name: "Customer Support",
+    //   link: "/contact-us",
+    //   icon: RiCustomerService2Fill,
+    // },
   ];
 
   const [open, setOpen] = useState(true);
