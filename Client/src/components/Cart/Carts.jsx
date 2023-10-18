@@ -72,7 +72,7 @@ const Carts = () => {
   }
   return (
     <div className=" bg-gray-200 md:mx-20 font-poppins">
-      <h1 className="text-7xl font-bold text-center my-12 pt-12  text-green-500">
+      <h1 className="text-7xl font-bold text-center my-8 pt-12  text-green-500">
         Your Cart
       </h1>
       {/* <div className="grid grid-cols-4">
