@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 const ProductTrending = ({ name, images, price, id }) => {
 
   return (
-    <div className="flex ml-4 items-center">
+    <div className="flex ml-4 items-center bg-white rounded-3xl pr-5">
    
       
    <Link to={`/detail/${id}`}>
