@@ -54,15 +54,11 @@ Favorite.belongsTo(User, {
   targetKey: 'email',
 });
 
-Testimonial.belongsTo(User, {
-  foreignKey: 'email',
-  targetKey: 'email',
-});
+// En el modelo User
+User.hasOne(Testimonial);
 
-Order.belongsTo(User, {
-  foreignKey: 'email',
-  targetKey: 'email',
-});
+// En el modelo Testimonial
+Testimonial.belongsTo(User);
 
 OrderDetail.belongsTo(Order, {
   foreignKey: 'order_id',
@@ -79,7 +75,7 @@ Product.hasMany(ShoppingCart);
 ShoppingCart.hasMany(Product);*/
 
 
-//Descomentar si se importo el modelo ShoppingCart
+// Descomentar si se importo el modelo ShoppingCart
 //User.hasMany(ShoppingCart, { foreignKey: 'userId', as: 'ShoppingCart' });
 //ShoppingCart.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
