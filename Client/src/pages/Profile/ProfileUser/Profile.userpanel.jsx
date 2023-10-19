@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import PaymentMethods from "../../../components/PaymentMethods/PaymentMethods";
 import Favorites from "../../Favorites";
 import ShoppingHistory from "./ShoppingHistory/ShoppingHistory";
+import RateUs from "./RateUs/RateUs";
 
 const ProfileUser = () => {
   const { user } = useAuth0();
@@ -21,9 +22,8 @@ const ProfileUser = () => {
         return <PaymentMethods />;
       case "My Garden":
         return <Favorites></Favorites>;
-
- 
-
+      case "Rate Us":
+        return <RateUs />;
       default:
         return <ProfileDashboard />;
     }

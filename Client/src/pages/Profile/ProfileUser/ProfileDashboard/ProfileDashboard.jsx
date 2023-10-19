@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getUserByEmail,
   updateUser,
 } from "../../../../Redux/actions/user/user-actions"; // Importa la acción updateUser
 import styles from "./ProfileDashboard.module.css";
@@ -21,11 +20,10 @@ const ProfileDashboard = () => {
   const [tempProfileImage, setTempProfileImage] = useState("");
   const [originalProfileImage, setOriginalProfileImage] = useState("");
 
-  useEffect(() => {
-    dispatch(getUserByEmail(user.email));
-  }, [dispatch, user.email]);
 
   const userProfile = useSelector((state) => state.userDetail);
+  
+ 
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -56,6 +54,7 @@ const ProfileDashboard = () => {
     });
     setEditMode(true);
     setOriginalProfileImage(profileImage || userProfile.picture);
+    
   };
 
   const handleCancelEdit = () => {
@@ -103,7 +102,7 @@ const ProfileDashboard = () => {
       <div className={styles.card2}>
         <div className={styles.card__image2}>
           <img
-            src={tempProfileImage || profileImage || userProfile.picture}
+            src={tempProfileImage || profileImage || userProfile.picture || user.picture}
             alt="Profile Picture"
           />
         </div>
