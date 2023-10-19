@@ -1,8 +1,12 @@
 import React from "react";
 
 const Comment = ({ opinion, user }) => {
-  console.log(user)
+  if (!user) {
+    return null; // Si user no está definido, no renderiza nada
+  }
+
   const rating = parseInt(opinion.rating);
+
   return (
     <div className="mb-8 sm:break-inside-avoid">
       <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
@@ -12,9 +16,9 @@ const Comment = ({ opinion, user }) => {
             src={user.picture ? user.picture : "Loading"}
             className="h-14 w-14 rounded-full object-cover"
           />
-          
+
           <div>
-          <p className="mt-0.5 text-lg font-medium text-gray-900">
+            <p className="mt-0.5 text-lg font-medium text-gray-900">
               {user.nickname ? user.nickname : "Loading"}
             </p>
             <div className="flex justify-center gap-0.5 text-green-500">
@@ -30,7 +34,6 @@ const Comment = ({ opinion, user }) => {
                 </svg>
               ))}
             </div>
-            
           </div>
           <p className="mt-0.5 text-lg font-medium text-gray-900">
             {opinion.date}
