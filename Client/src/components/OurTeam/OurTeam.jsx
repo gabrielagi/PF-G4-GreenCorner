@@ -89,7 +89,7 @@ const ourTeam = () => {
               <AiFillLinkedin size='30px' color='white'/>
               </a> 
               <a href="https://github.com/andresmdkr"> <AiFillGithub size='30px' color='white'/></a>
-              {/* <a href=''>  <AiFillFacebook size='30px' color='white'/></a> */}
+              <a href='https://instagram.com/andresm_dkr'>  <AiFillInstagram size='30px' color='white'/></a>
           
             </div>
             
