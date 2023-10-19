@@ -33,15 +33,15 @@ const Cart = ({ id, name, price, image, amount }) => {
           </div>
         </Link>
       </div>
-<div className="grid grid-cols-2 bg-yellow-400 md:grid-cols-4 md:col-span-3">
-   <div className="flex bg-blue-300 col-span-2 md:col-span-1 text-center items-center">
+<div className="grid grid-cols-2  md:grid-cols-4 md:col-span-3">
+   <div className="flex  col-span-2 md:col-span-1 text-center items-center">
         <div className="space-y-10  mx-auto justify-center">
           <p className="text-3xl font-medium">{name}</p>
           <strong>${pricee}</strong>
         </div>
       </div>
 
-      <div className="grid bg-red-300  col-span-2 md:grid-cols-2 md:col-span-3">
+      <div className="grid  col-span-2 md:grid-cols-2 md:col-span-3">
         <div className="grid col-span-1 row-span-1 justify-center">
           <div className=" flex items-center justify-center ">
             <p className="text-3xl  font-semibold">Amount: {amount}</p>
