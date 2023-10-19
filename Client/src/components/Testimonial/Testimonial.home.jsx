@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom"; // Asegúrate de importar Link desde react-router-dom
 import Comment from "./Comment";
-import opinions from "./mock.json";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { testimonialById, getTestimonial} from "../../Redux/actions/testimonial/actions";
+// import opinions from "./mock.json";
+
+
 
 const Testimonial = () => {
   const [visibleOpinions, setVisibleOpinions] = useState(3);
@@ -9,6 +14,16 @@ const Testimonial = () => {
   const handleShowMore = () => {
     setVisibleOpinions(opinions.length);
   };
+
+  const userDetail = useSelector((state) => state.userDetail);
+  const opinions = useSelector((state) => state.allTestimonial);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getTestimonial());
+  }, [dispatch]);
+
+  console.log(opinions)
 
   return (
     <div className="font-poppins py-40">
@@ -19,9 +34,9 @@ const Testimonial = () => {
         </h1>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {opinions.slice(0, visibleOpinions).map((opinion, index) => (
+        {opinions.map((opinion, index) => (
           <div key={index} className="py-5 mb-10">
-            <Comment opinion={opinion} />
+            <Comment picture={userDetail.picture} opinion={opinion} name={userDetail.nickname}/>
           </div>
         ))}
       </div>
@@ -31,14 +46,14 @@ const Testimonial = () => {
             onClick={handleShowMore}
             className="text-blue-500 hover:underline"
           >
-            Ver más
+            Show more
           </button>
         </div>
       )}
       {visibleOpinions === opinions.length && (
         <div className="text-center mt-4">
           <Link to="/testimoniales" className="text-blue-500 hover:underline">
-            Ver todos los testimonios
+            View all Testimonial
           </Link>
         </div>
       )}
