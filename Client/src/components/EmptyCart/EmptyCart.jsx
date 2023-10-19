@@ -18,7 +18,7 @@ hover:bg-green-600  grid grid-cols-4'>
               {`Visit our Shop `}
               
             </button>
-            <CiLocationArrow1 color="white" size='50%' className="flex justify-center items-center mt-9 text-4xl sm:text-4xl " />
+            <CiLocationArrow1 color="white" size='50%' className="flex justify-center items-center mt-4 md:mt-9 text-4xl sm:text-4xl " />
     </div>
            
        </Link>

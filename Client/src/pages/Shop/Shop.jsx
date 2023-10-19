@@ -206,7 +206,7 @@ console.log(allCategories)
                   allCategories.map((p, i) => (
                     <div
   key={i}
-  className="font-semibold hover:scale-100 hover:font-bold hover:text-[#54c23e] transition-all duration-400 ease-in-out text-3xl my-2  bg- hover:bg-opacity-50 rounded-[70px] max-w-sm py-1 px-5  text-gray-600 "
+  className="font-semibold hover:scale-110 hover:font-bold hover:text-[#54c23e] transition-all duration-400 ease-in-out text-3xl my-2  bg- hover:bg-opacity-50 rounded-[70px] max-w-sm py-1 px-5  text-gray-600 "
 >
   <Category
     name={p.name}
