@@ -7,6 +7,8 @@ const getAllTestimonials = async () => {
 
 const createTestimonial = async (message, date, rating, userId) => {
     try {
+        console.log("Creando testimonio");
+        console.log(message, date, rating, userId);
         const testimonial = await Testimonial.create({ message, date, rating });
         const user = await getUserById(userId);
 
@@ -74,8 +76,10 @@ const deleteTestimonial = async (id) => {
     }
 }
 const updateTestimonial = async (id, data) => {
+    console.log("Actualizando testimonio");
+    console.log(id, data);
     const [updatedCount, updatedTestimonial] = await Testimonial.update(data, {
-        where: { id: id },
+        where: { UserId: id },
         returning: true,
     })
     if (updatedCount === 0) {

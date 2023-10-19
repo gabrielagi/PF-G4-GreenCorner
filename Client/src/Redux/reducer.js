@@ -45,6 +45,8 @@ import {
   DELETE_FAV_BY_ID_BD,
   REFRESH_FAVORITES,
   GET_TESTIMONIAL_BY_ID,
+  CREATE_TESTIMONIAL,
+  UPDATE_TESTIMONIAL,
 
 } from "./actions/action-types";
 
@@ -630,6 +632,16 @@ function rootReducer(state = initialState, action) {
           ...state,
           testimonialData: action.payload,
         };
+       case CREATE_TESTIMONIAL:
+          return {
+            ...state,
+            testimonialData: action.payload,
+          };
+      case UPDATE_TESTIMONIAL:
+            return {
+              ...state,
+              testimonialData: action.payload,
+            };
     }
 }
 
