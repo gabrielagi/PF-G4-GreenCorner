@@ -2,8 +2,8 @@ import { GET_ALL_ORDERS, GET_ORDER_DETAIL } from "../action-types";
 
 import axios from "axios";
 
-const endpoint = `https://greencorner.onrender.com/order`;
-// const endpoint = `http://localhost:3001/order`;
+//const endpoint = `https://greencorner.onrender.com/order`;
+const endpoint = `http://localhost:3001/order`;
 
 export const getAllOrders = () => {
   return async (dispatch) => {
