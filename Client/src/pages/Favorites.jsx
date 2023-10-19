@@ -134,11 +134,11 @@ console.log(favorites)
        <div className="grid grid-cols-1   gap-x-20 md:gap-x-1  my-10 pt-10"> 
   {/*-- -----INICIO DE GRID----------------- BARRA  ------------------------------------------------- */}
             <div className=" col-span-2 md:col-span-2 md:flex md:items-center md:justify-center w-[]  bg-opacity-70 md:h-[130px] md:mb-20">
-            <div className="px-4 md:flex md:items-left md:justify-left md:h-auto md:mx-auto  ">
+            <div className=" px-4 md:flex md:items-left md:justify-left md:h-auto md:mx-auto  ">
                       <div className="md:px-[40px] md:mt-[20px] grid sm:grid-cols-1 md:grid-cols-1  md:my-10 text-3xl space-y-2 font-medium text-gray-500 bg-gray-200 py-10 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
                        {/* <h1 className="mx-auto mb-0 text-center text-gray-600 font-bold col-span-2 md:col-span-1 text-4xl md:font-medium pt-5">ORDER BY</h1> */}
                        <div className=" grid grid-cols-1 gap-x-5 text-center md:flex md:items-center md:justify-center ">
-                        <div> 
+                        <div className=""> 
                           <p  className="text-gray-500 text-2xl font-bold" htmlFor="priceOrden">ALPHABETIC</p>
                           <Select className="w-[120px] items-center font-extrabold "
                             sx={{
@@ -325,14 +325,15 @@ console.log(favorites)
 
                
               ) : (
-                <div className="col-span-3 row-span-2 my-auto "><EmptyFavorites  /></div>
+                <div className="col-span-4 row-span-2 my-auto mx-auto "><EmptyFavorites  /></div>
               )
-            ) : (<div className="col-span-3 row-span-2 my-auto "><EmptyFavorites  /></div>
+            ) : (<div className="col-span-3 row-span-2 my-auto mx-auto "><EmptyFavorites  /></div>
               
             )}
 
          </div> 
-         <div className=" bg-opacity-60 md:col-start-2 pt-10 mx-auto flex justify-center md:w-[400px]">
+         <div>
+          <div className=" bg-opacity-60 md:col-start-2 pt-10  mx-auto flex justify-center md:w-[400px]">
                     <Pagination 
                 count={totalPages}
                 page={currentPage} 
@@ -356,6 +357,8 @@ console.log(favorites)
                         
               
         </div>
+         </div>
+         
 
           {/* //className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] md:h-[250px] md:w-[250px]  */}
     </div>

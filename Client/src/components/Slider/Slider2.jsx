@@ -16,7 +16,7 @@ const swiper = new Swiper('.swiper', {
   direction: 'horizontal',
   loop: true,
   slidesPerView:"auto", 
-  spaceBetween:0,
+  spaceBetween:12,
   autoplay: {
             delay: 3000,
             pauseOnMouseEnter: true,
