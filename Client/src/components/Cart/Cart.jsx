@@ -33,21 +33,21 @@ const Cart = ({ id, name, price, image, amount }) => {
           </div>
         </Link>
       </div>
-
-      <div className="flex items-center">
-        <div className="space-y-10 justify-center">
+<div className="grid grid-cols-2 bg-yellow-400 md:grid-cols-4 md:col-span-3">
+   <div className="flex bg-blue-300 col-span-2 md:col-span-1 text-center items-center">
+        <div className="space-y-10  mx-auto justify-center">
           <p className="text-3xl font-medium">{name}</p>
           <strong>${pricee}</strong>
         </div>
       </div>
 
-      <div className="grid row-span-2 grid-cols-2 col-span-2 md:grid-cols-2 md:col-span-2">
-        <div className="grid col-span-2 justify-center">
-          <div className="flex items-start justify-start">
-            <p className="text-3xl flex items-start justify-start font-semibold">Amount: {amount}</p>
+      <div className="grid bg-red-300  col-span-2 md:grid-cols-2 md:col-span-3">
+        <div className="grid col-span-1 row-span-1 justify-center">
+          <div className=" flex items-center justify-center ">
+            <p className="text-3xl  font-semibold">Amount: {amount}</p>
           </div>
         </div>
-        <div className="justify-center grid col-span-2 md:flex md:justify-end items-center">
+        <div className=" justify-center grid col-span-1 md:flex md:justify-end items-center">
           <div className="flex total mr-2 sm:mx-10 sm:ml-10">
             <strong>${total}</strong>
             <button
@@ -63,6 +63,8 @@ const Cart = ({ id, name, price, image, amount }) => {
         </div>
       </div>
     </div>
+</div>
+     
   );
 };
 
