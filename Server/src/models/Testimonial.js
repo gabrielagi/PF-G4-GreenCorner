@@ -20,8 +20,7 @@ module.exports = (sequelize) => {
       rating: {
         type: DataTypes.INTEGER,
         allowNull: true,
-      },
-      
+      }
     },
     { timestamps: false }
   );

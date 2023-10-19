@@ -19,6 +19,9 @@ const byIdHandler = async (req, res) => {
     const id  = req.params.id
     try {
         const testimonial = await getTestimonialbyId(id)
+        if(!testimonial){
+            return res.status(404).send("Testimonial not found")
+        }
         return res.status(200).json(testimonial)
     } catch (error) {
         console.log(error);

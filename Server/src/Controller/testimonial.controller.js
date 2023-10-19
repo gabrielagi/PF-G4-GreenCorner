@@ -1,15 +1,26 @@
 const { Testimonial } = require("../db")
-
+const { getUserById } = require("../Controller/user.controller")
 const getAllTestimonials = async () => {
     const testimonials = await Testimonial.findAll()
     return testimonials
 }
 
 const createTestimonial = async (message, date, rating, userId) => {
-    const newTestimonial = await Testimonial.create({ message, date, rating, userId })
-    return newTestimonial
+    try {
+        const testimonial = await Testimonial.create({ message, date, rating });
+        const user = await getUserById(userId);
 
-}
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        await testimonial.setUser(user);
+        console.log("Testimonio creado");
+    } catch (error) {
+        console.log("Error al crear testimonio");
+        console.error(error);
+    }
+};
 
 const getTestimonialbyId = async (id) => {
     const testimonial = await Testimonial.findAll({
@@ -28,7 +39,7 @@ const deleteTestimonial = async (id) => {
                 id: testimonial
             }
         });
-        if(deleter) {
+        if (deleter) {
             return testimonial
         } else {
             return "Thist testimonial doesn't exist"
@@ -50,4 +61,4 @@ const updateTestimonial = async (id, data) => {
     return updatedTestimonial[0];
 
 }
-module.exports = { getAllTestimonials, createTestimonial, getTestimonialbyId, updateTestimonial, deleteTestimonial}
+module.exports = { getAllTestimonials, createTestimonial, getTestimonialbyId, updateTestimonial, deleteTestimonial }
