@@ -43,10 +43,10 @@ const Detail = () => {
   const [cartClicked, setCartClicked] = useState(false);
   const [checkoutClicked, setCheckoutClicked] = useState(false);
   const allProducts = useSelector((state) => state.allProducts);
-  const products = useSelector((state) => state.productDetail);
+  const product = useSelector((state) => state.productDetail);
   const cart = useSelector((state) => state.productCart);
   const [activeImg, setActiveImg] = useState(
-    products.images && products.images[0]
+    product.images && product.images[0]
   );
 
   const loginAlert = () => {
@@ -96,8 +96,8 @@ const Detail = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    setActiveImg(products.images && products.images[0]);
-  }, [products.images]);
+    setActiveImg(product.images && product.images[0]);
+  }, [product.images]);
 
   // Traigo todos los elementos del carrito del usuario (si existen)
   useEffect(() => {
@@ -178,7 +178,7 @@ const Detail = () => {
        if (isAuthenticated) {
       let favorite = {
         email: user.email,
-        product_id: products.product_id,
+        product_id: product.product_id,
       };
 
       if (!corazon) {
@@ -215,12 +215,12 @@ const Detail = () => {
       try {
       if (isAuthenticated) {
         const productInCart = cart.find(
-          (item) => item.product_id === products.product_id
+          (item) => item.product_id === product.product_id
         );
         console.log("El producto ya existe en el carrito? ", productInCart);
         if (productInCart) {
           // El producto ya está en el carrito
-          const availableStock = products.stock - productInCart.amount;
+          const availableStock = product.stock - productInCart.amount;
           console.log(
             "El producto ya existe en el carrito y tiene stock disponible para comprar de: ",
             availableStock
@@ -240,7 +240,7 @@ const Detail = () => {
             dispatch(
               updateProductCart({
                 email: user.email,
-                productId: products.product_id,
+                productId: product.product_id,
                 amount: productInCart.amount + amount,
               })
             ).then(() => {
@@ -257,7 +257,7 @@ const Detail = () => {
           setIsAddingToCart(true);
           let cartItem = {
             email: user.email,
-            product_id: products.product_id,
+            product_id: product.product_id,
             amount: amount,
           };
 
@@ -294,7 +294,7 @@ const Detail = () => {
 
   // Hasta cuánto se puede incrementar
   const amountIncrement = () =>
-    products.stock > amount
+    product.stock > amount
       ? setAmount(amount + 1)
       : Swal.fire({
         icon: 'error',
@@ -310,12 +310,11 @@ const Detail = () => {
 
   // Se realiza el checkout
   const handleCheckout = async () => {
-    let product = [];
-    product.push(products)
+  
     if(!checkoutClicked){
       setCheckoutClicked(true)
       if (isAuthenticated) {
-      if (products.stock >= amount) {
+      if (product.stock >= amount) {
         try {
           const { data } = await axios.post(
            "https://greencorner.onrender.com/payment/create-order",
@@ -344,10 +343,10 @@ const Detail = () => {
   const number = (max) => {
     return Math.floor(Math.random() * max);
   };
-  console.log(products)
+  console.log(product)
   let categories = [];
-if (products && products.categories) {
-  categories = products.categories.map((c) => c.name);
+if (product && product.categories) {
+  categories = product.categories.map((c) => c.name);
 }
 
 // Convert the categories array to a string, separated by commas
@@ -361,8 +360,8 @@ let shortDescription = "";
 let longDescription = "";
 
 // Verifica si la descripción existe antes de dividirla
-if (products?.description) {
-  const sentences = products.description.split('.'); // Puedes cambiar el delimitador según tus necesidades
+if (product?.description) {
+  const sentences = product.description.split('.'); // Puedes cambiar el delimitador según tus necesidades
 
   // Considera solo la primera oración como descripción corta
   shortDescription = sentences.length > 0 ? sentences[0] : "";
@@ -372,11 +371,11 @@ if (products?.description) {
 }
 
   console.log(number(5));
-  console.log(products.categories);
+  console.log(product.categories);
 
   if (loadingImages || !activeImg) {
     return <Loading/>;
-  } else if (products.name) {
+  } else if (product.name) {
     return (
       <div>
         <Link className="ml-16 mt-20" to="/shop">
@@ -402,7 +401,7 @@ if (products?.description) {
           <Slider
             className="rounded-[100px]"
             id={id}
-            images={products.images}
+            images={product.images}
             setActiveImg={setActiveImg}
           ></Slider>
         </div>
@@ -410,10 +409,10 @@ if (products?.description) {
 
             <div className="  bg-[#f6f6f6] rounded-[70px] justify-between w-full px-20">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
-                {products?.name}
+                {product?.name}
               </h2>
               <hr className="my-10"></hr>
-              <p className="py-t  text-5xl text-[#41b441]">${products.price}</p>
+              <p className="py-t  text-5xl text-[#41b441]">${product.price}</p>
               <div className="w-full">
                 <p className="py-20  break-words ">{shortDescription}</p>
               </div>
@@ -535,7 +534,7 @@ if (products?.description) {
             </div>
             <hr></hr>
             <div className=" text-center font-medium"><p>
-                 {products.description}
+                 {product.description}
         
             </p>
          </div>
@@ -549,8 +548,8 @@ if (products?.description) {
             {allProducts
               .map((p) => {
                 if (
-                  p.categories.name === products.categories.name &&
-                  p.name !== products.name
+                  p.categories.name === product.categories.name &&
+                  p.name !== product.name
                 )
                   return (
                     <Card
