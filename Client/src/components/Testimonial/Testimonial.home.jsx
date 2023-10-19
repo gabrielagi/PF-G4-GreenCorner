@@ -4,6 +4,7 @@ import Comment from "./Comment";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { testimonialById, getTestimonial} from "../../Redux/actions/testimonial/actions";
+import {getAllUsers} from "../../Redux/actions/user/user-actions";
 // import opinions from "./mock.json";
 
 
@@ -17,10 +18,16 @@ const Testimonial = () => {
 
   const userDetail = useSelector((state) => state.userDetail);
   const opinions = useSelector((state) => state.allTestimonial);
+  const allUsers = useSelector((state) => state.allUsers);
   const dispatch = useDispatch();
   
+ const findUser = (id) => {
+    return allUsers.find((user) => user.id === id);
+  }
+
   useEffect(() => {
     dispatch(getTestimonial());
+    dispatch(getAllUsers());
   }, [dispatch]);
 
   console.log(opinions)
@@ -34,11 +41,17 @@ const Testimonial = () => {
         </h1>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {opinions.map((opinion, index) => (
-          <div key={index} className="py-5 mb-10">
-            <Comment picture={userDetail.picture} opinion={opinion} name={userDetail.nickname}/>
-          </div>
-        ))}
+      {opinions.map((opinion, index) => {
+          const user = findUser(opinion.UserId);
+          return (
+            <div key={index} className="py-5 mb-10">
+              <Comment
+                opinion={opinion}
+                user={user} 
+              />
+            </div>
+          );
+        })}
       </div>
       {visibleOpinions < opinions.length && (
         <div className="text-center mt-4">

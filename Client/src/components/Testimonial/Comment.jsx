@@ -1,6 +1,6 @@
 import React from "react";
 
-const Comment = ({picture, opinion, name }) => {
+const Comment = ({ opinion, user }) => {
   const rating = parseInt(opinion.rating);
   return (
     <div className="mb-8 sm:break-inside-avoid">
@@ -8,11 +8,14 @@ const Comment = ({picture, opinion, name }) => {
         <div className="flex items-center gap-4">
           <img
             alt="Picture"
-            src={picture}
+            src={user.picture}
             className="h-14 w-14 rounded-full object-cover"
           />
           
           <div>
+          <p className="mt-0.5 text-lg font-medium text-gray-900">
+              {user.nickname}
+            </p>
             <div className="flex justify-center gap-0.5 text-green-500">
               {[...Array(rating)].map((_, index) => (
                 <svg
@@ -26,9 +29,7 @@ const Comment = ({picture, opinion, name }) => {
                 </svg>
               ))}
             </div>
-            <p className="mt-0.5 text-lg font-medium text-gray-900">
-              {name}
-            </p>
+            
           </div>
           <p className="mt-0.5 text-lg font-medium text-gray-900">
             {opinion.date}
