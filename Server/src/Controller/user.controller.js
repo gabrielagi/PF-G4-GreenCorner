@@ -166,7 +166,7 @@ const getByRol = async (rol) => {
 
 const getUserByEmail = async (email) => {
   try {
-    let userFromDb = await User.find({
+    let userFromDb = await User.findAll({
       where: {
         email: email,
       },

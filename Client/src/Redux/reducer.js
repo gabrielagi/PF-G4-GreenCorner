@@ -43,7 +43,9 @@ import {
   GET_ORDER_DETAIL, 
   GET_ALL_ORDERS,
   DELETE_FAV_BY_ID_BD,
-  REFRESH_FAVORITES
+  REFRESH_FAVORITES,
+  GET_TESTIMONIAL_BY_ID,
+
 } from "./actions/action-types";
 
 const initialState = {
@@ -65,6 +67,7 @@ const initialState = {
     currentPage: 1,
   },
   allFavorites: [],
+  testimonialData: [],
   change:[]
 };
 
@@ -622,6 +625,11 @@ function rootReducer(state = initialState, action) {
         ...state,
         orderDetail: action.payload,
       };
+      case GET_TESTIMONIAL_BY_ID:
+        return {
+          ...state,
+          testimonialData: action.payload,
+        };
     }
 }
 
