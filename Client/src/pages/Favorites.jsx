@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import "tailwindcss/tailwind.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -130,28 +131,43 @@ console.log(favorites)
       {isLoading ? (<Loading />) : (
        <div className="font-poppins    bg-gray-100 bg-opacity-100">
           
-       <div className="grid md:grid-cols-2 gap-x-20 md:gap-x-1  my-10 pt-10"> 
+       <div className="grid grid-cols-1   gap-x-20 md:gap-x-1  my-10 pt-10"> 
   {/*-- -----INICIO DE GRID----------------- BARRA  ------------------------------------------------- */}
-            <div className=" ">
-
-                {/*-- ---------------------- SEARCHBAR ------------------------------------------------- */}
-                <div className="box  mt-10 bg-[#42c94b]  h-[50px] w-[300px] mx-auto  md:h-[70px] md:w-[80px] mb-10 justify-center  "> {/* ACA PONER  md:w-[300px]*/}
-                      <input placeholder="Search.. " onChange={handleChange}  onKeyDown={handleKeyDown} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white  placeholder:text-white"/>
-                      <button type='submit' onClick={handleSubmit}><BiSearch color='black' size='30px'/></button>
-                </div>
-                 
-             <div className="  ">
-           
-                   {/*-- ---------------------- BARRA ------------------------------------------------- */}
-               <div className="  rounded-3xl bg-opacity-40 py-16 md:w-[300px] md:h-[700px] md:mx-auto">
-                    
-                    <div className="px-4 ">
-                      <div className="px-[40px] md:mt-[20px] grid sm:grid-cols-2 md:grid-cols-1 gap-x-1 my-10 text-3xl space-y-2 font-medium text-gray-500 bg-gray-200 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
-                       <h1 className="mx-auto mb-6 text-center text-gray-600 font-bold col-span-2 md:col-span-1 text-4xl md:font-medium pt-5">ORDER BY</h1>
-                       <div className=" grid grid-cols-2 gap-x-5 text-center md:grid-cols-1 ">
+            <div className=" col-span-2 md:col-span-2 md:flex md:items-center md:justify-center w-[]  bg-opacity-70 md:h-[130px] md:mb-20">
+            <div className="px-4 md:flex md:items-left md:justify-left md:h-auto md:mx-auto  ">
+                      <div className="md:px-[40px] md:mt-[20px] grid sm:grid-cols-1 md:grid-cols-1  md:my-10 text-3xl space-y-2 font-medium text-gray-500 bg-gray-200 py-10 rounded-3xl mx-auto shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1">
+                       {/* <h1 className="mx-auto mb-0 text-center text-gray-600 font-bold col-span-2 md:col-span-1 text-4xl md:font-medium pt-5">ORDER BY</h1> */}
+                       <div className=" grid grid-cols-1 gap-x-5 text-center md:flex md:items-center md:justify-center ">
                         <div> 
                           <p  className="text-gray-500 text-2xl font-bold" htmlFor="priceOrden">ALPHABETIC</p>
-                          <Select className="w-[120px] items-center font-extrabold "style={{ fontSize: "15px" }}
+                          <Select className="w-[120px] items-center font-extrabold "
+                            sx={{
+                              border: "none",
+                              minWidth: 100,
+                              "& label": {
+                                fontSize: "18px",
+                                color: "rgb(0, 133, 0)",
+                              },
+                              "& label.MuiInputLabel-shrink": {
+                                color: "rgb(0, 133, 0)",
+                              },
+                              "& .MuiOutlinedInput-root": {
+                                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                  borderColor: "rgb(0, 133, 0) !important", // Cambiar el color del borde cuando está enfocado
+                                },
+                              },
+                              "& .MuiOutlinedInput-notchedOutline": {
+                                borderColor: "rgb(0, 133, 0) !important", // Color del borde predeterminado
+                              },
+                              "& .MuiInputBase-input": {
+                                fontSize: "15px",
+                                color: "black",
+                              },
+                              "& .MuiSelect-icon": {
+                                color: "rgb(0, 133, 0)",
+                              },
+                            }}
+                            style={{ fontSize: "15px" }}
                               id="nameOrden"  
                               name="nameOrden"
                               value={nameOrden}
@@ -167,9 +183,34 @@ console.log(favorites)
                           </Select>
                         </div>
                         
-                        <div className="my-5">
+                        <div className="my-5 md:my-0">
                             <p className="text-gray-500 font-bold text-2xl" htmlFor="priceOrden">PRICE</p>
-                            <Select className="w-[120px]" style={{ fontSize: "15px" }}
+                            <Select className="w-[120px]" sx={{
+  border: "none",
+  minWidth: 100,
+  "& label": {
+    fontSize: "18px",
+    color: "rgb(0, 133, 0)",
+  },
+  "& label.MuiInputLabel-shrink": {
+    color: "rgb(0, 133, 0)",
+  },
+  "& .MuiOutlinedInput-root": {
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "rgb(0, 133, 0) !important", // Cambiar el color del borde cuando está enfocado
+    },
+  },
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "rgb(0, 133, 0) !important", // Color del borde predeterminado
+  },
+  "& .MuiInputBase-input": {
+    fontSize: "15px",
+    color: "black",
+  },
+  "& .MuiSelect-icon": {
+    color: "rgb(0, 133, 0)",
+  },
+}} style={{ fontSize: "15px" }}
                               id="priceOrden"
                               name="priceOrden"
                               value={priceOrden}
@@ -183,10 +224,23 @@ console.log(favorites)
                                   Low - High
                                 </MenuItem>
                             </Select>
-                        </div> 
-                    </div>  
+                          </div> 
+                          <div className="box  mt-10 mx-auto bg-[#42c94b]  h-[50px] w-[300px] md:ml-12  md:h-[70px] md:w-[80px] mb-10 justify-center  "> {/* ACA PONER  md:w-[300px]*/}
+                      <input placeholder="Search.. " onChange={handleChange}  onKeyDown={handleKeyDown} value={inputValue} className=" w-full self-center center my-10  h-20 md:h-20 bg-white  placeholder:text-white"/>
+                      <button type='submit' onClick={handleSubmit}><BiSearch color='black' size='30px'/></button>
+                </div>
+                       </div>  
                     </div>
                     </div>
+                {/*-- ---------------------- SEARCHBAR ------------------------------------------------- */}
+                
+                 
+            
+           
+                   {/*-- ---------------------- BARRA ------------------------------------------------- */}
+           
+                    
+                  
                     
                     
                        
@@ -222,8 +276,8 @@ console.log(favorites)
                      
               
                   
-               </div>
-              </div>
+            
+              
                         
 
               
@@ -232,7 +286,9 @@ console.log(favorites)
                     
             </div>  
    {/*-- ---------------------- CARDS ------------------------------------------------- */}
-                <div className="grid grid-cols-2 m  md:grid-cols-3">
+                
+
+               <div className=" grid col-span-2 grid-cols-2   md:grid-cols-4 md:col-span-2 mx-auto justify-around md:space-x-20">
                           {favorites ? (
                 Array.isArray(favorites) && favorites.length > 0 ? (
                 displayedFavorites.map((p) => (
@@ -275,8 +331,8 @@ console.log(favorites)
               
             )}
 
-         </div>
-         <div className=" bg-opacity-60 col-start-2 pt-10 mx-auto flex justify-center md:w-[400px]">
+         </div> 
+         <div className=" bg-opacity-60 md:col-start-2 pt-10 mx-auto flex justify-center md:w-[400px]">
                     <Pagination 
                 count={totalPages}
                 page={currentPage} 
