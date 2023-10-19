@@ -478,7 +478,6 @@ if (product?.description) {
                     fontSize: "16px",
                     width: "fit-content",
                     backgroundColor:"#fff",
-                    width: "fit-content",
                     height: "50px",
                     color: "#FF08B98C"  ,
                     border: `1px solid  "#FF08B98C"`,

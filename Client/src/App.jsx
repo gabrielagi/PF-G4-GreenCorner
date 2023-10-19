@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer/Footer";
 import Guides from "./pages/Guides/Guides";
 import ContactUs from "./pages/Contact-Us/ContactUs";
+import NotFoundPage from "./pages/NotFound";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { postUser } from "./Redux/actions/user/user-actions";
@@ -98,6 +99,7 @@ const App = () => {
             <Route path="/guides" element={<Guides />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/prueba" element={<Cart />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
           <Footer></Footer>
         </>
