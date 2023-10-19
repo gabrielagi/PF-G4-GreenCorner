@@ -1,6 +1,7 @@
 import React from "react";
 
 const Comment = ({ opinion, user }) => {
+  console.log(user)
   const rating = parseInt(opinion.rating);
   return (
     <div className="mb-8 sm:break-inside-avoid">
@@ -8,13 +9,13 @@ const Comment = ({ opinion, user }) => {
         <div className="flex items-center gap-4">
           <img
             alt="Picture"
-            src={user.picture}
+            src={user.picture ? user.picture : "Loading"}
             className="h-14 w-14 rounded-full object-cover"
           />
           
           <div>
           <p className="mt-0.5 text-lg font-medium text-gray-900">
-              {user.nickname}
+              {user.nickname ? user.nickname : "Loading"}
             </p>
             <div className="flex justify-center gap-0.5 text-green-500">
               {[...Array(rating)].map((_, index) => (

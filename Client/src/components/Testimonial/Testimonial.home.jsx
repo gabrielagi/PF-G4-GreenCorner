@@ -43,6 +43,7 @@ const Testimonial = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
       {opinions.map((opinion, index) => {
           const user = findUser(opinion.UserId);
+          console.log(user)
           return (
             <div key={index} className="py-5 mb-10">
               <Comment
