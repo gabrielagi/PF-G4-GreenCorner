@@ -2,12 +2,12 @@ import ProductTrending from "./ProductTrending";
 
 const ProductsTrending = ({ productTrending }) => {
 
-  const productTrendingRandomIndex = Math.floor(Math.random() * productTrending.length);
+  const productTrendingRandomIndex = Math.floor(Math.random() * (productTrending.length - 2));
 
   const getRandomProducts = (array, startIndex, count) => {
     return array.slice(startIndex, startIndex + count);
   };
-
+  
   const randomProducts = getRandomProducts(productTrending, productTrendingRandomIndex, 3);
 
 

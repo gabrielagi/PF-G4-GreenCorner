@@ -18,6 +18,8 @@ import { AiFillHeart } from "react-icons/ai";
 import { BsFillHeartbreakFill } from "react-icons/bs";
 import mercadopago from "../assets/mercadopago.png";
 import Swal from 'sweetalert2';
+
+import Loading from "../components/Loading/Loading";
 import {
   postFavorites,
   deleteFavorite,
@@ -41,10 +43,10 @@ const Detail = () => {
   const [cartClicked, setCartClicked] = useState(false);
   const [checkoutClicked, setCheckoutClicked] = useState(false);
   const allProducts = useSelector((state) => state.allProducts);
-  const product = useSelector((state) => state.productDetail);
+  const products = useSelector((state) => state.productDetail);
   const cart = useSelector((state) => state.productCart);
   const [activeImg, setActiveImg] = useState(
-    product.images && product.images[0]
+    products.images && products.images[0]
   );
 
   const loginAlert = () => {
@@ -94,8 +96,8 @@ const Detail = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    setActiveImg(product.images && product.images[0]);
-  }, [product.images]);
+    setActiveImg(products.images && products.images[0]);
+  }, [products.images]);
 
   // Traigo todos los elementos del carrito del usuario (si existen)
   useEffect(() => {
@@ -176,7 +178,7 @@ const Detail = () => {
        if (isAuthenticated) {
       let favorite = {
         email: user.email,
-        product_id: product.product_id,
+        product_id: products.product_id,
       };
 
       if (!corazon) {
@@ -213,12 +215,12 @@ const Detail = () => {
       try {
       if (isAuthenticated) {
         const productInCart = cart.find(
-          (item) => item.product_id === product.product_id
+          (item) => item.product_id === products.product_id
         );
         console.log("El producto ya existe en el carrito? ", productInCart);
         if (productInCart) {
           // El producto ya está en el carrito
-          const availableStock = product.stock - productInCart.amount;
+          const availableStock = products.stock - productInCart.amount;
           console.log(
             "El producto ya existe en el carrito y tiene stock disponible para comprar de: ",
             availableStock
@@ -238,7 +240,7 @@ const Detail = () => {
             dispatch(
               updateProductCart({
                 email: user.email,
-                productId: product.product_id,
+                productId: products.product_id,
                 amount: productInCart.amount + amount,
               })
             ).then(() => {
@@ -255,7 +257,7 @@ const Detail = () => {
           setIsAddingToCart(true);
           let cartItem = {
             email: user.email,
-            product_id: product.product_id,
+            product_id: products.product_id,
             amount: amount,
           };
 
@@ -292,7 +294,7 @@ const Detail = () => {
 
   // Hasta cuánto se puede incrementar
   const amountIncrement = () =>
-    product.stock > amount
+    products.stock > amount
       ? setAmount(amount + 1)
       : Swal.fire({
         icon: 'error',
@@ -308,13 +310,16 @@ const Detail = () => {
 
   // Se realiza el checkout
   const handleCheckout = async () => {
+    let product = [];
+    product.push(products)
     if(!checkoutClicked){
       setCheckoutClicked(true)
       if (isAuthenticated) {
-      if (product.stock >= amount) {
+      if (products.stock >= amount) {
         try {
           const { data } = await axios.post(
-            "https://greencorner.onrender.com/payment/create-order",
+           "https://greencorner.onrender.com/payment/create-order",
+           //"http://localhost:3001/payment/create-order",
             { product, amount, email: user.email }
           );
           console.log("Data en el componente Detail", data);
@@ -339,10 +344,10 @@ const Detail = () => {
   const number = (max) => {
     return Math.floor(Math.random() * max);
   };
-  console.log(product)
+  console.log(products)
   let categories = [];
-if (product && product.categories) {
-  categories = product.categories.map((c) => c.name);
+if (products && products.categories) {
+  categories = products.categories.map((c) => c.name);
 }
 
 // Convert the categories array to a string, separated by commas
@@ -356,8 +361,8 @@ let shortDescription = "";
 let longDescription = "";
 
 // Verifica si la descripción existe antes de dividirla
-if (product?.description) {
-  const sentences = product.description.split('.'); // Puedes cambiar el delimitador según tus necesidades
+if (products?.description) {
+  const sentences = products.description.split('.'); // Puedes cambiar el delimitador según tus necesidades
 
   // Considera solo la primera oración como descripción corta
   shortDescription = sentences.length > 0 ? sentences[0] : "";
@@ -367,11 +372,11 @@ if (product?.description) {
 }
 
   console.log(number(5));
-  console.log(product.categories);
+  console.log(products.categories);
 
   if (loadingImages || !activeImg) {
-    return <p> ta cargando</p>;
-  } else if (product.name) {
+    return <Loading/>;
+  } else if (products.name) {
     return (
       <div>
         <Link className="ml-16 mt-20" to="/shop">
@@ -397,7 +402,7 @@ if (product?.description) {
           <Slider
             className="rounded-[100px]"
             id={id}
-            images={product.images}
+            images={products.images}
             setActiveImg={setActiveImg}
           ></Slider>
         </div>
@@ -405,10 +410,10 @@ if (product?.description) {
 
             <div className="  bg-[#f6f6f6] rounded-[70px] justify-between w-full px-20">
               <h2 className="mt-10 pt-5 text-6xl font-bold text-[#444444]">
-                {product?.name}
+                {products?.name}
               </h2>
               <hr className="my-10"></hr>
-              <p className="py-t  text-5xl text-[#41b441]">${product.price}</p>
+              <p className="py-t  text-5xl text-[#41b441]">${products.price}</p>
               <div className="w-full">
                 <p className="py-20  break-words ">{shortDescription}</p>
               </div>
@@ -428,14 +433,14 @@ if (product?.description) {
              <p>{categoriesString}</p>
               </div>
               <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10  mx-auto  ">
-                <div className="mx-auto md:mx-0 border-2">
+                <div className="mx-auto md:mx-0 ">
                   <button
                     onClick={amountDecrement}
                     className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-xl text-green-800 text-4xl hover:bg-gray-300"
                   >
                     -
                   </button>
-                  <span className=" border-gray-200 border text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
+                  <span className=" border-gray-200 border-2 rounded-xl text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
                     {amount}
                   </span>
                   <button
@@ -476,7 +481,6 @@ if (product?.description) {
                     fontSize: "16px",
                     width: "fit-content",
                     backgroundColor:"#fff",
-                    width: "fit-content",
                     height: "50px",
                     color: "#FF08B98C"  ,
                     border: `1px solid  "#FF08B98C"`,
@@ -531,7 +535,7 @@ if (product?.description) {
             </div>
             <hr></hr>
             <div className=" text-center font-medium"><p>
-                 {product.description}
+                 {products.description}
         
             </p>
          </div>
@@ -545,8 +549,8 @@ if (product?.description) {
             {allProducts
               .map((p) => {
                 if (
-                  p.categories.name === product.categories.name &&
-                  p.name !== product.name
+                  p.categories.name === products.categories.name &&
+                  p.name !== products.name
                 )
                   return (
                     <Card

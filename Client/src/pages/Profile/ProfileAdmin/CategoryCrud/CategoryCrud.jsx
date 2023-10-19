@@ -15,7 +15,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import { setCurrentPage } from "../../../../Redux/actions/product/action";
 
-
 const Category = () => {
   const allCategories = useSelector((state) => state.categories);
   const [nameOrder, setNameOrder] = useState("name");
@@ -166,32 +165,31 @@ const Category = () => {
 
   return (
     <>
-      {/* Contenido del componente (encabezados, tabla, etc.) */}
       <div className="p-4 bg-white block sm:flex items-center justify-between lg:mt-1.5 pt-10">
-        <div className="mb-1 w-full">
+        <div className="mb-8 w-full">
           <div className="mb-4">
             <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900">
               Categories
             </h1>
           </div>
-          <div className="sm:flex">
-            {/* Boton para crear una nueva categoria */}
+          <div className="sm:flex flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
             <button
               type="button"
-              className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[15px] inline-flex items-center px-3 py-2 text-center ml-0 sm:mr-28"
+              className="text-white bg-green-600 hover:bg-green-500 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-[14px] sm:text-[15px] inline-flex items-center px-2 sm:px-3 py-4 sm:py-4 text-center ml-0 mt-10 sm:mr-4"
               onClick={() => createCategory({ name: "" })}
             >
               New category
             </button>
-            <div className="flex sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">            
-              <form className="lg:pr-3" action="#" method="GET">               
-                <InputLabel style={{fontSize : "15px"}}>Name</InputLabel>
-                <Select 
+            <div className="flex sm:items-center sm:pl-3 ml-20">
+              <form className="lg:pr-3" action="#" method="GET">
+                <InputLabel style={{ fontSize: "15px" }}>Name</InputLabel>
+                <Select
                   id="nameOrder"
                   name="nameOrder"
                   value={nameOrder}
                   onChange={handleOrder}
                   label="Name"
+                  className="text-[14px] sm:text-[15px] w-full sm:w-auto h-[40px] sm:h-[41px]" // Ajusté el tamaño del select
                 >
                   <MenuItem value="asc" style={{ fontSize: "15px" }}>
                     A - Z
@@ -204,6 +202,7 @@ const Category = () => {
             </div>
           </div>
         </div>
+
         {/* <div className="flex space-x-1">
           <a
             href="#"
@@ -250,39 +249,42 @@ const Category = () => {
               <table className="table-fixed min-w-full divide-y divide-gray-200">
                 {/* Encabezados de tabla */}
                 <thead className="bg-gray-100">
-                        <tr>
-                            <th scope="col" className="p-4">
-                              <th scope="col" className="p-1 text-left text-xl font-medium text-gray-500 uppercase">
-                                  Name
-                              </th>
-                                {/* <div class="flex items-center">
+                  <tr>
+                    <th scope="col" className="p-4">
+                      <th
+                        scope="col"
+                        className="p-1 text-left text-xl font-medium text-gray-500 uppercase"
+                      >
+                        Name
+                      </th>
+                      {/* <div class="flex items-center">
                                     <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
                                         className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded">
                                     <label for="checkbox-all" className="sr-only">checkbox</label>
                                 </div> */}
-                            </th>
-                            <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
-                               
-                            </th>
-                            {/* <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
+                    </th>
+                    <th
+                      scope="col"
+                      className="p-4 text-left text-xs font-medium text-gray-500 uppercase"
+                    ></th>
+                    {/* <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                 Country
                             </th>
                             <th scope="col" className="p-4 text-left text-xs font-medium text-gray-500 uppercase">
                                 Status
                             </th> */}
-                            <th scope="col" className="p-4">
-                            </th>
-                        </tr>
-                    </thead>
+                    <th scope="col" className="p-4"></th>
+                  </tr>
+                </thead>
 
                 <tbody className="bg-white divide-y divide-gray-200">
                   {/* Mapear los usuarios aquí */}
                   {/* Ejemplo de cómo mapear los usuarios */}
                   {displayedCategories.map((categorie) => (
                     <tr key={categorie.id} className="hover:bg-gray-100">
-                        <td className="p-4 whitespace-nowrap text-[15px] font-medium text-gray-900">
-                          {categorie.name}
-                        </td>
+                      <td className="p-4 whitespace-nowrap text-[15px] font-medium text-gray-900">
+                        {categorie.name}
+                      </td>
                       <td className="p-4 w-4">
                         {/* Checkbox para seleccionar el usuario */}
                         {/* <div className="flex items-center">
@@ -321,7 +323,11 @@ const Category = () => {
                     </tr>
                   ))}
                 </tbody>
-                <div style={{ marginLeft: "400px" }}>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1}}>
               <Pagination
                 count={totalPages}
                 page={currentPage}
@@ -341,10 +347,6 @@ const Category = () => {
                 }}
               />
             </div>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Modal de edición de usuario */}

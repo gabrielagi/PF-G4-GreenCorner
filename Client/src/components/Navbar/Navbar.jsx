@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import styles from "./Navbar.module.css";
 import loading from "../../assets/loading.gif";
 import { useLocation } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const Nav = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Nav = () => {
   const userDetail = useSelector((state) => state.userDetail);
   let count = products.length;
   const [open, setOpen] = useState(false);
-  const { isAuthenticated, user, isLoading } = useAuth0();
+  const { isAuthenticated, user, isLoading, loginWithRedirect } = useAuth0();
   const [isSearchVisible, setSearchVisible] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -85,6 +86,32 @@ const Nav = () => {
 
   const isLinkActive = (path) => {
     return location.pathname === path;
+  };
+
+
+  const loginAlertNav = () => {
+    Swal.fire({
+      title: 'Error',
+      text: 'You need to login first!',
+      icon: 'error',
+      showCancelButton: true,
+      confirmButtonText: 'Go to login',
+      confirmButtonColor: 'green',
+      cancelButtonText: 'Cancel',
+      cancelButtonColor: 'red', 
+    }).then((result) => {
+      if (result.isConfirmed) {
+        loginWithRedirect();
+      }
+    });
+  };
+
+
+  const handleCartClick = (e) => {
+    if (!isAuthenticated){ 
+      e.preventDefault();
+      loginAlertNav();
+    }
   };
 
 
@@ -165,10 +192,10 @@ const Nav = () => {
             </div>
 
             <Badge badgeContent={count} color="success">
-              <Link to="/cart" className={styles.cart}>
-                <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
-              </Link>
-            </Badge>
+      <Link to="/cart" onClick={handleCartClick} className={styles.cart}>
+        <GrCart style={{ fontSize: "24px" }} /> <p className={styles.p}>Cart</p>
+      </Link>
+    </Badge>
             {isAuthenticated ? (
               <div className={styles.container}>
                 <img

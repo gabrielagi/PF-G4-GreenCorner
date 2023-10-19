@@ -104,4 +104,8 @@
     margin-right: 0;
     margin-bottom: 10px;
   }
+
+  .error {
+    font-size: 12px;
+  }
 }

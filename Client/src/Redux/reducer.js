@@ -42,7 +42,12 @@ import {
   FIND_FAV_BY_NAME,
   GET_ORDER_DETAIL, 
   GET_ALL_ORDERS,
-  DELETE_FAV_BY_ID_BD
+  DELETE_FAV_BY_ID_BD,
+  REFRESH_FAVORITES,
+  GET_TESTIMONIAL_BY_ID,
+  CREATE_TESTIMONIAL,
+  UPDATE_TESTIMONIAL,
+
 } from "./actions/action-types";
 
 const initialState = {
@@ -64,6 +69,8 @@ const initialState = {
     currentPage: 1,
   },
   allFavorites: [],
+  testimonialData: [],
+  change:[]
 };
 
 function updater(product, id, updatedProductData) {
@@ -83,7 +90,18 @@ function updater(product, id, updatedProductData) {
     product[index] = currentProduct;
   }
 }
+function generarTextoAleatorio(longitud) {
+  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let textoAleatorio = '';
 
+  for (let i = 0; i < longitud; i++) {
+    const caracterAleatorio = caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    textoAleatorio += caracterAleatorio;
+  }
+
+  return textoAleatorio;
+}
+let textoAleatorio = ''
 let categoriesSorted = [];
 let allCategories = [];
 let usersStatus = [];
@@ -235,7 +253,13 @@ function rootReducer(state = initialState, action) {
         ...state,
         categories: action.payload,
       };
-
+    case REFRESH_FAVORITES:
+      textoAleatorio=generarTextoAleatorio(3)
+      return{
+        ...state,
+        refresh:textoAleatorio
+      }
+;
     case GET_CATEGORIES_SHOP:
       const categories = [];
 
@@ -288,20 +312,20 @@ function rootReducer(state = initialState, action) {
         ),
       };
 
-    case FIND_FAV_BY_NAME:
-      favorites = state.allFavorites.find((fav) => {
-        if (fav.Product) {
-          return fav.Product.name === action.payload;
-        } else {
-          return fav.name === action.payload;
-        }
-      });
-      favorites ? console.log("sii") : console.log("noo");
-      return {
-        ...state,
-        favorites: favorites,
-      };
-
+    case FIND_FAV_BY_NAME:    
+        const searchTerm = action.payload.toLowerCase(); // Convertir a minúsculas para una búsqueda sin distinción entre mayúsculas y minúsculas
+        const filteredFavorites = state.allFavorites.filter((fav) => {
+          if (fav.Product) {
+            return fav.Product.name.toLowerCase().includes(searchTerm);
+          } else {
+            return fav.name.toLowerCase().includes(searchTerm);
+          }
+        });
+      
+        return {
+          ...state,
+          favorites: filteredFavorites,
+        };
     case FILTER_CATEGORY:
       return {
         ...state,
@@ -603,6 +627,21 @@ function rootReducer(state = initialState, action) {
         ...state,
         orderDetail: action.payload,
       };
+      case GET_TESTIMONIAL_BY_ID:
+        return {
+          ...state,
+          testimonialData: action.payload,
+        };
+       case CREATE_TESTIMONIAL:
+          return {
+            ...state,
+            testimonialData: action.payload,
+          };
+      case UPDATE_TESTIMONIAL:
+            return {
+              ...state,
+              testimonialData: action.payload,
+            };
     }
 }
 

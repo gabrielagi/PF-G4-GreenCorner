@@ -31,7 +31,7 @@ const Shop = () => {
   const [priceOrder, setPriceOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
   const currentPage = useSelector((state) => state.pagination.currentPage);
-  const productsPerPage = 8;
+  const productsPerPage = 6;
 
   const dispatch = useDispatch();
 
@@ -43,6 +43,8 @@ const Shop = () => {
     dispatch(getAllProducts());
     dispatch(getAllCategoriesShop());
     dispatch(getProductsTrending());
+
+    return()=>{ dispatch(getAllCategoriesShop())  }
   }, [dispatch]);
 
   function handleOrder(e) {
@@ -99,7 +101,7 @@ const Shop = () => {
   const startIndex = (currentPage - 1) * productsPerPage;
   const endIndex = startIndex + productsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
-
+console.log(allCategories)
   return (
     <div>
       <div className={styles.filtros}>
@@ -190,25 +192,29 @@ const Shop = () => {
         </FormControl>
       </div>
 
-      <div className="flex flex-col lg:flex-row">
-        <div className="mb-10 md:mr-4 bg-gray-100 mx-[40px] px-10 h-85 w-90">
+      < div className="flex flex-col lg:flex-row">
+        <div className="mb-10 md:mr-4 rounded-3xl bg-gray-100 mx-[40px] px-10 h-85 w-90">
           <div>
-            <div className="grid items-center text-start ml-4">
-              <h1 className="text-4xl font-bold px-10 font-poppins mt-4 text-green-700 ">
-              Categories
+            <div className="grid items-center text-start ml-4 ">
+              <h1 className="text-5xl font-bold px-10 font-poppins pt-10 text-green-700 ">
+             Categories
               </h1>
               <br />
 
-              <div className=" mb-2 px-10">
+              <div className="  rounded-[30px] pt-5 mb-2 px-10">
                 {allCategories ? (
                   allCategories.map((p, i) => (
-                    <div key={i} className="font-semibold hover:scale-110 hover:font-bold hover:text-green-500"> <Category
-                      
-                      name={p.name}
-                      id={p.id}
-                      selected={p.name === selectedCategory}
-                      onSelect={handleCategorySelect}
-                    /> </div>
+                    <div
+  key={i}
+  className="font-semibold hover:scale-110 hover:font-bold hover:text-[#54c23e] transition-all duration-400 ease-in-out text-3xl my-2  bg- hover:bg-opacity-50 rounded-[70px] max-w-sm py-1 px-5  text-gray-600 "
+>
+  <Category
+    name={p.name}
+    id={p.id}
+    selected={p.name === selectedCategory}
+    onSelect={handleCategorySelect}
+  />
+</div>
                    
                   ))
                 ) : (
@@ -217,7 +223,7 @@ const Shop = () => {
                   </div>
                 )}
                 <button
-                  className="font-bold hover:scale-110 hover:text-green-500"
+                  className="font-semibold hover:scale-110 hover:font-bold text-green-800 hover:text-green-500 transition-all duration-300 ease-in-out text-3xl px-5"
                   onClick={handleClear}
                 >
                   All categories
@@ -226,7 +232,7 @@ const Shop = () => {
             </div>
           </div>
           <div className="grid items-center text-start   px-10">
-            <h1 className="text-4xl font-poppins font-bold text-green-700 mt-4 mb-2">
+            <h1 className="text-5xl font-poppins font-bold  text-green-700 mt-20 mb-2">
               Featured Products
             </h1>
             <ProductsTrending productTrending={productTrending} />

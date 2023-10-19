@@ -1,10 +1,12 @@
 const mercadopago = require("mercadopago");
-
 require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 
-const HOST = `https://greencorner.onrender.com/payment/`;
+//const HOST = `https://greencorner.onrender.com/payment/`;
+// ES LA BARRA
+const HOST = `http://localhost:3001/payment`;
+
 
 const { getAllProduct, getProductById, updateProduct, deleteAllProductCart } = require("../Controller/product.controller");
 
@@ -21,7 +23,7 @@ mercadopago.configure({
 });
 
 let emaill;
-let ejemplo;
+let productOrder;
 let orderId;
 
 const createOrder = async (req, res) => {
@@ -31,7 +33,7 @@ const createOrder = async (req, res) => {
   const amount = req.body.amount || 1; // Si amount no es enviado asumo un valor predeterminado en 1
   console.log("Este es el producto que me llega a payment: ", product);
 
-  ejemplo = product;
+  productOrder = product;
   const newEmail = req.body.email;
 
   emaill = req.body.email;
@@ -52,10 +54,10 @@ const createOrder = async (req, res) => {
     const productFound = allProducts.find(
       (item) => item.product_id === productId
     );
-    console.log(
+   /* console.log(
       "El producto encontrado en el nuevo metodo tiene stock: ",
       productFound.stock
-    );
+    );*/
     if (productFound) {
       return productFound.stock;
     }
@@ -206,8 +208,58 @@ const createOrder = async (req, res) => {
 const success = async (req, res) => {
   console.log(req.query);
   console.log("Necesito en success");
+  console.log(productOrder);
+  for (let i = 0; i < productOrder.length; i++) {
+    const elemento = productOrder[i];
+    console.log(`ID: ${elemento.id}, Amount: ${elemento.amount}, Name: ${elemento.name}, Price: ${elemento.price}`);
 
-  // Asegúrate de que ejemplo sea un array con al menos un elemento
+    const Products = await getProductById(elemento.id);
+    const updateProducts = Products.dataValues;
+
+    if ("stock" in updateProducts) {
+      updateProducts.stock -= elemento.amount;
+
+      if(updateProducts.stock === 0){
+        updateProducts.available = false;
+      }
+    }
+
+    await deleteAllProductCart(emaill);
+
+    let orders = await getOrderById(orderId);
+    let updateOrderss = orders.dataValues;
+
+    if ("status" in updateOrderss) {
+      updateOrderss.status = "Finish";
+    }
+
+    await updateOrders(orderId, updateOrderss)
+    .then((success) => {
+      if (success) {
+        console.log("Producto actualizado exitosamente");
+      } else {
+        console.log(`No se encontró un Producto con el ID ${orderId}`);
+      }
+    })
+    .catch((error) => {
+      console.error("Error en updateProduct:", error.message);
+    });
+
+    await updateProduct(elemento.id, updateProducts)
+      .then((success) => {
+        if (success) {
+          console.log("Producto actualizado exitosamente");
+        } else {
+          console.log(`No se encontró un Producto con el ID ${elemento.id}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Error en updateProduct:", error.message);
+      });
+
+  }
+
+/*
   if (ejemplo && ejemplo.length > 0) {
     const { id, amount } = ejemplo[0];
 
@@ -216,6 +268,10 @@ const success = async (req, res) => {
 
     if ("stock" in updateProducts) {
       updateProducts.stock -= amount;
+
+      if(updateProducts.stock === 0){
+        updateProducts.available = false;
+      }
     }
 
     await deleteAllProductCart(emaill);
@@ -223,8 +279,6 @@ const success = async (req, res) => {
     let orders = await getOrderById(orderId);
     let updateOrderss = orders.dataValues;
 
-    console.log(orders);
-    
     if ("status" in updateOrderss) {
       updateOrderss.status = "Finish";
     }
@@ -262,10 +316,27 @@ const success = async (req, res) => {
     console.log("Antes de redirigir");
 
   res.redirect("https://green-corner.vercel.app/");
-};
+};*/
+
+
+res.redirect("https://green-corner.vercel.app/");
 }
-const failure = (req, res) => {
+const failure = async(req, res) => {
   console.log(req.query);
+
+
+  let orders = await getOrderById(orderId);
+  
+  let updateOrderss = orders.dataValues;
+
+  if ("status" in updateOrderss) {
+    updateOrderss.status = "Rejected";
+  }
+
+  await updateOrders(orderId, updateOrderss);
+
+
+
   // res.send('Pago realizado')
   // store in database
   // Puedo guadar la información del usuario una vez que compró

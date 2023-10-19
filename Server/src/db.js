@@ -26,7 +26,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 
 
-const { User, Order, Product, Category, OrderDetail, ShoppingCart, Favorite} = sequelize.models;
+const { User, Order, Product, Category, OrderDetail, ShoppingCart, Favorite, Testimonial} = sequelize.models;
 
 // RELACIONES
 //User.hasMany(Order, { foreignKey: 'userId', as: 'orders' });
@@ -38,7 +38,6 @@ const { User, Order, Product, Category, OrderDetail, ShoppingCart, Favorite} = s
 Product.belongsToMany(Category, { through: "ProductCategory", foreignKey: 'productId', as: 'categories' });
 Category.belongsToMany(Product, { through: "ProductCategory", foreignKey: 'categoryId', as: 'products' });
 
-/* User.hasOne(Testimonial ) */
 ShoppingCart.belongsTo(Product, {
   foreignKey: 'product_id' // Clave foránea en el modelo Product
 });
@@ -55,10 +54,11 @@ Favorite.belongsTo(User, {
   targetKey: 'email',
 });
 
-Order.belongsTo(User, {
-  foreignKey: 'email',
-  targetKey: 'email',
-});
+// En el modelo User
+User.hasOne(Testimonial);
+
+// En el modelo Testimonial
+Testimonial.belongsTo(User);
 
 OrderDetail.belongsTo(Order, {
   foreignKey: 'order_id',
@@ -75,7 +75,7 @@ Product.hasMany(ShoppingCart);
 ShoppingCart.hasMany(Product);*/
 
 
-//Descomentar si se importo el modelo ShoppingCart
+// Descomentar si se importo el modelo ShoppingCart
 //User.hasMany(ShoppingCart, { foreignKey: 'userId', as: 'ShoppingCart' });
 //ShoppingCart.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
