@@ -433,14 +433,14 @@ if (products?.description) {
              <p>{categoriesString}</p>
               </div>
               <div className="my-10 grid grid-cols-1 md:grid-cols-2  md:my-10 gap-y-10  mx-auto  ">
-                <div className="mx-auto md:mx-0 border-2">
+                <div className="mx-auto md:mx-0 ">
                   <button
                     onClick={amountDecrement}
                     className="bg-gray-200 py-4 px-8 md:py-6 md:px-10 rounded-xl text-green-800 text-4xl hover:bg-gray-300"
                   >
                     -
                   </button>
-                  <span className=" border-gray-200 border text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
+                  <span className=" border-gray-200 border-2 rounded-xl text-3xl font-extrabold py-4 px-8 md:py-6 md:px-10">
                     {amount}
                   </span>
                   <button
@@ -481,7 +481,6 @@ if (products?.description) {
                     fontSize: "16px",
                     width: "fit-content",
                     backgroundColor:"#fff",
-                    width: "fit-content",
                     height: "50px",
                     color: "#FF08B98C"  ,
                     border: `1px solid  "#FF08B98C"`,

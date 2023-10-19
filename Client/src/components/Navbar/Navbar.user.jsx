@@ -9,6 +9,7 @@ import { AiOutlineUser, AiOutlineHeart } from "react-icons/ai";
 import { FiShoppingBag } from "react-icons/fi";
 import { TbGps } from "react-icons/tb";
 import { RiCustomerService2Fill } from "react-icons/ri";
+import {AiOutlineStar} from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 function NavbarUser({ selectedMenu, setSelectedMenu }) {
@@ -31,9 +32,14 @@ function NavbarUser({ selectedMenu, setSelectedMenu }) {
     {
       name: "My Garden",
       icon: AiOutlineHeart,
-      link: "/about-us",
       margin: true,
     },
+    {
+      name: "Rate Us",
+      icon: AiOutlineStar,
+      margin: true,
+
+    }
     // {
     //   name: "Shipping Address",
     //   icon: TbGps,
@@ -51,7 +57,7 @@ function NavbarUser({ selectedMenu, setSelectedMenu }) {
   return (
     <section className="flex gap-6 mt-3 mb-0`">
       <div
-        className={`bg-[#4f944f] h-[83vh] md:h-[85vh]  ${
+        className={`bg-[#4f944f] h-[83vh] md:h-[100vh]  ${
           open ? "w-80" : "w-20"
         } duration-500 text-gray-100 px-4 font-poppins  mb-0`}
       >
