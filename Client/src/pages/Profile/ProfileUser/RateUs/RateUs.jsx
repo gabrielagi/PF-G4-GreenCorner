@@ -77,6 +77,7 @@ const RateUs = () => {
   };
 
   return (
+    <div className={styles.centeredContainer}>
     <div className={styles.rateUs}>
       {testimonialData.id ? (
         <div className={styles.containerUs}>
@@ -186,6 +187,7 @@ const RateUs = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

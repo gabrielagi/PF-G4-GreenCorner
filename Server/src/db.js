@@ -60,6 +60,11 @@ User.hasOne(Testimonial);
 // En el modelo Testimonial
 Testimonial.belongsTo(User);
 
+Order.belongsTo(User, {
+  foreignKey: 'email',
+  targetKey: 'email',
+});
+
 OrderDetail.belongsTo(Order, {
   foreignKey: 'order_id',
 });
