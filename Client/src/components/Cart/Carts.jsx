@@ -57,7 +57,8 @@ const Carts = () => {
       }
       
       const { data } = await axios.post(
-        "http://localhost:3001/payment/create-order",
+        //"http://localhost:3001/payment/create-order",
+        "https://greencorner.onrender.com/create-order",
         
         { product, email: user.email }
       );

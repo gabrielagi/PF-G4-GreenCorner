@@ -10,8 +10,8 @@ import {
 import axios from "axios";
 
 
-/* const endpoint = `https://greencorner.onrender.com/testimonial`; */
-const endpoint = `http://localhost:3001/testimonial`;
+const endpoint = `https://greencorner.onrender.com/testimonial`;
+/* const endpoint = `http://localhost:3001/testimonial`; */
 
 export const getTestimonial = () => {
     return async (dispatch) => {
