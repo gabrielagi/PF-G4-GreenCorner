@@ -5,17 +5,23 @@ import { CiLocationArrow1 } from 'react-icons/ci'
 const EmptyCart = () => {
   return (
 
-    <div className='grid text-center'>
+    <div className='grid text-center '>
 
-    <h1 className='text-5xl md:text-[80px] font-poppins font-extrabold text-gray-500 text-center mt-20'>Your shop cart is empty </h1>
+    <h1 className='text-5xl md:text-[50px]  font-poppins font-extrabold text-gray-500 text-center mt-20'>Your shop cart is empty </h1>
     
-    <img src={cart} className='  w-[40%] mx-auto'></img>
-    <div className='w-[45%]  sm:w-[250px] md:w-[300px] md:h-[90px] mx-auto   '>    <Link to="/shop">
-            <button className=" w-full px-4 py-4 sm:px-10 sm:py-6  md:h-[90px] bg-green-500 text-white font-semibold md:py-8 md:text-5xl md:px-20 rounded hover:bg-green-600 font-poppins flex mx-auto">
+    <img src={cart} className='  w-[30%] mx-auto'></img>
+    <div className='w-[45%]  sm:w-[250px] md:w-[300px] md:h-[90px] mx-auto   '>  
+      <Link to="/shop">
+      <div className='-mt-10 bg-green-500
+hover:bg-green-600  grid grid-cols-4'>
+       <button className=" w-full  sm:px-10 sm:py-6  md:h-[60px] col-span-3 bg-green-500 text-white font-semibold md:py-8 md:text-4xl md:px-10 rounded hover:bg-green-600 font-poppins  mx-auto">
               {`Visit our Shop `}
-              <CiLocationArrow1 size='60%' className=" text-6xl sm:text-4xl" />
+              
             </button>
-          </Link>
+            <CiLocationArrow1 color="white" size='50%' className="flex justify-center items-center mt-9 text-4xl sm:text-4xl " />
+    </div>
+           
+       </Link>
     </div>
 
 

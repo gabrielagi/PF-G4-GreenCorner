@@ -18,6 +18,8 @@ import { AiFillHeart } from "react-icons/ai";
 import { BsFillHeartbreakFill } from "react-icons/bs";
 import mercadopago from "../assets/mercadopago.png";
 import Swal from 'sweetalert2';
+
+import Loading from "../components/Loading/Loading";
 import {
   postFavorites,
   deleteFavorite,
@@ -370,7 +372,7 @@ if (product?.description) {
   console.log(product.categories);
 
   if (loadingImages || !activeImg) {
-    return <p> ta cargando</p>;
+    return <Loading/>;
   } else if (product.name) {
     return (
       <div>

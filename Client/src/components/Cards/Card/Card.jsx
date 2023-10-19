@@ -10,7 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   postFavorites,
   deleteFavorite,
-  getOneFavorites
+  getOneFavorites,
+  refreshFavorites
 } from "../../../Redux/actions/user/user-actions";
 import Swal from 'sweetalert2';
 import {
@@ -24,6 +25,7 @@ const Card = ({ name, images, price, id }) => {
   const [addToCartClicked, setAddToCartClicked] = useState(false);
   const [addFavoriteClicked, setAddFavoriteClicked] = useState(false);
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const [change, setChange] = useState(false)
   const dispatch = useDispatch();
 
   let heart = "❤️";
@@ -141,7 +143,11 @@ const Card = ({ name, images, price, id }) => {
         });
 
         setCorazon(!corazon);
+       
+    
       } else {
+        setChange(!change)
+        dispatch(refreshFavorites(change))
         dispatch(deleteFavorite(product_id, user.email)).then((result) => {
           notifyII(result, heartBroke);
         });
@@ -158,7 +164,7 @@ const Card = ({ name, images, price, id }) => {
   };
 
   return (
-    <div className="bg-slate-100 bg-opacity-60 rounded-md box-border md:h-85 md:w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center">
+    <div className="bg-slate-100 bg-opacity-60 rounded-md box-border md:h-85 md:w-80 p-4 shadow-lg relative flex flex-col justify-between transition transform hover:scale-110 items-center md">
       <div className="corazon absolute hover:scale-110 top-2 right-2 text-3xl">
         <button
           onClick={() => handleHeart(id)}
@@ -183,8 +189,10 @@ const Card = ({ name, images, price, id }) => {
         </Link>
       </div>
       <div className="text-left w-full bg-slate-100" style={{ paddingBottom: "30px" }}>
-        <p className="font-poppins break-words ml-6">{name}</p>
-      </div>
+  <p className="font-poppins ml-6 overflow-hidden" style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', whiteSpace: 'normal', WebkitLineClamp: 2 }}>
+    {name}
+  </p>
+</div>
 
       <div className="bg-slate-100 flex justify-between items-center mt-3 w-full relative">
         <p className="text-lg font-bold mx-6">${price}</p>
