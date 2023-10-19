@@ -165,12 +165,16 @@ const Nav = () => {
         
         {!isLoading ? (
           <>
+          <Link to="/shop" className={styles.shop}>
             <a href="/shop" className={styles.shop}>
               <AiFillShop style={{ fontSize: "24px" }} /> <p className={styles.p}>Products</p>
             </a>
-            <a href="#" className={styles.guide}>
+            </Link>
+            <Link to="/guides" className={styles.guide}>
+            <a href="/guides" className={styles.guide}>
               <BsBook style={{ fontSize: "24px" }} /> <p className={styles.p}>Guide</p>
             </a>
+            </Link>
             <div className={styles.search} onKeyDown={handleKeyDown}>
               <input
                 type="text"
