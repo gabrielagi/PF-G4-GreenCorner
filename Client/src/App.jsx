@@ -32,6 +32,7 @@ import Slider from "./components/Slider/Slider2";
 import EmptyCart from "./components/EmptyCart/EmptyCart";
 import EmptyFavorites from "./components/EmptyFavorites/EmptyFavorites";
 import Cart from "./components/Cart/Cart";
+import AllTestimonial from "./components/Testimonial/AllTestimonial";
 
 const App = () => {
   //Carga de usuarios
@@ -99,7 +100,9 @@ const App = () => {
             <Route path="/guides" element={<Guides />} />
             <Route path="/contact-us" element={<ContactUs />} />
             <Route path="/prueba" element={<Cart />} />
+
             <Route path="*" element={<NotFoundPage />} />
+            <Route path="/testimonials" element={<AllTestimonial />} />
           </Routes>
           <Footer></Footer>
         </>

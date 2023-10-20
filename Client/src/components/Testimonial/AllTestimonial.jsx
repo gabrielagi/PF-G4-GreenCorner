@@ -6,9 +6,7 @@ import { useDispatch } from "react-redux";
 import { getTestimonial } from "../../Redux/actions/testimonial/actions";
 import { getAllUsers } from "../../Redux/actions/user/user-actions";
 
-const Testimonial = () => {
-  const [visibleOpinions, setVisibleOpinions] = useState(6); 
-  const userDetail = useSelector((state) => state.userDetail);
+const AllTestimonial = () => {
   const opinions = useSelector((state) => state.allTestimonial);
   const allUsers = useSelector((state) => state.allUsers);
   const dispatch = useDispatch();
@@ -22,18 +20,17 @@ const Testimonial = () => {
     dispatch(getAllUsers());
   }, [dispatch]);
 
-  console.log(opinions);
-
   return (
-    <div className="font-poppins py-40">
+    <div className="font-poppins py-30">
       <div className="text-center py-10">
-        <h5 className="text-[#1d252d]">Testimonials</h5>
-        <h1 className="text-4xl mx-auto leading-normal font-bold">
-          Read what others have to say
-        </h1>
+        <h1 className="text-4xl mx-auto leading-normal font-bold">All Testimonials</h1>
       </div>
+      <Link to="/" className="text-green-600 hover:underline text-2xl mb-4 block ml-5">
+     ← Back to Home
+        </Link>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {opinions.slice(0, visibleOpinions).map((opinion, index) => {
+        {opinions.map((opinion, index) => {
           const user = findUser(opinion.UserId);
           return (
             <div key={index} className="py-5 mb-10">
@@ -42,24 +39,8 @@ const Testimonial = () => {
           );
         })}
       </div>
-      {visibleOpinions < 9 ? (
-        <div className="text-center mt-4">
-          <button
-            onClick={() => setVisibleOpinions((prev) => prev + 3)} 
-            className="text-blue-500 hover:underline"
-          >
-            Show more
-          </button>
-        </div>
-      ) : (
-        <div className="text-center mt-4">
-          <Link to="/testimonials" className="text-blue-500 hover:underline">
-            View all Testimonials
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
 
-export default Testimonial;
+export default AllTestimonial;
