@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getTestimonial } from "../../Redux/actions/testimonial/actions";
 import { getAllUsers } from "../../Redux/actions/user/user-actions";
+import Aos from "aos";
+
 
 const Testimonial = () => {
   const [visibleOpinions, setVisibleOpinions] = useState(6); 
@@ -18,6 +20,13 @@ const Testimonial = () => {
   }
 
   useEffect(() => {
+    Aos.init({
+      duration: 2200,
+      offset: 0,
+    });
+  }, []);
+
+  useEffect(() => {
     dispatch(getTestimonial());
     dispatch(getAllUsers());
   }, [dispatch]);
@@ -25,7 +34,7 @@ const Testimonial = () => {
   console.log(opinions);
 
   return (
-    <div className="font-poppins py-40">
+    <div className="font-poppins py-40 " data-aos="fade-up" data-aos-duration="1000">
       <div className="text-center py-10">
         <h5 className="text-[#1d252d]">Testimonials</h5>
         <h1 className="text-4xl mx-auto leading-normal font-bold">

@@ -2,13 +2,13 @@ import React from "react";
 
 const Comment = ({ opinion, user }) => {
   if (!user) {
-    return null; // Si user no está definido, no renderiza nada
+    return null; 
   }
 
   const rating = parseInt(opinion.rating);
 
   return (
-    <div className="mb-8 sm:break-inside-avoid">
+    <div className="mb-8 sm:break-inside-avoid " >
       <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
         <div className="flex items-center gap-4">
           <img
