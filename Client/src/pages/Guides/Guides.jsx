@@ -11,6 +11,7 @@ const Guides = () => {
       duration: 2200,
       offset: 0,
     });
+    window.scrollTo(0, 0);
   }, []);
 
   return (

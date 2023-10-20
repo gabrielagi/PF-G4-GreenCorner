@@ -27,6 +27,7 @@ const AllTestimonial = () => {
   useEffect(() => {
     dispatch(getTestimonial());
     dispatch(getAllUsers());
+    window.scrollTo(0, 0);
   }, [dispatch]);
 
   return (

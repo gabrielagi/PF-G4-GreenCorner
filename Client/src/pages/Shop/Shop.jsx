@@ -43,6 +43,7 @@ const Shop = () => {
     dispatch(getAllProducts());
     dispatch(getAllCategoriesShop());
     dispatch(getProductsTrending());
+    window.scrollTo(0, 0);
 
     return()=>{ dispatch(getAllCategoriesShop())  }
   }, [dispatch]);
