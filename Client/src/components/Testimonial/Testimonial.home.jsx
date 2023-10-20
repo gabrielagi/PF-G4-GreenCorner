@@ -46,14 +46,14 @@ const Testimonial = () => {
         <div className="text-center mt-4">
           <button
             onClick={() => setVisibleOpinions((prev) => prev + 3)} 
-            className="text-blue-500 hover:underline"
+            className="text-green-700 hover:underline"
           >
             Show more
           </button>
         </div>
       ) : (
         <div className="text-center mt-4">
-          <Link to="/testimonials" className="text-blue-500 hover:underline">
+          <Link to="/testimonials" className="text-green-700 hover:underline">
             View all Testimonials
           </Link>
         </div>
