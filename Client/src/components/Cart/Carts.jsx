@@ -15,9 +15,6 @@ const Carts = () => {
   const dispatch = useDispatch();
   const { user, isLoading } = useAuth0();
 
-
-
-
   let total = 0;
   let [info, setInfo] = useState({});
 
@@ -58,8 +55,7 @@ const Carts = () => {
       
       const { data } = await axios.post(
         //"http://localhost:3001/payment/create-order",
-        "https://greencorner.onrender.com/payment/create-order",
-        
+        "https://greencorner.onrender.com/payment/create-order", 
         { product, email: user.email }
       );
 

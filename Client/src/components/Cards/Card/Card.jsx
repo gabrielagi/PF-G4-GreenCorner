@@ -11,6 +11,7 @@ import {
   postFavorites,
   deleteFavorite,
   getOneFavorites,
+  getFavorites,
   refreshFavorites
 } from "../../../Redux/actions/user/user-actions";
 import Swal from 'sweetalert2';
@@ -149,6 +150,7 @@ const Card = ({ name, images, price, id }) => {
         setChange(!change)
         dispatch(refreshFavorites(change))
         dispatch(deleteFavorite(product_id, user.email)).then((result) => {
+          dispatch(getFavorites(user.email));
           notifyII(result, heartBroke);
         });
 
