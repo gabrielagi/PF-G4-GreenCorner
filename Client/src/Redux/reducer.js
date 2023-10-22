@@ -575,10 +575,13 @@ function rootReducer(state = initialState, action) {
         allUsers: state.allUsers.filter((user) => user.id !== action.payload),
       };
     case DELETE_FAV_BY_ID_BD:
-    return{
-      ...state
-    }
-
+      console.log(action.payload);
+    return {
+      ...state,
+      favorites: state.favorites.filter(
+        (product) => product.product_id !== action.payload
+      ),
+    };
 
     case SET_CURRENT_PAGE: // Nuevo caso para manejar la acción de paginación
       return {
@@ -606,7 +609,7 @@ function rootReducer(state = initialState, action) {
         productCart: state.productCart.filter(
           (product) => product.id !== action.payload
         ),
-      };
+      };    
 
     case GET_ALL_USER:
       return {

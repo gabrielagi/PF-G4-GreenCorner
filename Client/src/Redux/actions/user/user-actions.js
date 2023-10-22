@@ -21,11 +21,8 @@ import {
 
 import axios from "axios";
 
-/* const link= import.meta.env.VITE_ENDPOINT
-const endpoint = `${link}/user`;  */
 const endpoint = `https://greencorner.onrender.com/user`;
 
-// const endpoint = `http://localhost:3001/user`;
 
 export const getFavorites = (email) => {
   console.log('aver');
@@ -212,11 +209,11 @@ export function deleteFavorite(id, email) {
         `${endpoint}/favorites/${email}/${id}`
       );
         
-      /*dispatch({
-        type: DELETE_USER,
-        payload: data,
+      dispatch({
+        type: DELETE_FAV_BY_ID_BD,
+        payload: id,
       });
-*/
+
       return data;
 
     } catch (error) {
