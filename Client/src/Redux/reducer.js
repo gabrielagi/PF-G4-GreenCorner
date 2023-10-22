@@ -47,6 +47,7 @@ import {
   GET_TESTIMONIAL_BY_ID,
   CREATE_TESTIMONIAL,
   UPDATE_TESTIMONIAL,
+  GET_ALL_TESTIMONIAL,
 
 } from "./actions/action-types";
 
@@ -70,7 +71,8 @@ const initialState = {
   },
   allFavorites: [],
   testimonialData: [],
-  change:[]
+  change:[],
+  allTestimonial: [],
 };
 
 function updater(product, id, updatedProductData) {
@@ -645,6 +647,12 @@ function rootReducer(state = initialState, action) {
               ...state,
               testimonialData: action.payload,
             };
+
+            case GET_ALL_TESTIMONIAL:
+          return {
+            ...state,
+            allTestimonial: action.payload,
+          };
     }
 }
 

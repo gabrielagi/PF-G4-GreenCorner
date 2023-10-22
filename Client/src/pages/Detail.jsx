@@ -93,6 +93,7 @@ const Detail = () => {
     };
 
     fetchData();
+    window.scrollTo(0, 0);
   }, [dispatch, id]);
 
   useEffect(() => {
