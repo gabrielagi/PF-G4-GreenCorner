@@ -3,11 +3,7 @@ require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 
-//const HOST = `https://greencorner.onrender.com/payment`;
-// ES LA BARRA
-const HOST = `http://localhost:3001/payment`;
-
-
+const HOST = `https://greencorner.onrender.com/payment`;
 const { getAllProduct, getProductById, updateProduct, deleteAllProductCart } = require("../Controller/product.controller");
 
 const {

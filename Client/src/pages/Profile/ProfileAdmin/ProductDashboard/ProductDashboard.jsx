@@ -116,6 +116,7 @@ function ProductDashboard() {
   };
 
   const handleHeaderClick = (column) => {
+    setCurrentPage(1);
     if (column === sortColumn) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {

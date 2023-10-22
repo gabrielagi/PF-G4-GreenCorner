@@ -93,6 +93,7 @@ const Detail = () => {
     };
 
     fetchData();
+    window.scrollTo(0, 0);
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -317,8 +318,7 @@ const Detail = () => {
       if (product.stock >= amount) {
         try {
           const { data } = await axios.post(
-           //"https://greencorner.onrender.com/payment/create-order",
-           "http://localhost:3001/payment/create-order",
+           "https://greencorner.onrender.com/payment/create-order",
             { product, amount, email: user.email }
           );
           console.log("Data en el componente Detail", data);

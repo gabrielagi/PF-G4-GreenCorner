@@ -45,6 +45,7 @@ console.log(totalFavorites)
 console.log(refresh)
 
   useEffect(() => {
+    window.scrollTo(0, 0);
 
     if(user){
     dispatch(getFavorites(user.email));

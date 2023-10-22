@@ -34,6 +34,7 @@ function OrderAdmin() {
   }));
 
   const handleSort = (column) => {
+    setCurrentPage(1);
     if (column === sortColumn) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
     } else {

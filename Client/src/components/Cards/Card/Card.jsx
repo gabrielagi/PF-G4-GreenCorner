@@ -190,13 +190,13 @@ const Card = ({ name, images, price, id }) => {
           />
         </Link>
       </div>
-      <div className="text-left w-full bg-slate-100" style={{ paddingBottom: "30px" }}>
+      <div className="text-left w-full" style={{ paddingBottom: "30px" }}>
   <p className="font-poppins ml-6 overflow-hidden font-medium" style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', whiteSpace: 'normal', WebkitLineClamp: 2 }}>
     {name}
   </p>
 </div>
 
-      <div className="bg-slate-100 flex justify-between items-center mt-1 w-full relative">
+      <div className="flex justify-between items-center mt-1 w-full relative">
         <p className="text-xl font-bold mx-6">${price}</p>
         <button
           className={`bg-transparent border-2 ${

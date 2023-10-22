@@ -12,6 +12,9 @@ const Profile = () => {
   const dispatch = useDispatch();
   const userDetail = useSelector((state) => state.userDetail);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div>

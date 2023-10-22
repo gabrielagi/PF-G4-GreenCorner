@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./ContactUs.module.css";
 import axios from 'axios';
 import { toast } from "react-toastify";
@@ -10,6 +10,9 @@ const ContactUs = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
   
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
 
   const handleSubmit = async (e) => {

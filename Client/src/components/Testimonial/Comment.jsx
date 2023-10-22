@@ -1,19 +1,28 @@
 import React from "react";
 
-const Comment = ({ opinion }) => {
+const Comment = ({ opinion, user }) => {
+  if (!user) {
+    return null; 
+  }
+
+  const rating = parseInt(opinion.rating);
+
   return (
-    <div className="mb-8 sm:break-inside-avoid">
+    <div className="mb-8 sm:break-inside-avoid " >
       <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
         <div className="flex items-center gap-4">
           <img
-            alt={opinion.name}
-            src={opinion.image}
+            alt="Picture"
+            src={user.picture ? user.picture : "Loading"}
             className="h-14 w-14 rounded-full object-cover"
           />
 
           <div>
+            <p className="mt-0.5 text-lg font-medium text-gray-900">
+              {user.nickname ? user.nickname : "Loading"}
+            </p>
             <div className="flex justify-center gap-0.5 text-green-500">
-              {[...Array(5)].map((_, index) => (
+              {[...Array(rating)].map((_, index) => (
                 <svg
                   key={index}
                   xmlns="http://www.w3.org/2000/svg"
@@ -25,13 +34,13 @@ const Comment = ({ opinion }) => {
                 </svg>
               ))}
             </div>
-            <p className="mt-0.5 text-lg font-medium text-gray-900">
-              {opinion.name}
-            </p>
           </div>
+          <p className="mt-0.5 text-lg font-medium text-gray-900">
+            {opinion.date}
+          </p>
         </div>
 
-        <p className="mt-4 text-gray-700">{opinion.text}</p>
+        <p className="mt-4 text-gray-700">{opinion.message}</p>
       </blockquote>
     </div>
   );

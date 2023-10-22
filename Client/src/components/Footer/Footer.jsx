@@ -35,7 +35,7 @@ const Footer = () => {
                 </div>
                 <ul className='text-3xl space-y-2 mt-5'>
                 <li className='flex transition duration-400 ease-in-out hover:text-white hover:text-4xl'><a href="https://www.linkedin.com/in/gabriela-iriart/"><AiFillLinkedin/></a> <a href='https://github.com/gabrielagi'><AiFillGithub/></a> <p>Gabriela Iriart</p></li>
-                <li className='flex transition duration-400 ease-in-out hover:text-white hover:text-4xl'><a href="https://www.linkedin.com/in/andresmdkr/"><AiFillLinkedin/></a> <a href='https://github.com/andresmdkr'><AiFillGithub/></a><p>Andrés Marques</p></li>
+                <li className='flex transition duration-400 ease-in-out hover:text-white hover:text-4xl'><a href="https://www.linkedin.com/in/andresmdkr/"><AiFillLinkedin/></a> <a href='https://github.com/andresmdkr'><AiFillGithub/></a><p>Andrés Marquez</p></li>
                 <li className='flex transition duration-400 ease-in-out hover:text-white hover:text-4xl'><a href="https://www.linkedin.com/in/f-sosa/"><AiFillLinkedin/></a> <a href='https://github.com/f-sosa'><AiFillGithub/></a> <p>Franco Sosa</p></li>
                 <li className='flex transition duration-400 ease-in-out hover:text-white hover:text-4xl'><a href="https://www.linkedin.com/in/facundo-storino-8894a7279/"><AiFillLinkedin/></a> <a href='https://github.com/Fakuese2'><AiFillGithub/></a> <p>Facundo Storino</p></li>
                 <li className='flex transition duration-400 ease-in-out hover:text-white hover:text-4xl'><a href="https://www.linkedin.com/in/matias-avesani/"><AiFillLinkedin/></a> <a href='https://github.com/AveMat81'><AiFillGithub/></a><p>Matias Avesani</p></li>
