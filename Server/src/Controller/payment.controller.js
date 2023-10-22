@@ -3,9 +3,9 @@ require("dotenv").config();
 
 const { ACCESS_TOKEN, DB_HOST, SERVER_PORT } = process.env;
 
-const HOST = `https://greencorner.onrender.com/payment`;
+//const HOST = `https://greencorner.onrender.com/payment`;
 // ES LA BARRA
-//const HOST = `http://localhost:3001/payment`;
+const HOST = `http://localhost:3001/payment`;
 
 
 const { getAllProduct, getProductById, updateProduct, deleteAllProductCart } = require("../Controller/product.controller");
@@ -25,6 +25,7 @@ mercadopago.configure({
 let emaill;
 let productOrder;
 let orderId;
+let amountOrder;
 
 const createOrder = async (req, res) => {
   console.log(req.body);
@@ -74,6 +75,7 @@ const createOrder = async (req, res) => {
       }
     }
   } else if (typeof product === "object") {
+    amountOrder = amount;
     cartTotalAmount = product.price * amount;
     const availableStock = getAvailableStock(product.product_id, allProducts);
     if (availableStock < amount) {
@@ -209,15 +211,70 @@ const success = async (req, res) => {
   console.log(req.query);
   console.log("Necesito en success");
   console.log(productOrder);
-  for (let i = 0; i < productOrder.length; i++) {
-    const elemento = productOrder[i];
-    console.log(`ID: ${elemento.id}, Amount: ${elemento.amount}, Name: ${elemento.name}, Price: ${elemento.price}`);
 
-    const Products = await getProductById(elemento.id);
+
+  if (Array.isArray(productOrder)) {
+   
+
+    for (let i = 0; i < productOrder.length; i++) {
+      const elemento = productOrder[i];
+      console.log(`ID: ${elemento.id}, Amount: ${elemento.amount}, Name: ${elemento.name}, Price: ${elemento.price}`);
+  
+      const Products = await getProductById(elemento.id);
+      const updateProducts = Products.dataValues;
+  
+      if ("stock" in updateProducts) {
+        updateProducts.stock -= elemento.amount;
+  
+        if(updateProducts.stock === 0){
+          updateProducts.available = false;
+        }
+      }
+  
+      await deleteAllProductCart(emaill);
+  
+      let orders = await getOrderById(orderId);
+      let updateOrderss = orders.dataValues;
+  
+      if ("status" in updateOrderss) {
+        updateOrderss.status = "Finish";
+      }
+  
+      await updateOrders(orderId, updateOrderss)
+      .then((success) => {
+        if (success) {
+          console.log("Producto actualizado exitosamente");
+        } else {
+          console.log(`No se encontró un Producto con el ID ${orderId}`);
+        }
+      })
+      .catch((error) => {
+        console.error("Error en updateProduct:", error.message);
+      });
+  
+      await updateProduct(elemento.id, updateProducts)
+        .then((success) => {
+          if (success) {
+            console.log("Producto actualizado exitosamente");
+          } else {
+            console.log(`No se encontró un Producto con el ID ${elemento.id}`);
+          }
+        })
+        .catch((error) => {
+          console.error("Error en updateProduct:", error.message);
+        });
+  
+    }
+
+  } else if (typeof productOrder === "object") {
+
+    const elemento = productOrder;
+
+    const Products = await getProductById(elemento.product_id);
     const updateProducts = Products.dataValues;
 
     if ("stock" in updateProducts) {
-      updateProducts.stock -= elemento.amount;
+      updateProducts.stock -= amountOrder;
 
       if(updateProducts.stock === 0){
         updateProducts.available = false;
@@ -245,19 +302,19 @@ const success = async (req, res) => {
       console.error("Error en updateProduct:", error.message);
     });
 
-    await updateProduct(elemento.id, updateProducts)
+    await updateProduct(elemento.product_id, updateProducts)
       .then((success) => {
         if (success) {
           console.log("Producto actualizado exitosamente");
         } else {
-          console.log(`No se encontró un Producto con el ID ${elemento.id}`);
+          console.log(`No se encontró un Producto con el ID ${elemento.product_id}`);
         }
       })
       .catch((error) => {
         console.error("Error en updateProduct:", error.message);
       });
-
   }
+
 
 /*
   if (ejemplo && ejemplo.length > 0) {
@@ -321,6 +378,7 @@ const success = async (req, res) => {
 
 res.redirect("https://green-corner.vercel.app/");
 }
+
 const failure = async(req, res) => {
   console.log(req.query);
 
