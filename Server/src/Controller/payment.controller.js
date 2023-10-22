@@ -111,7 +111,8 @@ const createOrder = async (req, res) => {
     }
   } else if (typeof product === "object") {
     const productDetailObject = {
-      quantity: product.amount,
+      //quantity: product.amount,
+      quantity: amountOrder,
       unit_price: parseInt(product.price),
       order_id: newOrderId,
       product_id: product.product_id,
@@ -269,6 +270,8 @@ const success = async (req, res) => {
   } else if (typeof productOrder === "object") {
 
     const elemento = productOrder;
+    console.log("AMOUNT ORDER");
+    console.log(amountOrder);
 
     const Products = await getProductById(elemento.product_id);
     const updateProducts = Products.dataValues;
